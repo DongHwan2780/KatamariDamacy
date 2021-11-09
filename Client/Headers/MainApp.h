@@ -1,0 +1,40 @@
+#pragma once
+
+#include "ClientDefines.h"
+#include "Base.h"
+
+BEGIN(Engine)
+class CManagement;
+END
+
+BEGIN(Client)
+
+class CMainApp final : public CBase
+{
+private:
+	CMainApp();
+	virtual ~CMainApp() = default;
+
+public:
+	HRESULT Initialize();
+	_uint	Update(_float dDeltaTime);
+	_uint	Late_Update();
+	HRESULT Render();
+
+public:
+	static CMainApp*	Create();
+	virtual void Free() override;
+
+
+private:
+	CManagement*		m_pManagement = nullptr;
+
+#ifdef _DEBUG
+private:
+	_tchar			m_szFPS[MAX_PATH] = TEXT("");
+	_uint			m_iNumDraw = 0;
+	_float			m_fDeltaTime = 0.f;
+#endif
+};
+
+END

@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="98.Base">
+      <UniqueIdentifier>{1bfb1755-6798-47b0-b58b-28085d57ced1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99.Defines">
+      <UniqueIdentifier>{e7a3c501-97e4-45d6-b4d0-4ce784d1e988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Management">
+      <UniqueIdentifier>{16f55bd9-84d3-4a86-a4ed-a6ce536b48ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager">
+      <UniqueIdentifier>{1589668d-577c-4472-bc88-dd52126129eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\00.ObjMgr">
+      <UniqueIdentifier>{f78b59b8-beb0-4ec8-92d9-a28aac4b8c19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr">
+      <UniqueIdentifier>{99df0f7d-9972-4bb0-89c1-4e9a19bf2fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\02.TimeMgr">
+      <UniqueIdentifier>{9fcc51af-9e73-4b33-bb8d-6a8061a5bfea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\03.KeyMgr">
+      <UniqueIdentifier>{22497fe4-f9c2-4b1d-bbf7-3ed721bd23a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\04.CollisionMgr">
+      <UniqueIdentifier>{e52d5f9f-7d03-4121-9992-ff1d56f5566c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\05.SceneMgr">
+      <UniqueIdentifier>{f9e598f5-fe5d-4856-ac67-a8a3eaa139c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\02.TimeMgr\00.Time">
+      <UniqueIdentifier>{59f8218d-cdaa-427c-8a61-46746728c2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Device">
+      <UniqueIdentifier>{72bb0249-441e-4ec3-9991-1eda0f8494ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Device\00.Graphic">
+      <UniqueIdentifier>{cba6d90c-ae1b-44c1-b36e-bde123b667a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Device\01.Sound">
+      <UniqueIdentifier>{71b28b4d-541f-439c-922f-1272f69a4889}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Codes\Base.cpp">
+      <Filter>98.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Management.cpp">
+      <Filter>00.Management</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Timer.cpp">
+      <Filter>01.Manager\02.TimeMgr\00.Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\TimeMgr.cpp">
+      <Filter>01.Manager\02.TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Graphic.cpp">
+      <Filter>02.Device\00.Graphic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Headers\Base.h">
+      <Filter>98.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\EngineDefines.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\EngineMacro.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\EngineTypedef.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\EngineFunction.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Management.h">
+      <Filter>00.Management</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Timer.h">
+      <Filter>01.Manager\02.TimeMgr\00.Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\TimeMgr.h">
+      <Filter>01.Manager\02.TimeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Graphic.h">
+      <Filter>02.Device\00.Graphic</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
