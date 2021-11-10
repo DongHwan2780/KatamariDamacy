@@ -31,9 +31,6 @@
     <Filter Include="01.Manager\05.SceneMgr">
       <UniqueIdentifier>{f9e598f5-fe5d-4856-ac67-a8a3eaa139c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Manager\02.TimeMgr\00.Time">
-      <UniqueIdentifier>{59f8218d-cdaa-427c-8a61-46746728c2f0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.Device">
       <UniqueIdentifier>{72bb0249-441e-4ec3-9991-1eda0f8494ce}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,21 @@
     </Filter>
     <Filter Include="02.Device\01.Sound">
       <UniqueIdentifier>{71b28b4d-541f-439c-922f-1272f69a4889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\05.SceneMgr\Scene">
+      <UniqueIdentifier>{090a0578-3a2a-49d2-aef3-4ca9615e7c24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\00.ObjMgr\Obj">
+      <UniqueIdentifier>{0af291bc-441d-484b-9ebe-5aa6786f1458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\06.LayerMgr">
+      <UniqueIdentifier>{18b8eb46-604f-44f6-8a11-74157937074b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\06.LayerMgr\Layer">
+      <UniqueIdentifier>{ff303f2f-9013-4995-bf73-398edadc13b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\02.TimeMgr\Time">
+      <UniqueIdentifier>{59f8218d-cdaa-427c-8a61-46746728c2f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,13 +64,25 @@
       <Filter>00.Management</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Timer.cpp">
-      <Filter>01.Manager\02.TimeMgr\00.Time</Filter>
+      <Filter>01.Manager\02.TimeMgr\Time</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\TimeMgr.cpp">
       <Filter>01.Manager\02.TimeMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Graphic.cpp">
       <Filter>02.Device\00.Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\ObjMgr.cpp">
+      <Filter>01.Manager\00.ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\SceneMgr.cpp">
+      <Filter>01.Manager\05.SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Scene.cpp">
+      <Filter>01.Manager\05.SceneMgr\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\LayerMgr.cpp">
+      <Filter>01.Manager\06.LayerMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -81,13 +105,25 @@
       <Filter>00.Management</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Timer.h">
-      <Filter>01.Manager\02.TimeMgr\00.Time</Filter>
+      <Filter>01.Manager\02.TimeMgr\Time</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\TimeMgr.h">
       <Filter>01.Manager\02.TimeMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Graphic.h">
       <Filter>02.Device\00.Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\ObjMgr.h">
+      <Filter>01.Manager\00.ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\SceneMgr.h">
+      <Filter>01.Manager\05.SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Scene.h">
+      <Filter>01.Manager\05.SceneMgr\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\LayerMgr.h">
+      <Filter>01.Manager\06.LayerMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

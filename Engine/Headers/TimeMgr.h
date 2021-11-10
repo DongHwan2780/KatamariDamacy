@@ -17,7 +17,7 @@ private:
 
 public:
 	HRESULT Add_Timers(const _tchar* TimeTag);
-	_float	Compute_DeltaTime(const _tchar* TimeTag);
+	_double	Compute_DeltaTime(const _tchar* TimeTag);
 
 private:
 	CTimer* Find_Timers(const _tchar* TimeTag);

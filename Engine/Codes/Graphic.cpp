@@ -6,7 +6,7 @@ CGraphic::CGraphic()
 {
 }
 
-HRESULT CGraphic::Ready_GraphicDevice(HWND hWnd, _uint iWidth, _uint iHeight)
+HRESULT CGraphic::Ready_GraphicDevice(HWND hWnd, _uint iWidth, _uint iHeight, ID3D11Device** ppOutDevice, ID3D11DeviceContext** ppOutDeviceContext)
 {
 	_uint iDebug = 0;
 
@@ -19,7 +19,6 @@ HRESULT CGraphic::Ready_GraphicDevice(HWND hWnd, _uint iWidth, _uint iHeight)
 	if (FAILED(D3D11CreateDevice(nullptr, D3D_DRIVER_TYPE_HARDWARE, 0, iDebug, nullptr, 0, D3D11_SDK_VERSION, &m_pDevice, &Feature_Level, &m_pDeviceContext)))
 		return E_FAIL;
 
-	// 스왑체인
 	if (FAILED(Ready_SwapChain(hWnd, iWidth, iHeight)))
 		return E_FAIL;
 
@@ -42,6 +41,12 @@ HRESULT CGraphic::Ready_GraphicDevice(HWND hWnd, _uint iWidth, _uint iHeight)
 	ViewPortDesc.MaxDepth = 1.f;
 
 	m_pDeviceContext->RSSetViewports(1, &ViewPortDesc);
+
+	*ppOutDevice = m_pDevice;
+	*ppOutDeviceContext = m_pDeviceContext;
+
+	Safe_AddRef(m_pDeviceContext);
+	Safe_AddRef(m_pDevice);
 
 	return S_OK;
 }
@@ -153,6 +158,8 @@ HRESULT CGraphic::Ready_DepthStencil_RenderTargetView(_uint iWidth, _uint iHeigh
 	if (FAILED(m_pDevice->CreateDepthStencilView(pDepthStencilTexture, nullptr, &m_pDepthStencilRTV)))
 		return E_FAIL;
 
+	Safe_Release(pDepthStencilTexture);
+
 	return S_OK;
 
 }
@@ -169,6 +176,7 @@ HRESULT CGraphic::Present()
 
 void CGraphic::Free()
 {
+	Safe_Release(m_pDepthStencilRTV);
 	Safe_Release(m_pBackBufferRTV);
 	Safe_Release(m_pSwapChain);
 	Safe_Release(m_pDeviceContext);

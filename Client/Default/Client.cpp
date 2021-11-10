@@ -26,6 +26,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+#ifdef _DEBUG
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -58,7 +62,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	if (FAILED(pManagement->Add_Timers(TEXT("Timer_40"))))
 		return FALSE;
 
-	_float			TimeAcc = 0.0;
+	_double			TimeAcc = 0.0;
     // 기본 메시지 루프입니다.
 	while (true)
 	{
@@ -76,9 +80,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		TimeAcc += pManagement->Compute_DeltaTime(TEXT("Timer_Default"));
 
 		if (TimeAcc > 1.0 / 40.0)
-
 		{
 			TimeAcc = 0.0;
+
 			pMainApp->Update(pManagement->Compute_DeltaTime(TEXT("Timer_40")));
 			pMainApp->Render();
 		}

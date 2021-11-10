@@ -164,14 +164,22 @@ xcopy			/y				..\Bin\*.dll		..\..\Client\Bin\</Command>
     <ClInclude Include="..\Headers\EngineMacro.h" />
     <ClInclude Include="..\Headers\EngineTypedef.h" />
     <ClInclude Include="..\Headers\Graphic.h" />
+    <ClInclude Include="..\Headers\LayerMgr.h" />
     <ClInclude Include="..\Headers\Management.h" />
+    <ClInclude Include="..\Headers\ObjMgr.h" />
+    <ClInclude Include="..\Headers\Scene.h" />
+    <ClInclude Include="..\Headers\SceneMgr.h" />
     <ClInclude Include="..\Headers\TimeMgr.h" />
     <ClInclude Include="..\Headers\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp" />
     <ClCompile Include="..\Codes\Graphic.cpp" />
+    <ClCompile Include="..\Codes\LayerMgr.cpp" />
     <ClCompile Include="..\Codes\Management.cpp" />
+    <ClCompile Include="..\Codes\ObjMgr.cpp" />
+    <ClCompile Include="..\Codes\Scene.cpp" />
+    <ClCompile Include="..\Codes\SceneMgr.cpp" />
     <ClCompile Include="..\Codes\TimeMgr.cpp" />
     <ClCompile Include="..\Codes\Timer.cpp" />
   </ItemGroup>

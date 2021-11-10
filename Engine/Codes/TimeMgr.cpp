@@ -21,7 +21,7 @@ HRESULT CTimeMgr::Add_Timers(const _tchar * TimeTag)
 	return S_OK;
 }
 
-_float CTimeMgr::Compute_DeltaTime(const _tchar * TimeTag)
+_double CTimeMgr::Compute_DeltaTime(const _tchar * TimeTag)
 {
 	CTimer*	pTimer = Find_Timers(TimeTag);
 
