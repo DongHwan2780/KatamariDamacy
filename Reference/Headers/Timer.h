@@ -15,14 +15,14 @@ private:
 
 public:
 	HRESULT Ready_Timer();
-	_float  Compute_DeltaTime();
+	_double  Compute_DeltaTime();
 
 public:
 	static CTimer* Create();
 	virtual void Free();
 
 private:
-	_float	m_fDeltaTime = 0.f;
+	_double	m_fDeltaTime = 0.0;
 
 private:
 	LARGE_INTEGER	m_FrameTime;		// LARGE_INTEGER == 64비트 정수형 데이터를 저장하기 위해 선언된 사용자 정의 자료형

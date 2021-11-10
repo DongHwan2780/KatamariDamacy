@@ -15,13 +15,13 @@ HRESULT CMainApp::Initialize()
 	if (m_pManagement == nullptr)
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Ready_GraphicDevice(g_hWnd, g_iWinCX, g_iWinCY)))
+	if (FAILED(m_pManagement->Ready_GraphicDevice(g_hWnd, g_iWinCX, g_iWinCY, &m_pDevice, &m_pDeviceContext)))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-_uint CMainApp::Update(_float dDeltaTime)
+_uint CMainApp::Update(_double dDeltaTime)
 {
 
 	m_fDeltaTime += dDeltaTime;
@@ -71,6 +71,8 @@ CMainApp * CMainApp::Create()
 
 void CMainApp::Free()
 {
+	Safe_Release(m_pDeviceContext);
+	Safe_Release(m_pDevice);
 	Safe_Release(m_pManagement);
 
 	CManagement::Release_Engine();

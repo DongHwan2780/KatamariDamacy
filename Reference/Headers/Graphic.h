@@ -16,7 +16,7 @@ private:
 	virtual ~CGraphic() = default;
 
 public:
-	HRESULT Ready_GraphicDevice(HWND hWnd, _uint iWidth, _uint iHeight);
+	HRESULT Ready_GraphicDevice(HWND hWnd, _uint iWidth, _uint iHeight, ID3D11Device** ppOutDevice, ID3D11DeviceContext** ppOutDeviceContext);
 	HRESULT Clear_BackBufferView(_float4 vColor);
 	HRESULT Clear_DepthStencilView(_float fDepth, _uint iStencil);
 	HRESULT Present();

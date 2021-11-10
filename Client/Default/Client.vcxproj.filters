@@ -10,6 +10,33 @@
     <Filter Include="00.MainApp">
       <UniqueIdentifier>{a392792c-7f71-421c-9230-cfb1fb518011}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Object">
+      <UniqueIdentifier>{78bfae48-f03f-44c1-a644-e1ff7015b170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene">
+      <UniqueIdentifier>{2c2c4339-2cb5-4c4e-b954-af8d206eb4f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\00.Player">
+      <UniqueIdentifier>{2127ef66-3a4e-4b9c-bd05-fa34d4e6f079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.MapObj">
+      <UniqueIdentifier>{a7e75fe9-5f11-4c3d-999c-8ea5ffde4b48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\00.Player\00.PlayerBall">
+      <UniqueIdentifier>{af6f8dae-4574-427c-a1e8-1404358ebf69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.MapObj\00.">
+      <UniqueIdentifier>{87dfb9cb-0893-4a18-8897-8440d29d6072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene\00.Loading">
+      <UniqueIdentifier>{c05979c4-d70e-481c-ab5a-f695efef2ec2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene\01.Logo">
+      <UniqueIdentifier>{522453a1-1ee7-43fb-88a6-028b72a65931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.Scene\02.Stage1">
+      <UniqueIdentifier>{965176aa-9c97-4e67-88da-9ce372d07195}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -33,6 +60,21 @@
     <ClInclude Include="..\Headers\MainApp.h">
       <Filter>00.MainApp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Player.h">
+      <Filter>01.Object\00.Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\PlayerBall.h">
+      <Filter>01.Object\00.Player\00.PlayerBall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Loading.h">
+      <Filter>02.Scene\00.Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Logo.h">
+      <Filter>02.Scene\01.Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\StageOne.h">
+      <Filter>02.Scene\02.Stage1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -43,6 +85,21 @@
     </ClCompile>
     <ClCompile Include="..\Codes\MainApp.cpp">
       <Filter>00.MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Player.cpp">
+      <Filter>01.Object\00.Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\PlayerBall.cpp">
+      <Filter>01.Object\00.Player\00.PlayerBall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Loading.cpp">
+      <Filter>02.Scene\00.Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Logo.cpp">
+      <Filter>02.Scene\01.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\StageOne.cpp">
+      <Filter>02.Scene\02.Stage1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

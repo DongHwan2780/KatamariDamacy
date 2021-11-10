@@ -17,21 +17,22 @@ HRESULT CTimer::Ready_Timer()
 	return S_OK;
 }
 
-_float CTimer::Compute_DeltaTime()
+_double CTimer::Compute_DeltaTime()
 {
 	QueryPerformanceCounter(&m_FrameTime);		// 지금(함수가 불린 시점)의 틱값을 받아옴
 
-	if (m_FrameTime.QuadPart - m_FixTime.QuadPart >= m_CpuTick.QuadPart)	
+	if (m_FrameTime.QuadPart - m_FixTime.QuadPart >= m_CpuTick.QuadPart)
 	{
 		m_FixTime = m_FrameTime;
 		QueryPerformanceFrequency(&m_CpuTick);
 	}
 
-	m_fDeltaTime = (_float)(m_FrameTime.QuadPart) - m_LastTime.QuadPart / m_CpuTick.QuadPart;		// 작업하는데 걸린 시간 / 초당 진동수
+
+	m_fDeltaTime = (_double(m_FrameTime.QuadPart) - m_LastTime.QuadPart) / m_CpuTick.QuadPart;		// 작업하는데 걸린 시간 / 초당 진동수
 
 	m_LastTime = m_FrameTime;
 
-	return _float(m_fDeltaTime);
+	return _double(m_fDeltaTime);
 }
 
 CTimer * CTimer::Create()

@@ -18,11 +18,11 @@ private:
 #pragma region TIMEMGR
 public:
 	HRESULT Add_Timers(const _tchar* TimeTag);
-	_float	Compute_DeltaTime(const _tchar* TimeTag);
+	_double	Compute_DeltaTime(const _tchar* TimeTag);
 #pragma endregion
 
 #pragma region GRAPHIC_DEVICE
-	HRESULT Ready_GraphicDevice(HWND hWnd, _uint iWidth, _uint iHeight);
+	HRESULT Ready_GraphicDevice(HWND hWnd, _uint iWidth, _uint iHeight, ID3D11Device** ppOutDevice, ID3D11DeviceContext** ppOutDeviceContext);
 	HRESULT Clear_BackBufferView(_float4 vColor);
 	HRESULT Clear_DepthStencilView(_float fDepth, _uint iStencil);
 	HRESULT Present();
@@ -41,6 +41,10 @@ public:
 #pragma endregion
 
 #pragma region COLLISION
+
+#pragma endregion
+
+#pragma region SCENE
 
 #pragma endregion
 
