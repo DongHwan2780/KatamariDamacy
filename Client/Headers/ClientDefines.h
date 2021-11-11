@@ -8,3 +8,5 @@ extern HWND			g_hWnd;
 namespace Client {}
 
 using namespace Client;
+
+enum SCENE {STATIC_SCENE, LOGO_SCENE, LOADING_SCENE, STAGEONE_SCENE, END_SCENE };

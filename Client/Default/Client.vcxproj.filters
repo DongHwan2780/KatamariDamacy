@@ -37,6 +37,9 @@
     <Filter Include="02.Scene\02.Stage1">
       <UniqueIdentifier>{965176aa-9c97-4e67-88da-9ce372d07195}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Scene\00.Loading\Loader">
+      <UniqueIdentifier>{1a53509e-cb07-432b-875f-707dbba43879}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -75,6 +78,9 @@
     <ClInclude Include="..\Headers\StageOne.h">
       <Filter>02.Scene\02.Stage1</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Loader.h">
+      <Filter>02.Scene\00.Loading\Loader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -100,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\StageOne.cpp">
       <Filter>02.Scene\02.Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Loader.cpp">
+      <Filter>02.Scene\00.Loading\Loader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
