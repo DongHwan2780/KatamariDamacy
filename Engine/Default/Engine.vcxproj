@@ -159,14 +159,18 @@ xcopy			/y				..\Bin\*.dll		..\..\Client\Bin\</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Headers\Base.h" />
+    <ClInclude Include="..\Headers\Component.h" />
+    <ClInclude Include="..\Headers\ComponentMgr.h" />
     <ClInclude Include="..\Headers\EngineDefines.h" />
     <ClInclude Include="..\Headers\EngineFunction.h" />
     <ClInclude Include="..\Headers\EngineMacro.h" />
     <ClInclude Include="..\Headers\EngineTypedef.h" />
     <ClInclude Include="..\Headers\Graphic.h" />
-    <ClInclude Include="..\Headers\LayerMgr.h" />
+    <ClInclude Include="..\Headers\Layer.h" />
     <ClInclude Include="..\Headers\Management.h" />
+    <ClInclude Include="..\Headers\Obj.h" />
     <ClInclude Include="..\Headers\ObjMgr.h" />
+    <ClInclude Include="..\Headers\Renderer.h" />
     <ClInclude Include="..\Headers\Scene.h" />
     <ClInclude Include="..\Headers\SceneMgr.h" />
     <ClInclude Include="..\Headers\TimeMgr.h" />
@@ -174,10 +178,14 @@ xcopy			/y				..\Bin\*.dll		..\..\Client\Bin\</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp" />
+    <ClCompile Include="..\Codes\Component.cpp" />
+    <ClCompile Include="..\Codes\ComponentMgr.cpp" />
     <ClCompile Include="..\Codes\Graphic.cpp" />
-    <ClCompile Include="..\Codes\LayerMgr.cpp" />
+    <ClCompile Include="..\Codes\Layer.cpp" />
     <ClCompile Include="..\Codes\Management.cpp" />
+    <ClCompile Include="..\Codes\Obj.cpp" />
     <ClCompile Include="..\Codes\ObjMgr.cpp" />
+    <ClCompile Include="..\Codes\Renderer.cpp" />
     <ClCompile Include="..\Codes\Scene.cpp" />
     <ClCompile Include="..\Codes\SceneMgr.cpp" />
     <ClCompile Include="..\Codes\TimeMgr.cpp" />

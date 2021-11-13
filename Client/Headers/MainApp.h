@@ -25,6 +25,9 @@ public:
 	static CMainApp*	Create();
 	virtual void Free() override;
 
+private:
+	HRESULT Ready_Scene(SCENE eScene);
+
 
 private:
 	CManagement*		m_pManagement = nullptr;

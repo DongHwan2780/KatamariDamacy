@@ -10,16 +10,22 @@ CStageOne::CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext)
 
 HRESULT CStageOne::Initialize()
 {
+	__super::Initialize();
+
 	return S_OK;
 }
 
 _int CStageOne::Update(_double DeltaTime)
 {
+	__super::Update(DeltaTime);
+
 	return _int();
 }
 
 HRESULT CStageOne::Render()
 {
+	__super::Render();
+
 	return S_OK;
 }
 
@@ -37,4 +43,5 @@ CStageOne * CStageOne::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDev
 
 void CStageOne::Free()
 {
+	__super::Free();
 }

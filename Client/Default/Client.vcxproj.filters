@@ -40,6 +40,9 @@
     <Filter Include="02.Scene\00.Loading\Loader">
       <UniqueIdentifier>{1a53509e-cb07-432b-875f-707dbba43879}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Object\BackGruond">
+      <UniqueIdentifier>{6713f36f-2a2c-46d0-9fd6-2cd541a84507}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -81,6 +84,9 @@
     <ClInclude Include="..\Headers\Loader.h">
       <Filter>02.Scene\00.Loading\Loader</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\BackGround.h">
+      <Filter>01.Object\BackGruond</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -109,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Loader.cpp">
       <Filter>02.Scene\00.Loading\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\BackGround.cpp">
+      <Filter>01.Object\BackGruond</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

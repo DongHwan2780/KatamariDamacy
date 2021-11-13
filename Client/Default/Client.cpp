@@ -84,6 +84,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			TimeAcc = 0.0;
 
 			pMainApp->Update(pManagement->Compute_DeltaTime(TEXT("Timer_40")));
+			pMainApp->Late_Update();
 			pMainApp->Render();
 		}
 	}
