@@ -10,16 +10,22 @@ CLogo::CLogo(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext)
 
 HRESULT CLogo::Initialize()
 {
+	__super::Initialize();
+
 	return S_OK;
 }
 
 _int CLogo::Update(_double DeltaTime)
 {
+	__super::Update(DeltaTime);
+
 	return _int();
 }
 
 HRESULT CLogo::Render()
 {
+	__super::Render();
+
 	return S_OK;
 }
 
@@ -36,4 +42,5 @@ CLogo * CLogo::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceConte
 
 void CLogo::Free()
 {
+	__super::Free();
 }

@@ -1,20 +1,26 @@
 ﻿  ObjMgr.cpp
      ..\Bin\Engine.lib 라이브러리 및 ..\Bin\Engine.exp 개체를 생성하고 있습니다.
-  Engine.vcxproj -> C:\Users\임미경\Desktop\KatamariDamacy\Engine\Default\..\Bin\Engine.dll
+  Engine.vcxproj -> C:\Users\fullddack\Desktop\KatamariDamacy\Engine\Default\..\Bin\Engine.dll
   Engine.vcxproj -> ..\Bin\Engine.pdb (Full PDB)
   ..\Headers\Base.h
+  ..\Headers\Component.h
+  ..\Headers\ComponentMgr.h
   ..\Headers\EngineDefines.h
   ..\Headers\EngineFunction.h
   ..\Headers\EngineMacro.h
   ..\Headers\EngineTypedef.h
   ..\Headers\Graphic.h
+  ..\Headers\Layer.h
+  ..\Headers\LayerMgr.h
   ..\Headers\Management.h
+  ..\Headers\Obj.h
   ..\Headers\ObjMgr.h
+  ..\Headers\Renderer.h
   ..\Headers\Scene.h
   ..\Headers\SceneMgr.h
   ..\Headers\TimeMgr.h
   ..\Headers\Timer.h
-  12개 파일이 복사되었습니다.
+  18개 파일이 복사되었습니다.
   ..\Bin\Engine.lib
   1개 파일이 복사되었습니다.
   ..\Bin\Engine.dll

@@ -19,9 +19,6 @@ unsigned int APIENTRY ThreadMain(void* pArg)
 	case STAGEONE_SCENE:
 		hr = pLoader->StageLoader();
 		break;
-
-		/*case LEVEL_GAMEPLAY1:
-		break;*/
 	}
 
 	if (FAILED(hr))
@@ -51,6 +48,11 @@ HRESULT CLoader::Initialize_Thread(SCENE eScene)
 
 HRESULT CLoader::StageLoader()
 {
+	for (_uint i = 0; i < 3999999999; ++i)
+	{
+		_uint iData = 10;
+	}
+
 	m_bFinish = true;
 
 	return S_OK;
@@ -62,6 +64,7 @@ CLoader * CLoader::Create(SCENE eScene)
 
 	if (FAILED(pInstance->Initialize_Thread(eScene)))
 	{
+		MSG_BOX("Failed to Creating CLoader");
 		Safe_Release(pInstance);
 	}
 

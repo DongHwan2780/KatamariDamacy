@@ -7,8 +7,8 @@
 	CLASSNAME*	pInstance = CLASSNAME::GetInstance();							\
 	if(nullptr == pInstance) {													\
 	char	szMessage[MAX_PATH] = "";											\
-	strcpy(szMessage, typeid(CLASSNAME).name());								\
-	strcat(szMessage, "is nullptr");											\
+	strcpy_s(szMessage, typeid(CLASSNAME).name());								\
+	strcat_s(szMessage, "is nullptr");											\
 	MessageBoxA(0, szMessage, nullptr, MB_OK);}									\
 	else {																		\
 	pInstance->AddRef();}														\
@@ -19,8 +19,8 @@
 	CLASSNAME*	pInstance = CLASSNAME::GetInstance();							\
 	if(nullptr == pInstance) {													\
 	char	szMessage[MAX_PATH] = "";											\
-	strcpy(szMessage, typeid(CLASSNAME).name());								\
-	strcat(szMessage, "is nullptr");											\
+	strcpy_s(szMessage, typeid(CLASSNAME).name());								\
+	strcat_s(szMessage, "is nullptr");											\
 	MessageBoxA(0, szMessage, nullptr, MB_OK);}									\
 	else {																		\
 	pInstance->Release();}														\

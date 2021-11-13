@@ -46,14 +46,20 @@
     <Filter Include="01.Manager\00.ObjMgr\Obj">
       <UniqueIdentifier>{0af291bc-441d-484b-9ebe-5aa6786f1458}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Manager\06.LayerMgr">
-      <UniqueIdentifier>{18b8eb46-604f-44f6-8a11-74157937074b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Manager\06.LayerMgr\Layer">
-      <UniqueIdentifier>{ff303f2f-9013-4995-bf73-398edadc13b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Manager\02.TimeMgr\Time">
       <UniqueIdentifier>{59f8218d-cdaa-427c-8a61-46746728c2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Component">
+      <UniqueIdentifier>{c74fed29-9aff-4527-8088-64f495923d40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Renderer">
+      <UniqueIdentifier>{ab9487cf-e05b-4873-ae5c-5fe3a8c2b096}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Transform">
+      <UniqueIdentifier>{289dfe37-c234-4a9d-89ae-89da80b00cb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\06.Layer">
+      <UniqueIdentifier>{18b8eb46-604f-44f6-8a11-74157937074b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -81,8 +87,20 @@
     <ClCompile Include="..\Codes\Scene.cpp">
       <Filter>01.Manager\05.SceneMgr\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Codes\LayerMgr.cpp">
-      <Filter>01.Manager\06.LayerMgr</Filter>
+    <ClCompile Include="..\Codes\Obj.cpp">
+      <Filter>01.Manager\00.ObjMgr\Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\ComponentMgr.cpp">
+      <Filter>01.Manager\01.ComponentMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Component.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Renderer.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Layer.cpp">
+      <Filter>01.Manager\06.Layer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,8 +140,20 @@
     <ClInclude Include="..\Headers\Scene.h">
       <Filter>01.Manager\05.SceneMgr\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\Headers\LayerMgr.h">
-      <Filter>01.Manager\06.LayerMgr</Filter>
+    <ClInclude Include="..\Headers\Obj.h">
+      <Filter>01.Manager\00.ObjMgr\Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\ComponentMgr.h">
+      <Filter>01.Manager\01.ComponentMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Component.h">
+      <Filter>01.Manager\01.ComponentMgr\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Renderer.h">
+      <Filter>01.Manager\01.ComponentMgr\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Layer.h">
+      <Filter>01.Manager\06.Layer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ CSceneMgr::CSceneMgr()
 
 HRESULT CSceneMgr::Set_CurScene(CScene * pCurScene)
 {
-	if (m_pCurScene == nullptr)
+	if (pCurScene == nullptr)
 		return E_FAIL;
 
 	if (Safe_Release(m_pCurScene) != 0)		// 지웠는데 레퍼카운트가 남아있으면

@@ -3,6 +3,8 @@
 #ifndef __ENGINE_DEFINES_H__
 #define __ENGINE_DEFINES_H__
 
+#pragma warning (disable : 4251)
+
 #include <d3d11.h>
 #include <unordered_map>
 #include <algorithm>

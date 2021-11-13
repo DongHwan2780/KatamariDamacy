@@ -1,13 +1,16 @@
 #include "..\Headers\Management.h"
 #include "TimeMgr.h"
 #include "Graphic.h"
+#include "SceneMgr.h"
 
 IMPLEMENT_SINGLETON(CManagement)
 
 CManagement::CManagement()
 	:m_pTimeMgr(CTimeMgr::GetInstance())
 	, m_pGraphicDevice(CGraphic::GetInstance())
+	, m_pSceneMgr(CSceneMgr::GetInstance())
 {
+	Safe_AddRef(m_pSceneMgr);
 	Safe_AddRef(m_pGraphicDevice);
 	Safe_AddRef(m_pTimeMgr);
 }
@@ -61,6 +64,30 @@ HRESULT CManagement::Present()
 	return m_pGraphicDevice->Present();
 }
 
+HRESULT CManagement::Set_CurScene(CScene * pCurScene)
+{
+	if (nullptr == m_pSceneMgr)
+		return E_FAIL;
+
+	return m_pSceneMgr->Set_CurScene(pCurScene);
+}
+
+_int CManagement::Update_Scene(_double DeltaTime)
+{
+	if (nullptr == m_pSceneMgr)
+		return -1;
+
+	return m_pSceneMgr->Update_Scene(DeltaTime);
+}
+
+HRESULT CManagement::Render_Scene()
+{
+	if (nullptr == m_pSceneMgr)
+		return E_FAIL;
+
+	return m_pSceneMgr->Render_Scene();
+}
+
 void CManagement::Release_Engine()
 {
 	if (0 != CManagement::GetInstance()->DestroyInstance())
@@ -69,12 +96,16 @@ void CManagement::Release_Engine()
 	if (0 != CTimeMgr::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CTimer_Manager");
 
+	if(0 != CSceneMgr::GetInstance()->DestroyInstance())
+		MSG_BOX("Failed to Deleting CSceneMgr");
+
 	if (0 != CGraphic::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CGraphic");
 }
 
 void CManagement::Free()
 {
-	Safe_Release(m_pGraphicDevice);
+	Safe_Release(m_pSceneMgr);
 	Safe_Release(m_pTimeMgr);
+	Safe_Release(m_pGraphicDevice);
 }

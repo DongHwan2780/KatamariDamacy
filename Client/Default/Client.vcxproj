@@ -149,6 +149,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Headers\BackGround.h" />
     <ClInclude Include="..\Headers\ClientDefines.h" />
     <ClInclude Include="..\Headers\Loader.h" />
     <ClInclude Include="..\Headers\Loading.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Codes\BackGround.cpp" />
     <ClCompile Include="..\Codes\Loader.cpp" />
     <ClCompile Include="..\Codes\Loading.cpp" />
     <ClCompile Include="..\Codes\Logo.cpp" />

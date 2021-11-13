@@ -45,7 +45,9 @@ public:
 #pragma endregion
 
 #pragma region SCENE
-
+	HRESULT	Set_CurScene(class CScene* pCurScene);
+	_int	Update_Scene(_double DeltaTime);
+	HRESULT	Render_Scene();
 #pragma endregion
 
 public:
@@ -55,8 +57,9 @@ public:
 	virtual void Free() override;
 
 private:
-	class CTimeMgr*	m_pTimeMgr = nullptr;
-	class CGraphic* m_pGraphicDevice = nullptr;
+	class CTimeMgr*		m_pTimeMgr = nullptr;
+	class CGraphic*		m_pGraphicDevice = nullptr;
+	class CSceneMgr*	m_pSceneMgr = nullptr;
 };
 
 END

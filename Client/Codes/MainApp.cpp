@@ -2,6 +2,8 @@
 #include "..\Headers\MainApp.h"
 
 #include "Management.h"
+#include "Logo.h"
+#include "Loading.h"
 
 
 CMainApp::CMainApp()
@@ -18,6 +20,9 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pManagement->Ready_GraphicDevice(g_hWnd, g_iWinCX, g_iWinCY, &m_pDevice, &m_pDeviceContext)))
 		return E_FAIL;
 
+	if (FAILED(Ready_Scene(STAGEONE_SCENE)))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -26,7 +31,9 @@ _uint CMainApp::Update(_double dDeltaTime)
 
 	m_fDeltaTime += dDeltaTime;
 
-	return _uint();
+	m_pManagement->Update_Scene(dDeltaTime);
+
+	return 0;
 }
 
 _uint CMainApp::Late_Update()
@@ -63,6 +70,7 @@ CMainApp * CMainApp::Create()
 
 	if (FAILED(pInstance->Initialize()))
 	{
+		MSG_BOX("Failed to Creating CMainApp");
 		Safe_Release(pInstance);
 	}
 
@@ -76,5 +84,28 @@ void CMainApp::Free()
 	Safe_Release(m_pManagement);
 
 	CManagement::Release_Engine();
+}
+
+HRESULT CMainApp::Ready_Scene(SCENE eScene)
+{
+	CScene*		pScene = nullptr;
+
+	switch (eScene)
+	{
+	case LOGO_SCENE:
+		pScene = CLogo::Create(m_pDevice, m_pDeviceContext);
+		break;
+	case STAGEONE_SCENE:
+		pScene = CLoading::Create(m_pDevice, m_pDeviceContext, eScene);		// 로딩씬에서 옵젝생성하고 스테이지로 넘어가줄거임 == 로딩이후에 넘어갈 스테이지 enumID값을 인자로 넘겨줘서
+		break;
+	}
+
+	if (pScene == nullptr)
+		return E_FAIL;
+
+	if (FAILED(m_pManagement->Set_CurScene(pScene)))
+		return E_FAIL;
+
+	return S_OK;
 }
 
