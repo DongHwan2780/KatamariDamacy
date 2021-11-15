@@ -32,6 +32,11 @@ _int CObj::Update(_double DeltaTime)
 	return _int();
 }
 
+_int CObj::Late_Update(_double DeltaTime)
+{
+	return _int();
+}
+
 HRESULT CObj::Render()
 {
 	return S_OK;
