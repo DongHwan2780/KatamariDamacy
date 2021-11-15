@@ -11,7 +11,7 @@ BEGIN(Engine)
 class ENGINE_DLL CScene abstract : public CBase
 {
 protected:
-	explicit CScene(ID3D11Device* pDevice, ID3D11DeviceContext*	pDeviceContext);
+	explicit CScene(ID3D11Device* pDevice, ID3D11DeviceContext*	pDeviceContext , _int iSceneIndex);
 	virtual ~CScene() = default;
 
 public:
@@ -20,11 +20,17 @@ public:
 	virtual HRESULT Render();
 
 public:
+	void Clear();
+
+public:
 	virtual void Free() override;
 
 protected:
 	ID3D11Device*		m_pDevice = nullptr;
 	ID3D11DeviceContext*	m_pDeviceContext = nullptr;
+
+private:
+	_int		m_iSceneIndex = 0;
 }; 
 
 END

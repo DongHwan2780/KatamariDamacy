@@ -18,7 +18,11 @@ public:
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize_Clone(void* pArg);
 	virtual _int	Update(_double DeltaTime);
+	virtual _int	Late_Update(_double DeltaTime);
 	virtual HRESULT	Render();
+
+protected:
+	HRESULT SetUp_Components(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pComponentTag, class CComponent** pOut, void* pArg = nullptr);
 
 public:
 	virtual CObj*	Clone(void* pArg) = 0;
@@ -27,6 +31,10 @@ public:
 protected:
 	ID3D11Device*			m_pDevice = nullptr;
 	ID3D11DeviceContext*	m_pDeviceContext = nullptr;
+
+protected:
+	unordered_map<const _tchar*, class CComponent*>			m_Components;
+	typedef unordered_map<const _tchar*, class CComponent*>	COMPONENTS;
 };
 
 END

@@ -4,6 +4,9 @@
 #define __MANAGEMENT_H__
 
 #include "Base.h"
+#include "SceneMgr.h"
+#include "ObjMgr.h"
+#include "ComponentMgr.h"
 
 BEGIN(Engine)
 
@@ -29,11 +32,15 @@ public:
 #pragma endregion
 
 #pragma region OBJMGR
-
+	HRESULT Add_Prototype(const _tchar* pPrototypeTag, class CObj* pPrototype);
+	HRESULT Add_GameObj(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pLayerTag, void* pArg = nullptr);
+	void	Clear_ObjMgr(_int iSceneIndex);
 #pragma endregion
 
 #pragma region COMPONENT
-
+	HRESULT Add_Prototype(_int iSceneIndex, const _tchar* pPrototypeTag, class CComponent* pPrototype);
+	class CComponent* Clone_Component(_int iSceneIndex, const _tchar* pPrototypeTag, void* pArg = nullptr);
+	void Clear_ComponentMgr(_int iSceneIndex);
 #pragma endregion
 
 #pragma region KEYMGR
@@ -51,15 +58,19 @@ public:
 #pragma endregion
 
 public:
+	HRESULT Initialize_Engine(_int iNumScenes);
+	_int	Update(_double DeltaTime);
 	static void Release_Engine();
 
 public:
 	virtual void Free() override;
 
 private:
-	class CTimeMgr*		m_pTimeMgr = nullptr;
-	class CGraphic*		m_pGraphicDevice = nullptr;
-	class CSceneMgr*	m_pSceneMgr = nullptr;
+	class CTimeMgr*			m_pTimeMgr = nullptr;
+	class CGraphic*			m_pGraphicDevice = nullptr;
+	class CSceneMgr*		m_pSceneMgr = nullptr;
+	class CObjMgr*			m_pObjMgr = nullptr;
+	class CComponentMgr*	m_pComponentMgr = nullptr;
 };
 
 END

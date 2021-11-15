@@ -11,6 +11,10 @@ HRESULT CSceneMgr::Set_CurScene(CScene * pCurScene)
 	if (pCurScene == nullptr)
 		return E_FAIL;
 
+	if (nullptr != m_pCurScene)
+		m_pCurScene->Clear();
+
+
 	if (Safe_Release(m_pCurScene) != 0)		// 지웠는데 레퍼카운트가 남아있으면
 		return E_FAIL;
 

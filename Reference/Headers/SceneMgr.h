@@ -11,7 +11,7 @@ BEGIN(Engine)
 class CSceneMgr final : public CBase
 {
 	DECLARE_SINGLETON(CSceneMgr)
-private:
+public:
 	CSceneMgr();
 	virtual ~CSceneMgr() = default;
 
