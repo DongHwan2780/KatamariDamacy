@@ -199,6 +199,22 @@ void CManagement::Release_Engine()
 		MSG_BOX("Failed to Deleting CGraphic");
 }
 
+void CManagement::UpdateTool()
+{
+	//m_pTimeMgr->Add_Timers(TEXT("Tool_Timer"));
+	//_double DeltaTime = m_pTimeMgr->Compute_DeltaTime(TEXT("Tool_Timer"));
+
+	//m_pObjMgr->Update(DeltaTime);
+	//m_pObjMgr->Late_Update(DeltaTime);
+
+	m_pGraphicDevice->Clear_BackBufferView(_float4(0.f, 0.f, 1.f, 1.f));
+	m_pGraphicDevice->Clear_DepthStencilView(1.f, 0);
+	
+	//m_pRenderer->Draw_RenderGroup();
+
+	m_pGraphicDevice->Present();
+}
+
 void CManagement::Free()
 {
 	Safe_Release(m_pComponentMgr);

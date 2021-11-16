@@ -7,6 +7,7 @@
 #include "SceneMgr.h"
 #include "ObjMgr.h"
 #include "ComponentMgr.h"
+#include "Renderer.h"
 
 BEGIN(Engine)
 
@@ -62,6 +63,9 @@ public:
 	_int	Update(_double DeltaTime);
 	static void Release_Engine();
 
+public: //For Tool
+	void UpdateTool();
+
 public:
 	virtual void Free() override;
 
@@ -71,6 +75,7 @@ private:
 	class CSceneMgr*		m_pSceneMgr = nullptr;
 	class CObjMgr*			m_pObjMgr = nullptr;
 	class CComponentMgr*	m_pComponentMgr = nullptr;
+	class CRenderer*		m_pRenderer = nullptr;
 };
 
 END
