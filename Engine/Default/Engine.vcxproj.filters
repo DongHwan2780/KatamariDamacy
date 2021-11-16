@@ -102,6 +102,9 @@
     <ClCompile Include="..\Codes\Layer.cpp">
       <Filter>01.Manager\06.Layer</Filter>
     </ClCompile>
+    <ClCompile Include="..\Codes\Transform.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Transform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Headers\Base.h">
@@ -154,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Layer.h">
       <Filter>01.Manager\06.Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Transform.h">
+      <Filter>01.Manager\01.ComponentMgr\Transform</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
