@@ -175,6 +175,7 @@ xcopy			/y				..\Bin\*.dll		..\..\Client\Bin\</Command>
     <ClInclude Include="..\Headers\SceneMgr.h" />
     <ClInclude Include="..\Headers\TimeMgr.h" />
     <ClInclude Include="..\Headers\Timer.h" />
+    <ClInclude Include="..\Headers\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp" />
@@ -190,6 +191,7 @@ xcopy			/y				..\Bin\*.dll		..\..\Client\Bin\</Command>
     <ClCompile Include="..\Codes\SceneMgr.cpp" />
     <ClCompile Include="..\Codes\TimeMgr.cpp" />
     <ClCompile Include="..\Codes\Timer.cpp" />
+    <ClCompile Include="..\Codes\Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

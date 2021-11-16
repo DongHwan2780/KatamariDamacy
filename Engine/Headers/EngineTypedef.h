@@ -29,6 +29,14 @@ namespace Engine
 	typedef XMFLOAT3				_float3;
 	typedef XMFLOAT4				_float4;
 
+	typedef XMVECTOR				_vector;		// 멤버변수가 따로 정의되어있지 않은 통짜 벡터 -> 멤버변수에 담아서 쓰려면 _float형식으로 캐스팅해야함
+	typedef FXMVECTOR				_fvector;		// XMVECTOR형식에 매개변수를 사용하기 위한 벡터 == _float3?
+
+	typedef XMFLOAT4X4				_float4x4;		// WorldMatrix,  4x4구조체 행렬
+
+	typedef XMMATRIX				_matrix;
+	typedef FXMMATRIX				_fmatrix;
+
 }
 
 #endif // !__ENGINE_TYPEDEF_H__
