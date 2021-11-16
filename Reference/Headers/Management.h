@@ -31,13 +31,13 @@ public:
 	HRESULT Present();
 #pragma endregion
 
-#pragma region OBJMGR
+#pragma region OBJ_MGR
 	HRESULT Add_Prototype(const _tchar* pPrototypeTag, class CObj* pPrototype);
 	HRESULT Add_GameObj(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pLayerTag, void* pArg = nullptr);
 	void	Clear_ObjMgr(_int iSceneIndex);
 #pragma endregion
 
-#pragma region COMPONENT
+#pragma region COMPONENT_MGR
 	HRESULT Add_Prototype(_int iSceneIndex, const _tchar* pPrototypeTag, class CComponent* pPrototype);
 	class CComponent* Clone_Component(_int iSceneIndex, const _tchar* pPrototypeTag, void* pArg = nullptr);
 	void Clear_ComponentMgr(_int iSceneIndex);
@@ -47,11 +47,11 @@ public:
 
 #pragma endregion
 
-#pragma region COLLISION
+#pragma region COLLISION_MGR
 
 #pragma endregion
 
-#pragma region SCENE
+#pragma region SCENE_MGR
 	HRESULT	Set_CurScene(class CScene* pCurScene);
 	_int	Update_Scene(_double DeltaTime);
 	HRESULT	Render_Scene();

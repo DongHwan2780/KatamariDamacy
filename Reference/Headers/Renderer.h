@@ -9,7 +9,7 @@ BEGIN(Engine)
 
 class ENGINE_DLL CRenderer final : public CComponent
 {
-private:
+protected:
 	explicit CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
 	explicit CRenderer(const CRenderer& other);
 	virtual ~CRenderer() = default;

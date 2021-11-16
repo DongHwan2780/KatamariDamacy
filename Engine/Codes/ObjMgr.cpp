@@ -129,7 +129,9 @@ void CObjMgr::Free()
 	for (_uint i = 0; i < m_iNumScenes; ++i)
 	{
 		for (auto& Pair : m_pGameObjects[i])
+		{
 			Safe_Release(Pair.second);
+		}
 
 		m_pGameObjects[i].clear();
 	}

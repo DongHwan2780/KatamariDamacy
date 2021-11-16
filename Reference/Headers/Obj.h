@@ -22,7 +22,7 @@ public:
 	virtual HRESULT	Render();
 
 protected:
-	HRESULT SetUp_Components(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pComponentTag, class CComponent** pOut, void* pArg = nullptr);
+	HRESULT SetUp_Components(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pComponentTag,  class CComponent** pOut, void* pArg = nullptr);
 
 public:
 	virtual CObj*	Clone(void* pArg) = 0;

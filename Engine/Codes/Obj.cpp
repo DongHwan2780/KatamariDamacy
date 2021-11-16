@@ -5,8 +5,8 @@ CObj::CObj(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
 	:m_pDevice(pDevice)
 	,m_pDeviceContext(pDeviceContext)
 {
-	Safe_AddRef(pDeviceContext);
-	Safe_AddRef(pDevice);
+	Safe_AddRef(m_pDeviceContext);
+	Safe_AddRef(m_pDevice);
 }
 
 CObj::CObj(const CObj & other)
@@ -42,7 +42,7 @@ HRESULT CObj::Render()
 	return S_OK;
 }
 
-HRESULT CObj::SetUp_Components(_int iSceneIndex, const _tchar * pPrototypeTag, const _tchar * pComponentTag, class CComponent ** pOut, void * pArg)
+HRESULT CObj::SetUp_Components(_int iSceneIndex, const _tchar * pPrototypeTag, const _tchar * pComponentTag,  class CComponent ** pOut, void * pArg)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
