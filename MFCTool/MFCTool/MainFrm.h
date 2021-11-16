@@ -4,7 +4,11 @@
 
 #pragma once
 
-class CMainFrame : public CFrameWnd
+#include "Base.h"
+
+BEGIN(Engine)
+
+class CMainFrame : public CFrameWnd, public Engine::CBase
 {
 	
 protected: // serialization에서만 만들어집니다.
@@ -13,7 +17,8 @@ protected: // serialization에서만 만들어집니다.
 
 // 특성입니다.
 public:
-
+	// 창을 분할 합니다.
+	CSplitterWnd m_tMainSplitter;
 // 작업입니다.
 public:
 
@@ -38,6 +43,8 @@ protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()
 
+public:
+	virtual void Free() override;
 };
 
-
+END

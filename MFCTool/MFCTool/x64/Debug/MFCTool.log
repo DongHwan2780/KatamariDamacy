@@ -1,0 +1,13 @@
+﻿  MainFrm.cpp
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(917): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS': 매크로 재정의
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50469): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'의 이전 정의를 참조하십시오.
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(918): warning C4005: 'D3D11_ERROR_FILE_NOT_FOUND': 매크로 재정의
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50478): note: 'D3D11_ERROR_FILE_NOT_FOUND'의 이전 정의를 참조하십시오.
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(919): warning C4005: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS': 매크로 재정의
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50488): note: 'D3D11_ERROR_TOO_MANY_UNIQUE_VIEW_OBJECTS'의 이전 정의를 참조하십시오.
+c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d11.h(920): warning C4005: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD': 매크로 재정의
+  c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50497): note: 'D3D11_ERROR_DEFERRED_CONTEXT_MAP_WITHOUT_INITIAL_DISCARD'의 이전 정의를 참조하십시오.
+c:\users\fullddack\desktop\katamaridamacy\mfctool\mfctool\mainfrm.cpp(11): warning C4005: 'new': 매크로 재정의
+  c:\users\fullddack\desktop\katamaridamacy\reference\headers\enginedefines.h(35): note: 'new'의 이전 정의를 참조하십시오.
+  MFCTool.vcxproj -> C:\Users\fullddack\Desktop\KatamariDamacy\x64\Debug\MFCTool.exe
+  MFCTool.vcxproj -> C:\Users\fullddack\Desktop\KatamariDamacy\x64\Debug\MFCTool.pdb (Partial PDB)
