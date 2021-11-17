@@ -27,7 +27,8 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize_Clone(void * pArg);
-
+	//{ return *(_vector*)&m_MatWorld.m[eState][0]; }
+	//{ return *(static_cast<_vector>(&m_MatWorld).m[eState][0]); }
 public:
 	_vector Get_State(STATE eState) { return *(_vector*)&m_MatWorld.m[eState][0]; }
 	_float Get_Scale(STATE eState) { return XMVectorGetX(XMVector3Length(Get_State(eState))); }

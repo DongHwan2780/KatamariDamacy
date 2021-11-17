@@ -122,6 +122,7 @@ void CManagement::Clear_ComponentMgr(_int iSceneIndex)
 }
 #pragma endregion
 
+#pragma region SCENE_MGR
 HRESULT CManagement::Set_CurScene(CScene * pCurScene)
 {
 	if (nullptr == m_pSceneMgr)
@@ -145,6 +146,8 @@ HRESULT CManagement::Render_Scene()
 
 	return m_pSceneMgr->Render_Scene();
 }
+
+#pragma endregion
 
 HRESULT CManagement::Initialize_Engine(_int iNumScenes)
 {

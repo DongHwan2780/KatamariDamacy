@@ -5,6 +5,15 @@
 
 #pragma warning (disable : 4251)
 
+#pragma region KEY_DEFINE
+#define KEY_LEFT	 0x00000001
+#define KEY_UP		 0x00000002
+#define KEY_RIGHT	 0x00000004
+#define KEY_DOWN	 0x00000008
+#define KEY_RETURN	 0x00000010
+#pragma endregion
+
+
 #include <d3d11.h>
 #include <unordered_map>
 #include <algorithm>
