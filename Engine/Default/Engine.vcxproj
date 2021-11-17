@@ -161,6 +161,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Headers\Base.h" />
+    <ClInclude Include="..\Headers\keyMgr.h" />
     <ClInclude Include="..\Headers\Component.h" />
     <ClInclude Include="..\Headers\ComponentMgr.h" />
     <ClInclude Include="..\Headers\EngineDefines.h" />
@@ -181,6 +182,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp" />
+    <ClCompile Include="..\Codes\keyMgr.cpp" />
     <ClCompile Include="..\Codes\Component.cpp" />
     <ClCompile Include="..\Codes\ComponentMgr.cpp" />
     <ClCompile Include="..\Codes\Graphic.cpp" />

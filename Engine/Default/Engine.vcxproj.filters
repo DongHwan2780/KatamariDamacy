@@ -61,6 +61,12 @@
     <Filter Include="01.Manager\06.Layer">
       <UniqueIdentifier>{18b8eb46-604f-44f6-8a11-74157937074b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer">
+      <UniqueIdentifier>{b3dee4eb-db58-404f-aeee-4e31b2505aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Cube">
+      <UniqueIdentifier>{797a3213-9128-4fb8-a416-545f879b1e8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -104,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Transform.cpp">
       <Filter>01.Manager\01.ComponentMgr\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\keyMgr.cpp">
+      <Filter>01.Manager\03.KeyMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Transform.h">
       <Filter>01.Manager\01.ComponentMgr\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\keyMgr.h">
+      <Filter>01.Manager\03.KeyMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
