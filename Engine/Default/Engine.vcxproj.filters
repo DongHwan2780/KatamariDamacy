@@ -37,9 +37,6 @@
     <Filter Include="02.Device\00.Graphic">
       <UniqueIdentifier>{cba6d90c-ae1b-44c1-b36e-bde123b667a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.Device\01.Sound">
-      <UniqueIdentifier>{71b28b4d-541f-439c-922f-1272f69a4889}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Manager\05.SceneMgr\Scene">
       <UniqueIdentifier>{090a0578-3a2a-49d2-aef3-4ca9615e7c24}</UniqueIdentifier>
     </Filter>
@@ -66,6 +63,9 @@
     </Filter>
     <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Cube">
       <UniqueIdentifier>{797a3213-9128-4fb8-a416-545f879b1e8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\07.SoundMgr">
+      <UniqueIdentifier>{bb1f1840-d362-4104-965d-b6b0dbdfb8fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\keyMgr.cpp">
       <Filter>01.Manager\03.KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\SoundMgr.cpp">
+      <Filter>01.Manager\07.SoundMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\keyMgr.h">
       <Filter>01.Manager\03.KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\SoundMgr.h">
+      <Filter>01.Manager\07.SoundMgr</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
