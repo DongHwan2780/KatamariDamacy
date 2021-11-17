@@ -47,4 +47,12 @@ using namespace Engine;
 
 #endif // _DEBUG
 
+#pragma region SOUND
+#include <io.h>
+#include <stdio.h>
+#include "fmod.h"
+#pragma comment (lib, "fmod_vc.lib")
+#pragma comment (lib, "fmodL_vc.lib")
+#pragma endregion	
+
 #endif // !__ENGINE_DEFINES_H__
