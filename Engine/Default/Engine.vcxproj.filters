@@ -179,5 +179,8 @@
     <ClInclude Include="..\Headers\SoundMgr.h">
       <Filter>01.Manager\07.SoundMgr</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\EngineStruct.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
