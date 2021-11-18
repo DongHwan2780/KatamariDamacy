@@ -27,9 +27,9 @@ public:
 	virtual void Free() override;
 
 private:
-	FMOD_SYSTEM*	pSystem;
-	FMOD_CHANNEL*	pSound_Channel[SOUND_END];
-	FMOD_SOUND*		pSound;
+	FMOD::System*	m_pSystem = nullptr;
+	FMOD::Channel*	m_pSound_Channel[SOUND_END];
+	FMOD::Sound*	m_pSound = nullptr;
 };
 
 END

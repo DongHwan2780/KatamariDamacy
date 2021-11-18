@@ -28,6 +28,7 @@ using namespace DirectX::PackedVector;
 #include "EngineMacro.h"
 #include "EngineTypedef.h"
 #include "EngineFunction.h"
+#include "EngineStruct.h"
 
 using namespace std;
 using namespace Engine;
@@ -51,6 +52,7 @@ using namespace Engine;
 #include <io.h>
 #include <stdio.h>
 #include "fmod.h"
+#include <fmod.hpp>
 #pragma comment (lib, "fmod_vc.lib")
 #pragma comment (lib, "fmodL_vc.lib")
 #pragma endregion	
