@@ -20,6 +20,8 @@
 #include <typeinfo>
 #include <process.h>
 
+#include <d3dx11effect.h>
+#include <d3dcompiler.h>
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
 using namespace DirectX;

@@ -40,8 +40,20 @@
     <Filter Include="02.Scene\00.Loading\Loader">
       <UniqueIdentifier>{1a53509e-cb07-432b-875f-707dbba43879}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Object\BackGruond">
+    <Filter Include="97.Shader">
+      <UniqueIdentifier>{2a202032-c680-4271-86f0-0c61701adf6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj">
+      <UniqueIdentifier>{297a7299-9f88-4647-b7bf-f26350da966c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj\00.BackGruond">
       <UniqueIdentifier>{6713f36f-2a2c-46d0-9fd6-2cd541a84507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj\01.Terrain">
+      <UniqueIdentifier>{8a1ab7af-1022-4a32-b85c-4c4aee89f654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj\02.MainCamera">
+      <UniqueIdentifier>{965eb0ba-2aa6-4fc1-bdd2-28ca81b36fdb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +97,13 @@
       <Filter>02.Scene\00.Loading\Loader</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\BackGround.h">
-      <Filter>01.Object\BackGruond</Filter>
+      <Filter>01.Object\02.CommonObj\00.BackGruond</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Terrain.h">
+      <Filter>01.Object\02.CommonObj\01.Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\MainCamera.h">
+      <Filter>01.Object\02.CommonObj\02.MainCamera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +135,13 @@
       <Filter>02.Scene\00.Loading\Loader</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\BackGround.cpp">
-      <Filter>01.Object\BackGruond</Filter>
+      <Filter>01.Object\02.CommonObj\00.BackGruond</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Terrain.cpp">
+      <Filter>01.Object\02.CommonObj\01.Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\MainCamera.cpp">
+      <Filter>01.Object\02.CommonObj\02.MainCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,5 +156,10 @@
     <ResourceCompile Include="Client.rc">
       <Filter>98.Default</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\Shader\Shader_Rect.fx">
+      <Filter>97.Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

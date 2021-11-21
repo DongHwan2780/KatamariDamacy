@@ -63,8 +63,3 @@ _bool CkeyMgr::Key_Pressing(DWORD _dwKey)
 void CkeyMgr::Free()
 {
 }
-
-
-CkeyMgr::~CkeyMgr()
-{
-}
