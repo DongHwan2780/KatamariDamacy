@@ -67,6 +67,12 @@
     <Filter Include="01.Manager\07.SoundMgr">
       <UniqueIdentifier>{bb1f1840-d362-4104-965d-b6b0dbdfb8fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Rect">
+      <UniqueIdentifier>{e28035e8-f892-4ccb-92d7-d3d3ccc12ae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Terrain">
+      <UniqueIdentifier>{97ddb5ee-4f8c-492a-a02f-80f7a1334e15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -116,6 +122,15 @@
     </ClCompile>
     <ClCompile Include="..\Codes\SoundMgr.cpp">
       <Filter>01.Manager\07.SoundMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\VIBuffer.cpp">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\VIBuffer_Terrain.cpp">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\VIBuffer_Rect.cpp">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Rect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +196,15 @@
     </ClInclude>
     <ClInclude Include="..\Headers\EngineStruct.h">
       <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\VIBuffer.h">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\VIBuffer_Terrain.h">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\VIBuffer_Rect.h">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Rect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
