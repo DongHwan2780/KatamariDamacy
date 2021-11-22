@@ -5,8 +5,8 @@
 #include "Loader.h"
 #include "StageOne.h"
 
-CLoading::CLoading(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext)
-	:CScene(pDevice, pDeviceContext)
+CLoading::CLoading(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
+	:CScene(pDevice, pDeviceContext, iSceneIndex)
 {
 }
 
@@ -41,7 +41,7 @@ _int CLoading::Update(_double DeltaTime)
 			switch (m_eNextScene)		// 로딩씬 이니셜라이즈에서 받아온 enumID값에 따라 다음씬으로 이동시켜줌
 			{
 			case STAGEONE_SCENE:
-				pScene = CStageOne::Create(m_pDevice, m_pDeviceContext);
+				pScene = CStageOne::Create(m_pDevice, m_pDeviceContext, STAGEONE_SCENE);
 				break;
 			}
 
@@ -62,9 +62,9 @@ HRESULT CLoading::Render()
 	return S_OK;
 }
 
-CLoading * CLoading::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext, SCENE eScene)
+CLoading * CLoading::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext, SCENE eScene, _uint iSceneIndex)
 {
-	CLoading*	pInstance = new CLoading(pDevice, pDeviceContext);
+	CLoading*	pInstance = new CLoading(pDevice, pDeviceContext, iSceneIndex);
 
 	if (FAILED(pInstance->Initialize(eScene)))
 	{

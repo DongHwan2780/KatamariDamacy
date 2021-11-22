@@ -4,6 +4,8 @@
 #define __COMPONENTMGR_H__
 
 #include "Renderer.h"
+#include "VIBuffer_Rect.h"
+#include "VIBuffer_Terrain.h"
 
 BEGIN(Engine)
 

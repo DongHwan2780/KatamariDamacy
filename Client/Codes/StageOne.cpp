@@ -2,8 +2,8 @@
 #include "..\Headers\StageOne.h"
 
 
-CStageOne::CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext)
-	:CScene(pDevice, pDeviceContext)
+CStageOne::CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
+	:CScene(pDevice, pDeviceContext, iSceneIndex)
 {
 }
 
@@ -29,9 +29,9 @@ HRESULT CStageOne::Render()
 	return S_OK;
 }
 
-CStageOne * CStageOne::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
+CStageOne * CStageOne::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
 {
-	CStageOne* pInstance = new CStageOne(pDevice, pDeviceContext);
+	CStageOne* pInstance = new CStageOne(pDevice, pDeviceContext, iSceneIndex);
 
 	if (FAILED(pInstance->Initialize()))
 	{

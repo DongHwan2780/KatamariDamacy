@@ -28,6 +28,8 @@ public:
 private:
 	typedef unordered_map<const _tchar*, CTimer*> TIMERS;		//TIMERS	m_pTimers;  -> 키값이 const라서 못쓰는거같음
 	unordered_map<const _tchar*, CTimer*>	m_pTimers;
+
+	//TIMERS		m_pTimers;
 };
 
 END

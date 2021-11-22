@@ -6,7 +6,7 @@
 class CStageOne final : public CScene
 {
 private:
-	explicit CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
+	explicit CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex);
 	virtual ~CStageOne() = default;
 
 public:
@@ -15,7 +15,7 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	static CStageOne* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
+	static CStageOne* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex);
 	virtual void Free() override;
 };
 

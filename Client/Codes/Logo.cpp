@@ -1,9 +1,10 @@
 #include "stdafx.h"
 #include "..\Headers\Logo.h"
 
+#include "Management.h"
 
-CLogo::CLogo(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext)
-	:CScene(pDevice, pDeviceContext)
+CLogo::CLogo(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
+	:CScene(pDevice, pDeviceContext, iSceneIndex)
 {
 }
 
@@ -11,6 +12,12 @@ CLogo::CLogo(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext)
 HRESULT CLogo::Initialize()
 {
 	__super::Initialize();
+
+	CManagement*		pManagement = GET_INSTANCE(CManagement);
+
+	pManagement->PlayBGM(L"Village.ogg");
+
+	RELEASE_INSTANCE(CManagement);
 
 	return S_OK;
 }
@@ -29,9 +36,9 @@ HRESULT CLogo::Render()
 	return S_OK;
 }
 
-CLogo * CLogo::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
+CLogo * CLogo::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext, _uint iSceneIndex)
 {
-	CLogo*	pInstance = new CLogo(pDevice, pDeviceContext);
+	CLogo*	pInstance = new CLogo(pDevice, pDeviceContext, iSceneIndex);
 
 	if (FAILED(pInstance->Initialize()))
 	{

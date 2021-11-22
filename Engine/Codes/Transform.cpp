@@ -109,7 +109,7 @@ void CTransform::RotateAxis(_fvector vAxis, _double DeltaTime)
 	vUp = Get_State(CTransform::UP);
 	vLook = Get_State(CTransform::LOOK);
 
-	_matrix		RotationMatrix = XMMatrixRotationAxis(vAxis, XMConvertToRadians(m_TransformDesc.fRotatePerSec) * DeltaTime);
+	_matrix		RotationMatrix = XMMatrixRotationAxis(vAxis, XMConvertToRadians(m_TransformDesc.fRotatePerSec) * (_float)DeltaTime);
 
 	Set_State(CTransform::RIGHT, XMVector4Transform(vRight, RotationMatrix));
 	Set_State(CTransform::UP, XMVector4Transform(vUp, RotationMatrix));

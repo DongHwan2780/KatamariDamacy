@@ -8,7 +8,7 @@ BEGIN(Client)
 class CLoading final : public CScene
 {
 private:
-	explicit CLoading(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
+	explicit CLoading(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex);
 	virtual ~CLoading() = default;
 
 public:
@@ -17,7 +17,7 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	static CLoading* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, SCENE eScene);
+	static CLoading* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, SCENE eScene, _uint iSceneIndex);
 	virtual void Free() override;
 
 private:

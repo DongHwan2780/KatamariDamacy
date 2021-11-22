@@ -24,6 +24,7 @@
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
+#include <DirectXTex.h>
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 
@@ -53,7 +54,6 @@ using namespace Engine;
 #pragma region SOUND
 #include <io.h>
 #include <stdio.h>
-#include "fmod.h"
 #include <fmod.hpp>
 #pragma comment (lib, "fmod_vc.lib")
 #pragma comment (lib, "fmodL_vc.lib")
