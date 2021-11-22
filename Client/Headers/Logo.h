@@ -7,7 +7,7 @@ BEGIN(Client)
 class CLogo final : public CScene
 {
 private:
-	explicit CLogo(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
+	explicit CLogo(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex);
 	virtual ~CLogo() = default;
 
 public:
@@ -16,7 +16,7 @@ public:
 	virtual HRESULT Render() override;
 
 public:
-	static CLogo* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
+	static CLogo* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex);
 	virtual void Free() override;
 };
 END

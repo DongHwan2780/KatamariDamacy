@@ -10,12 +10,14 @@ CManagement::CManagement()
 	, m_pSceneMgr(CSceneMgr::GetInstance())
 	, m_pObjMgr(CObjMgr::GetInstance())
 	, m_pComponentMgr(CComponentMgr::GetInstance())
+	, m_pSoundMgr(CSoundMgr::GetInstance())
 {
 	Safe_AddRef(m_pComponentMgr);
 	Safe_AddRef(m_pObjMgr);
 	Safe_AddRef(m_pSceneMgr);
 	Safe_AddRef(m_pGraphicDevice);
 	Safe_AddRef(m_pTimeMgr);
+	Safe_AddRef(m_pSoundMgr);
 }
 #pragma region TIMER_MANAGER
 HRESULT CManagement::Add_Timers(const _tchar * TimeTag)
@@ -146,6 +148,43 @@ HRESULT CManagement::Render_Scene()
 
 	return m_pSceneMgr->Render_Scene();
 }
+#pragma endregion
+
+#pragma region SOUND_MGR
+void CManagement::PlaySounds(_tchar * pSoundKey, CSoundMgr::SOUNDCHANNEL eID)
+{
+	m_pSoundMgr->PlaySounds(pSoundKey, eID);
+}
+
+void CManagement::PlayBGM(_tchar * pSoundKey)
+{
+	m_pSoundMgr->PlayBGM(pSoundKey);
+}
+
+void CManagement::StopSound(CSoundMgr::SOUNDCHANNEL eID)
+{
+	m_pSoundMgr->StopSound(eID);
+}
+
+void CManagement::StopAll()
+{
+	m_pSoundMgr->StopAll();
+}
+
+void CManagement::Pause(CSoundMgr::SOUNDCHANNEL eID)
+{
+	m_pSoundMgr->Pause(eID);
+}
+
+void CManagement::Resume(CSoundMgr::SOUNDCHANNEL eID)
+{
+	m_pSoundMgr->Resume(eID);
+}
+
+void CManagement::Set_Volume(CSoundMgr::SOUNDCHANNEL eID, float _fVolume)
+{
+	m_pSoundMgr->Set_Volume(eID, _fVolume);
+}
 
 #pragma endregion
 
@@ -159,6 +198,8 @@ HRESULT CManagement::Initialize_Engine(_int iNumScenes)
 
 	if (FAILED(m_pComponentMgr->Reserve_Manager(iNumScenes)))
 		return E_FAIL;
+
+	m_pSoundMgr->Initialize_Sound();
 
 	return S_OK;
 }
@@ -198,6 +239,9 @@ void CManagement::Release_Engine()
 	if (0 != CComponentMgr::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CComponentMgr");
 
+	if (0 != CSoundMgr::GetInstance()->DestroyInstance())
+		MSG_BOX("Failed to Deleting CSoundMgr");
+
 	if (0 != CGraphic::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CGraphic");
 }
@@ -220,6 +264,7 @@ void CManagement::UpdateTool()
 
 void CManagement::Free()
 {
+	Safe_Release(m_pSoundMgr);
 	Safe_Release(m_pComponentMgr);
 	Safe_Release(m_pObjMgr);
 	Safe_Release(m_pSceneMgr);

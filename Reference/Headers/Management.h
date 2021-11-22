@@ -7,6 +7,8 @@
 #include "SceneMgr.h"
 #include "ObjMgr.h"
 #include "ComponentMgr.h"
+#include "SoundMgr.h"
+
 #include "Renderer.h"
 
 BEGIN(Engine)
@@ -16,7 +18,7 @@ class ENGINE_DLL CManagement final : public CBase		// Management == GameInstance
 	DECLARE_SINGLETON(CManagement)
 
 private:
-	explicit CManagement();
+	CManagement();
 	virtual ~CManagement() = default;
 
 #pragma region TIMEMGR
@@ -58,6 +60,17 @@ public:
 	HRESULT	Render_Scene();
 #pragma endregion
 
+#pragma region SOUND_MGR
+public:
+	void PlaySounds(_tchar* pSoundKey, CSoundMgr::SOUNDCHANNEL eID);
+	void PlayBGM(_tchar* pSoundKey);
+	void StopSound(CSoundMgr::SOUNDCHANNEL eID);
+	void StopAll();
+	void Pause(CSoundMgr::SOUNDCHANNEL eID);
+	void Resume(CSoundMgr::SOUNDCHANNEL eID);
+	void Set_Volume(CSoundMgr::SOUNDCHANNEL eID, float _fVolume); // 1.0f -> 100% // 0.1f -> 10% // Normalize
+#pragma endregion
+
 public:
 	HRESULT Initialize_Engine(_int iNumScenes);
 	_int	Update(_double DeltaTime);
@@ -75,6 +88,9 @@ private:
 	class CSceneMgr*		m_pSceneMgr = nullptr;
 	class CObjMgr*			m_pObjMgr = nullptr;
 	class CComponentMgr*	m_pComponentMgr = nullptr;
+	class CSoundMgr*		m_pSoundMgr = nullptr;
+
+
 	class CRenderer*		m_pRenderer = nullptr;
 };
 

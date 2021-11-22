@@ -116,7 +116,7 @@
       <AdditionalLibraryDirectories>../Libraries/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy			/y				..\Headers\*.h		..\..\Reference\Headers\
+      <Command>xcopy			/y				..\Headers\*.*		..\..\Reference\Headers\
 xcopy			/y				..\Bin\*.lib		..\..\Reference\Libraries\
 xcopy			/y				..\Bin\*.dll		..\..\Client\Bin\
 xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>

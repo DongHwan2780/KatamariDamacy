@@ -5,6 +5,7 @@
 
 BEGIN(Engine)
 class CManagement;
+class CRenderer;
 END
 
 BEGIN(Client)
@@ -27,12 +28,14 @@ public:
 
 private:
 	HRESULT Ready_Scene(SCENE eScene);
+	HRESULT Ready_Prototype_Component();
 
 
 private:
-	CManagement*		m_pManagement = nullptr;
+	CManagement*			m_pManagement = nullptr;
 	ID3D11Device*			m_pDevice = nullptr;
 	ID3D11DeviceContext*	m_pDeviceContext = nullptr;
+	CRenderer*				m_pRenderer = nullptr;
 
 #ifdef _DEBUG
 private:

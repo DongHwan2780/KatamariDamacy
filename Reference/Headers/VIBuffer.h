@@ -27,6 +27,7 @@ public:
 	virtual HRESULT Render(_uint iPassIndex);
 public:
 	HRESULT SetUp_ValueOnShader(const char* pConstantName, void* pData, _uint iByteSize);
+	HRESULT SetUp_TextureOnShader(const char* pConstantName, class CTexture* pTextureComponent, _uint iTextureIndex = 0);
 
 protected:
 	HRESULT Create_Buffers();
