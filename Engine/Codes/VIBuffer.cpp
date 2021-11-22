@@ -1,5 +1,5 @@
 #include "..\Headers\VIBuffer.h"
-
+#include "Texture.h"
 
 
 CVIBuffer::CVIBuffer(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
@@ -89,6 +89,25 @@ HRESULT CVIBuffer::SetUp_ValueOnShader(const char * pConstantName, void * pData,
 		return E_FAIL;
 
 	if (FAILED(pVariable->SetRawValue(pData, 0, iByteSize)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CVIBuffer::SetUp_TextureOnShader(const char * pConstantName, CTexture * pTextureComponent, _uint iTextureIndex)
+{
+	if (nullptr == m_pEffect)
+		return E_FAIL;
+
+	ID3DX11EffectShaderResourceVariable*		pVariable = m_pEffect->GetVariableByName(pConstantName)->AsShaderResource();
+	if (nullptr == pVariable)
+		return E_FAIL;
+
+	ID3D11ShaderResourceView*		pShaderResourceView = pTextureComponent->Get_ShaderResourceView(iTextureIndex);
+	if (nullptr == pShaderResourceView)
+		return E_FAIL;
+
+	if (FAILED(pVariable->SetResource(pShaderResourceView)))
 		return E_FAIL;
 
 	return S_OK;

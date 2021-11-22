@@ -6,6 +6,13 @@ cbuffer Matrices
 	matrix		g_ProjMatrix;	
 }
 
+texture2D		g_DiffuseTexture;
+
+SamplerState	g_DiffuseSampler
+{
+	AddressU = wrap;
+	AddressV = wrap;
+};
 
 struct VS_IN
 {
@@ -17,6 +24,7 @@ struct VS_OUT
 {
 	float4	vPosition : SV_POSITION;
 	float2	vTexUV : TEXCOORD0;
+	float4	vViewPortPos : TEXCOORD1;
 };
 
 /* 정점의 스페이스 변환. (월드, 뷰, 투영행렬의 곱.)*/
@@ -44,22 +52,26 @@ struct PS_IN
 {
 	float4	vPosition : SV_POSITION;
 	float2	vTexUV : TEXCOORD0;
+	float4	vViewPortPos : TEXCOORD1;
 };
 
 vector	PS_MAIN(PS_IN In) : SV_TARGET
 {
 	vector		vColor = (vector)0;
 
-	vColor = vector(1.f, 0.f, 0.f, 1.f);
+	vColor = g_DiffuseTexture.Sample(g_DiffuseSampler, In.vTexUV);
+	
+	vColor.rgb += float3(0.7f, 0.7f, 0.7f);
+	
+	if (In.vPosition.x > 640.f)
+	{
+		vColor.r = 0.f;
+	}
+	
+	if (vColor.a <= 0.1f)
+	discard;
 
-	if (In.vTexUV.x < 0.01f || 
-		In.vTexUV.x > 0.99f || 
-		In.vTexUV.y < 0.01f || 
-		In.vTexUV.y > 0.99f
-		)
-		vColor = vector(1.f, 1.f, 0.f, 1.f);
-
-	return vColor;
+return vColor;
 }
 
 technique11		DefaultDevice
@@ -69,10 +81,4 @@ technique11		DefaultDevice
 		VertexShader = compile vs_5_0 VS_MAIN();
 		PixelShader = compile ps_5_0 PS_MAIN();
 	}
-
-	//pass DefaultPass
-	//{
-	//	VertexShader = compile vs_5_0 VS_MAIN_A();
-	//	PixelShader = compile ps_5_0 PS_MAIN_A();
-	//}
 }
