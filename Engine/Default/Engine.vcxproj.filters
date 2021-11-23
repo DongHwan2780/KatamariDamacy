@@ -76,6 +76,9 @@
     <Filter Include="01.Manager\01.ComponentMgr\Texture">
       <UniqueIdentifier>{0344f1f2-8de7-4e4e-8a4e-b35ead9ffc0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.Physx">
+      <UniqueIdentifier>{028ce3c6-b2b7-4e2c-b392-ef48a592f720}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -137,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Texture.cpp">
       <Filter>01.Manager\01.ComponentMgr\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Physx.cpp">
+      <Filter>03.Physx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Texture.h">
       <Filter>01.Manager\01.ComponentMgr\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Physx.h">
+      <Filter>03.Physx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
