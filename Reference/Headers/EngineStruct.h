@@ -11,6 +11,13 @@ namespace Engine
 		XMFLOAT2	vTexUV;
 	}VTXINFO;
 
+	typedef struct tagVertex_NormalInfo
+	{
+		XMFLOAT3		vPos;
+		XMFLOAT3		vNormal;
+		XMFLOAT2		vTexUV;
+	}VTXNORMALINFO;
+
 	typedef struct tagPolygonIndices16
 	{
 		_ushort	_0, _1, _2;

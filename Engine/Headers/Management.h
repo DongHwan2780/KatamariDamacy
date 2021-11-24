@@ -10,6 +10,7 @@
 #include "SoundMgr.h"
 
 #include "Renderer.h"
+#include "PipeLine.h"
 
 BEGIN(Engine)
 
@@ -71,6 +72,12 @@ public:
 	void Set_Volume(CSoundMgr::SOUNDCHANNEL eID, float _fVolume); // 1.0f -> 100% // 0.1f -> 10% // Normalize
 #pragma endregion
 
+#pragma region PIPELINE
+	_matrix Get_Transform(CPipeLine::TYPE eType);
+	_vector Get_CamPosition();
+#pragma endregion
+
+
 public:
 	HRESULT Initialize_Engine(_int iNumScenes);
 	_int	Update(_double DeltaTime);
@@ -92,6 +99,7 @@ private:
 
 
 	class CRenderer*		m_pRenderer = nullptr;
+	class CPipeLine*		m_pPipeline = nullptr;
 };
 
 END

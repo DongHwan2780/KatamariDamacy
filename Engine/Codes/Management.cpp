@@ -11,7 +11,9 @@ CManagement::CManagement()
 	, m_pObjMgr(CObjMgr::GetInstance())
 	, m_pComponentMgr(CComponentMgr::GetInstance())
 	, m_pSoundMgr(CSoundMgr::GetInstance())
+	, m_pPipeline(CPipeLine::GetInstance())
 {
+	Safe_AddRef(m_pPipeline);
 	Safe_AddRef(m_pComponentMgr);
 	Safe_AddRef(m_pObjMgr);
 	Safe_AddRef(m_pSceneMgr);
@@ -186,6 +188,25 @@ void CManagement::Set_Volume(CSoundMgr::SOUNDCHANNEL eID, float _fVolume)
 	m_pSoundMgr->Set_Volume(eID, _fVolume);
 }
 
+
+#pragma endregion
+
+#pragma region PIPELINE
+_matrix CManagement::Get_Transform(CPipeLine::TYPE eType)
+{
+	if (nullptr == m_pPipeline)
+		return XMMatrixIdentity();
+
+	return m_pPipeline->Get_Transform(eType);
+}
+
+_vector CManagement::Get_CamPosition()
+{
+	if (nullptr == m_pPipeline)
+		return XMVectorZero();
+
+	return m_pPipeline->Get_CamPosition();
+}
 #pragma endregion
 
 HRESULT CManagement::Initialize_Engine(_int iNumScenes)
@@ -241,6 +262,9 @@ void CManagement::Release_Engine()
 
 	if (0 != CSoundMgr::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CSoundMgr");
+
+	if (0 != CPipeLine::GetInstance()->DestroyInstance())
+		MSG_BOX("Failed to Deleting CPipeLine");
 
 	if (0 != CGraphic::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CGraphic");

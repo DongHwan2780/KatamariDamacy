@@ -32,6 +32,9 @@ public:
 public:
 	_vector Get_State(STATE eState) { return *(_vector*)&m_MatWorld.m[eState][0]; }
 	_float Get_Scale(STATE eState) { return XMVectorGetX(XMVector3Length(Get_State(eState))); }
+	_matrix Get_WorldMatrixInverse() const { return XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_MatWorld)); }
+	_matrix Get_WorldMatrix() const { return XMLoadFloat4x4(&m_MatWorld); }
+
 	void Set_State(STATE eState, _fvector vData) { memcpy(&m_MatWorld.m[eState][0], &vData, sizeof(_float3)); } // 어떤 벡터(eState)에 어떤 값(vData)를 넣을건지
 
 public:
