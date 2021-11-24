@@ -22,10 +22,6 @@ public:
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
 
-private:
-	_uint m_iVertexCountX = 0;
-	_uint m_iVertexCountZ = 0;
-	_float m_fVertexInterval = 1.f;
 };
 
 END

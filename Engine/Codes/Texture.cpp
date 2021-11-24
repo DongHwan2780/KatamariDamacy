@@ -56,8 +56,9 @@ HRESULT CTexture::Initialize_Prototype(TYPE eType, const _tchar * pTexturePath, 
 			return E_FAIL;
 
 		m_Textures.push_back(pShaderResourceView);
-	}
 
+		Safe_Release(pTexture);
+	}
 
 	return S_OK;
 }
