@@ -79,6 +79,12 @@
     <Filter Include="03.Physx">
       <UniqueIdentifier>{028ce3c6-b2b7-4e2c-b392-ef48a592f720}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\00.ObjMgr\Camera">
+      <UniqueIdentifier>{099febee-682d-4d8b-9667-92a612ad9b2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.PipeLine">
+      <UniqueIdentifier>{38283a6a-dedb-439f-9df7-4d15a5391176}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -143,6 +149,12 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Physx.cpp">
       <Filter>03.Physx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\PipeLine.cpp">
+      <Filter>04.PipeLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Camera.cpp">
+      <Filter>01.Manager\00.ObjMgr\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +235,12 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Physx.h">
       <Filter>03.Physx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\PipeLine.h">
+      <Filter>04.PipeLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Camera.h">
+      <Filter>01.Manager\00.ObjMgr\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
