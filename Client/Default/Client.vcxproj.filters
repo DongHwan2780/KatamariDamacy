@@ -105,6 +105,9 @@
     <ClInclude Include="..\Headers\MainCamera.h">
       <Filter>01.Object\02.CommonObj\02.MainCamera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Bin\Shader\Shader_Defines.hpp">
+      <Filter>97.Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -159,6 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\Shader\Shader_Rect.fx">
+      <Filter>97.Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\Shader_Terrain.fx">
       <Filter>97.Shader</Filter>
     </FxCompile>
   </ItemGroup>

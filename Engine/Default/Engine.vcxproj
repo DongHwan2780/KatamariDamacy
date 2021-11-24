@@ -167,6 +167,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Headers\Base.h" />
+    <ClInclude Include="..\Headers\Camera.h" />
     <ClInclude Include="..\Headers\EngineStruct.h" />
     <ClInclude Include="..\Headers\keyMgr.h" />
     <ClInclude Include="..\Headers\Component.h" />
@@ -181,6 +182,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClInclude Include="..\Headers\Obj.h" />
     <ClInclude Include="..\Headers\ObjMgr.h" />
     <ClInclude Include="..\Headers\Physx.h" />
+    <ClInclude Include="..\Headers\PipeLine.h" />
     <ClInclude Include="..\Headers\Renderer.h" />
     <ClInclude Include="..\Headers\Scene.h" />
     <ClInclude Include="..\Headers\SceneMgr.h" />
@@ -195,6 +197,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp" />
+    <ClCompile Include="..\Codes\Camera.cpp" />
     <ClCompile Include="..\Codes\keyMgr.cpp" />
     <ClCompile Include="..\Codes\Component.cpp" />
     <ClCompile Include="..\Codes\ComponentMgr.cpp" />
@@ -204,6 +207,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClCompile Include="..\Codes\Obj.cpp" />
     <ClCompile Include="..\Codes\ObjMgr.cpp" />
     <ClCompile Include="..\Codes\Physx.cpp" />
+    <ClCompile Include="..\Codes\PipeLine.cpp" />
     <ClCompile Include="..\Codes\Renderer.cpp" />
     <ClCompile Include="..\Codes\Scene.cpp" />
     <ClCompile Include="..\Codes\SceneMgr.cpp" />
