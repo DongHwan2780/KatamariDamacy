@@ -75,8 +75,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\Bin\</OutDir>
-    <IncludePath>../../fmod/;$(IncludePath)</IncludePath>
-    <LibraryPath>../../fmod/;$(LibraryPath)</LibraryPath>
+    <IncludePath>../../fmod/;../../physx/include/;$(IncludePath)</IncludePath>
+    <LibraryPath>../../fmod/;../../physx/debug/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
