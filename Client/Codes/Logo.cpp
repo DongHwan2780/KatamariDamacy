@@ -15,7 +15,7 @@ HRESULT CLogo::Initialize()
 
 	CManagement*		pManagement = GET_INSTANCE(CManagement);
 
-	pManagement->PlayBGM(L"Village.ogg");
+	//pManagement->PlayBGM(L"Village.ogg");
 
 	RELEASE_INSTANCE(CManagement);
 
@@ -26,6 +26,15 @@ _int CLogo::Update(_double DeltaTime)
 {
 	__super::Update(DeltaTime);
 
+	CManagement*		pManagement = GET_INSTANCE(CManagement);
+	PxTransform				pxTransform = PxTransform(PxVec3(), PxQuat());
+
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+		pManagement->CreateDynamicBall(pxTransform);
+	}
+
+	RELEASE_INSTANCE(CManagement);
 	return _int();
 }
 
