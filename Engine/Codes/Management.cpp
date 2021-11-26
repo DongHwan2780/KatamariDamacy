@@ -12,7 +12,9 @@ CManagement::CManagement()
 	, m_pComponentMgr(CComponentMgr::GetInstance())
 	, m_pSoundMgr(CSoundMgr::GetInstance())
 	, m_pPipeline(CPipeLine::GetInstance())
+	, m_physx(CPhysX::GetInstance())
 {
+	Safe_AddRef(m_physx);
 	Safe_AddRef(m_pPipeline);
 	Safe_AddRef(m_pComponentMgr);
 	Safe_AddRef(m_pObjMgr);
@@ -209,6 +211,30 @@ _vector CManagement::Get_CamPosition()
 }
 #pragma endregion
 
+#pragma region Physx
+HRESULT CManagement::Initialize_Physx()
+{
+	if (m_physx == nullptr)
+		return E_FAIL;
+
+	return m_physx->Initialize_Physx();
+}
+_int CManagement::Update_Physx(_double DeltaTime)
+{
+	if (m_physx == nullptr)
+		return E_FAIL;
+
+	return m_physx->Update_Physx(DeltaTime);
+}
+PxRigidDynamic * CManagement::CreateDynamicBall(const PxTransform & transform)
+{
+	if (m_physx == nullptr)
+		return nullptr;
+
+	return m_physx->CreateDynamicBall(transform);
+}
+#pragma endregion
+
 HRESULT CManagement::Initialize_Engine(_int iNumScenes)
 {
 	if (m_pObjMgr == nullptr || m_pComponentMgr == nullptr)
@@ -288,6 +314,7 @@ void CManagement::UpdateTool()
 
 void CManagement::Free()
 {
+	Safe_Release(m_physx);
 	Safe_Release(m_pSoundMgr);
 	Safe_Release(m_pComponentMgr);
 	Safe_Release(m_pObjMgr);
