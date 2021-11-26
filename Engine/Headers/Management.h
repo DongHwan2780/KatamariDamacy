@@ -11,6 +11,7 @@
 
 #include "Renderer.h"
 #include "PipeLine.h"
+#include "Physx.h"
 
 BEGIN(Engine)
 
@@ -77,6 +78,13 @@ public:
 	_vector Get_CamPosition();
 #pragma endregion
 
+#pragma region PHYSX
+public:
+	HRESULT Initialize_Physx();
+	_int	Update_Physx(_double DeltaTime);
+	PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
+#pragma endregion
+
 
 public:
 	HRESULT Initialize_Engine(_int iNumScenes);
@@ -100,6 +108,7 @@ private:
 
 	class CRenderer*		m_pRenderer = nullptr;
 	class CPipeLine*		m_pPipeline = nullptr;
+	class CPhysX*			m_physx = nullptr;
 };
 
 END

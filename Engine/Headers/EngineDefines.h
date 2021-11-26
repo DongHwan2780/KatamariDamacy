@@ -24,6 +24,21 @@ using namespace physx;
 #pragma comment(lib,"SimulationController_static_64.lib")
 #pragma endregion
 
+#pragma region CONSOLE
+//#ifdef UNICODE
+//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+//#else
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+//#endif
+//
+//#include <iostream>
+//using std::cout;
+//using std::endl;
+//using std::wstring;
+#pragma endregion
+
+
+
 #pragma region KEY_DEFINE
 #define KEY_LEFT	 0x00000001
 #define KEY_UP		 0x00000002

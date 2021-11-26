@@ -4,17 +4,26 @@
 #define __PHYSX_H__
 
 #include "Base.h"
+#include "Obj.h"
 
 BEGIN(Engine)
 
 class CPhysX final : public CBase
 {
+	DECLARE_SINGLETON(CPhysX)
 private:
 	CPhysX();
 	virtual ~CPhysX() = default;
 
 public:
 	HRESULT Initialize_Physx();
+	_int	Update_Physx(_double DeltaTime);
+
+public:
+	void Set_Gravity(CObj* pObj);
+	void CollisionFixed(CObj* pObj, _int iSceneIndex, const _tchar *pLayerTag);
+	void CollisionNonFix(CObj* pObj, _int iSceneIndex, const _tchar *pLayerTag);
+	PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
 	
 public:
 	virtual void Free() override;
@@ -33,6 +42,7 @@ private:
 
 	PxScene*				m_pxScene = NULL;		// 물리 시뮬레이션을 실험하기 위한 공간
 	PxMaterial*				m_pxMaterial = NULL;	
+	PxTransform				pxTransform = PxTransform(PxVec3(), PxQuat());
 #pragma endregion
 
 };
