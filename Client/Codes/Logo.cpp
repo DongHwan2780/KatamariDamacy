@@ -27,13 +27,12 @@ _int CLogo::Update(_double DeltaTime)
 	__super::Update(DeltaTime);
 
 	CManagement*		pManagement = GET_INSTANCE(CManagement);
-	PxTransform				pxTransform = PxTransform(PxVec3(), PxQuat());
+	PxTransform			pxTransform = PxTransform(PxVec3(0.f, 0.f, -10.f), PxQuat(1.f));
 
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 		pManagement->CreateDynamicBall(pxTransform);
 	}
-
 	RELEASE_INSTANCE(CManagement);
 	return _int();
 }
