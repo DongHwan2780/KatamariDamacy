@@ -4,6 +4,9 @@
 #define __COMPONENTMGR_H__
 
 #include "Renderer.h"
+#include "Texture.h"
+#include "Transform.h"
+
 #include "VIBuffer_Rect.h"
 #include "VIBuffer_Terrain.h"
 

@@ -43,6 +43,8 @@ private:
 	PxScene*				m_pxScene = NULL;		// 물리 시뮬레이션을 실험하기 위한 공간
 	PxMaterial*				m_pxMaterial = NULL;	
 	PxTransform				pxTransform = PxTransform(PxVec3(), PxQuat());
+	PxPvd*				    gPvd = NULL;
+
 #pragma endregion
 
 };

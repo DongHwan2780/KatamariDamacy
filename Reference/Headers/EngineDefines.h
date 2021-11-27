@@ -5,6 +5,19 @@
 
 #pragma warning (disable : 4251)
 
+//#pragma region CONSOLE
+//#ifdef UNICODE
+//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
+//#else
+//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+//#endif
+//
+//#include <iostream>
+//using std::cout;
+//using std::endl;
+//using std::wstring;
+//#pragma endregion
+
 #pragma region PHYSX
 #include <PxPhysicsAPI.h>
 using namespace physx;
@@ -22,22 +35,9 @@ using namespace physx;
 #pragma comment(lib,"PhysXVehicle_static_64.lib")
 #pragma comment(lib,"SceneQuery_static_64.lib")
 #pragma comment(lib,"SimulationController_static_64.lib")
+
+#define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
 #pragma endregion
-
-#pragma region CONSOLE
-//#ifdef UNICODE
-//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-//#else
-//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-//#endif
-//
-//#include <iostream>
-//using std::cout;
-//using std::endl;
-//using std::wstring;
-#pragma endregion
-
-
 
 #pragma region KEY_DEFINE
 #define KEY_LEFT	 0x00000001

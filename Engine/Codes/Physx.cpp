@@ -10,9 +10,12 @@ HRESULT CPhysX::Initialize_Physx()
 {
 	m_pxFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, m_pxAllocator, m_pxErrorCallback);
 
-	m_pxPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pxFoundation, PxTolerancesScale(), true);
 
+	gPvd = PxCreatePvd(*m_pxFoundation);
+	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+	gPvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
 
+	m_pxPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_pxFoundation, PxTolerancesScale(), true, gPvd);
 	PxSceneDesc sceneDesc(m_pxPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f); // 중력 세팅
 													
@@ -22,6 +25,13 @@ HRESULT CPhysX::Initialize_Physx()
 
 	m_pxScene = m_pxPhysics->createScene(sceneDesc);		// 공간 생성
 
+	//PxPvdSceneClient* pvdClient = m_pxScene->getScenePvdClient();
+	//if (pvdClient)
+	//{
+	//	pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
+	//	pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
+	//	pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
+	//}
 
 	m_pxMaterial = m_pxPhysics->createMaterial(0.5f, 0.5f, 0.6f); // 충돌체 마찰력,Dynamic마찰력, 탄성력
 	PxRigidStatic* groundPlane = PxCreatePlane(*m_pxPhysics, PxPlane(0, 1, 0, 0), *m_pxMaterial);		// m_pxMaterial 재질?을 가진 지형 정보 생성
@@ -63,10 +73,16 @@ void CPhysX::CollisionNonFix(CObj * pObj, _int iSceneIndex, const _tchar * pLaye
 PxRigidDynamic * CPhysX::CreateDynamicBall(const PxTransform& transform)
 {
 	PxSphereGeometry	pxSphereGeo = 2.f;
-	PxRigidDynamic* pxActor;
+	PxRigidDynamic*		pxActor;
 
-	pxActor = PxCreateDynamic(*m_pxPhysics, pxTransform, pxSphereGeo, *m_pxMaterial, 10.f);
+	pxActor = PxCreateDynamic(*m_pxPhysics, transform, pxSphereGeo, *m_pxMaterial, 10.f);
 	pxActor->setLinearVelocity(PxVec3(0.f, 0.f, -10.f ));
+	//PxTransform a =  pxActor->getGlobalPose();
+	//a.p;
+	//a.q;
+
+	//m_pTransform->Setposition(a.p);
+
 	m_pxScene->addActor(*pxActor);
 
 	return pxActor;
@@ -74,9 +90,14 @@ PxRigidDynamic * CPhysX::CreateDynamicBall(const PxTransform& transform)
 
 void CPhysX::Free()
 {
-	m_pxFoundation = NULL;
-	m_pxPhysics = NULL;
-	m_pxDispatcher = NULL;
-	m_pxScene = NULL;
-	m_pxMaterial = NULL;
+	PX_RELEASE(m_pxScene);
+	PX_RELEASE(m_pxDispatcher);
+	PX_RELEASE(m_pxPhysics);
+	if (gPvd)
+	{
+		PxPvdTransport* transport = gPvd->getTransport();
+		gPvd->release();	gPvd = NULL;
+		PX_RELEASE(transport);
+	}
+	PX_RELEASE(m_pxFoundation);
 }

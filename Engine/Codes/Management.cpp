@@ -212,20 +212,13 @@ _vector CManagement::Get_CamPosition()
 #pragma endregion
 
 #pragma region Physx
-HRESULT CManagement::Initialize_Physx()
-{
-	if (m_physx == nullptr)
-		return E_FAIL;
-
-	return m_physx->Initialize_Physx();
-}
-_int CManagement::Update_Physx(_double DeltaTime)
-{
-	if (m_physx == nullptr)
-		return E_FAIL;
-
-	return m_physx->Update_Physx(DeltaTime);
-}
+//_int CManagement::Update_Physx(_double DeltaTime)
+//{
+//	if (m_physx == nullptr)
+//		return E_FAIL;
+//
+//	return m_physx->Update_Physx(DeltaTime);
+//}
 PxRigidDynamic * CManagement::CreateDynamicBall(const PxTransform & transform)
 {
 	if (m_physx == nullptr)
@@ -246,6 +239,8 @@ HRESULT CManagement::Initialize_Engine(_int iNumScenes)
 	if (FAILED(m_pComponentMgr->Reserve_Manager(iNumScenes)))
 		return E_FAIL;
 
+	m_physx->Initialize_Physx();
+
 	m_pSoundMgr->Initialize_Sound();
 
 	return S_OK;
@@ -258,14 +253,37 @@ _int CManagement::Update(_double DeltaTime)
 
 	_int iProgress = 0;
 
+
+	// 너의 모든 객체들 (피직스를 사용하고싶은)의 트랜스폼을 피직스 한테 넘겨주어야한다.
+	// 피직스의 Actor 랑 너의 Object는 1:1 상태이어야 한다.
+	// 그러기 위해서는 너의 객체에 Component 형태로 Body(Actor)들이 추가 되어야 한다.
+	// 1. 먼저 실제 객체 (클라이언트의 player 등등) 의 Transform (position & quat) 를 피직스 컴포넌트 형태로 추가한 actor에게 넘겨준다
+	// Pxactor-> setglobalpos(pxtrans(p,q));
+
+	// 2. 시뮬레이션을 돌린다. 
+	/*	m_pxScene->simulate(DeltaTime);
+	m_pxScene->fetchResults(true);*/
+
+	// 3. 피직스 시뮬레이션 (위의 과정)을 거친 값을 나의(클라) 객체(player등등)한테 position과 quat을 얻어와서 적용시켜준다.
+	// Pxactor->getglobalpos() => 반환값이 PxTransform -> 쿼터니언과 포지션(Vector3)값을 뱉어줘
+	// 이걸 받아서 pxtransform 를 내 리얼 객체 transform에 옮겨줘
+
+
+	if (0 > (iProgress = m_physx->Update_Physx(DeltaTime)))
+		return -1;
+
+
+
+
+
+
 	if (0 > (iProgress = m_pObjMgr->Update(DeltaTime)))
 		return -1;
 
 
 	if (0 > (iProgress = m_pObjMgr->Late_Update(DeltaTime)))
 		return -1;
-
-
+	
 	return _int();
 }
 
@@ -292,6 +310,9 @@ void CManagement::Release_Engine()
 	if (0 != CPipeLine::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CPipeLine");
 
+	if (0 != CPhysX::GetInstance()->DestroyInstance())
+		MSG_BOX("Failed to Deleting CPhysX");
+
 	if (0 != CGraphic::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CGraphic");
 }
@@ -314,6 +335,7 @@ void CManagement::UpdateTool()
 
 void CManagement::Free()
 {
+	Safe_Release(m_pPipeline);
 	Safe_Release(m_physx);
 	Safe_Release(m_pSoundMgr);
 	Safe_Release(m_pComponentMgr);

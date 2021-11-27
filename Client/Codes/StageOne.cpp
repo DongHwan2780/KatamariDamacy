@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "..\Headers\StageOne.h"
 
+#include "Management.h"
 
 CStageOne::CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
 	:CScene(pDevice, pDeviceContext, iSceneIndex)

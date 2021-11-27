@@ -9,7 +9,6 @@
 #include "ComponentMgr.h"
 #include "SoundMgr.h"
 
-#include "Renderer.h"
 #include "PipeLine.h"
 #include "Physx.h"
 
@@ -79,9 +78,7 @@ public:
 #pragma endregion
 
 #pragma region PHYSX
-public:
-	HRESULT Initialize_Physx();
-	_int	Update_Physx(_double DeltaTime);
+	//_int	Update_Physx(_double DeltaTime);
 	PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
 #pragma endregion
 
@@ -98,15 +95,14 @@ public:
 	virtual void Free() override;
 
 private:
-	class CTimeMgr*			m_pTimeMgr = nullptr;
 	class CGraphic*			m_pGraphicDevice = nullptr;
+
+	class CTimeMgr*			m_pTimeMgr = nullptr;
 	class CSceneMgr*		m_pSceneMgr = nullptr;
 	class CObjMgr*			m_pObjMgr = nullptr;
 	class CComponentMgr*	m_pComponentMgr = nullptr;
 	class CSoundMgr*		m_pSoundMgr = nullptr;
 
-
-	class CRenderer*		m_pRenderer = nullptr;
 	class CPipeLine*		m_pPipeline = nullptr;
 	class CPhysX*			m_physx = nullptr;
 };
