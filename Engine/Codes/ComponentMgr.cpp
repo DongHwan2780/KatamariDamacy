@@ -20,7 +20,7 @@ HRESULT CComponentMgr::Reserve_Manager(_int iNumScenes)
 
 HRESULT CComponentMgr::Add_Prototype(_int iSceneIndex, const _tchar * pPrototypeTag, CComponent * pPrototype)
 {
-	if (pPrototype == nullptr || Find_Prototype(iSceneIndex, pPrototypeTag) != nullptr)	// 받아온 객체가 nullptr이거나 이미 있다면 FAIL반환
+	if (pPrototype == nullptr || Find_Prototype(iSceneIndex, pPrototypeTag) != nullptr || iSceneIndex >= m_iNumScenes)	// 받아온 객체가 nullptr이거나 이미 있다면 FAIL반환
 		return E_FAIL;
 
 	m_pPrototypes[iSceneIndex].emplace(pPrototypeTag, pPrototype);

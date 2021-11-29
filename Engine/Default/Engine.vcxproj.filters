@@ -85,6 +85,9 @@
     <Filter Include="04.PipeLine">
       <UniqueIdentifier>{38283a6a-dedb-439f-9df7-4d15a5391176}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.Device\01.Input">
+      <UniqueIdentifier>{1f017a71-9152-4b34-836c-1c2cec10778a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -155,6 +158,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Camera.cpp">
       <Filter>01.Manager\00.ObjMgr\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Input.cpp">
+      <Filter>02.Device\01.Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Camera.h">
       <Filter>01.Manager\00.ObjMgr\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Input.h">
+      <Filter>02.Device\01.Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

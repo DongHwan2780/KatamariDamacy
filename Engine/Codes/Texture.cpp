@@ -70,7 +70,7 @@ HRESULT CTexture::Initialize_Clone(void * pArg)
 
 ID3D11ShaderResourceView * CTexture::Get_ShaderResourceView(_uint iTextureIndex)
 {
-	if (iTextureIndex >= m_iTextureNum)
+	if (m_iTextureNum <= iTextureIndex)
 		return nullptr;
 
 	return m_Textures[iTextureIndex];

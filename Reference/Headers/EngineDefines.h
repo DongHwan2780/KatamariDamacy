@@ -47,6 +47,10 @@ using namespace physx;
 #define KEY_RETURN	 0x00000010
 #pragma endregion
 
+
+#define DIRECTINPUT_VERSION 0x0800
+#include <dinput.h>
+
 #include <d3d11.h>
 #include <unordered_map>
 #include <algorithm>

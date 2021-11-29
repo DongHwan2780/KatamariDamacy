@@ -5,8 +5,9 @@
 IMPLEMENT_SINGLETON(CManagement)
 
 CManagement::CManagement()
-	:m_pTimeMgr(CTimeMgr::GetInstance())
+	: m_pTimeMgr(CTimeMgr::GetInstance())
 	, m_pGraphicDevice(CGraphic::GetInstance())
+	, m_pInputDevice(CInput::GetInstance())
 	, m_pSceneMgr(CSceneMgr::GetInstance())
 	, m_pObjMgr(CObjMgr::GetInstance())
 	, m_pComponentMgr(CComponentMgr::GetInstance())
@@ -19,6 +20,7 @@ CManagement::CManagement()
 	Safe_AddRef(m_pComponentMgr);
 	Safe_AddRef(m_pObjMgr);
 	Safe_AddRef(m_pSceneMgr);
+	Safe_AddRef(m_pInputDevice);
 	Safe_AddRef(m_pGraphicDevice);
 	Safe_AddRef(m_pTimeMgr);
 	Safe_AddRef(m_pSoundMgr);
@@ -209,6 +211,34 @@ _vector CManagement::Get_CamPosition()
 
 	return m_pPipeline->Get_CamPosition();
 }
+HRESULT CManagement::Ready_InputDevice(HINSTANCE hInst, HWND hWnd)
+{
+	if (m_pInputDevice == nullptr)
+		return E_FAIL;
+
+	return m_pInputDevice->Ready_InputDevice(hInst, hWnd);
+}
+_byte CManagement::Get_DIKState(_ubyte byKeyID)
+{
+	if (m_pInputDevice == nullptr)
+		return 0;
+
+	return m_pInputDevice->Get_DIKState(byKeyID);
+}
+_long CManagement::Get_MouseMoveState(CInput::MOUSEMOVESTATE eMoveState)
+{
+	if (m_pInputDevice == nullptr)
+		return 0;
+
+	return m_pInputDevice->Get_MouseMoveState(eMoveState);
+}
+_byte CManagement::Get_MouseButtonState(CInput::MOUSEBUTTONSTATE eButtonState)
+{
+	if (m_pInputDevice == nullptr)
+		return 0;
+
+	return m_pInputDevice->Get_MouseButtonState(eButtonState);
+}
 #pragma endregion
 
 #pragma region Physx
@@ -272,11 +302,6 @@ _int CManagement::Update(_double DeltaTime)
 	if (0 > (iProgress = m_physx->Update_Physx(DeltaTime)))
 		return -1;
 
-
-
-
-
-
 	if (0 > (iProgress = m_pObjMgr->Update(DeltaTime)))
 		return -1;
 
@@ -313,6 +338,9 @@ void CManagement::Release_Engine()
 	if (0 != CPhysX::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CPhysX");
 
+	if (0 != CInput::GetInstance()->DestroyInstance())
+		MSG_BOX("Failed to Deleting CInput");
+
 	if (0 != CGraphic::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CGraphic");
 }
@@ -342,5 +370,6 @@ void CManagement::Free()
 	Safe_Release(m_pObjMgr);
 	Safe_Release(m_pSceneMgr);
 	Safe_Release(m_pTimeMgr);
+	Safe_Release(m_pInputDevice);
 	Safe_Release(m_pGraphicDevice);
 }

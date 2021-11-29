@@ -11,6 +11,7 @@
 
 #include "PipeLine.h"
 #include "Physx.h"
+#include "Input.h"
 
 BEGIN(Engine)
 
@@ -77,6 +78,15 @@ public:
 	_vector Get_CamPosition();
 #pragma endregion
 
+#pragma region INPUT_DEVICE
+	HRESULT Ready_InputDevice(HINSTANCE hInst, HWND hWnd);
+	_byte Get_DIKState(_ubyte byKeyID);
+	_long Get_MouseMoveState(CInput::MOUSEMOVESTATE eMoveState);
+	_byte Get_MouseButtonState(CInput::MOUSEBUTTONSTATE eButtonState);
+#pragma endregion
+
+
+
 #pragma region PHYSX
 	//_int	Update_Physx(_double DeltaTime);
 	PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
@@ -96,6 +106,7 @@ public:
 
 private:
 	class CGraphic*			m_pGraphicDevice = nullptr;
+	class CInput*			m_pInputDevice = nullptr;
 
 	class CTimeMgr*			m_pTimeMgr = nullptr;
 	class CSceneMgr*		m_pSceneMgr = nullptr;

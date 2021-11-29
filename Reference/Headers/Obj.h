@@ -31,6 +31,7 @@ public:
 protected:
 	ID3D11Device*			m_pDevice = nullptr;
 	ID3D11DeviceContext*	m_pDeviceContext = nullptr;
+	//PxTransform				m_pxTransform = PxTransform(PxVec3(), PxQuat());
 
 protected:
 	unordered_map<const _tchar*, class CComponent*>			m_Components;
