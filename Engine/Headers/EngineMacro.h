@@ -76,6 +76,6 @@
 #define ENGINE_DLL _declspec(dllimport)
 #endif
 
-
+#define DEVICES	ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext
 
 #endif // !__ENGINE_MACRO_H__

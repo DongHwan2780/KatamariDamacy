@@ -179,6 +179,8 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClInclude Include="..\Headers\EngineTypedef.h" />
     <ClInclude Include="..\Headers\Graphic.h" />
     <ClInclude Include="..\Headers\Layer.h" />
+    <ClInclude Include="..\Headers\Light.h" />
+    <ClInclude Include="..\Headers\LightMgr.h" />
     <ClInclude Include="..\Headers\Management.h" />
     <ClInclude Include="..\Headers\Obj.h" />
     <ClInclude Include="..\Headers\ObjMgr.h" />
@@ -205,6 +207,8 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClCompile Include="..\Codes\ComponentMgr.cpp" />
     <ClCompile Include="..\Codes\Graphic.cpp" />
     <ClCompile Include="..\Codes\Layer.cpp" />
+    <ClCompile Include="..\Codes\Light.cpp" />
+    <ClCompile Include="..\Codes\LightMgr.cpp" />
     <ClCompile Include="..\Codes\Management.cpp" />
     <ClCompile Include="..\Codes\Obj.cpp" />
     <ClCompile Include="..\Codes\ObjMgr.cpp" />

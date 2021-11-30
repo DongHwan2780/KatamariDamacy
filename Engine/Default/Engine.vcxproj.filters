@@ -88,6 +88,12 @@
     <Filter Include="02.Device\01.Input">
       <UniqueIdentifier>{1f017a71-9152-4b34-836c-1c2cec10778a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\08.LightMgr">
+      <UniqueIdentifier>{58d7bc75-d05f-4398-9f21-3d98c90827a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\08.LightMgr\Light">
+      <UniqueIdentifier>{00a626be-5b9b-4336-ad02-1f44c241e746}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -161,6 +167,12 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Input.cpp">
       <Filter>02.Device\01.Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\LightMgr.cpp">
+      <Filter>01.Manager\08.LightMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Light.cpp">
+      <Filter>01.Manager\08.LightMgr\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +262,12 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Input.h">
       <Filter>02.Device\01.Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\LightMgr.h">
+      <Filter>01.Manager\08.LightMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Light.h">
+      <Filter>01.Manager\08.LightMgr\Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
