@@ -14,7 +14,9 @@ CManagement::CManagement()
 	, m_pSoundMgr(CSoundMgr::GetInstance())
 	, m_pPipeline(CPipeLine::GetInstance())
 	, m_physx(CPhysX::GetInstance())
+	, m_pLightMgr(CLightMgr::GetInstance())
 {
+	Safe_AddRef(m_pLightMgr);
 	Safe_AddRef(m_physx);
 	Safe_AddRef(m_pPipeline);
 	Safe_AddRef(m_pComponentMgr);
@@ -241,6 +243,25 @@ _byte CManagement::Get_MouseButtonState(CInput::MOUSEBUTTONSTATE eButtonState)
 }
 #pragma endregion
 
+#pragma region LIGHT_MGR
+
+const LIGHTDESC * CManagement::Get_LightDesc(_uint Index) const
+{
+	if(m_pLightMgr == nullptr)
+		return nullptr;
+
+	return m_pLightMgr->Get_LightDesc(Index);
+}
+HRESULT CManagement::Add_Light(DEVICES, const LIGHTDESC & LightDesc)
+{
+	if (m_pLightMgr == nullptr)
+		return E_FAIL;
+
+	return m_pLightMgr->Add_Light(pDevice, pDeviceContext, LightDesc);
+}
+#pragma endregion
+
+
 #pragma region Physx
 //_int CManagement::Update_Physx(_double DeltaTime)
 //{
@@ -258,9 +279,12 @@ PxRigidDynamic * CManagement::CreateDynamicBall(const PxTransform & transform)
 }
 #pragma endregion
 
-HRESULT CManagement::Initialize_Engine(_int iNumScenes)
+HRESULT CManagement::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _int iNumScenes)
 {
-	if (m_pObjMgr == nullptr || m_pComponentMgr == nullptr)
+	if (m_pObjMgr == nullptr || m_pComponentMgr == nullptr || m_pInputDevice == nullptr)
+		return E_FAIL;
+
+	if (FAILED(m_pInputDevice->Ready_InputDevice(hInst, hWnd)))
 		return E_FAIL;
 
 	if (FAILED(m_pObjMgr->Reserve_Manager(iNumScenes)))
@@ -278,7 +302,7 @@ HRESULT CManagement::Initialize_Engine(_int iNumScenes)
 
 _int CManagement::Update(_double DeltaTime)
 {
-	if (m_pObjMgr == nullptr)
+	if (m_pObjMgr == nullptr || m_pInputDevice == nullptr)
 		return -1;
 
 	_int iProgress = 0;
@@ -301,6 +325,10 @@ _int CManagement::Update(_double DeltaTime)
 
 	if (0 > (iProgress = m_physx->Update_Physx(DeltaTime)))
 		return -1;
+	
+	if (FAILED(m_pInputDevice->SetUp_InputDeviceState()))
+		return -1;
+
 
 	if (0 > (iProgress = m_pObjMgr->Update(DeltaTime)))
 		return -1;
@@ -335,6 +363,9 @@ void CManagement::Release_Engine()
 	if (0 != CPipeLine::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CPipeLine");
 
+	if (0 != CLightMgr::GetInstance()->DestroyInstance())
+		MSG_BOX("Failed to Deleting CLightMgr");
+
 	if (0 != CPhysX::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CPhysX");
 
@@ -363,6 +394,7 @@ void CManagement::UpdateTool()
 
 void CManagement::Free()
 {
+	Safe_Release(m_pLightMgr);
 	Safe_Release(m_pPipeline);
 	Safe_Release(m_physx);
 	Safe_Release(m_pSoundMgr);
