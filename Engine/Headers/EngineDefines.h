@@ -49,7 +49,7 @@ using namespace physx;
 
 
 #define DIRECTINPUT_VERSION 0x0800
-#include <dinput.h>
+#include <dinput.h>		// 장치 헤더
 
 #include <d3d11.h>
 #include <unordered_map>
@@ -64,6 +64,11 @@ using namespace physx;
 #include <DirectXTex.h>
 using namespace DirectX;
 using namespace DirectX::PackedVector;
+
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 #include "EngineMacro.h"
 #include "EngineTypedef.h"

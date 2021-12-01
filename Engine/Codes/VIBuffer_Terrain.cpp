@@ -1,6 +1,6 @@
 #include "..\Headers\VIBuffer_Terrain.h"
 
-CVIBuffer_Terrain::CVIBuffer_Terrain(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
+CVIBuffer_Terrain::CVIBuffer_Terrain(DEVICES)
 	: CVIBuffer(pDevice, pDeviceContext)
 {
 }
@@ -192,7 +192,7 @@ HRESULT CVIBuffer_Terrain::Initialize_Clone(void * pArg)
 	return S_OK;
 }
 
-CVIBuffer_Terrain * CVIBuffer_Terrain::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext, const _tchar* pHeightMapPath, const _tchar* pShaderFilePath)
+CVIBuffer_Terrain * CVIBuffer_Terrain::Create(DEVICES, const _tchar* pHeightMapPath, const _tchar* pShaderFilePath)
 {
 	CVIBuffer_Terrain*	pInstance = new CVIBuffer_Terrain(pDevice, pDeviceContext);
 

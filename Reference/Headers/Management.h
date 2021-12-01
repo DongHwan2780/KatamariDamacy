@@ -8,9 +8,10 @@
 #include "ObjMgr.h"
 #include "ComponentMgr.h"
 #include "SoundMgr.h"
+#include "LightMgr.h"
 
 #include "PipeLine.h"
-#include "Physx.h"
+//#include "Physx.h"
 #include "Input.h"
 
 BEGIN(Engine)
@@ -85,16 +86,20 @@ public:
 	_byte Get_MouseButtonState(CInput::MOUSEBUTTONSTATE eButtonState);
 #pragma endregion
 
+#pragma region LIGHT_MGR
+	const LIGHTDESC* Get_LightDesc(_uint iIndex = 0) const;
+	HRESULT Add_Light(DEVICES, const LIGHTDESC& LightDesc);
+#pragma endregion
 
 
 #pragma region PHYSX
-	//_int	Update_Physx(_double DeltaTime);
-	PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
+	////_int	Update_Physx(_double DeltaTime);
+	//PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
 #pragma endregion
 
 
 public:
-	HRESULT Initialize_Engine(_int iNumScenes);
+	HRESULT Initialize_Engine(HINSTANCE hInst, HWND hWnd, _int iNumScenes);
 	_int	Update(_double DeltaTime);
 	static void Release_Engine();
 
@@ -113,9 +118,10 @@ private:
 	class CObjMgr*			m_pObjMgr = nullptr;
 	class CComponentMgr*	m_pComponentMgr = nullptr;
 	class CSoundMgr*		m_pSoundMgr = nullptr;
+	class CLightMgr*		m_pLightMgr = nullptr;
 
 	class CPipeLine*		m_pPipeline = nullptr;
-	class CPhysX*			m_physx = nullptr;
+//	class CPhysX*			m_physx = nullptr;
 };
 
 END

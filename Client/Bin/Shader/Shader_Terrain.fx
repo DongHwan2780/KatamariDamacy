@@ -8,13 +8,58 @@ cbuffer Matrices
 	matrix		g_ProjMatrix;	
 }
 
-texture2D		g_DiffuseTexture;
+cbuffer LightDesc			// 터레인에 들어오는 빛 정보
+{
+	vector		g_vLightDir;
+	vector		g_vLightDiffuse;
+	vector		g_vLightAmbient;
+	vector		g_vLightSpecular;
+}
+
+cbuffer MaterialDesc		// 터레인 재질 정보
+{
+	vector		g_vMtrlDiffuse;
+	vector		g_vMtrlAmbient = vector(0.4f, 0.4f, 0.4f, 1.f);
+	vector		g_vMtrlSpecular = vector(1.f, 1.f, 1.f, 1.f);
+	float		g_fPower = 30.f;		// 스펙큘러값을 몇 승(g_fPower) 해서 쓸것인지
+}
+
+cbuffer EtcDesc
+{
+	vector		g_vBrushPos = vector(10.f, 0.f, 10.f, 1.f);			// 마법진 이미지 위치
+	float		g_fRange = 5.f;			// 마법진 이미지 반지름(크기) 이고
+
+	vector		g_vCamPosition;			// 캠 포지션
+}
+
+
+texture2D		g_DiffuseSourTexture;
+texture2D		g_DiffuseDestTexture;
+texture2D		g_BrushTexture;
 
 SamplerState	g_DiffuseSampler
 {
+	Filter = min_mag_mip_linear;
+
 	AddressU = wrap;
 	AddressV = wrap;
 };
+
+
+texture2D		g_FilterTexture;
+
+SamplerState	g_FilterSampler
+{
+	Filter = min_mag_mip_point;
+
+	AddressU = wrap;
+	AddressV = wrap;
+};
+
+
+
+
+
 
 struct VS_IN
 {
