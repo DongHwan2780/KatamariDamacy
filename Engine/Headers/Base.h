@@ -7,7 +7,7 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CBase abstract
+class ENGINE_DLL CBase abstract		// 레퍼런스 카운트 관리
 {
 protected:
 	explicit CBase();

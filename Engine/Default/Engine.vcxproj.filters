@@ -94,6 +94,12 @@
     <Filter Include="01.Manager\08.LightMgr\Light">
       <UniqueIdentifier>{00a626be-5b9b-4336-ad02-1f44c241e746}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Model">
+      <UniqueIdentifier>{59812445-35bd-4442-b226-73cbd45af3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Model\MeshContainer">
+      <UniqueIdentifier>{1ec2b8cd-6565-45d5-ace2-a73c7ce88a35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -173,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Light.cpp">
       <Filter>01.Manager\08.LightMgr\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Model.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\MeshContainer.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Model\MeshContainer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +280,12 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Light.h">
       <Filter>01.Manager\08.LightMgr\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Model.h">
+      <Filter>01.Manager\01.ComponentMgr\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\MeshContainer.h">
+      <Filter>01.Manager\01.ComponentMgr\Model\MeshContainer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

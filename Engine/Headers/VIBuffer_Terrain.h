@@ -10,7 +10,7 @@ BEGIN(Engine)
 class ENGINE_DLL CVIBuffer_Terrain final : public CVIBuffer
 {
 private:
-	explicit CVIBuffer_Terrain(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
+	explicit CVIBuffer_Terrain(DEVICES);
 	explicit CVIBuffer_Terrain(const CVIBuffer_Terrain& other);
 	virtual ~CVIBuffer_Terrain() = default;
 public:
@@ -18,7 +18,7 @@ public:
 	virtual HRESULT Initialize_Clone(void * pArg) override;
 
 public:
-	static CVIBuffer_Terrain* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, const _tchar* pHeightMapPath, const _tchar* pShaderFilePath);
+	static CVIBuffer_Terrain* Create(DEVICES, const _tchar* pHeightMapPath, const _tchar* pShaderFilePath);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
 

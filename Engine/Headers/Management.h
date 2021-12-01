@@ -11,7 +11,7 @@
 #include "LightMgr.h"
 
 #include "PipeLine.h"
-#include "Physx.h"
+//#include "Physx.h"
 #include "Input.h"
 
 BEGIN(Engine)
@@ -93,8 +93,8 @@ public:
 
 
 #pragma region PHYSX
-	//_int	Update_Physx(_double DeltaTime);
-	PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
+	////_int	Update_Physx(_double DeltaTime);
+	//PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
 #pragma endregion
 
 
@@ -121,7 +121,7 @@ private:
 	class CLightMgr*		m_pLightMgr = nullptr;
 
 	class CPipeLine*		m_pPipeline = nullptr;
-	class CPhysX*			m_physx = nullptr;
+//	class CPhysX*			m_physx = nullptr;
 };
 
 END

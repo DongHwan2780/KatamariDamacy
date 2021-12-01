@@ -13,11 +13,11 @@ CManagement::CManagement()
 	, m_pComponentMgr(CComponentMgr::GetInstance())
 	, m_pSoundMgr(CSoundMgr::GetInstance())
 	, m_pPipeline(CPipeLine::GetInstance())
-	, m_physx(CPhysX::GetInstance())
+	//, m_physx(CPhysX::GetInstance())
 	, m_pLightMgr(CLightMgr::GetInstance())
 {
 	Safe_AddRef(m_pLightMgr);
-	Safe_AddRef(m_physx);
+	//Safe_AddRef(m_physx);
 	Safe_AddRef(m_pPipeline);
 	Safe_AddRef(m_pComponentMgr);
 	Safe_AddRef(m_pObjMgr);
@@ -270,13 +270,13 @@ HRESULT CManagement::Add_Light(DEVICES, const LIGHTDESC & LightDesc)
 //
 //	return m_physx->Update_Physx(DeltaTime);
 //}
-PxRigidDynamic * CManagement::CreateDynamicBall(const PxTransform & transform)
-{
-	if (m_physx == nullptr)
-		return nullptr;
-
-	return m_physx->CreateDynamicBall(transform);
-}
+//PxRigidDynamic * CManagement::CreateDynamicBall(const PxTransform & transform)
+//{
+//	if (m_physx == nullptr)
+//		return nullptr;
+//
+//	return m_physx->CreateDynamicBall(transform);
+//}
 #pragma endregion
 
 HRESULT CManagement::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _int iNumScenes)
@@ -293,7 +293,7 @@ HRESULT CManagement::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _int iNumScen
 	if (FAILED(m_pComponentMgr->Reserve_Manager(iNumScenes)))
 		return E_FAIL;
 
-	m_physx->Initialize_Physx();
+	//m_physx->Initialize_Physx();
 
 	m_pSoundMgr->Initialize_Sound();
 
@@ -323,8 +323,8 @@ _int CManagement::Update(_double DeltaTime)
 	// 이걸 받아서 pxtransform 를 내 리얼 객체 transform에 옮겨줘
 
 
-	if (0 > (iProgress = m_physx->Update_Physx(DeltaTime)))
-		return -1;
+	//if (0 > (iProgress = m_physx->Update_Physx(DeltaTime)))
+	//	return -1;
 	
 	if (FAILED(m_pInputDevice->SetUp_InputDeviceState()))
 		return -1;
@@ -366,8 +366,8 @@ void CManagement::Release_Engine()
 	if (0 != CLightMgr::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CLightMgr");
 
-	if (0 != CPhysX::GetInstance()->DestroyInstance())
-		MSG_BOX("Failed to Deleting CPhysX");
+	//if (0 != CPhysX::GetInstance()->DestroyInstance())
+	//	MSG_BOX("Failed to Deleting CPhysX");
 
 	if (0 != CInput::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CInput");
@@ -378,16 +378,8 @@ void CManagement::Release_Engine()
 
 void CManagement::UpdateTool()
 {
-	//m_pTimeMgr->Add_Timers(TEXT("Tool_Timer"));
-	//_double DeltaTime = m_pTimeMgr->Compute_DeltaTime(TEXT("Tool_Timer"));
-
-	//m_pObjMgr->Update(DeltaTime);
-	//m_pObjMgr->Late_Update(DeltaTime);
-
 	m_pGraphicDevice->Clear_BackBufferView(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGraphicDevice->Clear_DepthStencilView(1.f, 0);
-	
-	//m_pRenderer->Draw_RenderGroup();
 
 	m_pGraphicDevice->Present();
 }
@@ -396,7 +388,7 @@ void CManagement::Free()
 {
 	Safe_Release(m_pLightMgr);
 	Safe_Release(m_pPipeline);
-	Safe_Release(m_physx);
+	//Safe_Release(m_physx);
 	Safe_Release(m_pSoundMgr);
 	Safe_Release(m_pComponentMgr);
 	Safe_Release(m_pObjMgr);
