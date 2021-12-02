@@ -5,6 +5,17 @@
 
 namespace Engine
 {
+	typedef struct TagModelTextures
+	{
+		class CTexture*		pModelTexture[AI_TEXTURE_TYPE_MAX];
+	}MODELTEXTURES;
+
+	typedef struct tagEffectDesc
+	{
+		ID3DX11EffectPass*		pPass = nullptr;
+		ID3D11InputLayout*		pLayOut = nullptr;
+	}EFFECTDESC;
+
 	typedef struct tagLightDesc
 	{
 		XMFLOAT4		vLightDir;		// ºûÀÇ ¹æÇâ

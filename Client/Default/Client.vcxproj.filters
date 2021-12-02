@@ -167,5 +167,8 @@
     <FxCompile Include="..\Bin\Shader\Shader_Terrain.fx">
       <Filter>97.Shader</Filter>
     </FxCompile>
+    <FxCompile Include="..\Bin\Shader\Shader_Mesh.fx">
+      <Filter>97.Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

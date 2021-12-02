@@ -14,12 +14,17 @@ public:
 	virtual ~CMeshContainer() = default;
 
 public:
-	static CMeshContainer*	Create();
+	virtual HRESULT Initialize_Clone(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex);
+
+public:
+	static CMeshContainer* Create(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex);
 	virtual void Free() override;
 
 private:
-	_uint				m_iNumVertices;
-	_uint				m_iStartVertexIndex;
+	char				m_szName[MAX_PATH] = "";
+	_uint				m_iNumFaces = 0;
+	_uint				m_iStartFaceIndex = 0;
+	_uint				m_iStartVertexIndex = 0;
 };
 
 END
