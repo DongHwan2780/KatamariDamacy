@@ -46,17 +46,17 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 	_uint		iStartFaceIndex = 0;
 
 
-	m_MeshContainers.reserve(m_pScene->mNumMeshes);
+	m_MeshContainers.reserve(m_pScene->mNumMeshes);		// 메쉬의 개수만큼 컨테이너 공간 예약
 
 	for (_uint i = 0; i < m_pScene->mNumMeshes; ++i)
 	{
-		if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex)))
+		if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex)))	// 메쉬의 개수만큼 컨테이너 생성하고 메쉬, 시작정점인덱스, 폴리곤시작인덱스를 넘겨줌
 			return E_FAIL;
 	}
 
-	m_iStride = sizeof(VTXMESH);
+	m_iStride = sizeof(VTXMESH);		// 정점 구조체의 크기
 
-	/* 정점버퍼, 인덱스 버퍼를 생성하낟. */
+	// 버텍스, 인덱스 버퍼 생성
 	if (FAILED(Create_AllBuffer(pShaderFilePath)))
 		return E_FAIL;
 
@@ -147,7 +147,7 @@ HRESULT CModel::Create_AllBuffer(const _tchar * pShaderFilePath)
 	D3D11_BUFFER_DESC			BufferDesc;
 	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
 
-	BufferDesc.ByteWidth = sizeof(VTXMESH) * m_iNumVertices;
+	BufferDesc.ByteWidth = sizeof(VTXMESH) * m_iNumVertices;	// 정점의 크기 * 정점의 개수
 	BufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 	BufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	BufferDesc.CPUAccessFlags = 0;
@@ -200,22 +200,22 @@ HRESULT CModel::Create_Materials(aiMaterial * pMaterial, const char * pMeshFileP
 		if (FAILED(pMaterial->GetTexture(aiTextureType(i), 0, &strTexturePath)))
 			continue;
 
-		char	szTextureFileName[MAX_PATH] = "";
-		char	szExt[MAX_PATH] = "";
+		char	szTextureFileName[MAX_PATH] = "";		// 파일명
+		char	szExt[MAX_PATH] = "";					// 확장자명
 
-		_splitpath(strTexturePath.data, nullptr, nullptr, szTextureFileName, szExt);
-		strcat_s(szTextureFileName, szExt);
+		_splitpath(strTexturePath.data, nullptr, nullptr, szTextureFileName, szExt);	// 텍스쳐주소에서 텍스쳐이름, 확장자명만 가져와서 붙여줌
+		strcat_s(szTextureFileName, szExt);		
 
 		char		szFullPath[MAX_PATH] = "";
-		strcpy_s(szFullPath, pMeshFilePath);
-		strcat_s(szFullPath, szTextureFileName);
+		strcpy_s(szFullPath, pMeshFilePath);		// 받아온 메쉬파일의 주소와
+		strcat_s(szFullPath, szTextureFileName);	// 텍스쳐이름 + 확장자명을 szFullPath에 붙여줌
 
 		_tchar		szWideFullPath[MAX_PATH] = TEXT("");
 
 		MultiByteToWideChar(CP_ACP, 0, szFullPath, strlen(szFullPath), szWideFullPath, MAX_PATH);
 
-		if (!strcmp(szExt, ".dds"))
-			pModelTexture->pModelTexture[i] = CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::DDS, szWideFullPath);
+		if (!strcmp(szExt, ".dds"))				// 확장자명에 따라서 타입에 따른 텍스쳐 생성
+			pModelTexture->pModelTexture[i] = CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::DDS, szWideFullPath);		
 		else if (!strcmp(szExt, ".tga"))
 			pModelTexture->pModelTexture[i] = CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::TGA, szWideFullPath);
 		else

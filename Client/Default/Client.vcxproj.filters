@@ -19,14 +19,8 @@
     <Filter Include="01.Object\00.Player">
       <UniqueIdentifier>{2127ef66-3a4e-4b9c-bd05-fa34d4e6f079}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Object\01.MapObj">
-      <UniqueIdentifier>{a7e75fe9-5f11-4c3d-999c-8ea5ffde4b48}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Object\00.Player\00.PlayerBall">
       <UniqueIdentifier>{af6f8dae-4574-427c-a1e8-1404358ebf69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.MapObj\00.">
-      <UniqueIdentifier>{87dfb9cb-0893-4a18-8897-8440d29d6072}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.Scene\00.Loading">
       <UniqueIdentifier>{c05979c4-d70e-481c-ab5a-f695efef2ec2}</UniqueIdentifier>
@@ -54,6 +48,12 @@
     </Filter>
     <Filter Include="01.Object\02.CommonObj\02.MainCamera">
       <UniqueIdentifier>{965eb0ba-2aa6-4fc1-bdd2-28ca81b36fdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList">
+      <UniqueIdentifier>{a7e75fe9-5f11-4c3d-999c-8ea5ffde4b48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\00.">
+      <UniqueIdentifier>{00875ee5-f02c-47a4-92d9-60b67f8e500d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +108,9 @@
     <ClInclude Include="..\Bin\Shader\Shader_Defines.hpp">
       <Filter>97.Shader</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\ObjList.h">
+      <Filter>01.Object\01.ObjList</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -145,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\MainCamera.cpp">
       <Filter>01.Object\02.CommonObj\02.MainCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\ObjList.cpp">
+      <Filter>01.Object\01.ObjList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

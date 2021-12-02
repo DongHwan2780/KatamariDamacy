@@ -3,6 +3,11 @@
 #include "ClientDefines.h"
 #include "Camera.h"
 
+BEGIN(Engine)
+class CTransform;
+END
+
+
 BEGIN(Client)
 
 class CMainCamera final : public CCamera
@@ -29,3 +34,4 @@ public:
 
 };
 
+END
