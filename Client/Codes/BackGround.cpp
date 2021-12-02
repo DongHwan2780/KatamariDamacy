@@ -36,6 +36,14 @@ _int CBackGround::Update(_double DeltaTime)
 	return _int();
 }
 
+_int CBackGround::Late_Update(_double DeltaTime)
+{
+	if (FAILED(__super::Late_Update(DeltaTime)))
+		return -1;
+
+	return _int();
+}
+
 HRESULT CBackGround::Render()
 {
 	if (FAILED(__super::Render()))
