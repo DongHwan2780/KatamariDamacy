@@ -173,6 +173,7 @@
     <ClInclude Include="..\Headers\Logo.h" />
     <ClInclude Include="..\Headers\MainApp.h" />
     <ClInclude Include="..\Headers\MainCamera.h" />
+    <ClInclude Include="..\Headers\ObjList.h" />
     <ClInclude Include="..\Headers\Player.h" />
     <ClInclude Include="..\Headers\PlayerBall.h" />
     <ClInclude Include="..\Headers\StageOne.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="..\Codes\Logo.cpp" />
     <ClCompile Include="..\Codes\MainApp.cpp" />
     <ClCompile Include="..\Codes\MainCamera.cpp" />
+    <ClCompile Include="..\Codes\ObjList.cpp" />
     <ClCompile Include="..\Codes\Player.cpp" />
     <ClCompile Include="..\Codes\PlayerBall.cpp" />
     <ClCompile Include="..\Codes\StageOne.cpp" />
