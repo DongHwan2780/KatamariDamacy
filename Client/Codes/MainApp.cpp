@@ -20,7 +20,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pManagement->Ready_GraphicDevice(g_hWnd, g_iWinCX, g_iWinCY, &m_pDevice, &m_pDeviceContext)))
 		return E_FAIL;
 
-	if (FAILED(m_pManagement->Initialize_Engine(END_SCENE)))
+	if (FAILED(m_pManagement->Initialize_Engine(g_hInst, g_hWnd, END_SCENE)))
 		return E_FAIL;
 
 	if (FAILED(Ready_Prototype_Component()))

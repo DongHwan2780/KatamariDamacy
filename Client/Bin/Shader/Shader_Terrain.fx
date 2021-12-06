@@ -71,7 +71,10 @@ struct VS_IN
 struct VS_OUT
 {
 	float4	vPosition : SV_POSITION;
+	float	fShade : COLOR0;
+	float	fSpecular : COLOR1;
 	float2	vTexUV : TEXCOORD0;
+	float4	vWorldPos : TEXCOORD1;
 };
 
 /* 정점의 스페이스 변환. (월드, 뷰, 투영행렬의 곱.)*/
@@ -87,6 +90,19 @@ VS_OUT VS_MAIN(VS_IN In)
 	Out.vPosition = mul(vector(In.vPosition, 1.f), matWVP);
 	Out.vTexUV = In.vTexUV;
 
+	vector		vWorldNormal = mul(vector(In.vNormal, 0.f), g_WorldMatrix);
+	// Out.fShade = max(dot(normalize(g_vLightDir) * -1.f, normalize(In.vNormal)), 0.f);
+	Out.fShade = saturate(dot(normalize(g_vLightDir) * -1.f, normalize(vWorldNormal)));
+
+	vector		vWorldPos = mul(vector(In.vPosition, 1.f), g_WorldMatrix);
+
+	vector		vLook = vWorldPos - g_vCamPosition;
+	vector		vReflect = reflect(normalize(g_vLightDir), normalize(vWorldNormal));
+
+	Out.fSpecular = pow(saturate(dot(normalize(vLook) * -1.f, normalize(vReflect))), g_fPower);
+
+	Out.vWorldPos = vWorldPos;
+
 	return Out;
 }
 
@@ -98,15 +114,39 @@ VS_OUT VS_MAIN(VS_IN In)
 struct PS_IN
 {
 	float4	vPosition : SV_POSITION;
+	float	fShade : COLOR0;
+	float	fSpecular : COLOR1;
 	float2	vTexUV : TEXCOORD0;
+	float4	vWorldPos : TEXCOORD1;
 };
 
 vector	PS_MAIN(PS_IN In) : SV_TARGET0
 {
 	vector		vColor = (vector)0;
 
-	vColor = g_DiffuseTexture.Sample(g_DiffuseSampler, In.vTexUV);
-
+	vector		vSourDiffuse = g_DiffuseSourTexture.Sample(g_DiffuseSampler, In.vTexUV * 20.f);
+	vector		vDestDiffuse = g_DiffuseDestTexture.Sample(g_DiffuseSampler, In.vTexUV * 20.f);
+	
+	
+	vector		vFilter = g_FilterTexture.Sample(g_FilterSampler, In.vTexUV);
+	
+	vector		vMtrlDiffuse = vSourDiffuse * vFilter.r + vDestDiffuse * (1.f - vFilter.r);
+	
+	if (g_vBrushPos.x - g_fRange < In.vWorldPos.x && In.vWorldPos.x < g_vBrushPos.x + g_fRange &&
+		g_vBrushPos.z - g_fRange < In.vWorldPos.z && In.vWorldPos.z < g_vBrushPos.z + g_fRange)
+	{
+		float2		vTexUV = float2((In.vWorldPos.x - (g_vBrushPos.x - g_fRange)) / (2.f * g_fRange),
+			((g_vBrushPos.z + g_fRange) - In.vWorldPos.z) / (2.f * g_fRange));
+	
+		vector		vBrush = g_BrushTexture.Sample(g_DiffuseSampler, vTexUV);
+	
+		vMtrlDiffuse += vBrush;
+	}
+	
+	vColor = (g_vLightDiffuse * vMtrlDiffuse) * saturate(In.fShade + (g_vLightAmbient * g_vMtrlAmbient)) +
+	(g_vLightSpecular * g_vMtrlSpecular) * In.fSpecular;
+	vColor.a = vMtrlDiffuse.a;
+	
 	return vColor;
 }
 
