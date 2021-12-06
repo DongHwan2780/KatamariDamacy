@@ -37,6 +37,8 @@ public:
 
 	void Set_State(STATE eState, _fvector vData) { memcpy(&m_MatWorld.m[eState][0], &vData, sizeof(_float3)); } // 어떤 벡터(eState)에 어떤 값(vData)를 넣을건지
 	void Set_TransformDesc(const TRANSFORMDESC& TransformDesc) { m_TransformDesc = TransformDesc; }
+	void Set_Scale(_fvector vScale);
+
 
 public:
 	void Move_Straight(_double DeltaTime);

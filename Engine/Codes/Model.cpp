@@ -10,7 +10,28 @@ CModel::CModel(DEVICES)
 
 CModel::CModel(const CModel & other)
 	: CVIBuffer(other)
+	, m_iNumVertices(other.m_iNumVertices)
+	, m_iNumFaces(other.m_iNumFaces)
+	, m_pVertices(other.m_pVertices)
+	, m_pPolygonIndices32(other.m_pPolygonIndices32)
+	, m_MeshContainers(m_MeshContainers)
+	, m_SortByMaterialMesh(other.m_SortByMaterialMesh)
+	, m_ModelTextures(other.m_ModelTextures)
 {
+	for (auto& pMeshContainer : m_MeshContainers)
+		Safe_AddRef(pMeshContainer);
+
+	for (_uint i = 0; i < m_SortByMaterialMesh.size(); ++i)
+	{
+		for (auto& pSortByMaterialMesh : m_SortByMaterialMesh[i])
+			Safe_AddRef(pSortByMaterialMesh);
+	}
+
+	for (auto& pMeshTextues : m_ModelTextures)
+	{
+		for (_uint i = 0; i < AI_TEXTURE_TYPE_MAX; ++i)
+			Safe_AddRef(pMeshTextues->pModelTexture[i]);
+	}
 }
 
 HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath)
@@ -69,6 +90,10 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 			return E_FAIL;
 	}
 
+	/* 메시컨테이너들을 머테리얼 기준으로 묶고 정렬한다. */
+	if (FAILED(Sort_MeshesByMaterial()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -77,7 +102,28 @@ HRESULT CModel::Initialize_Clone(void * pArg)
 	return S_OK;
 }
 
-HRESULT CModel::Render(_uint iPassIndex)
+HRESULT CModel::Render(_uint iMaterialIndex, _uint iPassIndex)
+{
+	if (nullptr == m_pDeviceContext)
+		return E_FAIL;
+
+	m_pDeviceContext->IASetInputLayout(m_EffectDescs[iPassIndex].pLayOut);
+
+	if (FAILED(m_EffectDescs[iPassIndex].pPass->Apply(0, m_pDeviceContext)))
+		return E_FAIL;
+
+	for (auto& pMeshContainer : m_SortByMaterialMesh[iMaterialIndex])
+	{
+		m_pDeviceContext->DrawIndexed(pMeshContainer->Get_NumFaces() * 3,
+			pMeshContainer->Get_StartFaceIndex() * 3,
+			pMeshContainer->Get_StartVertexIndex());
+		// m_pDeviceContext->DrawIndexed(/* 인덱스 개수*/ /*인덱스버퍼의 어디에서부터그릴건지*/ /*정점버퍼의 어디에서부터 그리면되는지. */)
+	}
+
+	return S_OK;
+}
+
+HRESULT CModel::Bind_Buffers()
 {
 	if (nullptr == m_pDeviceContext)
 		return E_FAIL;
@@ -88,14 +134,27 @@ HRESULT CModel::Render(_uint iPassIndex)
 	m_pDeviceContext->IASetIndexBuffer(m_pIB, DXGI_FORMAT_R32_UINT, 0);
 	m_pDeviceContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	m_pDeviceContext->IASetInputLayout(m_EffectDescs[iPassIndex].pLayOut);
+	return S_OK;
+}
 
-	if (FAILED(m_EffectDescs[iPassIndex].pPass->Apply(0, m_pDeviceContext)))
+HRESULT CModel::SetUp_TextureOnShader(const char * pConstantName, _uint iMaterialIndex, aiTextureType eTextureType)
+{
+	if (nullptr == m_pEffect)
 		return E_FAIL;
 
-	for (auto& pMeshContainer : m_MeshContainers)
+	ID3DX11EffectShaderResourceVariable*		pVariable = m_pEffect->GetVariableByName(pConstantName)->AsShaderResource();
+	if (nullptr == pVariable)
+		return E_FAIL;
+
+
+	if (nullptr != m_ModelTextures[iMaterialIndex]->pModelTexture[eTextureType])
 	{
-		// m_pDeviceContext->DrawIndexed(/* 인덱스카운드*/ /*인덱스버퍼의 어디에서부터그릴건지*/ /*정점버퍼의 어디에서부터 그리면되는지. */)
+		ID3D11ShaderResourceView*		pShaderResourceView =
+			m_ModelTextures[iMaterialIndex]->pModelTexture[eTextureType]->Get_ShaderResourceView(0);
+		if (nullptr == pShaderResourceView)
+			return E_FAIL;
+		if (FAILED(pVariable->SetResource(pShaderResourceView)))
+			return E_FAIL;
 	}
 
 	return S_OK;
@@ -132,7 +191,7 @@ HRESULT CModel::Create_MeshContainer(aiMesh * pMesh, _uint * pStartVertexIndex, 
 		++(*pStartFaceIndex);
 	}
 
-	CMeshContainer*			pMeshContainer = CMeshContainer::Create(pMesh->mName.data, pMesh->mNumFaces, iStartFaceIndex, iStartVertexIndex);
+	CMeshContainer*			pMeshContainer = CMeshContainer::Create(pMesh->mName.data, pMesh->mNumFaces, iStartFaceIndex, iStartVertexIndex, pMesh->mMaterialIndex);
 	if (nullptr == pMeshContainer)
 		return E_FAIL;
 
@@ -224,6 +283,24 @@ HRESULT CModel::Create_Materials(aiMaterial * pMaterial, const char * pMeshFileP
 
 	m_ModelTextures.push_back(pModelTexture);
 
+	return S_OK;
+}
+
+HRESULT CModel::Sort_MeshesByMaterial()
+{
+	_uint		iNumMaterials = m_ModelTextures.size();	
+
+	m_SortByMaterialMesh.resize(iNumMaterials);	// 머테리얼의 개수만큼 
+
+	for (auto& pMeshContainer : m_MeshContainers)
+	{
+		_uint	iMeshMaterialIndex = pMeshContainer->Get_MeshMaterialIndex();
+		if (iMeshMaterialIndex >= m_pScene->mNumMaterials)
+			return E_FAIL;
+
+		m_SortByMaterialMesh[iMeshMaterialIndex].push_back(pMeshContainer);
+		Safe_AddRef(pMeshContainer);
+	}
 	return S_OK;
 }
 

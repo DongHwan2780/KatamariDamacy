@@ -18,13 +18,18 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype(const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath);
 	virtual HRESULT Initialize_Clone(void * pArg);
-	HRESULT Render(_uint iPassIndex);
+	HRESULT Render(_uint iMaterialIndex, _uint iPassIndex);
 
+public:
+	HRESULT Bind_Buffers();
+	HRESULT SetUp_TextureOnShader(const char* pConstantName, _uint iMaterialIndex, aiTextureType eTextureType);
 
 private:
 	HRESULT Create_MeshContainer(aiMesh* pMesh, _uint* pStartVertexIndex, _uint* pStartFaceIndex);
 	HRESULT Create_AllBuffer(const _tchar* pShaderFilePath);
 	HRESULT Create_Materials(aiMaterial*	pMaterial, const char* pMeshFilePath);
+
+	HRESULT Sort_MeshesByMaterial();
 
 public:
 	static CModel*	Create(DEVICES, const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath);
@@ -41,8 +46,10 @@ private:
 	VTXMESH*			m_pVertices = nullptr;
 	POLYGONINDICES32*	m_pPolygonIndices32 = nullptr;
 
-	vector<class CMeshContainer*>		m_MeshContainers;
-	vector<MODELTEXTURES*>				m_ModelTextures;
+	vector<class CMeshContainer*>			m_MeshContainers;
+
+	vector<vector<class CMeshContainer*>>	m_SortByMaterialMesh;		// 같은 재질을 가진 메쉬컨테이너끼리 묶어서 보관한다.
+	vector<MODELTEXTURES*>					m_ModelTextures;
 
 
 };

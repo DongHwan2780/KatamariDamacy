@@ -9,13 +9,6 @@ BEGIN(Engine)
 
 class ENGINE_DLL CVIBuffer abstract : public CComponent
 {
-public:
-	typedef struct tagEffectDesc
-	{
-		ID3DX11EffectPass*		pPass = nullptr;
-		ID3D11InputLayout*		pLayOut = nullptr;
-	}EFFECTDESC;
-
 protected:
 	explicit CVIBuffer(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
 	explicit CVIBuffer(const CVIBuffer& other);

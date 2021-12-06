@@ -28,6 +28,7 @@ public:
 
 public:
 	virtual void Free() override;
+
 private:
 	ID3D11Device*			m_pDevice = nullptr;		// 장치 초기화 관련 및 메모리 할당
 	ID3D11DeviceContext*	m_pDeviceContext = nullptr;	// 렌더링에 필요한 바인딩 작업 및 관련 작업 수행(버퍼를 그릴때)			//  LPDIRECT3DDEVICE9이 하던 기능을 둘이서 나눠서 함

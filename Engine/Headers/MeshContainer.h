@@ -14,10 +14,19 @@ public:
 	virtual ~CMeshContainer() = default;
 
 public:
-	virtual HRESULT Initialize_Clone(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex);
+	_uint Get_MeshMaterialIndex() const { return m_iMaterialIndex; }
+
+	_uint Get_NumFaces() const { return m_iNumFaces; }
+
+	_uint Get_StartFaceIndex() const { return m_iStartFaceIndex; }
+
+	_uint Get_StartVertexIndex() const { return m_iStartVertexIndex; }
 
 public:
-	static CMeshContainer* Create(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex);
+	virtual HRESULT Initialize_Clone(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex, _uint iMaterialIndex);
+
+public:
+	static CMeshContainer* Create(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex, _uint iMaterialIndex);
 	virtual void Free() override;
 
 private:
@@ -25,6 +34,7 @@ private:
 	_uint				m_iNumFaces = 0;
 	_uint				m_iStartFaceIndex = 0;
 	_uint				m_iStartVertexIndex = 0;
+	_uint				m_iMaterialIndex = 0;
 };
 
 END

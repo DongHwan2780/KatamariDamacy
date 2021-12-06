@@ -27,6 +27,17 @@ HRESULT CTransform::Initialize_Clone(void * pArg)
 	return S_OK;
 }
 
+void CTransform::Set_Scale(_fvector vScale)
+{
+	_vector		vRight = XMVector3Normalize(Get_State(CTransform::RIGHT)) * XMVectorGetX(vScale);
+	_vector		vUp = XMVector3Normalize(Get_State(CTransform::UP)) * XMVectorGetY(vScale);
+	_vector		vLook = XMVector3Normalize(Get_State(CTransform::LOOK)) * XMVectorGetZ(vScale);
+
+	Set_State(CTransform::RIGHT, vRight);
+	Set_State(CTransform::UP, vUp);
+	Set_State(CTransform::LOOK, vLook);
+}
+
 void CTransform::Move_Straight(_double DeltaTime)
 {
 	_vector vLook = Get_State(CTransform::LOOK);
