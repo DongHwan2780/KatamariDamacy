@@ -290,15 +290,17 @@ HRESULT CModel::Sort_MeshesByMaterial()
 {
 	_uint		iNumMaterials = m_ModelTextures.size();	
 
-	m_SortByMaterialMesh.resize(iNumMaterials);	// 머테리얼의 개수만큼 
-
+	m_SortByMaterialMesh.resize(iNumMaterials);	// 머테리얼의 개수만큼 공간과 원소를 잡아준다.
+												// reserve는 공간만 잡아줄 뿐 원소는 채워주지않고, 인자가 capacity보다 클때 iter를 사용할수없고 무효화되는 주의점이 있음.
+												// 그래서 resize를 통해 공간도 잡아주고 배열원소도 null값으로 사용.
+												
 	for (auto& pMeshContainer : m_MeshContainers)
 	{
-		_uint	iMeshMaterialIndex = pMeshContainer->Get_MeshMaterialIndex();
+		_uint	iMeshMaterialIndex = pMeshContainer->Get_MeshMaterialIndex();	// 메쉬컨테이너에 보관된 메쉬의 머테리얼 인덱스를 받아서
 		if (iMeshMaterialIndex >= m_pScene->mNumMaterials)
 			return E_FAIL;
 
-		m_SortByMaterialMesh[iMeshMaterialIndex].push_back(pMeshContainer);
+		m_SortByMaterialMesh[iMeshMaterialIndex].push_back(pMeshContainer);		// 해당 머테리얼 인덱스에 맞는 배열에 원소로 넣어줌
 		Safe_AddRef(pMeshContainer);
 	}
 	return S_OK;
