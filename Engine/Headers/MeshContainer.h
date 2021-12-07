@@ -15,15 +15,16 @@ public:
 
 public:
 	_uint Get_MeshMaterialIndex() const { return m_iMaterialIndex; }
-
 	_uint Get_NumFaces() const { return m_iNumFaces; }
-
 	_uint Get_StartFaceIndex() const { return m_iStartFaceIndex; }
-
 	_uint Get_StartVertexIndex() const { return m_iStartVertexIndex; }
 
 public:
 	virtual HRESULT Initialize_Clone(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex, _uint iMaterialIndex);
+
+public:
+	HRESULT Add_Bones(BONEDESC* pBoneDesc);
+
 
 public:
 	static CMeshContainer* Create(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex, _uint iMaterialIndex);
@@ -35,6 +36,9 @@ private:
 	_uint				m_iStartFaceIndex = 0;
 	_uint				m_iStartVertexIndex = 0;
 	_uint				m_iMaterialIndex = 0;
+
+	/* 현재 메시컨테이너(정점들)는 어떤 뼈대들로부터 행렬을 적용받아야하는지. */
+	vector<BONEDESC*>		m_Bones;
 };
 
 END

@@ -100,6 +100,9 @@
     <Filter Include="01.Manager\01.ComponentMgr\Model\MeshContainer">
       <UniqueIdentifier>{1ec2b8cd-6565-45d5-ace2-a73c7ce88a35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Model\HierarchyNode">
+      <UniqueIdentifier>{5936f682-beb1-4fba-a822-941e63ae096c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -185,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\MeshContainer.cpp">
       <Filter>01.Manager\01.ComponentMgr\Model\MeshContainer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\HierarchyNode.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Model\HierarchyNode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\MeshContainer.h">
       <Filter>01.Manager\01.ComponentMgr\Model\MeshContainer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\HierarchyNode.h">
+      <Filter>01.Manager\01.ComponentMgr\Model\HierarchyNode</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

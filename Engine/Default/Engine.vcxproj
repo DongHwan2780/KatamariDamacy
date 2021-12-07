@@ -169,6 +169,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClInclude Include="..\Headers\Base.h" />
     <ClInclude Include="..\Headers\Camera.h" />
     <ClInclude Include="..\Headers\EngineStruct.h" />
+    <ClInclude Include="..\Headers\HierarchyNode.h" />
     <ClInclude Include="..\Headers\Input.h" />
     <ClInclude Include="..\Headers\keyMgr.h" />
     <ClInclude Include="..\Headers\Component.h" />
@@ -203,6 +204,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp" />
     <ClCompile Include="..\Codes\Camera.cpp" />
+    <ClCompile Include="..\Codes\HierarchyNode.cpp" />
     <ClCompile Include="..\Codes\Input.cpp" />
     <ClCompile Include="..\Codes\keyMgr.cpp" />
     <ClCompile Include="..\Codes\Component.cpp" />
