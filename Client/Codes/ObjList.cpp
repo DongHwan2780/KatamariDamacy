@@ -43,6 +43,10 @@ void CObjList::Gravity(_double DeltaTime)
 {
 }
 
+void CObjList::OnLandCheck()
+{
+}
+
 void CObjList::Coll_PlayerBall()
 {
 }

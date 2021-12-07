@@ -5,6 +5,13 @@
 
 namespace Engine
 {
+	typedef struct tagBoneDesc
+	{
+		class CHierarchyNode*	pHierarchyNode = nullptr;
+		// XMFLOAT4X4		OffsetMatrix * CombindMatrix(TransformationMatrix * pParent->CombindMatrix);
+		XMFLOAT4X4		OffsetMatrix;
+	}BONEDESC;
+
 	typedef struct TagModelTextures
 	{
 		class CTexture*		pModelTexture[AI_TEXTURE_TYPE_MAX];

@@ -11,6 +11,8 @@
 
 BEGIN(Engine)
 class CTransform;
+class CRenderer;
+class CModel;
 END
 
 
@@ -18,8 +20,6 @@ BEGIN(Client)
 
 class CObjList final : public CObj
 {
-public:
-	enum OBJSTATE { NONE_STICK , STICK_BALL, OBJSTATE_END };
 public:
 	explicit CObjList(DEVICES);
 	explicit CObjList(const CObjList& other);
@@ -35,10 +35,10 @@ public:
 
 public:
 	void Gravity(_double DeltaTime);
+	void OnLandCheck();
 
 public:
 	void Coll_PlayerBall();
-
 
 public:
 	_float	Get_PlayerBallSize() {}
@@ -48,8 +48,28 @@ public:
 	virtual void Free() PURE;
 
 protected:
-	OBJSTATE	m_eObjState = OBJSTATE::NONE_STICK;	// 오브젝트 붙었는지 체크해줄거
+	// 오브젝트 컴퍼넌트
+	CTransform*		m_pTransform = nullptr;
+	CRenderer*		m_pRenderer = nullptr;
+	CModel*			m_pModel = nullptr;
+
+
+	// 오브젝트 공통 사용 변수
 	_float		m_fObjSize = 0.f;					// 각 오브젝트 사이즈, 비교해서 붙을건지 튕겨나가게할건지
+	_bool		m_bStickCheck = false;
+
+	//중력
+	_float m_fGravityTime = 0.f;
+	_float m_fGravityY = 0.f;
+
+
+	//반작용 관련
+	_float3 m_vReactionDir = { 0.f, 0.f, 0.f };
+	_float m_fReactionPower = 0.f;
+
+
+
+
 
 	CTransform*		m_pPlayerBallTransform = nullptr;
 

@@ -3,6 +3,8 @@
 #include "MeshContainer.h"
 #include "Texture.h"
 
+#include "HierarchyNode.h"
+
 CModel::CModel(DEVICES)
 	:CVIBuffer(m_pDevice, m_pDeviceContext)
 {
@@ -34,7 +36,7 @@ CModel::CModel(const CModel & other)
 	}
 }
 
-HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath)
+HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix)
 {
 	char		szFullPath[MAX_PATH] = "";
 
@@ -71,7 +73,7 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 
 	for (_uint i = 0; i < m_pScene->mNumMeshes; ++i)
 	{
-		if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex)))	// 메쉬의 개수만큼 컨테이너 생성하고 메쉬, 시작정점인덱스, 폴리곤시작인덱스를 넘겨줌
+		if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex, PivotMatrix)))	// 메쉬의 개수만큼 컨테이너 생성하고 메쉬, 시작정점인덱스, 폴리곤시작인덱스를 넘겨줌
 			return E_FAIL;
 	}
 
@@ -93,6 +95,16 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 	/* 메시컨테이너들을 머테리얼 기준으로 묶고 정렬한다. */
 	if (FAILED(Sort_MeshesByMaterial()))
 		return E_FAIL;
+
+	if (false == m_pScene->HasAnimations())
+		return S_OK;
+
+	/* 노드들의 계층구조를 내가 원하는 형태로 보관한다. */
+	Create_HierarchyNodes(m_pScene->mRootNode);
+
+	sort(m_HierarchyNodes.begin(), m_HierarchyNodes.end(), [](CHierarchyNode* pSour, CHierarchyNode* pDest) {
+		return pSour->Get_Depth() < pDest->Get_Depth();
+	});
 
 	return S_OK;
 }
@@ -160,7 +172,7 @@ HRESULT CModel::SetUp_TextureOnShader(const char * pConstantName, _uint iMateria
 	return S_OK;
 }
 
-HRESULT CModel::Create_MeshContainer(aiMesh * pMesh, _uint * pStartVertexIndex, _uint * pStartFaceIndex)
+HRESULT CModel::Create_MeshContainer(aiMesh * pMesh, _uint * pStartVertexIndex, _uint * pStartFaceIndex, _fmatrix PivotMatrix)
 {
 	_uint		iStartVertexIndex = *pStartVertexIndex;
 
@@ -168,6 +180,11 @@ HRESULT CModel::Create_MeshContainer(aiMesh * pMesh, _uint * pStartVertexIndex, 
 	{
 		/* 정점의 위치를 가지고 온다. */
 		memcpy(&m_pVertices[*pStartVertexIndex].vPosition, &pMesh->mVertices[i], sizeof(_float3));
+
+		_vector		vPosition;
+		vPosition = XMLoadFloat3(&m_pVertices[*pStartVertexIndex].vPosition);
+		vPosition = XMVector3TransformCoord(vPosition, PivotMatrix);
+		XMStoreFloat3(&m_pVertices[*pStartVertexIndex].vPosition, vPosition);
 
 		/* 정점의 노멀를 가지고 온다. */
 		memcpy(&m_pVertices[*pStartVertexIndex].vNormal, &pMesh->mNormals[i], sizeof(_float3));
@@ -306,11 +323,71 @@ HRESULT CModel::Sort_MeshesByMaterial()
 	return S_OK;
 }
 
-CModel * CModel::Create(DEVICES, const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath)
+HRESULT CModel::Create_HierarchyNodes(aiNode * pNode, CHierarchyNode * pParent, _uint iDepth)
+{
+	_matrix		TransformationMatrix;
+	memcpy(&TransformationMatrix, &pNode->mTransformation, sizeof(_matrix));
+
+	CHierarchyNode*		pHierarchyNode = CHierarchyNode::Create(pNode->mName.data, TransformationMatrix, pParent, iDepth);
+	if (nullptr == pHierarchyNode)
+		return E_FAIL;
+
+	m_HierarchyNodes.push_back(pHierarchyNode);
+
+	for (_uint i = 0; i < pNode->mNumChildren; ++i)
+		Create_HierarchyNodes(pNode->mChildren[i], pHierarchyNode, iDepth + 1);
+
+	return S_OK;
+}
+
+HRESULT CModel::SetUp_SkinnedInfo()
+{
+	for (_uint i = 0; i < m_pScene->mNumMeshes; ++i)
+	{
+		aiMesh*		pMesh = m_pScene->mMeshes[i];
+		CMeshContainer*	pMeshContainer = m_MeshContainers[i];
+
+		/* 현재 메시에 영향을 미치는 뼈들의 정보를 구성하여 메쉬 컨테이너안에 보관해둔다. */
+		/* 렌더링 시에, 메쉬 컨테이너 단위로 루프를 돌면서 그리기때문에 각 메쉬에 영향을 미치는 뼈들을 모아둔다..  */
+		for (_uint j = 0; j < pMesh->mNumBones; ++j)
+		{
+			aiBone*		pBone = pMesh->mBones[j];
+			if (nullptr == pBone)
+				return E_FAIL;
+
+			BONEDESC*	pBoneDesc = new BONEDESC;
+			ZeroMemory(pBoneDesc, sizeof(BONEDESC));
+
+			pBoneDesc->pHierarchyNode = Find_HierarchyNode(pBone->mName.data);
+			memcpy(&pBoneDesc->OffsetMatrix, &pBone->mOffsetMatrix, sizeof(_matrix));
+
+			/* 정점의 블렌드 인덱스와 블렌드 웨이트를 채운다. */
+
+
+			pMeshContainer->Add_Bones(pBoneDesc);
+		}
+	}
+
+
+	return S_OK;
+}
+
+CHierarchyNode * CModel::Find_HierarchyNode(const char * pBoneName)
+{
+	auto iter = find_if(m_HierarchyNodes.begin(), m_HierarchyNodes.end(), [&](CHierarchyNode* pNode) 
+	{
+		if (strcmp(pNode->Get_Name(), pBoneName) == 0)
+			return true;
+	});
+
+	return *iter;
+}
+
+CModel * CModel::Create(DEVICES, const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix)
 {
 	CModel*	pInstance = new CModel(pDevice, pDeviceContext);
 
-	if (FAILED(pInstance->Initialize_Prototype(pMeshFilePath, pMeshFileName, pShaderFilePath)))
+	if (FAILED(pInstance->Initialize_Prototype(pMeshFilePath, pMeshFileName, pShaderFilePath, PivotMatrix)))
 	{	
 		MSG_BOX("Failed To Creating CModel");
 		Safe_Release(pInstance);

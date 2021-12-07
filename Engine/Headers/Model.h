@@ -16,7 +16,10 @@ private:
 	virtual ~CModel() = default;
 
 public:
-	virtual HRESULT Initialize_Prototype(const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath);
+	_uint	Get_NumMaterials() const { return m_ModelTextures.size(); }
+
+public:
+	virtual HRESULT Initialize_Prototype(const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix);
 	virtual HRESULT Initialize_Clone(void * pArg);
 	HRESULT Render(_uint iMaterialIndex, _uint iPassIndex);
 
@@ -25,14 +28,19 @@ public:
 	HRESULT SetUp_TextureOnShader(const char* pConstantName, _uint iMaterialIndex, aiTextureType eTextureType);
 
 private:
-	HRESULT Create_MeshContainer(aiMesh* pMesh, _uint* pStartVertexIndex, _uint* pStartFaceIndex);
+	HRESULT Create_MeshContainer(aiMesh* pMesh, _uint* pStartVertexIndex, _uint* pStartFaceIndex, _fmatrix PivotMatrix);
 	HRESULT Create_AllBuffer(const _tchar* pShaderFilePath);
 	HRESULT Create_Materials(aiMaterial*	pMaterial, const char* pMeshFilePath);
 
 	HRESULT Sort_MeshesByMaterial();
 
+	HRESULT Create_HierarchyNodes(aiNode* pNode, class CHierarchyNode* pParent = nullptr, _uint iDepth = 0);
+	HRESULT SetUp_SkinnedInfo();
+	CHierarchyNode* Find_HierarchyNode(const char* pBoneName);
+
+
 public:
-	static CModel*	Create(DEVICES, const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath);
+	static CModel*	Create(DEVICES, const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
 
@@ -51,7 +59,7 @@ private:
 	vector<vector<class CMeshContainer*>>	m_SortByMaterialMesh;		// 같은 재질을 가진 메쉬컨테이너끼리 묶어서 보관한다.
 	vector<MODELTEXTURES*>					m_ModelTextures;
 
-
+	vector<class CHierarchyNode*>			m_HierarchyNodes;
 };
 END
 #endif // !__MODEL_H__
