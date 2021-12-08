@@ -31,11 +31,13 @@ private:
 	HRESULT Create_MeshContainer(aiMesh* pMesh, _uint* pStartVertexIndex, _uint* pStartFaceIndex, _fmatrix PivotMatrix);
 	HRESULT Create_AllBuffer(const _tchar* pShaderFilePath);
 	HRESULT Create_Materials(aiMaterial*	pMaterial, const char* pMeshFilePath);
+	HRESULT Create_HierarchyNodes(aiNode* pNode, class CHierarchyNode* pParent = nullptr, _uint iDepth = 0);
 
 	HRESULT Sort_MeshesByMaterial();
 
-	HRESULT Create_HierarchyNodes(aiNode* pNode, class CHierarchyNode* pParent = nullptr, _uint iDepth = 0);
 	HRESULT SetUp_SkinnedInfo();
+	HRESULT SetUp_AnimationInfo();
+
 	CHierarchyNode* Find_HierarchyNode(const char* pBoneName);
 
 
@@ -47,6 +49,10 @@ public:
 private:
 	const aiScene*		m_pScene = nullptr;		// 모든 모델들의 메쉬, 머테리얼 정보를 가지고 있을 공간
 	Assimp::Importer	m_Importer;
+
+protected:
+	vector<class CAnimation*>		m_Animations;
+
 
 private:
 	_uint				m_iNumVertices = 0;		// 정점 개수

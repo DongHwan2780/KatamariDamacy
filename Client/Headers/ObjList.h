@@ -15,10 +15,9 @@ class CRenderer;
 class CModel;
 END
 
-
 BEGIN(Client)
 
-class CObjList final : public CObj
+class CObjList abstract : public CObj
 {
 public:
 	explicit CObjList(DEVICES);
@@ -31,7 +30,6 @@ public:
 	virtual _int	Update(_double DeltaTime) PURE;
 	virtual _int	Late_Update(_double DeltaTime) PURE;
 	virtual HRESULT	Render() PURE;
-
 
 public:
 	void Gravity(_double DeltaTime);

@@ -176,8 +176,13 @@
     <ClInclude Include="..\Headers\ObjList.h" />
     <ClInclude Include="..\Headers\Player.h" />
     <ClInclude Include="..\Headers\PlayerBall.h" />
+    <ClInclude Include="..\Headers\PlayerMoveUI.h" />
+    <ClInclude Include="..\Headers\SizeUI.h" />
     <ClInclude Include="..\Headers\StageOne.h" />
+    <ClInclude Include="..\Headers\StickyUI.h" />
     <ClInclude Include="..\Headers\Terrain.h" />
+    <ClInclude Include="..\Headers\TimeUI.h" />
+    <ClInclude Include="..\Headers\UIList.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -193,8 +198,13 @@
     <ClCompile Include="..\Codes\ObjList.cpp" />
     <ClCompile Include="..\Codes\Player.cpp" />
     <ClCompile Include="..\Codes\PlayerBall.cpp" />
+    <ClCompile Include="..\Codes\PlayerMoveUI.cpp" />
+    <ClCompile Include="..\Codes\SizeUI.cpp" />
     <ClCompile Include="..\Codes\StageOne.cpp" />
+    <ClCompile Include="..\Codes\StickyUI.cpp" />
     <ClCompile Include="..\Codes\Terrain.cpp" />
+    <ClCompile Include="..\Codes\TimeUI.cpp" />
+    <ClCompile Include="..\Codes\UIList.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

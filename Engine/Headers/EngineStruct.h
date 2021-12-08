@@ -5,6 +5,14 @@
 
 namespace Engine
 {
+	typedef struct tagKeyFrameDesc
+	{
+		XMFLOAT3		vScale;
+		XMFLOAT4		vRotation;
+		XMFLOAT3		vPosition;
+		double			Time; /* 현재 키프레임이 표현되어야할 시간. */
+	}KEYFRAMEDESC;
+
 	typedef struct tagBoneDesc
 	{
 		class CHierarchyNode*	pHierarchyNode = nullptr;
@@ -45,8 +53,8 @@ namespace Engine
 		XMFLOAT3		vNormal;
 		XMFLOAT2		vTexUV;
 		XMFLOAT3		vTangent;
-		XMUINT4			BlendIndex;
-		XMFLOAT4		BlendWeight;
+		XMUINT4			vBlendIndex;
+		XMFLOAT4		vBlendWeight;
 	}VTXMESH;
 
 	typedef struct tagVertexInfo

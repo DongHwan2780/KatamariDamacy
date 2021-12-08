@@ -55,6 +55,21 @@
     <Filter Include="01.Object\01.ObjList\00.">
       <UniqueIdentifier>{00875ee5-f02c-47a4-92d9-60b67f8e500d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Object\02.CommonObj\03.UI">
+      <UniqueIdentifier>{6aeef947-8da0-4ef3-9ee2-99a8636730cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj\03.UI\00.SizeUI">
+      <UniqueIdentifier>{ed6466c7-c0cc-48e7-9f67-efd1c37bc025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj\03.UI\01.StickyUI">
+      <UniqueIdentifier>{b1ee6bfc-e024-49b5-a72a-bcd2713323de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj\03.UI\02.TimeUI">
+      <UniqueIdentifier>{de29ffbd-08cc-44ed-9fee-754206d71414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj\03.UI\03.PlayerMoveUI">
+      <UniqueIdentifier>{3b8421f4-3400-4d1a-a546-de4381c7795d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -111,6 +126,21 @@
     <ClInclude Include="..\Headers\ObjList.h">
       <Filter>01.Object\01.ObjList</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\PlayerMoveUI.h">
+      <Filter>01.Object\02.CommonObj\03.UI\03.PlayerMoveUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\SizeUI.h">
+      <Filter>01.Object\02.CommonObj\03.UI\00.SizeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\StickyUI.h">
+      <Filter>01.Object\02.CommonObj\03.UI\01.StickyUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\TimeUI.h">
+      <Filter>01.Object\02.CommonObj\03.UI\02.TimeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\UIList.h">
+      <Filter>01.Object\02.CommonObj\03.UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -151,6 +181,21 @@
     </ClCompile>
     <ClCompile Include="..\Codes\ObjList.cpp">
       <Filter>01.Object\01.ObjList</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\PlayerMoveUI.cpp">
+      <Filter>01.Object\02.CommonObj\03.UI\03.PlayerMoveUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\SizeUI.cpp">
+      <Filter>01.Object\02.CommonObj\03.UI\00.SizeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\StickyUI.cpp">
+      <Filter>01.Object\02.CommonObj\03.UI\01.StickyUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\TimeUI.cpp">
+      <Filter>01.Object\02.CommonObj\03.UI\02.TimeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\UIList.cpp">
+      <Filter>01.Object\02.CommonObj\03.UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

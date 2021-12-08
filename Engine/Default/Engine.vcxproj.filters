@@ -103,6 +103,12 @@
     <Filter Include="01.Manager\01.ComponentMgr\Model\HierarchyNode">
       <UniqueIdentifier>{5936f682-beb1-4fba-a822-941e63ae096c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Model\Animation">
+      <UniqueIdentifier>{b4ea7395-0dfc-47de-a69b-2e8d4abc8883}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Model\Channel">
+      <UniqueIdentifier>{e94302e2-e090-49ab-ab33-c156a2331f11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -191,6 +197,12 @@
     </ClCompile>
     <ClCompile Include="..\Codes\HierarchyNode.cpp">
       <Filter>01.Manager\01.ComponentMgr\Model\HierarchyNode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Animation.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Model\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Channel.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Model\Channel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +307,12 @@
     </ClInclude>
     <ClInclude Include="..\Headers\HierarchyNode.h">
       <Filter>01.Manager\01.ComponentMgr\Model\HierarchyNode</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Animation.h">
+      <Filter>01.Manager\01.ComponentMgr\Model\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Channel.h">
+      <Filter>01.Manager\01.ComponentMgr\Model\Channel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
