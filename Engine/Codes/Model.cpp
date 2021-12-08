@@ -3,6 +3,9 @@
 #include "MeshContainer.h"
 #include "Texture.h"
 
+#include "Animation.h"
+#include "Channel.h"
+
 #include "HierarchyNode.h"
 
 CModel::CModel(DEVICES)
@@ -79,10 +82,6 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 
 	m_iStride = sizeof(VTXMESH);		// 정점 구조체의 크기
 
-	// 버텍스, 인덱스 버퍼 생성
-	if (FAILED(Create_AllBuffer(pShaderFilePath)))
-		return E_FAIL;
-
 	/* 현재 모델의 머테리얼들을 로드한다. */
 	m_ModelTextures.reserve(m_pScene->mNumMaterials);
 
@@ -97,7 +96,13 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 		return E_FAIL;
 
 	if (false == m_pScene->HasAnimations())
+	{
+		// 버텍스, 인덱스 버퍼 생성
+		if (FAILED(Create_AllBuffer(pShaderFilePath)))
+			return E_FAIL;
+
 		return S_OK;
+	}
 
 	/* 노드들의 계층구조를 내가 원하는 형태로 보관한다. */
 	Create_HierarchyNodes(m_pScene->mRootNode);
@@ -105,6 +110,16 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 	sort(m_HierarchyNodes.begin(), m_HierarchyNodes.end(), [](CHierarchyNode* pSour, CHierarchyNode* pDest) {
 		return pSour->Get_Depth() < pDest->Get_Depth();
 	});
+
+
+	if (FAILED(SetUp_SkinnedInfo()))
+		return E_FAIL;
+
+	if (FAILED(Create_AllBuffer(pShaderFilePath)))
+		return E_FAIL;
+
+	if (FAILED(SetUp_AnimationInfo()))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -255,7 +270,9 @@ HRESULT CModel::Create_AllBuffer(const _tchar * pShaderFilePath)
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		{ "TANGENT", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "BLENDINDEX", 0, DXGI_FORMAT_R32G32B32A32_UINT, 0, 44, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "BLENDWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 60, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
 	if (FAILED(__super::Compile_Shader(ElementDesc, 4, pShaderFilePath)))
@@ -328,18 +345,19 @@ HRESULT CModel::Create_HierarchyNodes(aiNode * pNode, CHierarchyNode * pParent, 
 	_matrix		TransformationMatrix;
 	memcpy(&TransformationMatrix, &pNode->mTransformation, sizeof(_matrix));
 
-	CHierarchyNode*		pHierarchyNode = CHierarchyNode::Create(pNode->mName.data, TransformationMatrix, pParent, iDepth);
+	CHierarchyNode*		pHierarchyNode = CHierarchyNode::Create(pNode->mName.data, TransformationMatrix, pParent, iDepth);	// 첫 실행 시 생성되는 노드는 가장 최상위 부모 노드가 된다.
 	if (nullptr == pHierarchyNode)
 		return E_FAIL;
 
-	m_HierarchyNodes.push_back(pHierarchyNode);
+	m_HierarchyNodes.push_back(pHierarchyNode);		// 생성한 노드를 넣어주고
 
-	for (_uint i = 0; i < pNode->mNumChildren; ++i)
-		Create_HierarchyNodes(pNode->mChildren[i], pHierarchyNode, iDepth + 1);
+	for (_uint i = 0; i < pNode->mNumChildren; ++i)		
+		Create_HierarchyNodes(pNode->mChildren[i], pHierarchyNode, iDepth + 1);	// 
 
 	return S_OK;
 }
 
+/* 실제 정점들이 뼈의 행렬정보를 받아와서 처리될 수 있도록 준비한다. */
 HRESULT CModel::SetUp_SkinnedInfo()
 {
 	for (_uint i = 0; i < m_pScene->mNumMeshes; ++i)
@@ -347,8 +365,8 @@ HRESULT CModel::SetUp_SkinnedInfo()
 		aiMesh*		pMesh = m_pScene->mMeshes[i];
 		CMeshContainer*	pMeshContainer = m_MeshContainers[i];
 
-		/* 현재 메시에 영향을 미치는 뼈들의 정보를 구성하여 메쉬 컨테이너안에 보관해둔다. */
-		/* 렌더링 시에, 메쉬 컨테이너 단위로 루프를 돌면서 그리기때문에 각 메쉬에 영향을 미치는 뼈들을 모아둔다..  */
+		/* 현재 메시에 영향을 미치는 뼈들의 정보를 구성하여 메시컨테이너안에 보관해둔다. */
+		/* 렌더링 시에, 메시컨테이너단위로 루프를 돌면서 그리기때문에 각 메시에 영향을 미치는 뼈들을 모아둔다.  */
 		for (_uint j = 0; j < pMesh->mNumBones; ++j)
 		{
 			aiBone*		pBone = pMesh->mBones[j];
@@ -362,13 +380,114 @@ HRESULT CModel::SetUp_SkinnedInfo()
 			memcpy(&pBoneDesc->OffsetMatrix, &pBone->mOffsetMatrix, sizeof(_matrix));
 
 			/* 정점의 블렌드 인덱스와 블렌드 웨이트를 채운다. */
+			/* 뼈에 포함되어있는 웨이트의 갯수는 곧 영향을 미치는 정점의 갯수.  */
+			for (_uint k = 0; k < pBone->mNumWeights; ++k)
+			{
+				/* 하나의 웨이트값은 어떤 정점에 영향을 미치는지? 정점의 인덱스를 가져온다.   */
+				/* 내가 하나의 정점 버퍼로 모두 모아둔 정점버퍼기준으로 인덱스를 가져온다. */
+				_uint	iVertexIndex = pBone->mWeights[k].mVertexId + pMeshContainer->Get_StartVertexIndex();
 
+				/* 정점은 웨이트값을 네개씩 가질수있다. */
+				/* 메시를 구성하는 뼈들을 순회하며 뼈가 영향을 미치는 정점의 인덱스를 얻어왔다. */
+				/* 정점에 웨이트를 채우려고했더니 이미 다른 뼈가 값을 채워놓을 수 있었다. */
+				/* 다른뼈가 먼저 채워준경우 그 다음 웨이트에 값을 채운다. */
+				if (0.0f == m_pVertices[iVertexIndex].vBlendWeight.x)
+				{
+					m_pVertices[iVertexIndex].vBlendIndex.x = j;
+					m_pVertices[iVertexIndex].vBlendWeight.x = pBone->mWeights[k].mWeight;
+				}
 
+				else if (0.0f == m_pVertices[iVertexIndex].vBlendWeight.y)
+				{
+					m_pVertices[iVertexIndex].vBlendIndex.y = j;
+					m_pVertices[iVertexIndex].vBlendWeight.y = pBone->mWeights[k].mWeight;
+				}
+
+				else if (0.0f == m_pVertices[iVertexIndex].vBlendWeight.z)
+				{
+					m_pVertices[iVertexIndex].vBlendIndex.z = j;
+					m_pVertices[iVertexIndex].vBlendWeight.z = pBone->mWeights[k].mWeight;
+				}
+
+				else
+				{
+					m_pVertices[iVertexIndex].vBlendIndex.w = j;
+					m_pVertices[iVertexIndex].vBlendWeight.w = pBone->mWeights[k].mWeight;
+				}
+			}
 			pMeshContainer->Add_Bones(pBoneDesc);
 		}
 	}
+	return S_OK;
+}
+
+HRESULT CModel::SetUp_AnimationInfo()
+{
+	_uint		iNumAnimation = m_pScene->mNumAnimations;
+
+	for (_uint i = 0; i < iNumAnimation; ++i)
+	{
+		/* 하나의 애니메이션 하나의 동작 전체를 의미. */
+		aiAnimation*	pAnim = m_pScene->mAnimations[i];
+		if (nullptr == pAnim)
+			return E_FAIL;
+
+		CAnimation*		pAnimation = CAnimation::Create(pAnim->mName.data, pAnim->mDuration, pAnim->mTicksPerSecond);
+		if (nullptr == pAnimation)
+			return E_FAIL;
+
+		/* 현재 애니메이션을 표현하기위한 뼈들. */
+		for (_uint j = 0; j < pAnim->mNumChannels; ++j)
+		{
+			aiNodeAnim*		pNodeAnim = pAnim->mChannels[j];
+			if (nullptr == pNodeAnim)
+				return E_FAIL;
+
+			CChannel*		pChannel = CChannel::Create(pNodeAnim->mNodeName.data);
+			if (nullptr == pChannel)
+				return E_FAIL;
+
+			_uint		iMaxKeyFrame = max(pNodeAnim->mNumScalingKeys, pNodeAnim->mNumRotationKeys);
+			iMaxKeyFrame = max(iMaxKeyFrame, pNodeAnim->mNumPositionKeys);
 
 
+			for (_uint k = 0; k < iMaxKeyFrame; ++k)
+			{
+				KEYFRAMEDESC*		pKeyFrame = new KEYFRAMEDESC;
+				ZeroMemory(pKeyFrame, sizeof(KEYFRAMEDESC));
+
+				if (k < pNodeAnim->mNumScalingKeys)
+				{
+					memcpy(&pKeyFrame->vScale, &pNodeAnim->mScalingKeys[k].mValue, sizeof(_float3));
+					pKeyFrame->Time = pNodeAnim->mScalingKeys[k].mTime;
+				}
+
+				if (k < pNodeAnim->mNumRotationKeys)
+				{
+					pKeyFrame->vRotation.x = pNodeAnim->mRotationKeys[k].mValue.x;
+					pKeyFrame->vRotation.y = pNodeAnim->mRotationKeys[k].mValue.y;
+					pKeyFrame->vRotation.z = pNodeAnim->mRotationKeys[k].mValue.z;
+					pKeyFrame->vRotation.w = pNodeAnim->mRotationKeys[k].mValue.w;
+					pKeyFrame->Time = pNodeAnim->mRotationKeys[k].mTime;
+				}
+
+				if (k < pNodeAnim->mNumPositionKeys)
+				{
+					memcpy(&pKeyFrame->vPosition, &pNodeAnim->mPositionKeys[k].mValue, sizeof(_float3));
+					pKeyFrame->Time = pNodeAnim->mPositionKeys[k].mTime;
+				}
+
+				/* 뼈가 표현해야할 키프레임들(한애니메이션속에표현되는)의 상태행렬, 시간값을 저장해놓는다. */
+				pChannel->Add_KeyFrameDesc(pKeyFrame);
+			}
+
+			/* 애니메이션을 표현하기위한 뼈들을 애님에ㅣ션 안에 모아놓는다. */
+			pAnimation->Add_Channel(pChannel);
+
+		}
+		/* 애니메이션의 집합. */
+		m_Animations.push_back(pAnimation);
+	}
 	return S_OK;
 }
 

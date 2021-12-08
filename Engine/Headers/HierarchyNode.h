@@ -30,6 +30,7 @@ public:
 private:
 	char				m_szNodeName[MAX_PATH] = "";
 	_float4x4			m_TransformationMatrix;
+	_float4x4			m_CombinedTransformationMatrix; /* 부모뼈들의 상태행렬을 누적시켜만든행렬. */
 	CHierarchyNode*		m_pParent = nullptr;
 	_uint				m_iDepth = 0;
 };
