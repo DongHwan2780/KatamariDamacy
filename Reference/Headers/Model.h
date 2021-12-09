@@ -26,6 +26,7 @@ public:
 public:
 	HRESULT Bind_Buffers();
 	HRESULT SetUp_TextureOnShader(const char* pConstantName, _uint iMaterialIndex, aiTextureType eTextureType);
+	HRESULT SetUp_AnimationIndex(_uint iAnimationIndex);
 
 private:
 	HRESULT Create_MeshContainer(aiMesh* pMesh, _uint* pStartVertexIndex, _uint* pStartFaceIndex, _fmatrix PivotMatrix);
@@ -40,19 +41,23 @@ private:
 
 	CHierarchyNode* Find_HierarchyNode(const char* pBoneName);
 
+	HRESULT Update_CombinedTransformationMatrices(_double DeltaTime);
+
+	void Add_Channel_To_HierarchyNode(_uint iAnimationindex, class CChannel* pChannel);
+
 
 public:
 	static CModel*	Create(DEVICES, const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
 
+protected:
+	vector<class CAnimation*>		m_Animations;
+	_uint							m_iAnimationIndex = 0;
+
 private:
 	const aiScene*		m_pScene = nullptr;		// 모든 모델들의 메쉬, 머테리얼 정보를 가지고 있을 공간
 	Assimp::Importer	m_Importer;
-
-protected:
-	vector<class CAnimation*>		m_Animations;
-
 
 private:
 	_uint				m_iNumVertices = 0;		// 정점 개수
