@@ -139,6 +139,8 @@ HRESULT CModel::Render(_uint iMaterialIndex, _uint iPassIndex)
 	if (FAILED(m_EffectDescs[iPassIndex].pPass->Apply(0, m_pDeviceContext)))
 		return E_FAIL;
 
+	_matrix			BoneMatrices[128];
+
 	for (auto& pMeshContainer : m_SortByMaterialMesh[iMaterialIndex])
 	{
 		m_pDeviceContext->DrawIndexed(pMeshContainer->Get_NumFaces() * 3,
@@ -183,6 +185,16 @@ HRESULT CModel::SetUp_TextureOnShader(const char * pConstantName, _uint iMateria
 		if (FAILED(pVariable->SetResource(pShaderResourceView)))
 			return E_FAIL;
 	}
+
+	return S_OK;
+}
+
+HRESULT CModel::SetUp_AnimationIndex(_uint iAnimationIndex)
+{
+	if (m_Animations.size() <= iAnimationIndex)
+		return E_FAIL;
+
+	m_iAnimationIndex = iAnimationIndex;
 
 	return S_OK;
 }
@@ -481,6 +493,8 @@ HRESULT CModel::SetUp_AnimationInfo()
 				pChannel->Add_KeyFrameDesc(pKeyFrame);
 			}
 
+			Add_Channel_To_HierarchyNode(i, pChannel);
+
 			/* 애니메이션을 표현하기위한 뼈들을 애님에ㅣ션 안에 모아놓는다. */
 			pAnimation->Add_Channel(pChannel);
 
@@ -500,6 +514,30 @@ CHierarchyNode * CModel::Find_HierarchyNode(const char * pBoneName)
 	});
 
 	return *iter;
+}
+
+HRESULT CModel::Update_CombinedTransformationMatrices(_double DeltaTime)
+{
+	if (m_Animations.empty())
+		return E_FAIL;
+
+	/* 현재 애니메이션을 재생하고 있는 시간을 계산하고 그 시간값에 따른 뼈의 상태행렬을 만들어서 m_TrnasformationMAtrix에 대입해놓느다. */
+	m_Animations[m_iAnimationIndex]->Update_TransformationMatrices(DeltaTime);
+
+	for (auto& pHierarchyNodes : m_HierarchyNodes)
+		pHierarchyNodes->Update_CombinedTransformationMatrix(m_iAnimationIndex);
+
+	return S_OK;
+}
+
+void CModel::Add_Channel_To_HierarchyNode(_uint iAnimationindex, CChannel * pChannel)
+{
+	auto	iter = find_if(m_HierarchyNodes.begin(), m_HierarchyNodes.end(), [&](CHierarchyNode* pNode)->bool
+	{
+		return !strcmp(pNode->Get_Name(), pChannel->Get_Name());
+	});
+
+	//(*iter)->Add_Channel();
 }
 
 CModel * CModel::Create(DEVICES, const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix)

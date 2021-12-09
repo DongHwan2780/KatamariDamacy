@@ -18,12 +18,24 @@ public:
 	HRESULT Add_KeyFrameDesc(KEYFRAMEDESC* pKeyFrameDesc);
 
 public:
+	vector<KEYFRAMEDESC*> Get_KeyFrames() {return m_KeyFrame;}
+
+	const char* Get_Name() const {return m_szChannelName;}
+
+	_matrix Get_TransformationMatrix() {return XMLoadFloat4x4(&m_TransformationMatrix);}
+
+	void Set_TransformationMatrix(_fmatrix TransformationMatrix) {	XMStoreFloat4x4(&m_TransformationMatrix, TransformationMatrix);}
+
+
+
+public:
 	static CChannel* Create(const char* pChannelName);
 	virtual void Free() override;
 
 private:
 	char		m_szChannelName[MAX_PATH] = "";
 	vector<KEYFRAMEDESC*>		m_KeyFrame;		/* 현재 뼈가 각각의 키프레임 동작때마다 표현해야할 상태정보를 보관해둔다. */
+	_float4x4					m_TransformationMatrix;
 };
 END
 #endif // !__CHANNEL_H__

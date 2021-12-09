@@ -17,7 +17,7 @@ private:
 public:
 	HRESULT Initialize_Clone(const char* pAnimationName, _double Duration, _double TickPerSecond);
 	HRESULT Add_Channel(class CChannel* pChannel);
-
+	HRESULT Update_TransformationMatrices(_double DeltaTime);
 public:
 	static CAnimation* Create(const char* pAnimationName, _double Duration, _double TickPerSecond);
 	virtual void Free() override;
@@ -26,6 +26,10 @@ private:
 	char				m_AnimationName[MAX_PATH];
 	_double				m_Duration = 0.0; /* 애니메이션 하나를 재생하기위한 시간 */
 	_double				m_TickPerSecond = 0.0;
+
+	_double				m_CurrentTime = 0.0;
+
+	_bool				m_bFinished = false;
 
 	/* 현재 애니메이션 표현을 위한 채널(뼈)들의 집합. */
 	vector<class CChannel*>	m_Channels;
