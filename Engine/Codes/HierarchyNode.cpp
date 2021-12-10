@@ -42,7 +42,7 @@ void CHierarchyNode::Update_CombinedTransformationMatrix(_uint iAnimationIndex)
 		XMStoreFloat4x4(&m_CombinedTransformationMatrix, TransformationMatrix);
 }
 
-void CHierarchyNode::Reserve_Channels(_uint iNumAnimation)
+void CHierarchyNode::Resize_Channels(_uint iNumAnimation)
 {
 	m_Channels.resize(iNumAnimation);
 }

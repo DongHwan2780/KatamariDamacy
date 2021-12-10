@@ -22,6 +22,9 @@ CModel::CModel(const CModel & other)
 	, m_MeshContainers(m_MeshContainers)
 	, m_SortByMaterialMesh(other.m_SortByMaterialMesh)
 	, m_ModelTextures(other.m_ModelTextures)
+	, m_iAnimationIndex(other.m_iAnimationIndex)
+	, m_Animations(other.m_Animations)
+	, m_HierarchyNodes(other.m_HierarchyNodes)
 {
 	for (auto& pMeshContainer : m_MeshContainers)
 		Safe_AddRef(pMeshContainer);
@@ -37,6 +40,12 @@ CModel::CModel(const CModel & other)
 		for (_uint i = 0; i < AI_TEXTURE_TYPE_MAX; ++i)
 			Safe_AddRef(pMeshTextues->pModelTexture[i]);
 	}
+
+	for (auto& pAnimation : m_Animations)
+		Safe_AddRef(pAnimation);
+
+	for (auto& pHierarchyNode : m_HierarchyNodes)
+		Safe_AddRef(pHierarchyNode);
 }
 
 HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix)
@@ -143,6 +152,15 @@ HRESULT CModel::Render(_uint iMaterialIndex, _uint iPassIndex)
 
 	for (auto& pMeshContainer : m_SortByMaterialMesh[iMaterialIndex])
 	{
+		ZeroMemory(BoneMatrices, sizeof(_matrix) * 128);
+
+		/* 현재 메시컨테이너 영향을 주는 뼈대들의 Combined행렬을 배열에 저장한다. */
+		pMeshContainer->Get_BoneMatrices(BoneMatrices);
+
+		/* 배열을 셰이더에 던진다. */
+		SetUp_ValueOnShader("g_BoneMatrices", BoneMatrices, sizeof(_matrix) * 128);
+
+
 		m_pDeviceContext->DrawIndexed(pMeshContainer->Get_NumFaces() * 3,
 			pMeshContainer->Get_StartFaceIndex() * 3,
 			pMeshContainer->Get_StartVertexIndex());
@@ -195,6 +213,13 @@ HRESULT CModel::SetUp_AnimationIndex(_uint iAnimationIndex)
 		return E_FAIL;
 
 	m_iAnimationIndex = iAnimationIndex;
+
+	return S_OK;
+}
+
+HRESULT CModel::Play_Animation(_double DeltaTime)
+{
+	Update_CombinedTransformationMatrices(DeltaTime);
 
 	return S_OK;
 }
@@ -287,7 +312,7 @@ HRESULT CModel::Create_AllBuffer(const _tchar * pShaderFilePath)
 		{ "BLENDWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 60, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
-	if (FAILED(__super::Compile_Shader(ElementDesc, 4, pShaderFilePath)))
+	if (FAILED(__super::Compile_Shader(ElementDesc, 6, pShaderFilePath)))
 		return E_FAIL;
 
 	return S_OK;
@@ -389,7 +414,10 @@ HRESULT CModel::SetUp_SkinnedInfo()
 			ZeroMemory(pBoneDesc, sizeof(BONEDESC));
 
 			pBoneDesc->pHierarchyNode = Find_HierarchyNode(pBone->mName.data);
-			memcpy(&pBoneDesc->OffsetMatrix, &pBone->mOffsetMatrix, sizeof(_matrix));
+
+			_matrix		OffsetMatrix;
+			memcpy(&OffsetMatrix, &pBone->mOffsetMatrix, sizeof(_matrix));
+			XMStoreFloat4x4(&pBoneDesc->OffsetMatrix, XMMatrixTranspose(OffsetMatrix));
 
 			/* 정점의 블렌드 인덱스와 블렌드 웨이트를 채운다. */
 			/* 뼈에 포함되어있는 웨이트의 갯수는 곧 영향을 미치는 정점의 갯수.  */
@@ -436,6 +464,9 @@ HRESULT CModel::SetUp_SkinnedInfo()
 HRESULT CModel::SetUp_AnimationInfo()
 {
 	_uint		iNumAnimation = m_pScene->mNumAnimations;
+
+	for (auto& pHierarchyNode : m_HierarchyNodes)
+		pHierarchyNode->Resize_Channels(iNumAnimation);
 
 	for (_uint i = 0; i < iNumAnimation; ++i)
 	{
@@ -511,6 +542,8 @@ CHierarchyNode * CModel::Find_HierarchyNode(const char * pBoneName)
 	{
 		if (strcmp(pNode->Get_Name(), pBoneName) == 0)
 			return true;
+
+		return false;
 	});
 
 	return *iter;
@@ -518,7 +551,7 @@ CHierarchyNode * CModel::Find_HierarchyNode(const char * pBoneName)
 
 HRESULT CModel::Update_CombinedTransformationMatrices(_double DeltaTime)
 {
-	if (m_Animations.empty())
+	if (m_Animations.empty() || m_iAnimationIndex >= m_Animations.size())
 		return E_FAIL;
 
 	/* 현재 애니메이션을 재생하고 있는 시간을 계산하고 그 시간값에 따른 뼈의 상태행렬을 만들어서 m_TrnasformationMAtrix에 대입해놓느다. */
