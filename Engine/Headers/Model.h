@@ -27,6 +27,7 @@ public:
 	HRESULT Bind_Buffers();
 	HRESULT SetUp_TextureOnShader(const char* pConstantName, _uint iMaterialIndex, aiTextureType eTextureType);
 	HRESULT SetUp_AnimationIndex(_uint iAnimationIndex);
+	HRESULT Play_Animation(_double DeltaTime);
 
 private:
 	HRESULT Create_MeshContainer(aiMesh* pMesh, _uint* pStartVertexIndex, _uint* pStartFaceIndex, _fmatrix PivotMatrix);

@@ -76,7 +76,9 @@ HRESULT CAnimation::Update_TransformationMatrices(_double DeltaTime)
 		else
 		{
 			if (m_CurrentTime > KeyFrames[iCurrentKeyFrame + 1]->Time)
-				++iCurrentKeyFrame;
+				pAnimationChannel->Set_CurrentKeyFrame(++iCurrentKeyFrame);
+
+
 			fRatio = (m_CurrentTime - KeyFrames[iCurrentKeyFrame]->Time) /
 				(KeyFrames[iCurrentKeyFrame + 1]->Time - KeyFrames[iCurrentKeyFrame]->Time);
 

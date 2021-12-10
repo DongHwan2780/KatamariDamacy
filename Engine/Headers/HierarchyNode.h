@@ -19,12 +19,13 @@ public:
 public:
 	_uint Get_Depth() const { return m_iDepth; }
 	const char* Get_Name() const { return m_szNodeName; }
+	_matrix Get_CombinedTransformationMatrix() { return XMLoadFloat4x4(&m_CombinedTransformationMatrix); }
 
 public:
 	HRESULT Initialize_Clone(const char* pNodeName, _fmatrix TransformationMatrix, CHierarchyNode* pParent, _uint iDepth);
 	HRESULT Add_Channel(_uint iAnimationIndex, class CChannel* pChannel);
 	void Update_CombinedTransformationMatrix(_uint iAnimationIndex);
-	void Reserve_Channels(_uint iNumAnimation);
+	void Resize_Channels(_uint iNumAnimation);
 
 public:
 	static CHierarchyNode* Create(const char* pNodeName, _fmatrix TransformationMatrix, CHierarchyNode* pParent, _uint iDepth);
