@@ -64,7 +64,11 @@ HRESULT CUIList::SetUp_ComponentsOrthUI()
 	return S_OK;
 }
 
-HRESULT CUIList::SetUp_ComponentsProjUI()
+void CUIList::Free()
 {
-	return S_OK;
 }
+
+//HRESULT CUIList::SetUp_ComponentsProjUI()
+//{
+//	return S_OK;
+//}

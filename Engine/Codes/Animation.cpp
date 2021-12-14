@@ -57,6 +57,13 @@ HRESULT CAnimation::Update_TransformationMatrices(_double DeltaTime)
 		_float		fRatio = 0.f;		// 프레임키 간의 비율을 선형보간해줄 값
 
 
+		if (true == m_bFinished)
+		{
+			iCurrentKeyFrame = 0;
+			pAnimationChannel->Set_CurrentKeyFrame(iCurrentKeyFrame);
+		}
+
+
 		if (m_CurrentTime <= pFirst->Time)		// 현재 애니메이션 재생 시간이 첫번째 프레임키보다 작을때
 		{
 			vScale = XMLoadFloat3(&pFirst->vScale);
@@ -122,4 +129,7 @@ CAnimation * CAnimation::Create(const char * pAnimationName, _double Duration, _
 
 void CAnimation::Free()
 {
+	for (auto& pChannel : m_Channels)
+		Safe_Release(pChannel);
+	m_Channels.clear();
 }

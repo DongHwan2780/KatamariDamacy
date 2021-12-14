@@ -58,6 +58,11 @@ HRESULT CPlayerMoveUI::Render()
 	return E_NOTIMPL;
 }
 
+HRESULT CPlayerMoveUI::SetUp_Components()
+{
+	return E_NOTIMPL;
+}
+
 CPlayerMoveUI * CPlayerMoveUI::Create(DEVICES)
 {
 	CPlayerMoveUI*		pInstance = new CPlayerMoveUI(pDevice, pDeviceContext);

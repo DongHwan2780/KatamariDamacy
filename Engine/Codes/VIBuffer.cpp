@@ -141,7 +141,7 @@ HRESULT CVIBuffer::Compile_Shader(D3D11_INPUT_ELEMENT_DESC * pElementDescs, _uin
 	ID3DBlob*		pCompileShaderErrorMessage = nullptr;
 
 	// 외부에서 가져온 쉐이더 파일을 번역하여 바이너리화하였고 메모리영역안에 담았다.
-	if (FAILED(D3DCompileFromFile(pShaderFilePath, nullptr, nullptr, nullptr, "fx_5_0", iFlag, 0, &pCompileShader, &pCompileShaderErrorMessage)))
+	if (FAILED(D3DCompileFromFile(pShaderFilePath, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, nullptr, "fx_5_0", iFlag, 0, &pCompileShader, &pCompileShaderErrorMessage)))
 		return E_FAIL;
 
 	if (FAILED(D3DX11CreateEffectFromMemory(pCompileShader->GetBufferPointer(), pCompileShader->GetBufferSize(), 0, m_pDevice, &m_pEffect)))

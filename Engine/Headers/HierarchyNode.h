@@ -29,6 +29,7 @@ public:
 
 public:
 	static CHierarchyNode* Create(const char* pNodeName, _fmatrix TransformationMatrix, CHierarchyNode* pParent, _uint iDepth);
+	CHierarchyNode* Clone();
 	virtual void Free() override;
 
 private:

@@ -36,6 +36,6 @@ public:
 private:
 	CTransform*		m_pTransform = nullptr;
 	CRenderer*		m_pRenderer = nullptr;
-	CModel*			m_pModel = nulltpr;
+	CModel*			m_pModel = nullptr;
 };
 END

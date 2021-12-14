@@ -9,30 +9,32 @@
 #include "HierarchyNode.h"
 
 CModel::CModel(DEVICES)
-	:CVIBuffer(m_pDevice, m_pDeviceContext)
+	:CComponent(pDevice, pDeviceContext)
 {
 }
 
 CModel::CModel(const CModel & other)
-	: CVIBuffer(other)
+	: CComponent(other)
+	, m_pScene(other.m_pScene)
 	, m_iNumVertices(other.m_iNumVertices)
 	, m_iNumFaces(other.m_iNumFaces)
 	, m_pVertices(other.m_pVertices)
 	, m_pPolygonIndices32(other.m_pPolygonIndices32)
-	, m_MeshContainers(m_MeshContainers)
-	, m_SortByMaterialMesh(other.m_SortByMaterialMesh)
 	, m_ModelTextures(other.m_ModelTextures)
+	, m_pVB(other.m_pVB)
+	, m_pIB(other.m_pIB)
+	, m_iStride(other.m_iStride)
+	, m_EffectDescs(other.m_EffectDescs)
+	, m_pEffect(other.m_pEffect)
 	, m_iAnimationIndex(other.m_iAnimationIndex)
-	, m_Animations(other.m_Animations)
-	, m_HierarchyNodes(other.m_HierarchyNodes)
+	, m_PivotMatrix(other.m_PivotMatrix)
 {
-	for (auto& pMeshContainer : m_MeshContainers)
-		Safe_AddRef(pMeshContainer);
-
-	for (_uint i = 0; i < m_SortByMaterialMesh.size(); ++i)
+	/* 메시컨테이너의 뼈들 중, HierarchyNode*의 주소에는 아직 값을 채우지 않았다. */
+	for (auto& pPrototypeMeshContainer : other.m_MeshContainers)
 	{
-		for (auto& pSortByMaterialMesh : m_SortByMaterialMesh[i])
-			Safe_AddRef(pSortByMaterialMesh);
+		CMeshContainer*	pMeshContainer = pPrototypeMeshContainer->Clone();
+
+		m_MeshContainers.push_back(pMeshContainer);
 	}
 
 	for (auto& pMeshTextues : m_ModelTextures)
@@ -41,11 +43,16 @@ CModel::CModel(const CModel & other)
 			Safe_AddRef(pMeshTextues->pModelTexture[i]);
 	}
 
-	for (auto& pAnimation : m_Animations)
-		Safe_AddRef(pAnimation);
+	Safe_AddRef(m_pVB);
+	Safe_AddRef(m_pIB);
 
-	for (auto& pHierarchyNode : m_HierarchyNodes)
-		Safe_AddRef(pHierarchyNode);
+	for (auto& pEffectDesc : m_EffectDescs)
+	{
+		Safe_AddRef(pEffectDesc.pLayOut);
+		Safe_AddRef(pEffectDesc.pPass);
+	}
+
+	Safe_AddRef(m_pEffect);
 }
 
 HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix)
@@ -55,6 +62,7 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 	strcpy_s(szFullPath, pMeshFilePath);
 	strcat_s(szFullPath, pMeshFileName);
 
+	m_PivotMatrix = PivotMatrix;
 	// Readfile == 메쉬의 정보를 읽어온다.
 	// aiProcess_ConvertToLeftHanded == 메쉬를 왼손좌표계 기준으로 변경해준다.
 	// aiProcess_Triangulate == 메쉬가 가지고 있는 정점들이 삼각형을 이루고 있지 않을 경우 삼각형으로 정점들을 연결해줌
@@ -85,7 +93,7 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 
 	for (_uint i = 0; i < m_pScene->mNumMeshes; ++i)
 	{
-		if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex, PivotMatrix)))	// 메쉬의 개수만큼 컨테이너 생성하고 메쉬, 시작정점인덱스, 폴리곤시작인덱스를 넘겨줌
+		if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex, XMMatrixIdentity())))	// 메쉬의 개수만큼 컨테이너 생성하고 메쉬, 시작정점인덱스, 폴리곤시작인덱스를 넘겨줌
 			return E_FAIL;
 	}
 
@@ -101,8 +109,6 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 	}
 
 	/* 메시컨테이너들을 머테리얼 기준으로 묶고 정렬한다. */
-	if (FAILED(Sort_MeshesByMaterial()))
-		return E_FAIL;
 
 	if (false == m_pScene->HasAnimations())
 	{
@@ -114,7 +120,7 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 	}
 
 	/* 노드들의 계층구조를 내가 원하는 형태로 보관한다. */
-	Create_HierarchyNodes(m_pScene->mRootNode);
+	Create_HierarchyNodes(m_pScene->mRootNode, nullptr, 0, PivotMatrix);
 
 	sort(m_HierarchyNodes.begin(), m_HierarchyNodes.end(), [](CHierarchyNode* pSour, CHierarchyNode* pDest) {
 		return pSour->Get_Depth() < pDest->Get_Depth();
@@ -135,6 +141,29 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 
 HRESULT CModel::Initialize_Clone(void * pArg)
 {
+	Create_HierarchyNodes(m_pScene->mRootNode, nullptr, 0, m_PivotMatrix);
+
+	sort(m_HierarchyNodes.begin(), m_HierarchyNodes.end(), [](CHierarchyNode* pSour, CHierarchyNode* pDest)
+	{
+		return pSour->Get_Depth() < pDest->Get_Depth();
+	});
+
+	for (auto& pMeshContainer : m_MeshContainers)
+	{
+		vector<BONEDESC*>	Bones = pMeshContainer->Get_BoneDesc();
+
+		for (auto& pBoneDesc : Bones)
+			pBoneDesc->pHierarchyNode = Find_HierarchyNode(pBoneDesc->pName);
+	}
+
+	if (FAILED(SetUp_SkinnedInfo()))
+		return E_FAIL;
+
+	Sort_MeshesByMaterial();
+
+	if (FAILED(SetUp_AnimationInfo()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -145,8 +174,6 @@ HRESULT CModel::Render(_uint iMaterialIndex, _uint iPassIndex)
 
 	m_pDeviceContext->IASetInputLayout(m_EffectDescs[iPassIndex].pLayOut);
 
-	if (FAILED(m_EffectDescs[iPassIndex].pPass->Apply(0, m_pDeviceContext)))
-		return E_FAIL;
 
 	_matrix			BoneMatrices[128];
 
@@ -160,6 +187,8 @@ HRESULT CModel::Render(_uint iMaterialIndex, _uint iPassIndex)
 		/* 배열을 셰이더에 던진다. */
 		SetUp_ValueOnShader("g_BoneMatrices", BoneMatrices, sizeof(_matrix) * 128);
 
+		if (FAILED(m_EffectDescs[iPassIndex].pPass->Apply(0, m_pDeviceContext)))
+			return E_FAIL;
 
 		m_pDeviceContext->DrawIndexed(pMeshContainer->Get_NumFaces() * 3,
 			pMeshContainer->Get_StartFaceIndex() * 3,
@@ -180,6 +209,21 @@ HRESULT CModel::Bind_Buffers()
 	m_pDeviceContext->IASetVertexBuffers(0, 1, &m_pVB, &m_iStride, &iOffSet);
 	m_pDeviceContext->IASetIndexBuffer(m_pIB, DXGI_FORMAT_R32_UINT, 0);
 	m_pDeviceContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	return S_OK;
+}
+
+HRESULT CModel::SetUp_ValueOnShader(const char * pConstantName, void * pData, _uint iByteSize)
+{
+	if (nullptr == m_pEffect)
+		return E_FAIL;
+
+	ID3DX11EffectVariable*		pVariable = m_pEffect->GetVariableByName(pConstantName);
+	if (nullptr == pVariable)
+		return E_FAIL;
+
+	if (FAILED(pVariable->SetRawValue(pData, 0, iByteSize)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -271,11 +315,10 @@ HRESULT CModel::Create_MeshContainer(aiMesh * pMesh, _uint * pStartVertexIndex, 
 
 HRESULT CModel::Create_AllBuffer(const _tchar * pShaderFilePath)
 {
-	/* For.VertexBuffer */
 	D3D11_BUFFER_DESC			BufferDesc;
 	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
 
-	BufferDesc.ByteWidth = sizeof(VTXMESH) * m_iNumVertices;	// 정점의 크기 * 정점의 개수
+	BufferDesc.ByteWidth = sizeof(VTXMESH) * m_iNumVertices;
 	BufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 	BufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	BufferDesc.CPUAccessFlags = 0;
@@ -286,6 +329,10 @@ HRESULT CModel::Create_AllBuffer(const _tchar * pShaderFilePath)
 	ZeroMemory(&SubResourceData, sizeof(D3D11_SUBRESOURCE_DATA));
 
 	SubResourceData.pSysMem = m_pVertices;
+
+	if (FAILED(m_pDevice->CreateBuffer(&BufferDesc, &SubResourceData, &m_pVB)))
+		return E_FAIL;
+
 
 	/* For.IndexBuffer */
 	ZeroMemory(&BufferDesc, sizeof(D3D11_BUFFER_DESC));
@@ -300,9 +347,13 @@ HRESULT CModel::Create_AllBuffer(const _tchar * pShaderFilePath)
 	ZeroMemory(&SubResourceData, sizeof(D3D11_SUBRESOURCE_DATA));
 	SubResourceData.pSysMem = m_pPolygonIndices32;
 
-	if (FAILED(__super::Create_Buffers()))
+	if (FAILED(m_pDevice->CreateBuffer(&BufferDesc, &SubResourceData, &m_pIB)))
 		return E_FAIL;
 
+	/*if (m_pScene->HasAnimations())
+	{
+
+	}*/
 	D3D11_INPUT_ELEMENT_DESC		ElementDesc[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -312,7 +363,7 @@ HRESULT CModel::Create_AllBuffer(const _tchar * pShaderFilePath)
 		{ "BLENDWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 60, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
-	if (FAILED(__super::Compile_Shader(ElementDesc, 6, pShaderFilePath)))
+	if (FAILED(Compile_Shader(ElementDesc, 6, pShaderFilePath)))
 		return E_FAIL;
 
 	return S_OK;
@@ -377,7 +428,7 @@ HRESULT CModel::Sort_MeshesByMaterial()
 	return S_OK;
 }
 
-HRESULT CModel::Create_HierarchyNodes(aiNode * pNode, CHierarchyNode * pParent, _uint iDepth)
+HRESULT CModel::Create_HierarchyNodes(aiNode * pNode, CHierarchyNode * pParent, _uint iDepth, _fmatrix PivotMatrix)
 {
 	_matrix		TransformationMatrix;
 	memcpy(&TransformationMatrix, &pNode->mTransformation, sizeof(_matrix));
@@ -390,6 +441,60 @@ HRESULT CModel::Create_HierarchyNodes(aiNode * pNode, CHierarchyNode * pParent, 
 
 	for (_uint i = 0; i < pNode->mNumChildren; ++i)		
 		Create_HierarchyNodes(pNode->mChildren[i], pHierarchyNode, iDepth + 1);	// 
+
+	return S_OK;
+}
+
+HRESULT CModel::Compile_Shader(D3D11_INPUT_ELEMENT_DESC * pElementDescs, _uint iNumElement, const _tchar * pShaderFilePath, _uint iTechniqueIndex)
+{
+	_uint		iFlag = 0;
+
+#ifdef _DEBUG
+	iFlag = D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION;
+#else
+	iFlag = D3DCOMPILE_OPTIMIZATION_LEVEL1;
+#endif
+
+	ID3DBlob*		pCompileShader = nullptr;
+	ID3DBlob*		pCompileShaderErrorMessage = nullptr;
+
+	/* 외부에서 가져온 쉐이더 파일을 번역하여 바이너리화하였고 메모리영역안에 ㄷ마았다. */
+	if (FAILED(D3DCompileFromFile(pShaderFilePath, nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, nullptr, "fx_5_0", iFlag, 0, &pCompileShader, &pCompileShaderErrorMessage)))
+		return E_FAIL;
+
+	if (FAILED(D3DX11CreateEffectFromMemory(pCompileShader->GetBufferPointer(), pCompileShader->GetBufferSize(), 0, m_pDevice, &m_pEffect)))
+		return E_FAIL;
+
+	ID3DX11EffectTechnique*		pTechnique = m_pEffect->GetTechniqueByIndex(iTechniqueIndex);
+	if (nullptr == pTechnique)
+		return E_FAIL;
+
+	D3DX11_TECHNIQUE_DESC		TechniqueDesc;
+	ZeroMemory(&TechniqueDesc, sizeof(D3DX11_TECHNIQUE_DESC));
+
+	if (FAILED(pTechnique->GetDesc(&TechniqueDesc)))
+		return E_FAIL;
+
+	m_EffectDescs.reserve(TechniqueDesc.Passes);
+
+	for (_uint i = 0; i < TechniqueDesc.Passes; ++i)
+	{
+		EFFECTDESC			EffectDesc;
+
+		EffectDesc.pPass = pTechnique->GetPassByIndex(i);
+		if (nullptr == EffectDesc.pPass)
+			return E_FAIL;
+
+		D3DX11_PASS_DESC			PassDesc;
+
+		if (FAILED(EffectDesc.pPass->GetDesc(&PassDesc)))
+			return E_FAIL;
+
+		if (FAILED(m_pDevice->CreateInputLayout(pElementDescs, iNumElement, PassDesc.pIAInputSignature, PassDesc.IAInputSignatureSize, &EffectDesc.pLayOut)))
+			return E_FAIL;
+
+		m_EffectDescs.push_back(EffectDesc);
+	}
 
 	return S_OK;
 }
@@ -413,6 +518,7 @@ HRESULT CModel::SetUp_SkinnedInfo()
 			BONEDESC*	pBoneDesc = new BONEDESC;
 			ZeroMemory(pBoneDesc, sizeof(BONEDESC));
 
+			pBoneDesc->pName = pBone->mName.data;
 			pBoneDesc->pHierarchyNode = Find_HierarchyNode(pBone->mName.data);
 
 			_matrix		OffsetMatrix;
@@ -540,7 +646,7 @@ CHierarchyNode * CModel::Find_HierarchyNode(const char * pBoneName)
 {
 	auto iter = find_if(m_HierarchyNodes.begin(), m_HierarchyNodes.end(), [&](CHierarchyNode* pNode) 
 	{
-		if (strcmp(pNode->Get_Name(), pBoneName) == 0)
+		if (0 == strcmp(pNode->Get_Name(), pBoneName))
 			return true;
 
 		return false;
@@ -570,7 +676,7 @@ void CModel::Add_Channel_To_HierarchyNode(_uint iAnimationindex, CChannel * pCha
 		return !strcmp(pNode->Get_Name(), pChannel->Get_Name());
 	});
 
-	//(*iter)->Add_Channel();
+	(*iter)->Add_Channel(iAnimationindex, pChannel);
 }
 
 CModel * CModel::Create(DEVICES, const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix)
@@ -602,4 +708,63 @@ CComponent * CModel::Clone(void * pArg)
 void CModel::Free()
 {
 	__super::Free();
+
+	if (false == m_isCloned)
+	{
+		Safe_Delete_Array(m_pVertices);
+		Safe_Delete_Array(m_pPolygonIndices32);
+
+		for (auto& pModelTextures : m_ModelTextures)
+		{
+			for (auto& pTexture : pModelTextures->pModelTexture)
+				Safe_Release(pTexture);
+
+			Safe_Delete(pModelTextures);
+		}
+		m_ModelTextures.clear();
+
+		m_Importer.FreeScene();
+	}
+
+	for (auto& pModelTextures : m_ModelTextures)
+	{
+		for (auto& pTexture : pModelTextures->pModelTexture)
+			Safe_Release(pTexture);
+	}
+	m_ModelTextures.clear();
+
+	for (auto& pMeshContainers : m_SortByMaterialMesh)
+	{
+		for (auto& pMeshContainer : pMeshContainers)
+			Safe_Release(pMeshContainer);
+		pMeshContainers.clear();
+	}
+	m_SortByMaterialMesh.clear();
+
+	for (auto& pMeshContainer : m_MeshContainers)
+		Safe_Release(pMeshContainer);
+	m_MeshContainers.clear();
+
+	for (auto& pHierarchyNode : m_HierarchyNodes)
+		Safe_Release(pHierarchyNode);
+	m_HierarchyNodes.clear();
+
+
+	Safe_Release(m_pVB);
+	Safe_Release(m_pIB);
+
+	for (auto& EffectDesc : m_EffectDescs)
+	{
+		Safe_Release(EffectDesc.pLayOut);
+		Safe_Release(EffectDesc.pPass);
+	}
+	m_EffectDescs.clear();
+
+	Safe_Release(m_pEffect);
+
+
+
+	for (auto& pAnimation : m_Animations)
+		Safe_Release(pAnimation);
+	m_Animations.clear();
 }

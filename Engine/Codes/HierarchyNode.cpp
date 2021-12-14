@@ -60,7 +60,18 @@ CHierarchyNode * CHierarchyNode::Create(const char * pNodeName, _fmatrix Transfo
 	return pInstance;
 }
 
+CHierarchyNode * CHierarchyNode::Clone()
+{
+	CHierarchyNode*	pInstance = new CHierarchyNode(*this);
+
+	return nullptr;
+}
+
 void CHierarchyNode::Free()
 {
+	for (auto& pChannel : m_Channels)
+		Safe_Release(pChannel);
+
+	m_Channels.clear();
 }
 

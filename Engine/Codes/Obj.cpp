@@ -42,7 +42,7 @@ HRESULT CObj::Render()
 	return S_OK;
 }
 
-HRESULT CObj::SetUp_Components(_int iSceneIndex, const _tchar * pPrototypeTag, const _tchar * pComponentTag,  class CComponent ** pOut, void * pArg)
+HRESULT CObj::SetUp_Components(_int iSceneIndex, const _tchar * pPrototypeTag, const _tchar * pComponentTag,  CComponent ** pOut, void * pArg)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 

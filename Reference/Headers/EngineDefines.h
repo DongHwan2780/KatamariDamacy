@@ -62,6 +62,7 @@ using namespace physx;
 #include <DirectXMath.h>
 #include <DirectXPackedVector.h>
 #include <DirectXTex.h>
+#include <DirectXCollision.h>
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 

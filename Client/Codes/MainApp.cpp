@@ -127,13 +127,17 @@ HRESULT CMainApp::Ready_Prototype_Component()
 	if (m_pManagement == nullptr)
 		return E_FAIL;
 
+	/* For.Prototype_Transform */
+	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Transform"), CTransform::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
 	/* For.Prototype_Renderer */
-	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Prototype_Renderer"), m_pRenderer = CRenderer::Create(m_pDevice, m_pDeviceContext))))
+	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Renderer"), m_pRenderer = CRenderer::Create(m_pDevice, m_pDeviceContext))))
 		return E_FAIL;
 	Safe_AddRef(m_pRenderer);
 
 	/* For.Prototype_VIBuffer_Rect */
-	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Prototype_VIBuffer_Rect"), CVIBuffer_Rect::Create(m_pDevice, m_pDeviceContext, TEXT("../Bin/Shader/Shader_Rect.fx")))))
+	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Rect"), CVIBuffer_Rect::Create(m_pDevice, m_pDeviceContext, TEXT("../Bin/Shader/Shader_Rect.fx")))))
 		return E_FAIL;
 
 	return S_OK;
