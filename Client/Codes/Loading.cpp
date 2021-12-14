@@ -14,7 +14,7 @@ HRESULT CLoading::Initialize(SCENE eScene)
 {
 	__super::Initialize();
 
-	m_pLoader = CLoader::Create(eScene);
+	m_pLoader = CLoader::Create(m_pDevice, m_pDeviceContext, eScene);
 
 	if (m_pLoader == nullptr)
 		return E_FAIL;
@@ -77,4 +77,6 @@ CLoading * CLoading::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDevic
 void CLoading::Free()
 {
 	__super::Free();
+
+	Safe_Release(m_pLoader);
 }

@@ -3,6 +3,7 @@
 #ifndef __COMPONENTMGR_H__
 #define __COMPONENTMGR_H__
 
+#include "Model.h"
 #include "Renderer.h"
 #include "Texture.h"
 #include "Transform.h"

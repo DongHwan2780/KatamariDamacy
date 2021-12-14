@@ -24,8 +24,10 @@ public:
 
 	_matrix Get_TransformationMatrix() {return XMLoadFloat4x4(&m_TransformationMatrix);}
 
-	void Set_TransformationMatrix(_fmatrix TransformationMatrix) {	XMStoreFloat4x4(&m_TransformationMatrix, TransformationMatrix);}
+	_uint Get_CurrentKeyFrame() const { return m_iCurrentKeyFrame; }
 
+	void Set_TransformationMatrix(_fmatrix TransformationMatrix) {	XMStoreFloat4x4(&m_TransformationMatrix, TransformationMatrix);}
+	void Set_CurrentKeyFrame(_uint iCurrentKeyFrame) { m_iCurrentKeyFrame = iCurrentKeyFrame; }
 
 
 public:
@@ -36,6 +38,7 @@ private:
 	char		m_szChannelName[MAX_PATH] = "";
 	vector<KEYFRAMEDESC*>		m_KeyFrame;		/* 현재 뼈가 각각의 키프레임 동작때마다 표현해야할 상태정보를 보관해둔다. */
 	_float4x4					m_TransformationMatrix;
+	_uint						m_iCurrentKeyFrame = 0;
 };
 END
 #endif // !__CHANNEL_H__

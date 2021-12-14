@@ -109,6 +109,9 @@
     <Filter Include="01.Manager\01.ComponentMgr\Model\Channel">
       <UniqueIdentifier>{e94302e2-e090-49ab-ab33-c156a2331f11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Collider">
+      <UniqueIdentifier>{c61f585c-28e2-4c59-a13f-a3dbe150d5b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -203,6 +206,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Channel.cpp">
       <Filter>01.Manager\01.ComponentMgr\Model\Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Collider.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Channel.h">
       <Filter>01.Manager\01.ComponentMgr\Model\Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Collider.h">
+      <Filter>01.Manager\01.ComponentMgr\Collider</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

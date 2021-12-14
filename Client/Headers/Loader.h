@@ -8,7 +8,7 @@ BEGIN(Client)
 class CLoader final : public CBase
 {
 private:
-	CLoader();
+	explicit CLoader(DEVICES);
 	virtual ~CLoader() = default;
 
 public:
@@ -22,7 +22,7 @@ public:
 
 
 public:
-	static CLoader* Create(SCENE eScene);
+	static CLoader* Create(DEVICES, SCENE eScene);
 	virtual void Free() override;
 
 private:
@@ -30,6 +30,10 @@ private:
 	HANDLE		m_hThread = 0;
 	CRITICAL_SECTION	m_CS;
 	_bool		m_bFinish;
+
+private:
+	ID3D11Device*			m_pDevice = nullptr;
+	ID3D11DeviceContext*	m_pDeviceContext = nullptr;
 };
 
 END

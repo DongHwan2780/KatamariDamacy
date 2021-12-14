@@ -4,11 +4,10 @@
 #define __MODEL_H__
 
 #include "Component.h"
-#include "VIBuffer.h"
 
 BEGIN(Engine)
 
-class ENGINE_DLL CModel final : public CVIBuffer
+class ENGINE_DLL CModel final : public CComponent
 {
 private:
 	explicit CModel(DEVICES);
@@ -25,6 +24,7 @@ public:
 
 public:
 	HRESULT Bind_Buffers();
+	HRESULT SetUp_ValueOnShader(const char* pConstantName, void* pData, _uint iByteSize);
 	HRESULT SetUp_TextureOnShader(const char* pConstantName, _uint iMaterialIndex, aiTextureType eTextureType);
 	HRESULT SetUp_AnimationIndex(_uint iAnimationIndex);
 	HRESULT Play_Animation(_double DeltaTime);
@@ -33,8 +33,8 @@ private:
 	HRESULT Create_MeshContainer(aiMesh* pMesh, _uint* pStartVertexIndex, _uint* pStartFaceIndex, _fmatrix PivotMatrix);
 	HRESULT Create_AllBuffer(const _tchar* pShaderFilePath);
 	HRESULT Create_Materials(aiMaterial*	pMaterial, const char* pMeshFilePath);
-	HRESULT Create_HierarchyNodes(aiNode* pNode, class CHierarchyNode* pParent = nullptr, _uint iDepth = 0);
-
+	HRESULT Create_HierarchyNodes(aiNode* pNode, class CHierarchyNode* pParent = nullptr, _uint iDepth = 0, _fmatrix PivotMatrix = XMMatrixIdentity());
+	HRESULT Compile_Shader(D3D11_INPUT_ELEMENT_DESC* pElementDescs, _uint iNumElement, const _tchar* pShaderFilePath, _uint iTechniqueIndex = 0);
 	HRESULT Sort_MeshesByMaterial();
 
 	HRESULT SetUp_SkinnedInfo();
@@ -55,6 +55,7 @@ public:
 protected:
 	vector<class CAnimation*>		m_Animations;
 	_uint							m_iAnimationIndex = 0;
+	_matrix							m_PivotMatrix;
 
 private:
 	const aiScene*		m_pScene = nullptr;		// 모든 모델들의 메쉬, 머테리얼 정보를 가지고 있을 공간
@@ -72,6 +73,15 @@ private:
 	vector<MODELTEXTURES*>					m_ModelTextures;
 
 	vector<class CHierarchyNode*>			m_HierarchyNodes;
+
+private:
+	ID3D11Buffer*				m_pVB = nullptr;
+	ID3D11Buffer*				m_pIB = nullptr;
+	_uint						m_iStride = 0;
+
+protected:
+	vector<EFFECTDESC>			m_EffectDescs;
+	ID3DX11Effect*				m_pEffect = nullptr;
 };
 END
 #endif // !__MODEL_H__

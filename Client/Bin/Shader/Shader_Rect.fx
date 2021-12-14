@@ -1,3 +1,4 @@
+#include "Shader_Defines.hpp"
 
 cbuffer Matrices
 {
@@ -60,24 +61,20 @@ vector	PS_MAIN(PS_IN In) : SV_TARGET
 	vector		vColor = (vector)0;
 
 	vColor = g_DiffuseTexture.Sample(g_DiffuseSampler, In.vTexUV);
-	
-	vColor.rgb += float3(0.7f, 0.7f, 0.7f);
-	
-	if (In.vPosition.x > 640.f)
-	{
-		vColor.r = 0.f;
-	}
-	
-	if (vColor.a <= 0.1f)
-	discard;
 
-return vColor;
+	vColor.a *= 0.5f;
+
+	return vColor;
 }
 
 technique11		DefaultDevice
 {
 	pass DefaultPass
 	{
+		SetRasterizerState(Rasterizer_Solid);
+		SetDepthStencilState(DepthStecil_Default, 0);
+		SetBlendState(Blend_One, vector(0.f, 0.f, 0.f, 0.f), 0xffffffff);
+
 		VertexShader = compile vs_5_0 VS_MAIN();
 		PixelShader = compile ps_5_0 PS_MAIN();
 	}

@@ -19,15 +19,20 @@ public:
 	_uint Get_StartFaceIndex() const { return m_iStartFaceIndex; }
 	_uint Get_StartVertexIndex() const { return m_iStartVertexIndex; }
 
+	vector<BONEDESC*> Get_BoneDesc() { return m_Bones; }
+
+	void Get_BoneMatrices(_matrix* pBoneMatrices);
+
 public:
 	virtual HRESULT Initialize_Clone(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex, _uint iMaterialIndex);
 
 public:
 	HRESULT Add_Bones(BONEDESC* pBoneDesc);
-
+	HRESULT Clone_BoneDesc();
 
 public:
 	static CMeshContainer* Create(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex, _uint iMaterialIndex);
+	CMeshContainer* Clone();
 	virtual void Free() override;
 
 private:

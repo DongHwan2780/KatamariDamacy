@@ -41,12 +41,12 @@ _int CMainCamera::Late_Update(_double DeltaTime)
 
 HRESULT CMainCamera::Render()
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 HRESULT CMainCamera::SetUp_Components()
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 CMainCamera * CMainCamera::Create(DEVICES)

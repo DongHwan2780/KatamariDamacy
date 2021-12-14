@@ -4,6 +4,7 @@
 #define __CAMERA_H__
 
 #include "Obj.h"
+#include "Transform.h"
 
 BEGIN(Engine)
 
@@ -15,6 +16,7 @@ public:
 		_float3		vEye;
 		_float3		vAt;
 		_float3		vAxisY = _float3(0.f, 1.f, 0.f);
+		CTransform::TRANSFORMDESC		TransformDesc;
 	}CAMERADESC;
 protected:
 	explicit CCamera(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);

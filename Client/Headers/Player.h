@@ -7,7 +7,9 @@
 #include "Obj.h"
 
 BEGIN(Engine)
+class CRenderer;
 class CTransform;
+class CModel;
 END
 
 BEGIN(Client)
@@ -27,7 +29,11 @@ public:
 	virtual HRESULT	Render() override;
 
 private:
+	void Movement(_double TimeDelta);
+
+private:
 	HRESULT SetUp_Components();
+	HRESULT SetUp_ConstantTable();
 
 public:
 	static CPlayer*	Create(DEVICES);
@@ -36,6 +42,8 @@ public:
 
 private:
 	CTransform*		m_pTransform = nullptr;
+	CRenderer*		m_pRenderer = nullptr;
+	CModel*			m_pModel = nullptr;
 };
 END
 #endif // !__PLAYER_H__
