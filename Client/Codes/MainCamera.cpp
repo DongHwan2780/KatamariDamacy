@@ -31,7 +31,7 @@ HRESULT CMainCamera::Initialize_Clone(void * pArg)
 
 _int CMainCamera::Update(_double DeltaTime)
 {
-	return _int();
+	return __super::Update(DeltaTime);
 }
 
 _int CMainCamera::Late_Update(_double DeltaTime)

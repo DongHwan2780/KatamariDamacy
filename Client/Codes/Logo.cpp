@@ -101,6 +101,7 @@ CLogo * CLogo::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceConte
 
 	if (FAILED(pInstance->Initialize()))
 	{
+		MSG_BOX("Failed to Creating CLevel_Logo");
 		Safe_Release(pInstance);
 	}
 	return pInstance;

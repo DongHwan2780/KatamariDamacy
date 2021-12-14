@@ -32,7 +32,7 @@ HRESULT CPlayer::Initialize_Clone(void * pArg)
 	//m_pTransformCom->Set_Scale(XMVectorSet(0.01f, 0.01f, 0.01f, 1.f));
 
 	CTransform::TRANSFORMDESC	TransformDesc;
-	TransformDesc.fSpeedPerSec = 7.f;
+	TransformDesc.fSpeedPerSec = 3.f;
 
 	m_pTransform->Set_TransformDesc(TransformDesc);
 

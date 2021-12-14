@@ -19,8 +19,10 @@ HRESULT CStageOne::Initialize()
 
 	if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
 		return E_FAIL;
+
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
+
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
 
@@ -110,6 +112,7 @@ CStageOne * CStageOne::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDevic
 
 	if (FAILED(pInstance->Initialize()))
 	{
+		MSG_BOX("Failed to Creating CStageOne");
 		Safe_Release(pInstance);
 	}
 
