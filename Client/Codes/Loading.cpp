@@ -28,7 +28,7 @@ _int CLoading::Update(_double DeltaTime)
 {
 	__super::Update(DeltaTime);
 
-	if (m_pLoader->Get_Finish())	// 로딩이 끝나면 == 쓰레드가 다 돌면
+	if (m_pLoader->Get_Finish() == true)	// 로딩이 끝나면 == 쓰레드가 다 돌면
 	{
 		CManagement*		pManagement = GET_INSTANCE(CManagement);
 
@@ -68,6 +68,7 @@ CLoading * CLoading::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDevic
 
 	if (FAILED(pInstance->Initialize(eScene)))
 	{
+		MSG_BOX("Failed to Creating CLevel_Loading");
 		Safe_Release(pInstance);
 	}
 

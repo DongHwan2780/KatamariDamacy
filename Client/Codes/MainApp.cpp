@@ -137,7 +137,7 @@ HRESULT CMainApp::Ready_Prototype_Component()
 	Safe_AddRef(m_pRenderer);
 
 	/* For.Prototype_VIBuffer_Rect */
-	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Rect"), CVIBuffer_Rect::Create(m_pDevice, m_pDeviceContext, TEXT("../Bin/Shader/Shader_Rect.fx")))))
+	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Rect"), CVIBuffer_Rect::Create(m_pDevice, m_pDeviceContext, TEXT("../Bin/ShaderFiles/Shader_Rect.fx")))))
 		return E_FAIL;
 
 	return S_OK;
