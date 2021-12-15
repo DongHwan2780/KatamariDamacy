@@ -4,7 +4,6 @@
 #define __MODEL_H__
 
 #include "Component.h"
-#include "VIBuffer.h"
 
 BEGIN(Engine)
 

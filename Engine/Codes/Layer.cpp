@@ -46,6 +46,17 @@ _int CLayer::Late_Update(_double DeltaTime)
 	return _int();
 }
 
+CComponent * CLayer::GetComponent(const _tchar * ComponentTag, _uint iIndex) const
+{
+	auto iter = m_ObjList.begin();
+	if (m_ObjList.end() == iter)
+	{
+		return nullptr;
+	}
+
+	return (*iter)->GetComponent(ComponentTag);
+}
+
 CLayer * CLayer::Create()
 {
 	CLayer*	pInstance = new CLayer();

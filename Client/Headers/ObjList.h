@@ -61,10 +61,6 @@ protected:
 	_float m_fGravityY = 0.f;
 
 
-	//반작용 관련
-	_float3 m_vReactionDir = { 0.f, 0.f, 0.f };
-	_float m_fReactionPower = 0.f;
-
 
 
 

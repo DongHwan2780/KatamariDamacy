@@ -433,7 +433,7 @@ HRESULT CModel::Create_HierarchyNodes(aiNode * pNode, CHierarchyNode * pParent, 
 	_matrix		TransformationMatrix;
 	memcpy(&TransformationMatrix, &pNode->mTransformation, sizeof(_matrix));
 
-	CHierarchyNode*		pHierarchyNode = CHierarchyNode::Create(pNode->mName.data, TransformationMatrix, pParent, iDepth);	// 첫 실행 시 생성되는 노드는 가장 최상위 부모 노드가 된다.
+	CHierarchyNode*		pHierarchyNode = CHierarchyNode::Create(pNode->mName.data, TransformationMatrix * PivotMatrix, pParent, iDepth);	// 첫 실행 시 생성되는 노드는 가장 최상위 부모 노드가 된다.
 	if (nullptr == pHierarchyNode)
 		return E_FAIL;
 

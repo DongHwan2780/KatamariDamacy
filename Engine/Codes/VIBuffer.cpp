@@ -28,7 +28,6 @@ CVIBuffer::CVIBuffer(const CVIBuffer & other)
 {
 	for (auto& EffectDesc : m_EffectDescs)
 	{
-		Safe_AddRef(EffectDesc.pPass);
 		Safe_AddRef(EffectDesc.pLayOut);
 	}
 
@@ -190,7 +189,6 @@ void CVIBuffer::Free()
 
 	for (auto& EffectDesc : m_EffectDescs)
 	{
-		Safe_Release(EffectDesc.pPass);
 		Safe_Release(EffectDesc.pLayOut);
 	}
 	m_EffectDescs.clear();

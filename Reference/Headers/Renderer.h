@@ -12,7 +12,7 @@ class ENGINE_DLL CRenderer final : public CComponent
 public:
 	enum RENDER {PRIORITY, NONALPHA, ALPHA, UI, RENDER_END};
 
-protected:
+private:
 	explicit CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
 	explicit CRenderer(const CRenderer& other);
 	virtual ~CRenderer() = default;

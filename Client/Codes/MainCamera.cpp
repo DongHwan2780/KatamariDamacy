@@ -31,12 +31,56 @@ HRESULT CMainCamera::Initialize_Clone(void * pArg)
 
 _int CMainCamera::Update(_double DeltaTime)
 {
+	if (nullptr == m_pTransform)
+		return -1;
+
+	POINT		ptMouse = { g_iWinCX >> 1, g_iWinCY >> 1 };
+
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	if (pManagement->Get_DIKState(DIK_W) & 0x80)
+	{
+		m_pTransform->Move_Straight(DeltaTime);
+	}
+
+	if (pManagement->Get_DIKState(DIK_S) & 0x80)
+	{
+		m_pTransform->Move_Straight(DeltaTime * -1.0);
+	}
+
+	if (pManagement->Get_DIKState(DIK_A) & 0x80)
+	{
+		m_pTransform->Move_Strafe(DeltaTime * -1.0);
+	}
+
+	if (pManagement->Get_DIKState(DIK_D) & 0x80)
+	{
+		m_pTransform->Move_Strafe(DeltaTime);
+	}
+
+	_long			MouseMove = 0;
+
+	if (MouseMove = pManagement->Get_MouseMoveState(CInput::MOUSE_MOVEX))
+	{
+		m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime * MouseMove * 2.f);
+	}
+
+	if (MouseMove = pManagement->Get_MouseMoveState(CInput::MOUSE_MOVEY))
+	{
+		m_pTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT), DeltaTime * MouseMove * 2.0f);
+	}
+
+	RELEASE_INSTANCE(CManagement);
+
 	return __super::Update(DeltaTime);
 }
 
 _int CMainCamera::Late_Update(_double DeltaTime)
 {
-	return _int();
+	if (0 > __super::Late_Update(DeltaTime))
+		return -1;
+
+	return _uint();
 }
 
 HRESULT CMainCamera::Render()

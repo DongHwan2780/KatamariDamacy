@@ -25,6 +25,9 @@ protected:
 	HRESULT SetUp_Components(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pComponentTag,  class CComponent** pOut, void* pArg = nullptr);
 
 public:
+	CComponent*	GetComponent(const _tchar* pComponentTag) const;
+
+public:
 	virtual CObj*	Clone(void* pArg) = 0;
 	virtual void Free() override;
 

@@ -7,6 +7,7 @@
 #include "Obj.h"
 
 BEGIN(Engine)
+class CCollider;
 class CRenderer;
 class CTransform;
 class CModel;
@@ -44,6 +45,7 @@ private:
 	CTransform*		m_pTransform = nullptr;
 	CRenderer*		m_pRenderer = nullptr;
 	CModel*			m_pModel = nullptr;
+	CCollider*			m_pCollider = nullptr;
 };
 END
 #endif // !__PLAYER_H__

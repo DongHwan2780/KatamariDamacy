@@ -71,6 +71,9 @@ using namespace DirectX::PackedVector;
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
+#include <DirectXTK/Effects.h>
+#include <DirectXTK/SpriteBatch.h>
+
 #include "EngineMacro.h"
 #include "EngineTypedef.h"
 #include "EngineFunction.h"
