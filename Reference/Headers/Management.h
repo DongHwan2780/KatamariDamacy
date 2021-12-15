@@ -41,6 +41,7 @@ public:
 	HRESULT Add_Prototype(const _tchar* pPrototypeTag, class CObj* pPrototype);
 	HRESULT Add_GameObj(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pLayerTag, void* pArg = nullptr);
 	void	Clear_ObjMgr(_int iSceneIndex);
+	class CComponent* GetComponent(const _tchar * LayerTag, const _tchar * ComponentTag, _int iSceneIndex) const;
 #pragma endregion
 
 #pragma region COMPONENT_MGR

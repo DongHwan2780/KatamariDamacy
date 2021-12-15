@@ -23,6 +23,9 @@ public:
 private:
 	HRESULT SetUp_Components();
 
+private:
+	_uint Movement(_double DeltaTime);
+
 public:
 	static CMainCamera* Create(DEVICES);
 	virtual CObj* Clone(void* pArg) override;
@@ -31,6 +34,8 @@ public:
 private:
 	CPlayer*		m_pPlayer = nullptr;
 	CTransform*		m_pPlayerTransform = nullptr;
+
+	_float			m_fDistanceToTarget = 10.f;
 
 };
 
