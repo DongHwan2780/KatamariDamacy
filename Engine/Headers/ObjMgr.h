@@ -23,6 +23,9 @@ public:
 	_int	Late_Update(_double DeltaTime);
 	void	Clear(_int	iSceneIndex);
 
+public:
+	class CComponent* GetComponent(const _tchar * LayerTag, const _tchar * ComponentTag, _int iSceneIndex) const;
+
 private:
 	class CObj*	Find_Prototype(const _tchar* pPrototypeTag );
 	class CLayer* Find_Layer(_int iSceneIndex , const _tchar* pLayerTag);

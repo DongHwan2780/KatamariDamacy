@@ -210,6 +210,9 @@
     <ClCompile Include="..\Codes\Collider.cpp">
       <Filter>01.Manager\01.ComponentMgr\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="..\Headers\DebugDraw.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Headers\Base.h">
@@ -321,6 +324,9 @@
       <Filter>01.Manager\01.ComponentMgr\Model\Channel</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Collider.h">
+      <Filter>01.Manager\01.ComponentMgr\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\DebugDraw.h">
       <Filter>01.Manager\01.ComponentMgr\Collider</Filter>
     </ClInclude>
   </ItemGroup>

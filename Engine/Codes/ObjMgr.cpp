@@ -105,6 +105,16 @@ void CObjMgr::Clear(_int iSceneIndex)
 	m_pGameObjects[iSceneIndex].clear();
 }
 
+CComponent * CObjMgr::GetComponent(const _tchar * LayerTag, const _tchar * ComponentTag, _int iSceneIndex) const
+{
+	auto iter = find_if(m_pGameObjects[iSceneIndex].begin(), m_pGameObjects[iSceneIndex].end(), CTagFinder(LayerTag));
+
+	if (m_pGameObjects[iSceneIndex].end() == iter)
+		return nullptr;
+
+	return iter->second->GetComponent(ComponentTag, iSceneIndex);
+}
+
 CObj * CObjMgr::Find_Prototype(const _tchar * pPrototypeTag)
 {
 	auto iter = find_if(m_Prototypes.begin(), m_Prototypes.end(), CTagFinder(pPrototypeTag));

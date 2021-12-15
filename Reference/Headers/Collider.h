@@ -4,6 +4,7 @@
 #define __COLLIDER_H__
 
 #include "Component.h"
+#include "DebugDraw.h"
 
 BEGIN(Engine)
 
@@ -25,6 +26,14 @@ private:
 public:
 	virtual HRESULT Initialize_Prototype(COLLTYPE eType);
 	virtual HRESULT Initialize_Clone(void * pArg) override;
+	HRESULT Render();
+
+public:
+	_bool Update_State(_fmatrix TransformMatrix);
+	_bool Collision_AABB(const CCollider* pTargetCollider);
+
+private:
+	_fmatrix Remove_Rotation(_fmatrix TransformMatrix);
 
 public:
 	static CCollider* Create(DEVICES, COLLTYPE eType);
@@ -38,6 +47,19 @@ private:
 	BoundingBox*			m_pAABB = nullptr;
 	BoundingOrientedBox*	m_pOBB = nullptr;
 	BoundingSphere*			m_pSphere = nullptr;
+	_bool					m_isCollision = false;
+
+	_float4x4				m_TransformMatrix;
+
+	_float3					m_vMin, m_vMax;
+
+private:
+	BasicEffect*			m_pEffect = nullptr;
+	ID3D11InputLayout*		m_pInputLayOut = nullptr;
+
+private:
+	DirectX::PrimitiveBatch<DirectX::VertexPositionColor>*				m_pBatch = nullptr;
+	typedef DirectX::PrimitiveBatch<DirectX::VertexPositionColor>		BATCH;
 };
 END
 #endif // !__COLLIDER_H__

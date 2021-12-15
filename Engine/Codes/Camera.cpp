@@ -36,6 +36,8 @@ HRESULT CCamera::Initialize_Clone(void * pArg)
 	if (nullptr == m_pTransform)
 		return E_FAIL;
 
+	m_pTransform->Set_TransformDesc(m_CameraDesc.TransformDesc);
+
 	_vector	vLook = XMLoadFloat3(&m_CameraDesc.vAt) - XMLoadFloat3(&m_CameraDesc.vEye);
 	m_pTransform->Set_State(CTransform::LOOK, XMVector3Normalize(vLook));
 

@@ -85,7 +85,7 @@ HRESULT CStageOne::Ready_Layer_Camera(const _tchar * pLayerTag)
 	CameraDesc.vAt = _float3(0.f, 0.f, 0.f);
 	CameraDesc.vAxisY = _float3(0.f, 1.f, 0.f);
 
-	CameraDesc.TransformDesc.fSpeedPerSec = 7.0f;
+	CameraDesc.TransformDesc.fSpeedPerSec = 5.0f;
 	CameraDesc.TransformDesc.fRotatePerSec = XMConvertToRadians(90.0f);
 
 	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_MainCamera"), pLayerTag, &CameraDesc)))

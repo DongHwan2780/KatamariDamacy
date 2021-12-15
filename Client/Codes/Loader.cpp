@@ -88,6 +88,11 @@ HRESULT CLoader::StageLoader()
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_Player"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/Katamari/", "OUJI01.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
 		return E_FAIL;
 
+	/* For.Collider Component */
+	if (FAILED(pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Collider_AABB"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_AABB))))
+		return E_FAIL;
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/* GameObject_Player*/
 	if (FAILED(pManagement->Add_Prototype(TEXT("GameObject_Player"), CPlayer::Create(m_pDevice, m_pDeviceContext))))

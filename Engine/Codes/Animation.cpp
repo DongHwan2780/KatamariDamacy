@@ -53,7 +53,7 @@ HRESULT CAnimation::Update_TransformationMatrices(_double DeltaTime)
 		vPosition = XMVectorZero();
 
 
-		_uint		iCurrentKeyFrame = 0;
+		_uint		iCurrentKeyFrame = pAnimationChannel->Get_CurrentKeyFrame();
 		_float		fRatio = 0.f;		// 프레임키 간의 비율을 선형보간해줄 값
 
 
@@ -86,8 +86,8 @@ HRESULT CAnimation::Update_TransformationMatrices(_double DeltaTime)
 				pAnimationChannel->Set_CurrentKeyFrame(++iCurrentKeyFrame);
 
 
-			fRatio = (m_CurrentTime - KeyFrames[iCurrentKeyFrame]->Time) /
-				(KeyFrames[iCurrentKeyFrame + 1]->Time - KeyFrames[iCurrentKeyFrame]->Time);
+			fRatio = (_float)((m_CurrentTime - KeyFrames[iCurrentKeyFrame]->Time) /
+				(KeyFrames[iCurrentKeyFrame + 1]->Time - KeyFrames[iCurrentKeyFrame]->Time));
 
 			vSourScale = XMLoadFloat3(&KeyFrames[iCurrentKeyFrame]->vScale);
 			vSourRotation = XMLoadFloat4(&KeyFrames[iCurrentKeyFrame]->vRotation);

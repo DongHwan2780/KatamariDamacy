@@ -2,6 +2,7 @@
 
 #include "ClientDefines.h"
 #include "Camera.h"
+#include "Player.h"
 
 BEGIN(Client)
 
@@ -26,6 +27,10 @@ public:
 	static CMainCamera* Create(DEVICES);
 	virtual CObj* Clone(void* pArg) override;
 	virtual void Free() override;
+
+private:
+	CPlayer*		m_pPlayer = nullptr;
+	CTransform*		m_pPlayerTransform = nullptr;
 
 };
 

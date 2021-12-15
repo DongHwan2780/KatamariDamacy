@@ -18,26 +18,26 @@
 //using std::wstring;
 //#pragma endregion
 
-#pragma region PHYSX
-#include <PxPhysicsAPI.h>
-using namespace physx;
-#pragma comment(lib,"LowLevel_static_64.lib")
-#pragma comment(lib,"LowLevelAABB_static_64.lib")
-#pragma comment(lib,"LowLevelDynamics_static_64.lib")
-#pragma comment(lib,"PhysX_64.lib")
-#pragma comment(lib,"PhysXCharacterKinematic_static_64.lib")
-#pragma comment(lib,"PhysXCommon_64.lib")
-#pragma comment(lib,"PhysXCooking_64.lib")
-#pragma comment(lib,"PhysXExtensions_static_64.lib")
-#pragma comment(lib,"PhysXFoundation_64.lib")
-#pragma comment(lib,"PhysXPvdSDK_static_64.lib")
-#pragma comment(lib,"PhysXTask_static_64.lib")
-#pragma comment(lib,"PhysXVehicle_static_64.lib")
-#pragma comment(lib,"SceneQuery_static_64.lib")
-#pragma comment(lib,"SimulationController_static_64.lib")
-
-#define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
-#pragma endregion
+//#pragma region PHYSX
+//#include <PxPhysicsAPI.h>
+//using namespace physx;
+//#pragma comment(lib,"LowLevel_static_64.lib")
+//#pragma comment(lib,"LowLevelAABB_static_64.lib")
+//#pragma comment(lib,"LowLevelDynamics_static_64.lib")
+//#pragma comment(lib,"PhysX_64.lib")
+//#pragma comment(lib,"PhysXCharacterKinematic_static_64.lib")
+//#pragma comment(lib,"PhysXCommon_64.lib")
+//#pragma comment(lib,"PhysXCooking_64.lib")
+//#pragma comment(lib,"PhysXExtensions_static_64.lib")
+//#pragma comment(lib,"PhysXFoundation_64.lib")
+//#pragma comment(lib,"PhysXPvdSDK_static_64.lib")
+//#pragma comment(lib,"PhysXTask_static_64.lib")
+//#pragma comment(lib,"PhysXVehicle_static_64.lib")
+//#pragma comment(lib,"SceneQuery_static_64.lib")
+//#pragma comment(lib,"SimulationController_static_64.lib")
+//
+//#define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
+//#pragma endregion
 
 #pragma region KEY_DEFINE
 #define KEY_LEFT	 0x00000001
@@ -70,6 +70,9 @@ using namespace DirectX::PackedVector;
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+
+#include <DirectXTK/Effects.h>
+#include <DirectXTK/SpriteBatch.h>
 
 #include "EngineMacro.h"
 #include "EngineTypedef.h"
