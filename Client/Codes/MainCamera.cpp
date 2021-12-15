@@ -26,6 +26,13 @@ HRESULT CMainCamera::Initialize_Clone(void * pArg)
 	if (FAILED(__super::Initialize_Clone(pArg)))
 		return E_FAIL;
 
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(TEXT("Layer_Player"), TEXT("Com_Transform"), STAGEONE_SCENE));
+
+	//Safe_AddRef(m_pPlayerTransform);
+
+	RELEASE_INSTANCE(CManagement);
 	return S_OK;
 }
 
@@ -72,6 +79,8 @@ _int CMainCamera::Update(_double DeltaTime)
 
 	RELEASE_INSTANCE(CManagement);
 
+	Movement(DeltaTime);
+
 	return __super::Update(DeltaTime);
 }
 
@@ -91,6 +100,21 @@ HRESULT CMainCamera::Render()
 HRESULT CMainCamera::SetUp_Components()
 {
 	return S_OK;
+}
+
+_uint CMainCamera::Movement(_double DeltaTime)
+{
+	_vector vTargetPos = m_pPlayerTransform->Get_State(CTransform::POSITION);
+
+	_vector vTargetLook = m_pPlayerTransform->Get_State(CTransform::LOOK);
+	XMVector3Normalize(vTargetLook);
+
+	_vector vInTargetLook = vTargetLook * -m_fDistanceToTarget;
+
+	XMStoreFloat3(&m_CameraDesc.vEye,  vTargetPos + vInTargetLook);
+	XMStoreFloat3(&m_CameraDesc.vAt,  vTargetPos);
+
+	return _uint();
 }
 
 CMainCamera * CMainCamera::Create(DEVICES)

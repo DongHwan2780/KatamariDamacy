@@ -104,6 +104,10 @@ void CManagement::Clear_ObjMgr(_int iSceneIndex)
 
 	m_pObjMgr->Clear(iSceneIndex);
 }
+CComponent * CManagement::GetComponent(const _tchar * LayerTag, const _tchar * ComponentTag, _int iSceneIndex) const
+{
+	return m_pObjMgr->GetComponent(LayerTag, ComponentTag, iSceneIndex);;
+}
 #pragma endregion
 
 #pragma region COMPONENT_MANAGER
