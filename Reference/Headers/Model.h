@@ -15,7 +15,7 @@ private:
 	virtual ~CModel() = default;
 
 public:
-	_uint	Get_NumMaterials() const { return m_ModelTextures.size(); }
+	size_t	Get_NumMaterials() const { return m_ModelTextures.size(); }
 
 public:
 	virtual HRESULT Initialize_Prototype(const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix);

@@ -36,7 +36,7 @@ private:
 	CTransform*		m_pPlayerTransform = nullptr;
 
 	_float			m_fDistanceToTarget = 10.f;
-
+	_float			m_fCamAngle = XMConvertToRadians(35.f);
 };
 
 END

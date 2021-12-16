@@ -24,7 +24,7 @@ public:
 	void	Clear(_int	iSceneIndex);
 
 public:
-	class CComponent* GetComponent(const _tchar * LayerTag, const _tchar * ComponentTag, _int iSceneIndex) const;
+	class CComponent* GetComponent(_uint iLevelIndex, const _tchar* pLayerTag, const _tchar* pComponentTag, _uint iIndex = 0) ;
 
 private:
 	class CObj*	Find_Prototype(const _tchar* pPrototypeTag );

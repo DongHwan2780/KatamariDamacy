@@ -410,7 +410,7 @@ HRESULT CModel::Create_Materials(aiMaterial * pMaterial, const char * pMeshFileP
 
 HRESULT CModel::Sort_MeshesByMaterial()
 {
-	_uint		iNumMaterials = m_ModelTextures.size();	
+	size_t		iNumMaterials = m_ModelTextures.size();
 
 	m_SortByMaterialMesh.resize(iNumMaterials);	// 머테리얼의 개수만큼 공간과 원소를 잡아준다.
 												// reserve는 공간만 잡아줄 뿐 원소는 채워주지않고, 인자가 capacity보다 클때 iter를 사용할수없고 무효화되는 주의점이 있음.

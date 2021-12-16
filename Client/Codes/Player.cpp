@@ -89,35 +89,101 @@ HRESULT CPlayer::Render()
 	return S_OK;
 }
 
-void CPlayer::Movement(_double TimeDelta)
+void CPlayer::Movement(_double DeltaTime)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
 	if (pManagement->Get_DIKState(DIK_UP) & 0x80)
 	{
 		m_pModel->SetUp_AnimationIndex(1);
-		m_pTransform->Move_Straight(TimeDelta);
+		m_pTransform->Move_Straight(DeltaTime);
+
+		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
+		{
+			m_pTransform->Move_Strafe(-DeltaTime);
+		}
+		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
+		{
+			m_pTransform->Move_Strafe(DeltaTime);
+		}
 	}
 
-	if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
+	else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
 	{
 		m_pModel->SetUp_AnimationIndex(12);
-		m_pTransform->Move_Straight(-TimeDelta);
+		m_pTransform->Move_Straight(-DeltaTime);
+
+		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
+		{
+			m_pTransform->Move_Strafe(-DeltaTime);
+		}
+		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
+		{
+			m_pTransform->Move_Strafe(DeltaTime);
+		}
 	}
 
-	if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
+	else if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 	{
 		m_pModel->SetUp_AnimationIndex(3);
-		m_pTransform->Move_Strafe(-TimeDelta);
+		m_pTransform->Move_Strafe(-DeltaTime);
+
+		if (pManagement->Get_DIKState(DIK_UP) & 0x80)
+		{
+			m_pTransform->Move_Straight(DeltaTime);
+		}
+		else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
+		{
+			m_pTransform->Move_Straight(-DeltaTime);
+		}
 	}
 
-	if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
+	else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 	{
 		m_pModel->SetUp_AnimationIndex(2);
-		m_pTransform->Move_Strafe(TimeDelta);
+		m_pTransform->Move_Strafe(DeltaTime);
+
+		if (pManagement->Get_DIKState(DIK_UP) & 0x80)
+		{
+			m_pTransform->Move_Straight(DeltaTime);
+		}
+		else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
+		{
+			m_pTransform->Move_Straight(-DeltaTime);
+		}
 	}
+	else
+		m_pModel->SetUp_AnimationIndex(20);
 
 	RELEASE_INSTANCE(CManagement);
+}
+
+void CPlayer::Acceleration(_double DeltaTime, _float Ballsize)
+{
+	_float fPlayerSpeed = m_fAccel * Ballsize;
+
+
+		if (fPlayerSpeed > m_fMaxSpeed - 20.f)
+		{
+			m_fAccel = 7.f;
+		}
+		else if (m_fAccel < 15.f && fPlayerSpeed <= m_fMaxSpeed - 20.f)
+		{
+			m_fAccel += DeltaTime*25.f;
+		}
+
+		if (fPlayerSpeed > 0.f)
+		{
+			m_fBackAccel = 15.f;
+		}
+		else if (fPlayerSpeed < -m_fBackMaxSpeed + 20.f)
+		{
+			m_fBackAccel = 7.f;
+		}
+}
+
+void CPlayer::ResistAccel(_double DeltaTime, _float Ballsize)
+{
 }
 
 HRESULT CPlayer::SetUp_Components()

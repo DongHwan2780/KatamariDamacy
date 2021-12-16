@@ -19,7 +19,7 @@ public:
 	_int	Late_Update(_double DeltaTime);
 
 public:
-	class CComponent* GetComponent(const _tchar* ComponentTag, _uint iIndex = 0) const;
+	class CComponent* GetComponent(const _tchar* ComponentTag, _uint iIndex = 0);
 public:
 	static CLayer*	Create();
 	virtual void Free() override;
