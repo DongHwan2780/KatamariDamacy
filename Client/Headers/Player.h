@@ -5,6 +5,7 @@
 
 #include "ClientDefines.h"
 #include "Obj.h"
+#include "PlayerBall.h"
 
 BEGIN(Engine)
 class CCollider;
@@ -30,7 +31,9 @@ public:
 	virtual HRESULT	Render() override;
 
 private:
-	void Movement(_double TimeDelta);
+	void Movement(_double DeltaTime);
+	void Acceleration(_double DeltaTime, _float Ballsize);
+	void ResistAccel(_double DeltaTime, _float Ballsize);
 
 private:
 	HRESULT SetUp_Components();
@@ -45,7 +48,28 @@ private:
 	CTransform*		m_pTransform = nullptr;
 	CRenderer*		m_pRenderer = nullptr;
 	CModel*			m_pModel = nullptr;
-	CCollider*			m_pCollider = nullptr;
+	CCollider*		m_pCollider = nullptr;
+
+private:
+
+	// 속도  m_pTransform.speed = ballsize * accel
+	_float			m_fAccel = 0.f;		// 공 크기에 따라 값이 변경되어야함 -> 공이 크면 클수록 작게, 공이 작을수록 크게
+	_float			m_fBackAccel = 0.f;
+	_float			m_fMaxSpeed = 0.f;
+	_float			m_fBackMaxSpeed = 0.f;
+	_float			m_fResist = 0.f;		// 저항값 == 공 크기 * 중력 가속 + 플레이어 속도
+	
+
+	_float			m_fBallSize = 0.f;
+
+	//중력
+	_float			m_fGravityTime = 0.f;
+	_float			m_fGravityY = 0.f;
+
+	//충돌
+	_float3			m_vReactionDir = { 0.f, 0.f, 0.f };
+	_float			m_fReactionPower = 0.f;
+
 };
 END
 #endif // !__PLAYER_H__

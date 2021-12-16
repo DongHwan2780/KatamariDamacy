@@ -66,13 +66,12 @@ HRESULT CObj::SetUp_Components(_int iSceneIndex, const _tchar * pPrototypeTag, c
 
 CComponent * CObj::GetComponent(const _tchar * pComponentTag) const
 {
-	auto iter_find = m_Components.find(pComponentTag);
-	if (m_Components.end() == iter_find)
-	{
-		return nullptr;
-	}
+	auto	iter = find_if(m_Components.begin(), m_Components.end(), CTagFinder(pComponentTag));
 
-	return iter_find->second;
+	if (iter == m_Components.end())
+		return nullptr;
+
+	return iter->second;
 }
 
 void CObj::Free()

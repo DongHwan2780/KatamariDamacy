@@ -37,6 +37,10 @@ public:
 
 private:
 	CTransform*		m_pTransform = nullptr;
+
+
+private:
+	_float			m_fBallSize = 0.f;
 };
 END
 #endif // !__PLAYERBALL_H__
