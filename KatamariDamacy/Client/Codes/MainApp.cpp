@@ -140,6 +140,10 @@ HRESULT CMainApp::Ready_Prototype_Component()
 	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Rect"), CVIBuffer_Rect::Create(m_pDevice, m_pDeviceContext, TEXT("../Bin/ShaderFiles/Shader_Rect.fx")))))
 		return E_FAIL;
 
+	/* For.Prototype_VIBuffer_UI */
+	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_UI"), CVIBuffer_UI::Create(m_pDevice, m_pDeviceContext, TEXT("../Bin/ShaderFiles/Shader_UI.fx")))))
+		return E_FAIL;
+
 	return S_OK;
 
 }

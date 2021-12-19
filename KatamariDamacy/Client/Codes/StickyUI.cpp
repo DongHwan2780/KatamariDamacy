@@ -29,6 +29,21 @@ HRESULT CStickyUI::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_ComponentsOrthUI()))
 		return E_FAIL;
 
+	m_fSizeX = 256.f;
+	m_fSizeY = 256.f;
+
+	m_fX = g_iWinCX - m_fSizeX * 0.5f;
+	m_fY = m_fSizeY * 0.5f;
+
+	XMStoreFloat4x4(&m_TransformMatrix, XMMatrixIdentity());
+
+	m_TransformMatrix._11 = m_fSizeX;
+	m_TransformMatrix._22 = m_fSizeY;
+
+	m_TransformMatrix._41 = m_fX - (g_iWinCX >> 1);
+	m_TransformMatrix._42 = -m_fY + (g_iWinCY >> 1);
+
+	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH(g_iWinCX, g_iWinCY, 0.0f, 1.f));
 
 	return S_OK;
 }
@@ -54,6 +69,39 @@ _int CStickyUI::Late_Update(_double DeltaTime)
 
 HRESULT CStickyUI::Render()
 {
+	if (nullptr == m_pVIBuffer)
+		return E_FAIL;
+
+	m_pVIBuffer->SetUp_ValueOnShader("g_WorldMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_TransformMatrix)), sizeof(_matrix));
+	m_pVIBuffer->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixIdentity(), sizeof(_matrix));
+	m_pVIBuffer->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_OrthMatrix)), sizeof(_matrix));
+
+	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseTexture", m_pTexture)))
+		return E_FAIL;
+
+	if (FAILED(__super::Render()))
+		return E_FAIL;
+
+	m_pVIBuffer->Render(0);
+
+	return S_OK;
+}
+
+HRESULT CStickyUI::SetUp_ComponentsOrthUI()
+{
+	/* For.Com_Renderer */
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Renderer"), TEXT("Com_Renderer"), (CComponent**)&m_pRenderer)))
+		return E_FAIL;
+
+	/* For.Com_VIBuffer */
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_VIBuffer_UI"), TEXT("Com_VIBuffer"), (CComponent**)&m_pVIBuffer)))
+		return E_FAIL;
+
+	/* For.Com_Texture */
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Texture_StickUI"), TEXT("Com_Texture"), (CComponent**)&m_pTexture)))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 

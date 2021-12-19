@@ -165,7 +165,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Bin\Shader\Shader_Defines.hpp" />
+    <ClInclude Include="..\Bin\ShaderFiles\Shader_Defines.hpp" />
     <ClInclude Include="..\Headers\BackGround.h" />
     <ClInclude Include="..\Headers\ClientDefines.h" />
     <ClInclude Include="..\Headers\Loader.h" />
@@ -178,6 +178,7 @@
     <ClInclude Include="..\Headers\PlayerBall.h" />
     <ClInclude Include="..\Headers\PlayerMoveUI.h" />
     <ClInclude Include="..\Headers\SizeUI.h" />
+    <ClInclude Include="..\Headers\StageMap.h" />
     <ClInclude Include="..\Headers\StageOne.h" />
     <ClInclude Include="..\Headers\StickyUI.h" />
     <ClInclude Include="..\Headers\Terrain.h" />
@@ -200,6 +201,7 @@
     <ClCompile Include="..\Codes\PlayerBall.cpp" />
     <ClCompile Include="..\Codes\PlayerMoveUI.cpp" />
     <ClCompile Include="..\Codes\SizeUI.cpp" />
+    <ClCompile Include="..\Codes\StageMap.cpp" />
     <ClCompile Include="..\Codes\StageOne.cpp" />
     <ClCompile Include="..\Codes\StickyUI.cpp" />
     <ClCompile Include="..\Codes\Terrain.cpp" />
@@ -221,9 +223,10 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Bin\Shader\Shader_Mesh.fx" />
-    <FxCompile Include="..\Bin\Shader\Shader_Rect.fx" />
-    <FxCompile Include="..\Bin\Shader\Shader_Terrain.fx" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Mesh.fx" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.fx" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Terrain.fx" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_UI.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

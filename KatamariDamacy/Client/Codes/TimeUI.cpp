@@ -57,6 +57,11 @@ HRESULT CTimeUI::Render()
 	return S_OK;
 }
 
+HRESULT CTimeUI::SetUp_ComponentsOrthUI()
+{
+	return E_NOTIMPL;
+}
+
 CTimeUI * CTimeUI::Create(DEVICES)
 {
 	CTimeUI*		pInstance = new CTimeUI(pDevice, pDeviceContext);

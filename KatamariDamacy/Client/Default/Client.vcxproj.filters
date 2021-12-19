@@ -70,6 +70,9 @@
     <Filter Include="01.Object\02.CommonObj\03.UI\03.PlayerMoveUI">
       <UniqueIdentifier>{3b8421f4-3400-4d1a-a546-de4381c7795d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Object\02.CommonObj\04.StageMap">
+      <UniqueIdentifier>{8db00604-6c9c-432f-a6da-700eb2338614}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -120,9 +123,6 @@
     <ClInclude Include="..\Headers\MainCamera.h">
       <Filter>01.Object\02.CommonObj\02.MainCamera</Filter>
     </ClInclude>
-    <ClInclude Include="..\Bin\Shader\Shader_Defines.hpp">
-      <Filter>97.Shader</Filter>
-    </ClInclude>
     <ClInclude Include="..\Headers\ObjList.h">
       <Filter>01.Object\01.ObjList</Filter>
     </ClInclude>
@@ -140,6 +140,12 @@
     </ClInclude>
     <ClInclude Include="..\Headers\UIList.h">
       <Filter>01.Object\02.CommonObj\03.UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Bin\ShaderFiles\Shader_Defines.hpp">
+      <Filter>97.Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\StageMap.h">
+      <Filter>01.Object\02.CommonObj\04.StageMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +203,9 @@
     <ClCompile Include="..\Codes\UIList.cpp">
       <Filter>01.Object\02.CommonObj\03.UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Codes\StageMap.cpp">
+      <Filter>01.Object\02.CommonObj\04.StageMap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -212,13 +221,16 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Bin\Shader\Shader_Rect.fx">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Mesh.fx">
       <Filter>97.Shader</Filter>
     </FxCompile>
-    <FxCompile Include="..\Bin\Shader\Shader_Terrain.fx">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.fx">
       <Filter>97.Shader</Filter>
     </FxCompile>
-    <FxCompile Include="..\Bin\Shader\Shader_Mesh.fx">
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_Terrain.fx">
+      <Filter>97.Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_UI.fx">
       <Filter>97.Shader</Filter>
     </FxCompile>
   </ItemGroup>

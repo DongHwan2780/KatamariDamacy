@@ -30,11 +30,6 @@ public:
 	virtual HRESULT	Render() PURE;
 
 public:
-	HRESULT SetUp_ComponentsOrthUI();
-	//HRESULT SetUp_ComponentsProjUI();
-
-
-public:
 	virtual CObj*	Clone(void* pArg) PURE;
 	virtual void Free() PURE;
 
@@ -48,10 +43,6 @@ protected:			// 직교투영에서 쓸 변수들
 	_float4x4			m_OrthMatrix;
 	_float4x4			m_TransformMatrix;
 	_float				m_fX, m_fY, m_fSizeX, m_fSizeY;
-
-
-
-
 };
 END
 #endif // !__UILIST_H__

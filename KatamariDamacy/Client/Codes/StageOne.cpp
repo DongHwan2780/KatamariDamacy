@@ -4,6 +4,11 @@
 #include "Management.h"
 #include "MainCamera.h"
 
+#include "SizeUI.h"
+#include "StickyUI.h"
+#include "TimeUI.h"
+#include "PlayerMoveUI.h"
+
 CStageOne::CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
 	:CScene(pDevice, pDeviceContext, iSceneIndex)
 {
@@ -17,14 +22,26 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
+	//if (FAILED(Ready_Prototype_Component()))
+	//	return E_FAIL;
+
+	//if (FAILED(Ready_Prototype_GameObject()))
+	//	return E_FAIL;
+
 	if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
+	if (FAILED(Ready_Layer_StageMap(TEXT("Layer_StageMap"))))
 		return E_FAIL;
+
+	//if (FAILED(Ready_Layer_SizeUI(TEXT("Layer_SizeUI"))))
+	//	return E_FAIL;
+
+	//if (FAILED(Ready_Layer_StickyUI(TEXT("Layer_StickUI"))))
+	//	return E_FAIL;
 
 	return S_OK;
 }
@@ -71,6 +88,7 @@ HRESULT CStageOne::Ready_Layer_Player(const _tchar * pLayerTag)
 		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);
+
 	return S_OK;
 }
 
@@ -95,16 +113,90 @@ HRESULT CStageOne::Ready_Layer_Camera(const _tchar * pLayerTag)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_BackGround(const _tchar * pLayerTag)
+HRESULT CStageOne::Ready_Layer_StageMap(const _tchar * pLayerTag)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
-	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_Terrain"), pLayerTag)))
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_StageMap"), pLayerTag)))
 		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);
 	return S_OK;
 }
+
+HRESULT CStageOne::Ready_Prototype_Component()
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+
+	/* Prototype_Texture_SizeUI */
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_SizeUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/BallSizeUI/Size%d.png"), 5))))
+		return E_FAIL;
+
+	/* Prototype_Texture_StickUI */
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_StickUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/LastStickUI/ps4_stickR.png"), 1))))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Prototype_GameObject()
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+
+	/* Prototype_SizeUI */
+	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_SizeUI"), CSizeUI::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
+	/* Prototype_StickUI */
+	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_StickUI"), CStickyUI::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Layer_SizeUI(const _tchar * pLayerTag)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	/* For.GameObject_SizeUI */
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_SizeUI"), pLayerTag)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Layer_StickyUI(const _tchar * pLayerTag)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	/* For.GameObject_StickUI */
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_StickUI"), pLayerTag)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Layer_TimeUI(const _tchar * pLayerTag)
+{
+	return E_NOTIMPL;
+}
+
+HRESULT CStageOne::Ready_Layer_PlayerMoveUI(const _tchar * pLayerTag)
+{
+	return E_NOTIMPL;
+}
+
 
 CStageOne * CStageOne::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
 {

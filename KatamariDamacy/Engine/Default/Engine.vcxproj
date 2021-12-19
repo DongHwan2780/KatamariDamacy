@@ -204,6 +204,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClInclude Include="..\Headers\VIBuffer.h" />
     <ClInclude Include="..\Headers\VIBuffer_Rect.h" />
     <ClInclude Include="..\Headers\VIBuffer_Terrain.h" />
+    <ClInclude Include="..\Headers\VIBuffer_UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Animation.cpp" />
@@ -238,6 +239,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClCompile Include="..\Codes\VIBuffer.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Rect.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Terrain.cpp" />
+    <ClCompile Include="..\Codes\VIBuffer_UI.cpp" />
     <ClCompile Include="..\Headers\DebugDraw.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
