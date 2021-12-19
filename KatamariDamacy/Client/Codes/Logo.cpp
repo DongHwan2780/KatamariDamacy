@@ -59,7 +59,7 @@ HRESULT CLogo::Ready_Prototype_Component()
 
 
 	/* Prototype_Texture_BackGround */
-	if (FAILED(pManagement->Add_Prototype(LOGO_SCENE, TEXT("Component_Texture_BackGround"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/Devil%d.png"), 2))))
+	if (FAILED(pManagement->Add_Prototype(LOGO_SCENE, TEXT("Component_Texture_BackGround"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/Logo/staff_back.png"), 1))))
 		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);

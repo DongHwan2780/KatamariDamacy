@@ -112,6 +112,9 @@
     <Filter Include="01.Manager\01.ComponentMgr\Collider">
       <UniqueIdentifier>{c61f585c-28e2-4c59-a13f-a3dbe150d5b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_UI">
+      <UniqueIdentifier>{6a406a04-9ca5-4da1-a61a-7bc765708869}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -212,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="..\Headers\DebugDraw.cpp">
       <Filter>01.Manager\01.ComponentMgr\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\VIBuffer_UI.cpp">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +334,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\DebugDraw.h">
       <Filter>01.Manager\01.ComponentMgr\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\VIBuffer_UI.h">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

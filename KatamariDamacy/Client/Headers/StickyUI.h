@@ -23,6 +23,10 @@ public:
 	virtual _int	Late_Update(_double DeltaTime) override;
 	virtual HRESULT	Render() override;
 
+
+private:
+	HRESULT SetUp_ComponentsOrthUI();
+
 public:
 	static CStickyUI*	Create(DEVICES);
 	virtual CObj*	Clone(void* pArg) override;

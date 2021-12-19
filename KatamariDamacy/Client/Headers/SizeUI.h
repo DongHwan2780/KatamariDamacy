@@ -20,8 +20,11 @@ public:
 	virtual HRESULT Initialize_Clone(void* pArg) override;
 	virtual _int	Update(_double DeltaTime) override;
 	virtual _int	Late_Update(_double DeltaTime) override;
-
 	virtual HRESULT	Render() override;
+
+private:
+	HRESULT SetUp_ComponentsOrthUI();
+
 
 public:
 	static CSizeUI*	Create(DEVICES);
