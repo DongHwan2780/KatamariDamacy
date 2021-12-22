@@ -41,8 +41,8 @@ public:
 
 
 public:
-	void Move_Straight(_double DeltaTime);
-	void Move_Strafe(_double DeltaTime);
+	void Move_Straight(_double DeltaTime, class CNavigation* pNavigation = nullptr);
+	void Move_Strafe(_double DeltaTime, class CNavigation* pNavigation = nullptr);
 	void Chase_Target(CTransform* pTarget);
 	void Chase_Target(_fvector vTargetPos, _double DeltaTime);
 	void LookAtLandObj(_fvector vTargetPos);

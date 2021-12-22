@@ -74,7 +74,7 @@ HRESULT CLoader::StageLoader()
 	/* Component_Model_StageMap*/
 	//_matrix		ScaleMatrix, RotationMatrix, TranslationMatrix;
 	//_matrix		ModelPivotMatrix;
-	ScaleMatrix = XMMatrixScaling(200.f, 200.f, 200.f);
+	ScaleMatrix = XMMatrixScaling(10.f, 10.f,10.f);
 	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
 
 	ModelPivotMatrix = ScaleMatrix /** RotationMatrix*/;

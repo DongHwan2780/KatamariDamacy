@@ -15,7 +15,8 @@ private:
 	virtual ~CModel() = default;
 
 public:
-	size_t	Get_NumMaterials() const { return m_ModelTextures.size(); }
+	size_t	Get_NumMaterials() const { return (_uint)m_ModelTextures.size(); }
+	_fmatrix Get_BoneMatrix(const char* pBoneName);
 
 public:
 	virtual HRESULT Initialize_Prototype(const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix);
@@ -34,9 +35,10 @@ private:
 	HRESULT Create_AllBuffer(const _tchar* pShaderFilePath);
 	HRESULT Create_Materials(aiMaterial*	pMaterial, const char* pMeshFilePath);
 	HRESULT Create_HierarchyNodes(aiNode* pNode, class CHierarchyNode* pParent = nullptr, _uint iDepth = 0, _fmatrix PivotMatrix = XMMatrixIdentity());
+
+
 	HRESULT Compile_Shader(D3D11_INPUT_ELEMENT_DESC* pElementDescs, _uint iNumElement, const _tchar* pShaderFilePath, _uint iTechniqueIndex = 0);
 	HRESULT Sort_MeshesByMaterial();
-
 	HRESULT SetUp_SkinnedInfo();
 	HRESULT SetUp_AnimationInfo();
 

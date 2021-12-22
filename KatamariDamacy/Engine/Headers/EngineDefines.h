@@ -5,40 +5,6 @@
 
 #pragma warning (disable : 4251)
 
-//#pragma region CONSOLE
-//#ifdef UNICODE
-//#pragma comment(linker, "/entry:wWinMainCRTStartup /subsystem:console")
-//#else
-//#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
-//#endif
-//
-//#include <iostream>
-//using std::cout;
-//using std::endl;
-//using std::wstring;
-//#pragma endregion
-
-//#pragma region PHYSX
-//#include <PxPhysicsAPI.h>
-//using namespace physx;
-//#pragma comment(lib,"LowLevel_static_64.lib")
-//#pragma comment(lib,"LowLevelAABB_static_64.lib")
-//#pragma comment(lib,"LowLevelDynamics_static_64.lib")
-//#pragma comment(lib,"PhysX_64.lib")
-//#pragma comment(lib,"PhysXCharacterKinematic_static_64.lib")
-//#pragma comment(lib,"PhysXCommon_64.lib")
-//#pragma comment(lib,"PhysXCooking_64.lib")
-//#pragma comment(lib,"PhysXExtensions_static_64.lib")
-//#pragma comment(lib,"PhysXFoundation_64.lib")
-//#pragma comment(lib,"PhysXPvdSDK_static_64.lib")
-//#pragma comment(lib,"PhysXTask_static_64.lib")
-//#pragma comment(lib,"PhysXVehicle_static_64.lib")
-//#pragma comment(lib,"SceneQuery_static_64.lib")
-//#pragma comment(lib,"SimulationController_static_64.lib")
-//
-//#define PX_RELEASE(x)	if(x)	{ x->release(); x = NULL;	}
-//#pragma endregion
-
 #pragma region KEY_DEFINE
 #define KEY_LEFT	 0x00000001
 #define KEY_UP		 0x00000002

@@ -55,6 +55,15 @@ CModel::CModel(const CModel & other)
 	Safe_AddRef(m_pEffect);
 }
 
+_fmatrix CModel::Get_BoneMatrix(const char * pBoneName)
+{
+	CHierarchyNode*		pNode = Find_HierarchyNode(pBoneName);
+	if (nullptr == pNode)
+		return XMMatrixIdentity();
+
+	return pNode->Get_OffsetMatrix() * pNode->Get_CombinedTransformationMatrix();
+}
+
 HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix)
 {
 	char		szFullPath[MAX_PATH] = "";
@@ -93,8 +102,16 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 
 	for (_uint i = 0; i < m_pScene->mNumMeshes; ++i)
 	{
-		if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex, XMMatrixIdentity())))	// 메쉬의 개수만큼 컨테이너 생성하고 메쉬, 시작정점인덱스, 폴리곤시작인덱스를 넘겨줌
-			return E_FAIL;
+		if (false == m_pScene->HasAnimations())
+		{
+			if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex, XMMatrixIdentity() * PivotMatrix)))	// 메쉬의 개수만큼 컨테이너 생성하고 메쉬, 시작정점인덱스, 폴리곤시작인덱스를 넘겨줌
+				return E_FAIL;
+		}
+		else
+		{
+			if (FAILED(Create_MeshContainer(m_pScene->mMeshes[i], &iStartVertexIndex, &iStartFaceIndex, XMMatrixIdentity())))	// 메쉬의 개수만큼 컨테이너 생성하고 메쉬, 시작정점인덱스, 폴리곤시작인덱스를 넘겨줌
+				return E_FAIL;
+		}
 	}
 
 	m_iStride = sizeof(VTXMESH);		// 정점 구조체의 크기
@@ -147,14 +164,6 @@ HRESULT CModel::Initialize_Clone(void * pArg)
 	{
 		return pSour->Get_Depth() < pDest->Get_Depth();
 	});
-
-	for (auto& pMeshContainer : m_MeshContainers)
-	{
-		vector<BONEDESC*>	Bones = pMeshContainer->Get_BoneDesc();
-
-		for (auto& pBoneDesc : Bones)
-			pBoneDesc->pHierarchyNode = Find_HierarchyNode(pBoneDesc->pName);
-	}
 
 	if (FAILED(SetUp_SkinnedInfo()))
 		return E_FAIL;
@@ -410,7 +419,7 @@ HRESULT CModel::Create_Materials(aiMaterial * pMaterial, const char * pMeshFileP
 
 HRESULT CModel::Sort_MeshesByMaterial()
 {
-	size_t		iNumMaterials = m_ModelTextures.size();
+	_uint		iNumMaterials = m_ModelTextures.size();
 
 	m_SortByMaterialMesh.resize(iNumMaterials);	// 머테리얼의 개수만큼 공간과 원소를 잡아준다.
 												// reserve는 공간만 잡아줄 뿐 원소는 채워주지않고, 인자가 capacity보다 클때 iter를 사용할수없고 무효화되는 주의점이 있음.
@@ -431,7 +440,7 @@ HRESULT CModel::Sort_MeshesByMaterial()
 HRESULT CModel::Create_HierarchyNodes(aiNode * pNode, CHierarchyNode * pParent, _uint iDepth, _fmatrix PivotMatrix)
 {
 	_matrix		TransformationMatrix;
-	memcpy(&TransformationMatrix, &pNode->mTransformation, sizeof(_matrix));
+	memcpy(&TransformationMatrix, &pNode->mTransformation, sizeof(_matrix));		/* 현재 이 노드가 대변하고있는 뼈의 mTransformation를 가지고 온다. */
 
 	CHierarchyNode*		pHierarchyNode = CHierarchyNode::Create(pNode->mName.data, TransformationMatrix * PivotMatrix, pParent, iDepth);	// 첫 실행 시 생성되는 노드는 가장 최상위 부모 노드가 된다.
 	if (nullptr == pHierarchyNode)
@@ -524,6 +533,7 @@ HRESULT CModel::SetUp_SkinnedInfo()
 			_matrix		OffsetMatrix;
 			memcpy(&OffsetMatrix, &pBone->mOffsetMatrix, sizeof(_matrix));
 			XMStoreFloat4x4(&pBoneDesc->OffsetMatrix, XMMatrixTranspose(OffsetMatrix));
+			pBoneDesc->pHierarchyNode->Set_OffSetMatrix(XMMatrixTranspose(OffsetMatrix));
 
 			/* 정점의 블렌드 인덱스와 블렌드 웨이트를 채운다. */
 			/* 뼈에 포함되어있는 웨이트의 갯수는 곧 영향을 미치는 정점의 갯수.  */
@@ -660,7 +670,8 @@ HRESULT CModel::Update_CombinedTransformationMatrices(_double DeltaTime)
 	if (m_Animations.empty() || m_iAnimationIndex >= m_Animations.size())
 		return E_FAIL;
 
-	/* 현재 애니메이션을 재생하고 있는 시간을 계산하고 그 시간값에 따른 뼈의 상태행렬을 만들어서 m_TrnasformationMAtrix에 대입해놓느다. */
+	/* 현재 애니메이션을 재생하고 있는 시간을 계산하고 그 시간값에 따른 뼈의 상태행렬을 만들어서 m_TrnasformationMAtrix에 대입해놓는다. */
+	/* 특정 애니메이션이 재생될때, 그 애니메이션을 구성하는 뼈들의 행렬을 갱신한다. */
 	m_Animations[m_iAnimationIndex]->Update_TransformationMatrices(DeltaTime);
 
 	for (auto& pHierarchyNodes : m_HierarchyNodes)
@@ -676,7 +687,7 @@ void CModel::Add_Channel_To_HierarchyNode(_uint iAnimationindex, CChannel * pCha
 		return !strcmp(pNode->Get_Name(), pChannel->Get_Name());
 	});
 
-	(*iter)->Add_Channel(iAnimationindex, pChannel);
+	(*iter)->Add_Channel(iAnimationindex, pChannel);		/* 여기서 추가되는 채널은 노드(뼈)의 정보와 같은 뼈정보플 표현하는 채널 */
 }
 
 CModel * CModel::Create(DEVICES, const char * pMeshFilePath, const char * pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix)
