@@ -11,6 +11,7 @@ class CMeshContainer final : public CBase
 {
 public:
 	CMeshContainer();
+	CMeshContainer(const CMeshContainer& other);
 	virtual ~CMeshContainer() = default;
 
 public:
@@ -28,7 +29,6 @@ public:
 
 public:
 	HRESULT Add_Bones(BONEDESC* pBoneDesc);
-	HRESULT Clone_BoneDesc();
 
 public:
 	static CMeshContainer* Create(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex, _uint iMaterialIndex);

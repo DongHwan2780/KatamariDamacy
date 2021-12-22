@@ -5,7 +5,7 @@
 
 namespace Engine
 {
-	typedef struct tagKeyFrameDesc
+	typedef struct tagKeyFrameDesc		// 중간동작을 표현하기위한 모션(키프레임)을 구성하는 뼈 하나의 상태
 	{
 		XMFLOAT3		vScale;
 		XMFLOAT4		vRotation;
@@ -58,6 +58,12 @@ namespace Engine
 		XMFLOAT4		vBlendWeight;
 	}VTXMESH;
 
+	typedef struct tagVertex_Color
+	{
+		XMFLOAT3		vPosition;
+		XMFLOAT4		vColor;
+	}VTXCOL;
+
 	typedef struct tagVertexInfo
 	{
 		XMFLOAT3	vPos;
@@ -70,6 +76,19 @@ namespace Engine
 		XMFLOAT3		vNormal;
 		XMFLOAT2		vTexUV;
 	}VTXNORMALINFO;
+
+	typedef struct tagVertex_Instancing
+	{
+		XMFLOAT4		vRight;
+		XMFLOAT4		vUp;
+		XMFLOAT4		vLook;
+		XMFLOAT4		vPosition;
+	}VTXINSTANCE;
+
+	typedef struct taglineIndices16
+	{
+		unsigned short	_0, _1;
+	}LINEINDICES16;
 
 	typedef struct tagPolygonIndices16
 	{

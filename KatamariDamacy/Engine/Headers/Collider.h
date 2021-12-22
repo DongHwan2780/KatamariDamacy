@@ -18,6 +18,13 @@ public:
 		_float3		vSize = _float3(1.f, 1.f, 1.f);
 	} COLLIDERDESC;
 
+	typedef struct tagOBBDesc
+	{
+		_float3		vCenter;
+		_float3		vAlignAxis[3];
+		_float3		vCenterAxis[3];
+	}OBBDESC;
+
 private:
 	explicit CCollider(DEVICES);
 	explicit CCollider(const CCollider& other);
@@ -30,10 +37,14 @@ public:
 
 public:
 	_bool Update_State(_fmatrix TransformMatrix);
-	_bool Collision_AABB(const CCollider* pTargetCollider);
+	_bool Collision_AABB(CCollider* pTargetCollider);
+	_bool Collision_OBB(CCollider* pTargetCollider);
 
 private:
-	_fmatrix Remove_Rotation(_fmatrix TransformMatrix);
+	_fmatrix Remove_ScaleRotation(_fmatrix TransformMatrix);
+	_fmatrix Remove_Scale(_fmatrix TransformMatrix);
+
+	OBBDESC Compute_OBB(_fvector* pPoints);
 
 public:
 	static CCollider* Create(DEVICES, COLLTYPE eType);
@@ -44,14 +55,14 @@ private:
 	COLLTYPE				m_eType = COLL_END;
 	COLLIDERDESC			m_ColliderDesc;
 
-	BoundingBox*			m_pAABB = nullptr;
-	BoundingOrientedBox*	m_pOBB = nullptr;
+	BoundingBox*			m_pBB = nullptr;
 	BoundingSphere*			m_pSphere = nullptr;
 	_bool					m_isCollision = false;
 
 	_float4x4				m_TransformMatrix;
 
 	_float3					m_vMin, m_vMax;
+	_float3					m_vPoint[8];
 
 private:
 	BasicEffect*			m_pEffect = nullptr;

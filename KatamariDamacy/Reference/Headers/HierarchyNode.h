@@ -21,6 +21,10 @@ public:
 	const char* Get_Name() const { return m_szNodeName; }
 	_matrix Get_CombinedTransformationMatrix() { return XMLoadFloat4x4(&m_CombinedTransformationMatrix); }
 
+	_matrix Get_OffsetMatrix() { return XMLoadFloat4x4(&m_OffSetMatrix); }
+
+	void Set_OffSetMatrix(_fmatrix OffSetMatrix) { XMStoreFloat4x4(&m_OffSetMatrix, OffSetMatrix); }
+
 public:
 	HRESULT Initialize_Clone(const char* pNodeName, _fmatrix TransformationMatrix, CHierarchyNode* pParent, _uint iDepth);
 	HRESULT Add_Channel(_uint iAnimationIndex, class CChannel* pChannel);
@@ -34,6 +38,7 @@ public:
 
 private:
 	char				m_szNodeName[MAX_PATH] = "";
+	_float4x4			m_OffSetMatrix;
 	_float4x4			m_TransformationMatrix;
 	_float4x4			m_CombinedTransformationMatrix; /* 부모뼈들의 상태행렬을 누적시켜만든행렬. */
 	CHierarchyNode*		m_pParent = nullptr;

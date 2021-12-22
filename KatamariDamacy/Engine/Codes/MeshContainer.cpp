@@ -6,6 +6,16 @@ CMeshContainer::CMeshContainer()
 {
 }
 
+CMeshContainer::CMeshContainer(const CMeshContainer & other)
+	: m_iNumFaces(other.m_iNumFaces)
+	, m_iStartFaceIndex(other.m_iStartFaceIndex)
+	, m_iStartVertexIndex(other.m_iStartVertexIndex)
+	, m_iMaterialIndex(other.m_iMaterialIndex)
+{
+	strcpy_s(m_szName, other.m_szName);
+	m_Bones.clear();
+}
+
 void CMeshContainer::Get_BoneMatrices(_matrix * pBoneMatrices)
 {
 	_uint		iNumBones = m_Bones.size();
@@ -34,24 +44,6 @@ HRESULT CMeshContainer::Add_Bones(BONEDESC * pBoneDesc)
 	return S_OK;
 }
 
-HRESULT CMeshContainer::Clone_BoneDesc()
-{
-	vector<BONEDESC*>		OriginalBones = m_Bones;
-	m_Bones.clear();
-
-	for (auto& pOriginalBone : OriginalBones)
-	{
-		BONEDESC*		pBone = new BONEDESC();
-		ZeroMemory(pBone, sizeof(BONEDESC));
-
-		pBone->OffsetMatrix = pOriginalBone->OffsetMatrix;
-		pBone->pName = pOriginalBone->pName;
-		m_Bones.push_back(pBone);
-	}
-
-	return S_OK;
-}
-
 CMeshContainer * CMeshContainer::Create(const char* pName, _uint iNumFaces, _uint iStartFaceIndex, _uint iStartVertexIndex, _uint iMaterialIndex)
 {
 	CMeshContainer*	pInstance = new CMeshContainer();
@@ -67,12 +59,6 @@ CMeshContainer * CMeshContainer::Create(const char* pName, _uint iNumFaces, _uin
 CMeshContainer * CMeshContainer:: Clone()
 {
 	CMeshContainer*	pInstance = new CMeshContainer(*this);
-
-	if (FAILED(Clone_BoneDesc()))
-	{
-		Safe_Release(pInstance);
-	}
-
 
 	return pInstance;
 }

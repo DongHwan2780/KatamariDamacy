@@ -1,4 +1,5 @@
 #include "..\Headers\Transform.h"
+#include "Navigation.h"
 
 CTransform::CTransform(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
 	:CComponent(pDevice, pDeviceContext)
@@ -38,25 +39,47 @@ void CTransform::Set_Scale(_fvector vScale)
 	Set_State(CTransform::LOOK, vLook);
 }
 
-void CTransform::Move_Straight(_double DeltaTime)
+void CTransform::Move_Straight(_double DeltaTime, class CNavigation* pNavigation)
 {
 	_vector vLook = Get_State(CTransform::LOOK);
 	_vector vPos = Get_State(CTransform::POSITION);
 
 	vPos += XMVector3Normalize(vLook) * m_TransformDesc.fSpeedPerSec * _float(DeltaTime);
 
-	Set_State(CTransform::POSITION, vPos);
+	if (nullptr == pNavigation)
+	{
+		Set_State(CTransform::POSITION, vPos);
+		return;
+	}
+
+	if (true == pNavigation->isMove(vPos))
+		Set_State(CTransform::POSITION, vPos);
+	else
+	{
+
+	}
 
 }
 
-void CTransform::Move_Strafe(_double DeltaTime)
+void CTransform::Move_Strafe(_double DeltaTime, class CNavigation* pNavigation)
 {
 	_vector vRight = Get_State(CTransform::RIGHT);
 	_vector vPos = Get_State(CTransform::POSITION);
 
 	vPos += XMVector3Normalize(vRight) * m_TransformDesc.fSpeedPerSec * _float(DeltaTime);
 
-	Set_State(CTransform::POSITION, vPos);
+	if (nullptr == pNavigation)
+	{
+		Set_State(CTransform::POSITION, vPos);
+		return;
+	}
+
+	if (true == pNavigation->isMove(vPos))
+		Set_State(CTransform::POSITION, vPos);
+	else
+	{
+
+	}
 }
 
 void CTransform::Chase_Target(CTransform * pTarget)

@@ -75,8 +75,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\Bin\</OutDir>
-    <IncludePath>../../fmod/;../../Physx/include/;$(IncludePath)</IncludePath>
-    <LibraryPath>../../fmod/;../../Physx/debug/;$(LibraryPath)</LibraryPath>
+    <IncludePath>../../fmod/;$(IncludePath)</IncludePath>
+    <LibraryPath>../../fmod/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -112,7 +112,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxguid.lib;dinput8.lib;fmod_vc.lib;fmodL_vc.lib;Effects11d.lib;DirectXTexd.lib;PhysX_64.lib;PhysXFoundation_64.lib;PhysXExtensions_static_64.lib;assimp-vc140-mtd.lib;DirectXTKd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;dxguid.lib;dinput8.lib;fmod_vc.lib;fmodL_vc.lib;Effects11d.lib;DirectXTexd.lib;assimp-vc140-mtd.lib;DirectXTKd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../Libraries/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -121,6 +121,12 @@ xcopy			/y				..\Bin\*.lib		..\..\Reference\Libraries\
 xcopy			/y				..\Bin\*.dll		..\..\Client\Bin\
 xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     </PostBuildEvent>
+    <FxCompile>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -169,6 +175,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClInclude Include="..\Headers\Animation.h" />
     <ClInclude Include="..\Headers\Base.h" />
     <ClInclude Include="..\Headers\Camera.h" />
+    <ClInclude Include="..\Headers\Cell.h" />
     <ClInclude Include="..\Headers\Channel.h" />
     <ClInclude Include="..\Headers\Collider.h" />
     <ClInclude Include="..\Headers\DebugDraw.h" />
@@ -189,6 +196,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClInclude Include="..\Headers\Management.h" />
     <ClInclude Include="..\Headers\MeshContainer.h" />
     <ClInclude Include="..\Headers\Model.h" />
+    <ClInclude Include="..\Headers\Navigation.h" />
     <ClInclude Include="..\Headers\Obj.h" />
     <ClInclude Include="..\Headers\ObjMgr.h" />
     <ClInclude Include="..\Headers\Physx.h" />
@@ -204,12 +212,14 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClInclude Include="..\Headers\VIBuffer.h" />
     <ClInclude Include="..\Headers\VIBuffer_Rect.h" />
     <ClInclude Include="..\Headers\VIBuffer_Terrain.h" />
+    <ClInclude Include="..\Headers\VIBuffer_Triangle.h" />
     <ClInclude Include="..\Headers\VIBuffer_UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Animation.cpp" />
     <ClCompile Include="..\Codes\Base.cpp" />
     <ClCompile Include="..\Codes\Camera.cpp" />
+    <ClCompile Include="..\Codes\Cell.cpp" />
     <ClCompile Include="..\Codes\Channel.cpp" />
     <ClCompile Include="..\Codes\Collider.cpp" />
     <ClCompile Include="..\Codes\HierarchyNode.cpp" />
@@ -224,6 +234,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClCompile Include="..\Codes\Management.cpp" />
     <ClCompile Include="..\Codes\MeshContainer.cpp" />
     <ClCompile Include="..\Codes\Model.cpp" />
+    <ClCompile Include="..\Codes\Navigation.cpp" />
     <ClCompile Include="..\Codes\Obj.cpp" />
     <ClCompile Include="..\Codes\ObjMgr.cpp" />
     <ClCompile Include="..\Codes\Physx.cpp" />
@@ -239,8 +250,12 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClCompile Include="..\Codes\VIBuffer.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Rect.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Terrain.cpp" />
+    <ClCompile Include="..\Codes\VIBuffer_Triangle.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_UI.cpp" />
     <ClCompile Include="..\Headers\DebugDraw.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Client\Bin\ShaderFiles\Shader_TriangleDBG.fx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

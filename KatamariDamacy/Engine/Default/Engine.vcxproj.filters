@@ -115,6 +115,15 @@
     <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_UI">
       <UniqueIdentifier>{6a406a04-9ca5-4da1-a61a-7bc765708869}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Triangle">
+      <UniqueIdentifier>{a5772f20-c7ff-4cae-aec1-13816ae1aa73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Navigation">
+      <UniqueIdentifier>{9f22ecd3-96f0-46c1-9461-ebaaa28a3930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\Navigation\Cell">
+      <UniqueIdentifier>{7d62b60a-2853-4c1f-acd8-db4649779026}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -218,6 +227,15 @@
     </ClCompile>
     <ClCompile Include="..\Codes\VIBuffer_UI.cpp">
       <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\VIBuffer_Triangle.cpp">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Triangle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Navigation.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Navigation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Cell.cpp">
+      <Filter>01.Manager\01.ComponentMgr\Navigation\Cell</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -338,5 +356,19 @@
     <ClInclude Include="..\Headers\VIBuffer_UI.h">
       <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_UI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\VIBuffer_Triangle.h">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Triangle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Navigation.h">
+      <Filter>01.Manager\01.ComponentMgr\Navigation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\Cell.h">
+      <Filter>01.Manager\01.ComponentMgr\Navigation\Cell</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Client\Bin\ShaderFiles\Shader_TriangleDBG.fx">
+      <Filter>01.Manager\01.ComponentMgr\Navigation\Cell</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
