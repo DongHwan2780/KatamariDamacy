@@ -6,6 +6,8 @@
 #include "MFCTool.h"
 
 #include "MainFrm.h"
+#include "MFCToolView.h"
+#include "Form.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -68,6 +70,18 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 	return 0;
+}
+
+BOOL CMainFrame::OnCreateClient(LPCREATESTRUCT lpcs, CCreateContext * pContext)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	m_tMainSplitter.CreateStatic(this, 1, 2);
+	m_tMainSplitter.CreateView(0, 0, RUNTIME_CLASS(CForm), CSize(600, 720), pContext);
+	m_tMainSplitter.CreateView(0, 1, RUNTIME_CLASS(CMFCToolView), CSize(600, 720), pContext);
+
+	m_tMainSplitter.SetColumnInfo(0, 600, 600);
+
+	return TRUE;
 }
 
 void CMainFrame::Free()
