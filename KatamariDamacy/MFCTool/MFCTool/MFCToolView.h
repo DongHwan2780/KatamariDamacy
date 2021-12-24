@@ -17,8 +17,8 @@ protected: // serialization에서만 만들어집니다.
 public:
 	CMFCToolDoc* GetDocument() const;
 	CManagement* m_pManagement;
-	//ID3D11Device* m_pDevice;
-	//ID3D11DeviceContext* m_pDeviceContext;
+	ID3D11Device* m_pDevice;
+	ID3D11DeviceContext* m_pDeviceContext;
 	//bool m_bInvalidate = true;
 // 작업입니다.
 public:
@@ -47,7 +47,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-
 	virtual void OnInitialUpdate();
 };
 

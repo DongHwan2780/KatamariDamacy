@@ -13,6 +13,12 @@
     <Filter Include="02.Document">
       <UniqueIdentifier>{02341cdf-b817-4db3-8eb3-0ec95ec29ba0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.ToolView\00.Form">
+      <UniqueIdentifier>{db050a10-34cf-429f-a162-9697980c4b91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.ToolView\00.Form\00.ObjTool">
+      <UniqueIdentifier>{e4ebca2d-a451-4d47-972c-4cb678bc0bb9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -36,6 +42,12 @@
     <ClInclude Include="MFCToolDoc.h">
       <Filter>02.Document</Filter>
     </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>01.ToolView\00.Form</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjTool.h">
+      <Filter>01.ToolView\00.Form\00.ObjTool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -52,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="MFCToolDoc.cpp">
       <Filter>02.Document</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>01.ToolView\00.Form</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjTool.cpp">
+      <Filter>01.ToolView\00.Form\00.ObjTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

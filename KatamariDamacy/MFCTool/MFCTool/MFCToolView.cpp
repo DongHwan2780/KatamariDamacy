@@ -39,8 +39,8 @@ CMFCToolView::CMFCToolView()
 
 CMFCToolView::~CMFCToolView()
 {
-	//Safe_Release(m_pDeviceContext);
-	//Safe_Release(m_pDevice);
+	Safe_Release(m_pDeviceContext);
+	Safe_Release(m_pDevice);
 	Safe_Release(m_pManagement);
 	CManagement::Release_Engine();
 }
@@ -139,14 +139,9 @@ void CMFCToolView::OnInitialUpdate()
 
 	//pMain->SetWindowPos(nullptr, 0, 0, 800 + iGapX + 1, 600 + iGapY + 1, SWP_NOMOVE);
 
-	ID3D11Device* m_pDevice;
-	ID3D11DeviceContext* m_pDeviceContext;
-
-
 	HRESULT hr;
 	hr = m_pManagement->Ready_GraphicDevice(g_hWnd, 800, 600, &m_pDevice, &m_pDeviceContext);
 
-
-	Safe_Release(m_pDeviceContext);
-	Safe_Release(m_pDevice);
+	Safe_AddRef(m_pDeviceContext);
+	Safe_AddRef(m_pDevice);
 }
