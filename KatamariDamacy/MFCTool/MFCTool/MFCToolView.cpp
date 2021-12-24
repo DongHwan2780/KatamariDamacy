@@ -13,6 +13,9 @@
 #include "MFCToolView.h"
 #include "MainFrm.h"
 
+#include "Form.h"
+#include "ObjTool.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -118,30 +121,29 @@ void CMFCToolView::OnInitialUpdate()
 {
 	CView::OnInitialUpdate();
 
-	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 	g_hWnd = m_hWnd;
 	m_pManagement = CManagement::GetInstance();
 	Safe_AddRef(m_pManagement);
 
-	//CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
-	//RECT rcMain{};
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+	RECT rcMain{};
 
-	//pMain->GetWindowRect(&rcMain);
-	//rcMain.right = rcMain.right - rcMain.left;
-	//rcMain.bottom = rcMain.bottom - rcMain.top;
-	//rcMain.left = 0;
-	//rcMain.top = 0;
+	pMain->GetWindowRect(&rcMain);
+	rcMain.right = rcMain.right - rcMain.left;
+	rcMain.bottom = rcMain.bottom - rcMain.top;
+	rcMain.left = 0;
+	rcMain.top = 0;
 
-	//RECT rcView{};
-	//GetClientRect(&rcView);
-	//int iGapX = rcMain.right - rcView.right;
-	//int iGapY = rcMain.bottom - rcView.bottom;
+	RECT rcView{};
+	GetClientRect(&rcView);
+	int iGapX = rcMain.right - rcView.right;
+	int iGapY = rcMain.bottom - rcView.bottom;
 
-	//pMain->SetWindowPos(nullptr, 0, 0, 800 + iGapX + 1, 600 + iGapY + 1, SWP_NOMOVE);
+	pMain->SetWindowPos(nullptr, 0, 0, 800 + iGapX + 1, 600 + iGapY + 1, SWP_NOMOVE);
 
 	HRESULT hr;
 	hr = m_pManagement->Ready_GraphicDevice(g_hWnd, 800, 600, &m_pDevice, &m_pDeviceContext);
 
-	Safe_AddRef(m_pDeviceContext);
-	Safe_AddRef(m_pDevice);
+	CForm* pForm = dynamic_cast<CForm*>(pMain->m_tMainSplitter.GetPane(0, 0));
+	pForm->Initialize();
 }

@@ -1,6 +1,7 @@
 #pragma once
 
-
+#include "ObjTool.h"
+#include "afxcmn.h"
 
 // CForm 폼 뷰입니다.
 
@@ -23,10 +24,19 @@ public:
 #endif
 #endif
 
+public:
+	void Initialize();
+
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 지원입니다.
 
 	DECLARE_MESSAGE_MAP()
+
+public:
+	CObjTool	m_tObjTool;
+	CTabCtrl m_CtrlTab_Main;
+	afx_msg void OnTcnSelchangeTab_Main(NMHDR *pNMHDR, LRESULT *pResult);
+	virtual void OnInitialUpdate();
 };
 
 

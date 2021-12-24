@@ -19,6 +19,9 @@
     <Filter Include="01.ToolView\00.Form\00.ObjTool">
       <UniqueIdentifier>{e4ebca2d-a451-4d47-972c-4cb678bc0bb9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03.ToolCamera">
+      <UniqueIdentifier>{c816c206-ef19-43b9-aff6-61ba7081a831}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -48,6 +51,9 @@
     <ClInclude Include="ObjTool.h">
       <Filter>01.ToolView\00.Form\00.ObjTool</Filter>
     </ClInclude>
+    <ClInclude Include="ToolCamera.h">
+      <Filter>03.ToolCamera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -70,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="ObjTool.cpp">
       <Filter>01.ToolView\00.Form\00.ObjTool</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolCamera.cpp">
+      <Filter>03.ToolCamera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
