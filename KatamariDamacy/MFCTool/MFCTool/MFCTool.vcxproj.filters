@@ -22,6 +22,9 @@
     <Filter Include="03.ToolCamera">
       <UniqueIdentifier>{c816c206-ef19-43b9-aff6-61ba7081a831}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.ToolMap">
+      <UniqueIdentifier>{b19c5da5-19fb-4f65-8c7b-9e5b1e457280}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -54,6 +57,9 @@
     <ClInclude Include="ToolCamera.h">
       <Filter>03.ToolCamera</Filter>
     </ClInclude>
+    <ClInclude Include="ToolMap.h">
+      <Filter>04.ToolMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -79,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="ToolCamera.cpp">
       <Filter>03.ToolCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolMap.cpp">
+      <Filter>04.ToolMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

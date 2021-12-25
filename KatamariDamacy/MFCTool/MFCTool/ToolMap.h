@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Camera.h"
+#include "Obj.h"
 
 BEGIN(Engine)
 class CCollider;
@@ -9,12 +9,12 @@ class CTransform;
 class CModel;
 END
 
-class CToolCamera final : public CCamera
+class CToolMap final : public CObj
 {
 private:
-	explicit CToolCamera(DEVICES);
-	explicit CToolCamera(const CToolCamera& other);
-	virtual ~CToolCamera() = default;
+	explicit CToolMap(DEVICES);
+	explicit CToolMap(const CToolMap& other);
+	virtual ~CToolMap() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -23,11 +23,14 @@ public:
 	virtual _int	Late_Update(_double DeltaTime) override;
 	virtual HRESULT	Render() override;
 
-public:
-	static CToolCamera* Create(DEVICES);
-	virtual CObj * Clone(void * pArg) override;
-	virtual void Free() override;
+private:
+	HRESULT SetUp_Components();
+	HRESULT SetUp_ConstantTable();
 
+public:
+	static CToolMap*	Create(DEVICES);
+	virtual CObj*	Clone(void* pArg) override;
+	virtual void Free() override;
 
 private:
 	CTransform*		m_pTransform = nullptr;
