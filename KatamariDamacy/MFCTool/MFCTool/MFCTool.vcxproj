@@ -205,6 +205,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ToolCamera.h" />
+    <ClInclude Include="ToolMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Form.cpp" />
@@ -220,6 +221,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ToolCamera.cpp" />
+    <ClCompile Include="ToolMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MFCTool.rc" />
