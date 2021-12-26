@@ -208,6 +208,72 @@ HRESULT CModel::Render(_uint iMaterialIndex, _uint iPassIndex)
 	return S_OK;
 }
 
+_bool CModel::RayCast(_float3 & out, HWND hWnd, _uint iWinCX, _uint iWinCY, const _float4x4 & matWorld)
+{
+	POINT pt;
+	::GetCursorPos(&pt);
+	::ScreenToClient(hWnd, &pt);
+
+	CPipeLine*		pPipeLine = GET_INSTANCE(CPipeLine);
+
+	// 뷰포트 -> 투영스페이스
+	_float3 vMouse = _float3(0.f, 0.f, 0.f);
+	vMouse.x = pt.x / (iWinCX * 0.5f) - 1.f;
+	vMouse.y = 1.f - pt.y / (iWinCY * 0.5f);
+
+	// 투영스페이스 -> 뷰스페이스
+	_float4x4 matProj;
+
+	XMStoreFloat4x4(&matProj, pPipeLine->Get_Transform(CPipeLine::D3DTS_PROJ));
+	XMMatrixInverse( nullptr, XMLoadFloat4x4(&matProj));
+	XMVector3TransformCoord(XMLoadFloat3(&vMouse), XMLoadFloat4x4(&matProj));
+
+	// 뷰스페이스에서 광선(ray)의 정보를 설정한다.
+	_float3 vRayPos = _float3(0.f, 0.f, 0.f);
+	_float3 vRayDir = _float3(vMouse.x - vRayPos.x, vMouse.y - vRayPos.y, - vMouse.z - vRayPos.z);
+
+	// 뷰스페이스 -> 월드스페이스
+	_float4x4 matView;
+	XMStoreFloat4x4(&matView, pPipeLine->Get_Transform(CPipeLine::D3DTS_VIEW));
+	XMMatrixInverse(nullptr, XMLoadFloat4x4(&matView));
+	XMVector3TransformCoord(XMLoadFloat3(&vRayPos), XMLoadFloat4x4(&matView));
+	XMVector3TransformNormal(XMLoadFloat3(&vRayDir), XMLoadFloat4x4(&matView));
+
+	// 월드스페이스 -> 로컬스페이스
+	_float4x4 matInverse;
+	XMStoreFloat4x4(&matInverse, XMMatrixInverse(nullptr, XMLoadFloat4x4(&matWorld)));
+	XMVector3TransformCoord(XMLoadFloat3(&vRayPos), XMLoadFloat4x4(&matInverse));
+	XMVector3TransformNormal(XMLoadFloat3(&vRayDir), XMLoadFloat4x4(&matInverse));
+
+	_uint _1 = 0, _2 = 0, _3 = 0;
+	_uint m_iIndexSize = sizeof(POLYGONINDICES32);
+	_uint iSize = m_iIndexSize / 3;
+	_float3 v1, v2, v3;
+	_float dist;
+
+	for (_uint i = 0; i < m_iNumFaces; ++i)
+	{
+		memcpy(&_1, ((_byte*)m_pPolygonIndices32) + i * m_iIndexSize, iSize);
+		memcpy(&_2, ((_byte*)m_pPolygonIndices32) + i * m_iIndexSize + (iSize), iSize);
+		memcpy(&_3, ((_byte*)m_pPolygonIndices32) + i * m_iIndexSize + (iSize * 2), iSize);
+
+		memcpy(&v1, ((_byte*)m_pVertices) + _1 * m_iStride, sizeof(_float3));
+		memcpy(&v2, ((_byte*)m_pVertices) + _2 * m_iStride, sizeof(_float3));
+		memcpy(&v3, ((_byte*)m_pVertices) + _3 * m_iStride, sizeof(_float3));
+
+		if (DX::Intersects(XMLoadFloat3(&vRayPos), XMLoadFloat3(&vRayDir), XMLoadFloat3(&v1), XMLoadFloat3(&v2), XMLoadFloat3(&v3), dist))		//광선이랑 폴리곤이랑 충돌헀으면
+		{
+			XMStoreFloat3(&out, dist * XMLoadFloat3(&vRayDir));
+			XMVector3TransformCoord(XMLoadFloat3(&out), XMLoadFloat4x4(&matWorld));
+			return true;
+		}
+	}
+
+	RELEASE_INSTANCE(CPipeLine);
+
+	return false;
+}
+
 HRESULT CModel::Bind_Buffers()
 {
 	if (nullptr == m_pDeviceContext)

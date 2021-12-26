@@ -67,14 +67,14 @@ void CForm::Dump(CDumpContext& dc) const
 void CForm::OnTcnSelchangeTab_Main(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	int nIndex = m_CtrlTab_Main.GetCurSel();
-	switch (nIndex)
-	{
-	case 0:
-		m_tObjTool.ShowWindow(SW_SHOW);
-		break;
-	}
-	*pResult = 0;
+	//int nIndex = m_CtrlTab_Main.GetCurSel();
+	//switch (nIndex)
+	//{
+	//case 0:
+	//	m_tObjTool.ShowWindow(SW_SHOW);
+	//	break;
+	//}
+	//*pResult = 0;
 }
 
 void CForm::OnInitialUpdate()

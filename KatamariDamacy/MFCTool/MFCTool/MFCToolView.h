@@ -5,6 +5,11 @@
 #pragma once
 
 #include "Management.h"
+
+BEGIN(Engine)
+class CRenderer;
+END
+
 class CMFCToolDoc;
 
 class CMFCToolView : public CView
@@ -19,6 +24,7 @@ public:
 	CManagement* m_pManagement;
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDeviceContext;
+	CRenderer*				m_pRenderer = nullptr;
 	//bool m_bInvalidate = true;
 // 작업입니다.
 public:
@@ -48,6 +54,12 @@ protected:
 
 public:
 	virtual void OnInitialUpdate();
+
+	HRESULT Ready_Layer_Camera(const _tchar* pLayerTag);
+	HRESULT Ready_Layer_StageMap(const _tchar* pLayerTag);
+	HRESULT Ready_Prototype_Component();
+
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // MFCToolView.cpp의 디버그 버전

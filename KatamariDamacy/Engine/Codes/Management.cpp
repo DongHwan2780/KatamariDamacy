@@ -13,11 +13,9 @@ CManagement::CManagement()
 	, m_pComponentMgr(CComponentMgr::GetInstance())
 	, m_pSoundMgr(CSoundMgr::GetInstance())
 	, m_pPipeline(CPipeLine::GetInstance())
-	//, m_physx(CPhysX::GetInstance())
 	, m_pLightMgr(CLightMgr::GetInstance())
 {
 	Safe_AddRef(m_pLightMgr);
-	//Safe_AddRef(m_physx);
 	Safe_AddRef(m_pPipeline);
 	Safe_AddRef(m_pComponentMgr);
 	Safe_AddRef(m_pObjMgr);
@@ -266,23 +264,6 @@ HRESULT CManagement::Add_Light(DEVICES, const LIGHTDESC & LightDesc)
 #pragma endregion
 
 
-#pragma region Physx
-//_int CManagement::Update_Physx(_double DeltaTime)
-//{
-//	if (m_physx == nullptr)
-//		return E_FAIL;
-//
-//	return m_physx->Update_Physx(DeltaTime);
-//}
-//PxRigidDynamic * CManagement::CreateDynamicBall(const PxTransform & transform)
-//{
-//	if (m_physx == nullptr)
-//		return nullptr;
-//
-//	return m_physx->CreateDynamicBall(transform);
-//}
-#pragma endregion
-
 HRESULT CManagement::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _int iNumScenes)
 {
 	if (m_pObjMgr == nullptr || m_pComponentMgr == nullptr || m_pInputDevice == nullptr)
@@ -299,7 +280,7 @@ HRESULT CManagement::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _int iNumScen
 
 	//m_physx->Initialize_Physx();
 
-	m_pSoundMgr->Initialize_Sound();
+	//m_pSoundMgr->Initialize_Sound();
 
 	return S_OK;
 }
@@ -310,25 +291,6 @@ _int CManagement::Update(_double DeltaTime)
 		return -1;
 
 	_int iProgress = 0;
-
-
-	// 너의 모든 객체들 (피직스를 사용하고싶은)의 트랜스폼을 피직스 한테 넘겨주어야한다.
-	// 피직스의 Actor 랑 너의 Object는 1:1 상태이어야 한다.
-	// 그러기 위해서는 너의 객체에 Component 형태로 Body(Actor)들이 추가 되어야 한다.
-	// 1. 먼저 실제 객체 (클라이언트의 player 등등) 의 Transform (position & quat) 를 피직스 컴포넌트 형태로 추가한 actor에게 넘겨준다
-	// Pxactor-> setglobalpos(pxtrans(p,q));
-
-	// 2. 시뮬레이션을 돌린다. 
-	/*	m_pxScene->simulate(DeltaTime);
-	m_pxScene->fetchResults(true);*/
-
-	// 3. 피직스 시뮬레이션 (위의 과정)을 거친 값을 나의(클라) 객체(player등등)한테 position과 quat을 얻어와서 적용시켜준다.
-	// Pxactor->getglobalpos() => 반환값이 PxTransform -> 쿼터니언과 포지션(Vector3)값을 뱉어줘
-	// 이걸 받아서 pxtransform 를 내 리얼 객체 transform에 옮겨줘
-
-
-	//if (0 > (iProgress = m_physx->Update_Physx(DeltaTime)))
-	//	return -1;
 	
 	if (FAILED(m_pInputDevice->SetUp_InputDeviceState()))
 		return -1;
@@ -384,6 +346,7 @@ void CManagement::UpdateTool()
 {
 	m_pGraphicDevice->Clear_BackBufferView(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pGraphicDevice->Clear_DepthStencilView(1.f, 0);
+
 
 	m_pGraphicDevice->Present();
 }
