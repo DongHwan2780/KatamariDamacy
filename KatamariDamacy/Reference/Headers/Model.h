@@ -5,6 +5,9 @@
 
 #include "Component.h"
 
+#include "PipeLine.h"
+#include "DebugDraw.h"
+
 BEGIN(Engine)
 
 class ENGINE_DLL CModel final : public CComponent
@@ -22,6 +25,11 @@ public:
 	virtual HRESULT Initialize_Prototype(const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix);
 	virtual HRESULT Initialize_Clone(void * pArg);
 	HRESULT Render(_uint iMaterialIndex, _uint iPassIndex);
+
+public:
+	_bool RayCast(_float3& out, HWND hWnd, _uint iWinCX, _uint iWinCY, const _float4x4& matWorld);
+
+
 
 public:
 	HRESULT Bind_Buffers();

@@ -2,13 +2,6 @@
 
 #include "Camera.h"
 
-BEGIN(Engine)
-class CCollider;
-class CRenderer;
-class CTransform;
-class CModel;
-END
-
 class CToolCamera final : public CCamera
 {
 private:
@@ -28,11 +21,5 @@ public:
 	virtual CObj * Clone(void * pArg) override;
 	virtual void Free() override;
 
-
-private:
-	CTransform*		m_pTransform = nullptr;
-	CRenderer*		m_pRenderer = nullptr;
-	CModel*			m_pModel = nullptr;
-	CCollider*		m_pCollider = nullptr;
 };
 
