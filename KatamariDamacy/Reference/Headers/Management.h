@@ -92,13 +92,6 @@ public:
 	HRESULT Add_Light(DEVICES, const LIGHTDESC& LightDesc);
 #pragma endregion
 
-
-#pragma region PHYSX
-	////_int	Update_Physx(_double DeltaTime);
-	//PxRigidDynamic* CreateDynamicBall(const PxTransform& transform);
-#pragma endregion
-
-
 public:
 	HRESULT Initialize_Engine(HINSTANCE hInst, HWND hWnd, _int iNumScenes);
 	_int	Update(_double DeltaTime);
@@ -122,7 +115,6 @@ private:
 	class CLightMgr*		m_pLightMgr = nullptr;
 
 	class CPipeLine*		m_pPipeline = nullptr;
-//	class CPhysX*			m_physx = nullptr;
 };
 
 END

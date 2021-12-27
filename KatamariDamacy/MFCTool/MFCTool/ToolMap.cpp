@@ -83,7 +83,7 @@ HRESULT CToolMap::SetUp_Components()
 		return E_FAIL;
 
 	/* For.Com_Model */
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Model_StageMap"), TEXT("Com_Model"), (CComponent**)&m_pModel)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Model_StageMap"), TEXT("Com_Model"), (CComponent**)&m_pModel)))
 		return E_FAIL;
 
 	/* For.Com_Transform */
