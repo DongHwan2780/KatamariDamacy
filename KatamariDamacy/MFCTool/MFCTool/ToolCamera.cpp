@@ -22,16 +22,23 @@ HRESULT CToolCamera::Initialize_Prototype()
 
 HRESULT CToolCamera::Initialize_Clone(void * pArg)
 {
+	__super::Initialize_Clone(pArg);
+
 	return S_OK;
 }
 
 _int CToolCamera::Update(_double DeltaTime)
 {
+	__super::Update(DeltaTime);
+
+
 	return _int();
 }
 
 _int CToolCamera::Late_Update(_double DeltaTime)
 {
+	__super::Late_Update(DeltaTime);
+
 	return _int();
 }
 

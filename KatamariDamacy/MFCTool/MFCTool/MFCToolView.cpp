@@ -72,7 +72,20 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
-	m_pManagement->UpdateTool();
+	//m_pManagement->UpdateTool();
+
+	m_pManagement->Update(1/40);
+
+	m_pManagement->Update_Scene(1/40);
+
+	m_pManagement->Clear_BackBufferView(_float4(0.f, 0.f, 1.f, 1.f));
+	m_pManagement->Clear_DepthStencilView(1.f, 0);
+
+	m_pRenderer->Draw_RenderGroup();
+
+	m_pManagement->Render_Scene();
+
+	m_pManagement->Present();
 
 	Invalidate(false);
 
@@ -148,15 +161,15 @@ void CMFCToolView::OnInitialUpdate()
 	pMain->SetWindowPos(nullptr, 0, 0, 800 + iGapX + 1, 600 + iGapY + 1, SWP_NOMOVE);
 
 	HRESULT hr;
-	g_hWnd = AfxGetMainWnd()->GetSafeHwnd();
-	//CWnd *pWnd = AfxGetMainWnd();
-	//HWND hWnd = pWnd->m_hWnd;
 
 	g_hInst = AfxGetInstanceHandle();
-
+	
 	hr = m_pManagement->Ready_GraphicDevice(g_hWnd, 800, 600, &m_pDevice, &m_pDeviceContext);
+
+	g_hWnd = AfxGetMainWnd()->GetSafeHwnd();
+
 	m_pManagement->Initialize_Engine(g_hInst, g_hWnd, END_SCENE);
-	//Ready_Prototype_Component();
+	Ready_Prototype_Component();
 
 	CForm* pForm = dynamic_cast<CForm*>(pMain->m_tMainSplitter.GetPane(0, 0));
 	pForm->Initialize();
@@ -170,10 +183,11 @@ void CMFCToolView::OnInitialUpdate()
 
 	hr = m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Model_StageMap"), CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/StageMap/", "StageMap.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
+
 	hr = m_pManagement->Add_Prototype(TEXT("GameObject_ToolCamera"), CToolCamera::Create(m_pDevice, m_pDeviceContext));
+	hr = m_pManagement->Add_Prototype(TEXT("GameObject_StageMap"), CToolMap::Create(m_pDevice, m_pDeviceContext));
 
 #pragma endregion
-
 }
 
 HRESULT CMFCToolView::Ready_Layer_Camera(const _tchar * pLayerTag)
@@ -231,6 +245,7 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 		Ready_Layer_Camera(TEXT("Layer_Camera"));
 		Ready_Layer_StageMap(TEXT("Layer_StageMap"));
+
 	}
 
 	CView::OnLButtonDown(nFlags, point);
