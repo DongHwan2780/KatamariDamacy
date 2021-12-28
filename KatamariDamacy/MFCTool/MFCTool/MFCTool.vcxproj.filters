@@ -25,6 +25,12 @@
     <Filter Include="04.ToolMap">
       <UniqueIdentifier>{b19c5da5-19fb-4f65-8c7b-9e5b1e457280}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.ToolObj">
+      <UniqueIdentifier>{cc4f8e1a-af1c-4083-81fe-798f6304ad75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\00.Apple">
+      <UniqueIdentifier>{ed31a9a6-a43d-4c99-9fc7-bdb637793345}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -60,6 +66,9 @@
     <ClInclude Include="ToolMap.h">
       <Filter>04.ToolMap</Filter>
     </ClInclude>
+    <ClInclude Include="ToolApple.h">
+      <Filter>05.ToolObj\00.Apple</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -88,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="ToolMap.cpp">
       <Filter>04.ToolMap</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolApple.cpp">
+      <Filter>05.ToolObj\00.Apple</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

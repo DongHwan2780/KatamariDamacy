@@ -25,6 +25,10 @@ public:
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDeviceContext;
 	CRenderer*				m_pRenderer = nullptr;
+	_float4x4			matWorld;
+
+private:
+	_bool		m_bFirst = true;
 	//bool m_bInvalidate = true;
 // 작업입니다.
 public:

@@ -278,9 +278,7 @@ HRESULT CManagement::Initialize_Engine(HINSTANCE hInst, HWND hWnd, _int iNumScen
 	if (FAILED(m_pComponentMgr->Reserve_Manager(iNumScenes)))
 		return E_FAIL;
 
-	//m_physx->Initialize_Physx();
-
-	//m_pSoundMgr->Initialize_Sound();
+	m_pSoundMgr->Initialize_Sound();
 
 	return S_OK;
 }
@@ -332,14 +330,42 @@ void CManagement::Release_Engine()
 	if (0 != CLightMgr::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CLightMgr");
 
-	//if (0 != CPhysX::GetInstance()->DestroyInstance())
-	//	MSG_BOX("Failed to Deleting CPhysX");
-
 	if (0 != CInput::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CInput");
 
 	if (0 != CGraphic::GetInstance()->DestroyInstance())
 		MSG_BOX("Failed to Deleting CGraphic");
+}
+
+HRESULT CManagement::Initialize_Engine_Tool(HINSTANCE hInst, HWND hWnd, _int iNumScenes)
+{
+	if (m_pObjMgr == nullptr || m_pComponentMgr == nullptr)
+		return E_FAIL;
+
+	if (FAILED(m_pObjMgr->Reserve_Manager(iNumScenes)))
+		return E_FAIL;
+
+	if (FAILED(m_pComponentMgr->Reserve_Manager(iNumScenes)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+_int CManagement::Update_Tool(_double DeltaTime)
+{
+	if (m_pObjMgr == nullptr )
+		return -1;
+
+	_int iProgress = 0;
+
+	if (0 > (iProgress = m_pObjMgr->Update(DeltaTime)))
+		return -1;
+
+
+	if (0 > (iProgress = m_pObjMgr->Late_Update(DeltaTime)))
+		return -1;
+
+	return _int();
 }
 
 void CManagement::UpdateTool()

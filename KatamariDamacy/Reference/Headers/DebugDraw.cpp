@@ -279,7 +279,7 @@ void XM_CALLCONV DX::DrawTriangle(PrimitiveBatch<VertexPositionColor>* batch,
 
 bool XM_CALLCONV DX::Intersects(FXMVECTOR Origin, FXMVECTOR Direction, FXMVECTOR V0, GXMVECTOR V1, HXMVECTOR V2, float & Dist)
 {
-	assert(DirectX::Internal::XMVector3IsUnit(Direction));
+	//assert(DirectX::Internal::XMVector3IsUnit(Direction));
 
 	XMVECTOR Zero = XMVectorZero();
 

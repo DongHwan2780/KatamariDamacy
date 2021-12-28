@@ -29,7 +29,7 @@ CObjTool::~CObjTool()
 void CObjTool::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_LIST1, m_ObjListBox);
+	DDX_Control(pDX, IDC_LIST1, m_FBXListBox);
 	DDX_Text(pDX, IDC_EDIT2, m_fPosX);
 	DDX_Text(pDX, IDC_EDIT3, m_fPosY);
 	DDX_Text(pDX, IDC_EDIT4, m_fPosZ);
@@ -39,6 +39,7 @@ void CObjTool::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT8, m_fAngleX);
 	DDX_Text(pDX, IDC_EDIT9, m_fAngleY);
 	DDX_Text(pDX, IDC_EDIT10, m_fAngleZ);
+	DDX_Control(pDX, IDC_LIST2, m_ObjList);
 }
 
 
@@ -74,7 +75,7 @@ void CObjTool::OnDropFiles(HDROP hDropInfo)
 		lstrcpy(szFileName, PathFindFileName(szFilePath));
 		PathRemoveExtension(szFileName);
 
-		m_ObjListBox.AddString(szFileName);
+		m_FBXListBox.AddString(szFileName);
 	}
 
 	UpdateData(FALSE);
