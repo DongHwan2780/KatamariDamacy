@@ -27,9 +27,7 @@ public:
 	HRESULT Render(_uint iMaterialIndex, _uint iPassIndex);
 
 public:
-	_bool RayCast(_float3& out, HWND hWnd, _uint iWinCX, _uint iWinCY, const _float4x4& matWorld);
-
-
+	_bool RayCast(_float3& out, HWND hWnd, _uint iWinCX, _uint iWinCY, _float4x4& matWorld, _fvector CameraPos);
 
 public:
 	HRESULT Bind_Buffers();

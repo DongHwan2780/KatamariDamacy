@@ -98,6 +98,8 @@ public:
 	static void Release_Engine();
 
 public: //For Tool
+	HRESULT Initialize_Engine_Tool(HINSTANCE hInst, HWND hWnd, _int iNumScenes);
+	_int	Update_Tool(_double DeltaTime);
 	void UpdateTool();
 
 public:

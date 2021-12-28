@@ -83,11 +83,6 @@ _uint CMainCamera::Movement(_double DeltaTime)
 	XMStoreFloat3(&m_CameraDesc.vEye, vTargetPos + vInTargetLook + vUp);
 	XMStoreFloat3(&m_CameraDesc.vAt, vTargetPos);
 
-	//m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, matRot));
-	//m_pTransform->Set_State(CTransform::POSITION, XMLoadFloat3(&m_CameraDesc.vEye));
-
-
-
 	vLook = XMLoadFloat3(&m_CameraDesc.vAt) - XMLoadFloat3(&m_CameraDesc.vEye);
 	m_pTransform->Set_State(CTransform::LOOK, XMVector3Normalize(vLook));
 

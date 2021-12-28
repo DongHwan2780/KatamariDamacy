@@ -24,7 +24,8 @@ protected:
 public:
 	afx_msg void OnLbnSelchangeObjList();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
-	CListBox m_ObjListBox;
+	CListBox m_FBXListBox;
+	CListBox m_ObjList;
 	afx_msg void OnBnClickedCubeColliderCreate();
 	afx_msg void OnBnClickedSphereColliderCreate();
 	afx_msg void OnBnClickedApply();

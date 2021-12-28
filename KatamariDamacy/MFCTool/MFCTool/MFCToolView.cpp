@@ -15,10 +15,13 @@
 
 #include "Form.h"
 #include "ObjTool.h"
+#include "Transform.h"
 
 #include "ToolCamera.h"
 #include "ToolMap.h"
 #include "ClientDefines.h"
+
+#include "ToolApple.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -74,7 +77,7 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 
 	//m_pManagement->UpdateTool();
 
-	m_pManagement->Update(1/40);
+	m_pManagement->Update_Tool(1/40);
 
 	m_pManagement->Update_Scene(1/40);
 
@@ -141,6 +144,8 @@ void CMFCToolView::OnInitialUpdate()
 	CView::OnInitialUpdate();
 
 	g_hWnd = m_hWnd;
+	g_hInst = AfxGetApp()->m_hInstance;
+
 	m_pManagement = CManagement::GetInstance();
 	Safe_AddRef(m_pManagement);
 
@@ -158,17 +163,12 @@ void CMFCToolView::OnInitialUpdate()
 	int iGapX = rcMain.right - rcView.right;
 	int iGapY = rcMain.bottom - rcView.bottom;
 
-	pMain->SetWindowPos(nullptr, 0, 0, 800 + iGapX + 1, 600 + iGapY + 1, SWP_NOMOVE);
+	pMain->SetWindowPos(nullptr, 0, 0, g_iWinCX + iGapX + 1, g_iWinCY + iGapY + 1, SWP_NOMOVE);
 
 	HRESULT hr;
-
-	g_hInst = AfxGetInstanceHandle();
 	
-	hr = m_pManagement->Ready_GraphicDevice(g_hWnd, 800, 600, &m_pDevice, &m_pDeviceContext);
-
-	g_hWnd = AfxGetMainWnd()->GetSafeHwnd();
-
-	m_pManagement->Initialize_Engine(g_hInst, g_hWnd, END_SCENE);
+	hr = m_pManagement->Ready_GraphicDevice(g_hWnd, g_iWinCX, g_iWinCY, &m_pDevice, &m_pDeviceContext);
+	m_pManagement->Initialize_Engine_Tool(g_hInst, g_hWnd, END_SCENE);
 	Ready_Prototype_Component();
 
 	CForm* pForm = dynamic_cast<CForm*>(pMain->m_tMainSplitter.GetPane(0, 0));
@@ -181,11 +181,17 @@ void CMFCToolView::OnInitialUpdate()
 	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
 	ModelPivotMatrix = ScaleMatrix;
 
+	// ¸Ê
 	hr = m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Model_StageMap"), CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/StageMap/", "StageMap.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
+	ScaleMatrix = XMMatrixScaling(100.f, 100.f, 100.f);
+	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
+	ModelPivotMatrix = ScaleMatrix ;
+	hr = m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Model_Apple"), CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/Object/", "Apple.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
 	hr = m_pManagement->Add_Prototype(TEXT("GameObject_ToolCamera"), CToolCamera::Create(m_pDevice, m_pDeviceContext));
 	hr = m_pManagement->Add_Prototype(TEXT("GameObject_StageMap"), CToolMap::Create(m_pDevice, m_pDeviceContext));
+	hr = m_pManagement->Add_Prototype(TEXT("GameObject_ToolApple"), CToolApple::Create(m_pDevice, m_pDeviceContext));
 
 #pragma endregion
 }
@@ -241,11 +247,48 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	CForm* pForm = dynamic_cast<CForm*>(pMainFrame->m_tMainSplitter.GetPane(0, 0));
 	CObjTool*	pObjTool = &pForm->m_tObjTool;
 
-	if (pForm->m_CtrlTab_Main.GetCurSel() == 0)
+	if (pForm->m_CtrlTab_Main.GetCurSel() == 0 )
 	{
-		Ready_Layer_Camera(TEXT("Layer_Camera"));
-		Ready_Layer_StageMap(TEXT("Layer_StageMap"));
+		CModel*		pModel = dynamic_cast<CModel*>(m_pManagement->GetComponent(STATIC_SCENE, TEXT("Layer_StageMap"), TEXT("Com_Model")));
+		Safe_AddRef(pModel);
 
+		CTransform*	pTransformMap = nullptr;
+		CTransform*	pTransformCamera = nullptr;
+
+		_float3 vOut;
+		_float3 vPosition;
+		_vector vCameraPos = XMVectorZero();
+
+		if (m_bFirst)
+		{
+			Ready_Layer_Camera(TEXT("Layer_Camera"));
+			Ready_Layer_StageMap(TEXT("Layer_StageMap"));
+
+			pTransformMap = dynamic_cast<CTransform*>(m_pManagement->GetComponent(STATIC_SCENE, TEXT("Layer_StageMap"), TEXT("Com_Transform")));
+			XMStoreFloat4x4(&matWorld, pTransformMap->Get_WorldMatrix());
+
+			m_bFirst = false;
+		}
+
+		else if (pModel->RayCast(vOut, g_hWnd, g_iWinCX, g_iWinCY, matWorld, vCameraPos))
+		{
+			vPosition = {vOut.x, 0.f, vOut.z};
+			//vPosition = vOut;
+
+			//CString FbxName;
+			//_uint iIdx = pObjTool->m_FBXListBox.GetCurSel();
+			//pObjTool->m_FBXListBox.GetText(iIdx, FbxName);
+
+			m_pManagement->Add_GameObj(STATIC_SCENE, TEXT("GameObject_ToolApple"), TEXT("Layer_ToolApple"), &vPosition);
+
+			//_uint ObjCnt = pObjTool->m_ObjList.GetCount();
+			//CString ObjListName;
+			//ObjListName.Format(FbxName + L"%d", ObjCnt);
+			//pObjTool->m_ObjList.AddString(ObjListName);
+
+		}
+
+			Safe_Release(pModel);
 	}
 
 	CView::OnLButtonDown(nFlags, point);
