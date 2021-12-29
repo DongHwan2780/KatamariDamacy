@@ -26,7 +26,7 @@ CManagement::CManagement()
 	Safe_AddRef(m_pSoundMgr);
 }
 #pragma region TIMER_MANAGER
-HRESULT CManagement::Add_Timers(const _tchar * TimeTag)
+HRESULT CManagement::Add_Timers(const wstring& TimeTag)
 {
 	if (nullptr == m_pTimeMgr)
 		return E_FAIL;
@@ -35,7 +35,7 @@ HRESULT CManagement::Add_Timers(const _tchar * TimeTag)
 	return m_pTimeMgr->Add_Timers(TimeTag);
 }
 
-_double CManagement::Compute_DeltaTime(const _tchar * TimeTag)
+_double CManagement::Compute_DeltaTime(const wstring& TimeTag)
 {
 	if (nullptr == m_pTimeMgr)
 		return 0.0;
@@ -79,7 +79,7 @@ HRESULT CManagement::Present()
 #pragma endregion
 
 #pragma region OBJECT_MANAGER
-HRESULT CManagement::Add_Prototype(const _tchar * pPrototypeTag, class CObj * pPrototype)
+HRESULT CManagement::Add_Prototype(const wstring& pPrototypeTag, class CObj * pPrototype)
 {
 	if (m_pObjMgr == nullptr)
 		return E_FAIL;
@@ -87,7 +87,7 @@ HRESULT CManagement::Add_Prototype(const _tchar * pPrototypeTag, class CObj * pP
 	return m_pObjMgr->Add_Prototype(pPrototypeTag, pPrototype);
 }
 
-HRESULT CManagement::Add_GameObj(_int iSceneIndex, const _tchar * pPrototypeTag, const _tchar * pLayerTag, void * pArg)
+HRESULT CManagement::Add_GameObj(_int iSceneIndex, const wstring& pPrototypeTag, const wstring& pLayerTag, void * pArg)
 {
 	if (m_pObjMgr == nullptr)
 		return E_FAIL;
@@ -102,14 +102,22 @@ void CManagement::Clear_ObjMgr(_int iSceneIndex)
 
 	m_pObjMgr->Clear(iSceneIndex);
 }
-CComponent * CManagement::GetComponent(_uint iLevelIndex, const _tchar* pLayerTag, const _tchar* pComponentTag, _uint iIndex)
+CComponent * CManagement::GetComponent(_uint iLevelIndex, const wstring& pLayerTag, const wstring& pComponentTag, _uint iIndex)
 {
-	return m_pObjMgr->GetComponent(iLevelIndex, pLayerTag, pComponentTag, iIndex);;
+	return m_pObjMgr->GetComponent(iLevelIndex, pLayerTag, pComponentTag, iIndex);
+}
+_uint CManagement::GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const
+{
+	return m_pObjMgr->GetGameObjectListSize(iLevelIndex, LayerTag);
+}
+CObj * CManagement::GetGameObject(_uint iLevelIndex, const wstring & LayerTag, _uint iIndex) const
+{
+	return m_pObjMgr->GetGameObject(iLevelIndex, LayerTag, iIndex);
 }
 #pragma endregion
 
 #pragma region COMPONENT_MANAGER
-HRESULT CManagement::Add_Prototype(_int iSceneIndex, const _tchar * pPrototypeTag, class CComponent * pPrototype)
+HRESULT CManagement::Add_Prototype(_int iSceneIndex, const wstring& pPrototypeTag, class CComponent * pPrototype)
 {
 	if (m_pComponentMgr == nullptr)
 		return E_FAIL;
@@ -117,7 +125,7 @@ HRESULT CManagement::Add_Prototype(_int iSceneIndex, const _tchar * pPrototypeTa
 	return m_pComponentMgr->Add_Prototype(iSceneIndex, pPrototypeTag, pPrototype);
 }
 
-CComponent * CManagement::Clone_Component(_int iSceneIndex, const _tchar * pPrototypeTag, void * pArg)
+CComponent * CManagement::Clone_Component(_int iSceneIndex, const wstring& pPrototypeTag, void * pArg)
 {
 	if (m_pComponentMgr == nullptr)
 		return nullptr;

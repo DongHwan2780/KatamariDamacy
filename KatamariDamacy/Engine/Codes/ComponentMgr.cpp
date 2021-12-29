@@ -18,7 +18,7 @@ HRESULT CComponentMgr::Reserve_Manager(_int iNumScenes)
 	return S_OK;
 }
 
-HRESULT CComponentMgr::Add_Prototype(_int iSceneIndex, const _tchar * pPrototypeTag, CComponent * pPrototype)
+HRESULT CComponentMgr::Add_Prototype(_int iSceneIndex, const wstring& pPrototypeTag, CComponent * pPrototype)
 {
 	if (pPrototype == nullptr || Find_Prototype(iSceneIndex, pPrototypeTag) != nullptr || iSceneIndex >= m_iNumScenes)	// 받아온 객체가 nullptr이거나 이미 있다면 FAIL반환
 		return E_FAIL;
@@ -28,7 +28,7 @@ HRESULT CComponentMgr::Add_Prototype(_int iSceneIndex, const _tchar * pPrototype
 	return S_OK;
 }
 
-CComponent * CComponentMgr::Clone_Component(_int iSceneIndex, const _tchar * pPrototypeTag, void * pArg)
+CComponent * CComponentMgr::Clone_Component(_int iSceneIndex, const wstring& pPrototypeTag, void * pArg)
 {
 	if(m_iNumScenes <= iSceneIndex)
 		return nullptr;
@@ -52,9 +52,9 @@ void CComponentMgr::Clear(_int iSceneIndex)
 	m_pPrototypes[iSceneIndex].clear();
 }
 
-CComponent * CComponentMgr::Find_Prototype(_int iSceneIndex, const _tchar * pPrototypeTag)
+CComponent * CComponentMgr::Find_Prototype(_int iSceneIndex, const wstring& pPrototypeTag)
 {
-	auto iter = find_if(m_pPrototypes[iSceneIndex].begin(), m_pPrototypes[iSceneIndex].end(), CTagFinder(pPrototypeTag));
+	auto iter = m_pPrototypes[iSceneIndex].find(pPrototypeTag);
 
 	if (iter == m_pPrototypes[iSceneIndex].end())
 		return nullptr;

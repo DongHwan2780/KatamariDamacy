@@ -44,21 +44,50 @@ void CObjTool::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CObjTool, CDialog)
-	ON_LBN_SELCHANGE(IDC_LIST1, &CObjTool::OnLbnSelchangeObjList)
+	ON_LBN_SELCHANGE(IDC_LIST1, &CObjTool::OnLbnSelchangeFBXList)
 	ON_WM_DROPFILES()
 	ON_BN_CLICKED(IDC_BUTTON1, &CObjTool::OnBnClickedCubeColliderCreate)
 	ON_BN_CLICKED(IDC_BUTTON2, &CObjTool::OnBnClickedSphereColliderCreate)
 	ON_BN_CLICKED(IDC_BUTTON3, &CObjTool::OnBnClickedApply)
 	ON_BN_CLICKED(IDC_BUTTON4, &CObjTool::OnBnClickedSave)
+	ON_LBN_SELCHANGE(IDC_LIST2, &CObjTool::OnLbnSelchangeObjList)
 END_MESSAGE_MAP()
 
 
 // CObjTool 메시지 처리기입니다.
 
 
-void CObjTool::OnLbnSelchangeObjList()
+void CObjTool::OnLbnSelchangeFBXList()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
+
+	m_ObjList.ResetContent();
+
+	int iIdx = m_FBXListBox.GetCurSel();
+	int ObjCnt = 0;
+	CString wstrModelName;
+	m_FBXListBox.GetText(iIdx, wstrModelName);
+	m_strObjName = L"GameObject_";
+	m_strLayerName = L"Layer_";
+	m_strObjName += wstrModelName;
+	m_strLayerName += wstrModelName;
+
+	//ObjCnt = m_pManagement->GetGameObjectListSize(STATIC_SCENE, m_strLayerName.GetString());
+
+	for (int i = 0; i < ObjCnt; ++i)
+	{
+		CString ObjNum;
+		CString ObjName = wstrModelName;
+		ObjNum.Format(L"%d", i);
+		ObjName += ObjNum;
+
+		m_ObjList.AddString(ObjName);
+		RELEASE_INSTANCE(CManagement);
+		UpdateData(FALSE);
+	}
+
+	RELEASE_INSTANCE(CManagement);
 }
 
 
@@ -120,4 +149,50 @@ void CObjTool::OnBnClickedSave()
 
 
 	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnLbnSelchangeObjList()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
+
+	int iIdx = m_ObjList.GetCurSel();
+	_vector vPos;   /*, vAngle;*/
+	_vector ScaleX, ScaleY, ScaleZ;
+
+	if (iIdx < 0)
+		return;
+
+	m_pGameObj = m_pManagement->GetGameObject(STATIC_SCENE, m_strLayerName.GetString(), iIdx);
+
+	m_pTransform = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(/*STATIC_SCENE, m_strLayerName.GetString(), */L"Com_Transform"));
+
+	vPos = m_pTransform->Get_State(CTransform::POSITION);
+	ScaleX = m_pTransform->Get_State(CTransform::RIGHT);
+	ScaleY = m_pTransform->Get_State(CTransform::UP);
+	ScaleZ = m_pTransform->Get_State(CTransform::LOOK);
+
+	m_fPosX = XMVectorGetX(vPos);
+
+	m_fPosY = XMVectorGetY(vPos);
+
+	m_fPosZ = XMVectorGetZ(vPos);
+
+
+	m_fScaleX = XMVectorGetX(ScaleX);
+
+	m_fScaleY = XMVectorGetY(ScaleY);
+
+	m_fScaleZ = XMVectorGetZ(ScaleZ);
+
+	//m_fAngleX = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vRotate.x;
+
+	//m_fAngleY = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vRotate.y;
+
+	//m_fAngleZ = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vRotate.z;
+
+	UpdateData(FALSE);
+
+	RELEASE_INSTANCE(CManagement);
 }

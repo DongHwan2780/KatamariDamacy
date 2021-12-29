@@ -82,7 +82,7 @@ HRESULT CLogo::Ready_Prototype_GameObject()
 	return S_OK;
 }
 
-HRESULT CLogo::Ready_Layer_BackGround(const _tchar * pLayerTag)
+HRESULT CLogo::Ready_Layer_BackGround(const wstring& pLayerTag)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 

@@ -80,7 +80,7 @@ HRESULT CStageOne::Ready_Lights()
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_Player(const _tchar * pLayerTag)
+HRESULT CStageOne::Ready_Layer_Player(const wstring&)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -92,7 +92,7 @@ HRESULT CStageOne::Ready_Layer_Player(const _tchar * pLayerTag)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_Camera(const _tchar * pLayerTag)
+HRESULT CStageOne::Ready_Layer_Camera(const wstring&)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -113,7 +113,7 @@ HRESULT CStageOne::Ready_Layer_Camera(const _tchar * pLayerTag)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_StageMap(const _tchar * pLayerTag)
+HRESULT CStageOne::Ready_Layer_StageMap(const wstring&)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -161,7 +161,7 @@ HRESULT CStageOne::Ready_Prototype_GameObject()
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_SizeUI(const _tchar * pLayerTag)
+HRESULT CStageOne::Ready_Layer_SizeUI(const wstring&)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -174,7 +174,7 @@ HRESULT CStageOne::Ready_Layer_SizeUI(const _tchar * pLayerTag)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_StickyUI(const _tchar * pLayerTag)
+HRESULT CStageOne::Ready_Layer_StickyUI(const wstring&)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -187,12 +187,12 @@ HRESULT CStageOne::Ready_Layer_StickyUI(const _tchar * pLayerTag)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_TimeUI(const _tchar * pLayerTag)
+HRESULT CStageOne::Ready_Layer_TimeUI(const wstring&)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT CStageOne::Ready_Layer_PlayerMoveUI(const _tchar * pLayerTag)
+HRESULT CStageOne::Ready_Layer_PlayerMoveUI(const wstring&)
 {
 	return E_NOTIMPL;
 }

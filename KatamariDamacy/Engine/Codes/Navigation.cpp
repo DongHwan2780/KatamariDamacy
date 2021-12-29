@@ -15,7 +15,7 @@ CNavigation::CNavigation(const CNavigation & other)
 		Safe_AddRef(pCell);
 }
 
-HRESULT CNavigation::Initialize_Prototype(const _tchar * pDataFiles)
+HRESULT CNavigation::Initialize_Prototype(const _tchar* pDataFiles)
 {
 	_ulong			dwByte = 0;
 	HANDLE			hFile = CreateFile(pDataFiles, GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);

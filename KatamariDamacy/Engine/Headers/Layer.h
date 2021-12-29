@@ -19,7 +19,9 @@ public:
 	_int	Late_Update(_double DeltaTime);
 
 public:
-	class CComponent* GetComponent(const _tchar* ComponentTag, _uint iIndex = 0);
+	class CComponent* GetComponent(const wstring& ComponentTag, _uint iIndex = 0);
+	_uint GetGameObjectListSize() const;
+	class CObj* GetGameObject(_uint iIndex = 0) const;
 public:
 	static CLayer*	Create();
 	virtual void Free() override;

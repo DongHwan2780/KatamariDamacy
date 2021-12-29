@@ -42,7 +42,7 @@ HRESULT CObj::Render()
 	return S_OK;
 }
 
-HRESULT CObj::SetUp_Components(_int iSceneIndex, const _tchar * pPrototypeTag, const _tchar * pComponentTag,  CComponent ** pOut, void * pArg)
+HRESULT CObj::SetUp_Components(_int iSceneIndex, const wstring& pPrototypeTag, const wstring& pComponentTag,  CComponent ** pOut, void * pArg)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -50,7 +50,7 @@ HRESULT CObj::SetUp_Components(_int iSceneIndex, const _tchar * pPrototypeTag, c
 	if (nullptr == pComponent)
 		return E_FAIL;
 
-	if (m_Components.end() != find_if(m_Components.begin(), m_Components.end(), CTagFinder(pComponentTag)))
+	if (m_Components.end() != m_Components.find(pPrototypeTag))
 		return E_FAIL;
 	else
 	{
@@ -64,14 +64,14 @@ HRESULT CObj::SetUp_Components(_int iSceneIndex, const _tchar * pPrototypeTag, c
 	return S_OK;
 }
 
-CComponent * CObj::GetComponent(const _tchar * pComponentTag) const
+CComponent * CObj::GetComponent(const wstring& pComponentTag) const
 {
-	auto	iter = find_if(m_Components.begin(), m_Components.end(), CTagFinder(pComponentTag));
+	auto iter_find = m_Components.find(pComponentTag);
 
-	if (iter == m_Components.end())
+	if (iter_find == m_Components.end())
 		return nullptr;
 
-	return iter->second;
+	return iter_find->second;
 }
 
 void CObj::Free()

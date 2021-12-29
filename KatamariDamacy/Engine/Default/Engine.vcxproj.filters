@@ -61,9 +61,6 @@
     <Filter Include="01.Manager\01.ComponentMgr\VIBuffer">
       <UniqueIdentifier>{b3dee4eb-db58-404f-aeee-4e31b2505aa2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\VIBuffer_Cube">
-      <UniqueIdentifier>{797a3213-9128-4fb8-a416-545f879b1e8a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Manager\07.SoundMgr">
       <UniqueIdentifier>{bb1f1840-d362-4104-965d-b6b0dbdfb8fe}</UniqueIdentifier>
     </Filter>

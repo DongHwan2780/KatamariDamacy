@@ -17,6 +17,9 @@ public:
 	virtual HRESULT	Render() override;
 
 public:
+	void Movement(_double DeltaTime);
+
+public:
 	static CToolCamera* Create(DEVICES);
 	virtual CObj * Clone(void * pArg) override;
 	virtual void Free() override;

@@ -5,10 +5,7 @@
 #pragma once
 
 #include "Management.h"
-
-BEGIN(Engine)
-class CRenderer;
-END
+#include "ClientDefines.h"
 
 class CMFCToolDoc;
 
@@ -59,8 +56,8 @@ protected:
 public:
 	virtual void OnInitialUpdate();
 
-	HRESULT Ready_Layer_Camera(const _tchar* pLayerTag);
-	HRESULT Ready_Layer_StageMap(const _tchar* pLayerTag);
+	HRESULT Ready_Layer_Camera(const wstring& pLayerTag);
+	HRESULT Ready_Layer_StageMap(const wstring& pLayerTag);
 	HRESULT Ready_Prototype_Component();
 
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

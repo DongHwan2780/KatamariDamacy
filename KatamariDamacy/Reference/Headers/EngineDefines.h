@@ -48,20 +48,25 @@ using namespace DirectX::PackedVector;
 using namespace std;
 using namespace Engine;
 
-#ifdef _DEBUG
+#ifdef _MFCTOOL
+
+#else
+#ifdef _DEBUG 
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
 
-#ifndef DBG_NEW 
+#ifndef DBG_NEW
 
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
-#define new DBG_NEW 
+#define new DBG_NEW
 
 #endif
 
 #endif // _DEBUG
+
+#endif // _MFCTOOL
 
 #pragma region SOUND
 #include <io.h>

@@ -1,7 +1,7 @@
 #pragma once
 #include "afxwin.h"
 
-
+#include "Management.h"
 // CObjTool 대화 상자입니다.
 
 class CObjTool : public CDialog
@@ -22,7 +22,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnLbnSelchangeObjList();
+	afx_msg void OnLbnSelchangeFBXList();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	CListBox m_FBXListBox;
 	CListBox m_ObjList;
@@ -39,4 +39,10 @@ public:
 	float m_fAngleX;
 	float m_fAngleY;
 	float m_fAngleZ;
+	CString	m_strLayerName = L"Layer_";
+	CString	m_strObjName = L"GameObject_";
+	afx_msg void OnLbnSelchangeObjList();
+
+	CObj* m_pGameObj;
+	CTransform*  m_pTransform;
 };

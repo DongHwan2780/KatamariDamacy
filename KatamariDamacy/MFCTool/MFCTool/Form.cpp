@@ -4,8 +4,6 @@
 #include "stdafx.h"
 #include "MFCTool.h"
 #include "Form.h"
-
-
 // CForm
 
 IMPLEMENT_DYNCREATE(CForm, CFormView)

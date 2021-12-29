@@ -10,7 +10,7 @@ CVIBuffer_Terrain::CVIBuffer_Terrain(const CVIBuffer_Terrain & other)
 {
 }
 
-HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pHeightMapPath, const _tchar* pShaderFilePath)
+HRESULT CVIBuffer_Terrain::Initialize_Prototype( const _tchar* pHeightMapPath,  const _tchar* pShaderFilePath)
 {
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
@@ -192,7 +192,7 @@ HRESULT CVIBuffer_Terrain::Initialize_Clone(void * pArg)
 	return S_OK;
 }
 
-CVIBuffer_Terrain * CVIBuffer_Terrain::Create(DEVICES, const _tchar* pHeightMapPath, const _tchar* pShaderFilePath)
+CVIBuffer_Terrain * CVIBuffer_Terrain::Create(DEVICES,  const _tchar* pHeightMapPath,  const _tchar* pShaderFilePath)
 {
 	CVIBuffer_Terrain*	pInstance = new CVIBuffer_Terrain(pDevice, pDeviceContext);
 

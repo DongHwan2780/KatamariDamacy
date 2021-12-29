@@ -22,10 +22,10 @@ public:
 	virtual HRESULT	Render();
 
 protected:
-	HRESULT SetUp_Components(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pComponentTag,  class CComponent** pOut, void* pArg = nullptr);
+	HRESULT SetUp_Components(_int iSceneIndex, const wstring& pPrototypeTag, const wstring& pComponentTag,  class CComponent** pOut, void* pArg = nullptr);
 
 public:
-	CComponent*	GetComponent(const _tchar* pComponentTag) const;
+	CComponent*	GetComponent(const wstring& pComponentTag) const;
 
 public:
 	virtual CObj*	Clone(void* pArg) = 0;
@@ -37,8 +37,8 @@ protected:
 	//PxTransform				m_pxTransform = PxTransform(PxVec3(), PxQuat());
 
 protected:
-	unordered_map<const _tchar*, class CComponent*>			m_Components;
-	typedef unordered_map<const _tchar*, class CComponent*>	COMPONENTS;
+	unordered_map<wstring, class CComponent*>			m_Components;
+	typedef unordered_map<wstring, class CComponent*>	COMPONENTS;
 };
 
 END

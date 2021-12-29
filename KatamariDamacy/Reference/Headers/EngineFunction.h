@@ -57,7 +57,7 @@ namespace Engine
 	class CTagFinder
 	{
 	public:
-		explicit CTagFinder(const wchar_t* pTag)
+		explicit CTagFinder(const _tchar* pTag)
 			: m_pTargetTag(pTag) {		}
 		~CTagFinder() {}
 
@@ -72,7 +72,7 @@ namespace Engine
 		}
 
 	private:
-		const wchar_t*	m_pTargetTag;
+		const _tchar*	m_pTargetTag;
 
 	};
 }
