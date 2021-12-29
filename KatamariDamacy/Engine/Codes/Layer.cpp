@@ -46,7 +46,7 @@ _int CLayer::Late_Update(_double DeltaTime)
 	return _int();
 }
 
-CComponent * CLayer::GetComponent(const _tchar * ComponentTag, _uint iIndex)
+CComponent * CLayer::GetComponent(const wstring& ComponentTag, _uint iIndex)
 {
 	auto iter = m_ObjList.begin();
 
@@ -54,6 +54,24 @@ CComponent * CLayer::GetComponent(const _tchar * ComponentTag, _uint iIndex)
 		++iter;
 
 	return (*iter)->GetComponent(ComponentTag);
+}
+
+_uint CLayer::GetGameObjectListSize() const
+{
+	return (_uint)m_ObjList.size();
+}
+
+CObj * CLayer::GetGameObject(_uint iIndex) const
+{
+	auto iter = m_ObjList.begin();
+	if (m_ObjList.end() == iter)
+	{
+		return nullptr;
+	}
+
+	for (_uint i = 0; i < iIndex; ++i, ++iter);
+
+	return (*iter);
 }
 
 CLayer * CLayer::Create()

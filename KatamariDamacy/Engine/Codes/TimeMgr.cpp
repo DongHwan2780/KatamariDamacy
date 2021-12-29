@@ -7,7 +7,7 @@ CTimeMgr::CTimeMgr()
 }
 
 
-HRESULT CTimeMgr::Add_Timers(const _tchar * TimeTag)
+HRESULT CTimeMgr::Add_Timers(const wstring& TimeTag)
 {
 	if (nullptr != Find_Timers(TimeTag))		//	키값으로 타이머를 찾았을 때 이미 있으면 실패 반환
 		return E_FAIL;
@@ -21,7 +21,7 @@ HRESULT CTimeMgr::Add_Timers(const _tchar * TimeTag)
 	return S_OK;
 }
 
-_double CTimeMgr::Compute_DeltaTime(const _tchar * TimeTag)
+_double CTimeMgr::Compute_DeltaTime(const wstring& TimeTag)
 {
 	CTimer*	pTimer = Find_Timers(TimeTag);
 
@@ -31,14 +31,14 @@ _double CTimeMgr::Compute_DeltaTime(const _tchar * TimeTag)
 	return pTimer->Compute_DeltaTime();
 }
 
-CTimer * CTimeMgr::Find_Timers(const _tchar * TimeTag)
+CTimer * CTimeMgr::Find_Timers(const wstring& TimeTag)
 {
-	auto	iter = find_if(m_pTimers.begin(), m_pTimers.end(), CTagFinder(TimeTag));
+	auto iter_find = m_pTimers.find(TimeTag);
 
-	if (iter == m_pTimers.end())
+	if (iter_find == m_pTimers.end())
 		return nullptr;
 
-	return iter->second;
+	return iter_find->second;
 }
 
 void CTimeMgr::Free()

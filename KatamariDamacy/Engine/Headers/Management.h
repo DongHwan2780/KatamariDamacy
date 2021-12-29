@@ -11,7 +11,6 @@
 #include "LightMgr.h"
 
 #include "PipeLine.h"
-//#include "Physx.h"
 #include "Input.h"
 
 BEGIN(Engine)
@@ -26,8 +25,8 @@ private:
 
 #pragma region TIMEMGR
 public:
-	HRESULT Add_Timers(const _tchar* TimeTag);
-	_double	Compute_DeltaTime(const _tchar* TimeTag);
+	HRESULT Add_Timers(const wstring& TimeTag);
+	_double	Compute_DeltaTime(const wstring& TimeTag);
 #pragma endregion
 
 #pragma region GRAPHIC_DEVICE
@@ -38,15 +37,18 @@ public:
 #pragma endregion
 
 #pragma region OBJ_MGR
-	HRESULT Add_Prototype(const _tchar* pPrototypeTag, class CObj* pPrototype);
-	HRESULT Add_GameObj(_int iSceneIndex, const _tchar* pPrototypeTag, const _tchar* pLayerTag, void* pArg = nullptr);
+	HRESULT Add_Prototype(const wstring& pPrototypeTag, class CObj* pPrototype);
+	HRESULT Add_GameObj(_int iSceneIndex, const wstring& pPrototypeTag, const wstring& pLayerTag, void* pArg = nullptr);
 	void	Clear_ObjMgr(_int iSceneIndex);
-	class CComponent* GetComponent(_uint iLevelIndex, const _tchar* pLayerTag, const _tchar* pComponentTag, _uint iIndex = 0);
+	class CComponent* GetComponent(_uint iLevelIndex, const wstring& pLayerTag, const wstring& pComponentTag, _uint iIndex = 0);
+
+	_uint GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const;
+	CObj* GetGameObject(_uint iLevelIndex, const wstring& LayerTag, _uint iIndex = 0) const;
 #pragma endregion
 
 #pragma region COMPONENT_MGR
-	HRESULT Add_Prototype(_int iSceneIndex, const _tchar* pPrototypeTag, class CComponent* pPrototype);
-	class CComponent* Clone_Component(_int iSceneIndex, const _tchar* pPrototypeTag, void* pArg = nullptr);
+	HRESULT Add_Prototype(_int iSceneIndex, const wstring& pPrototypeTag, class CComponent* pPrototype);
+	class CComponent* Clone_Component(_int iSceneIndex, const wstring& pPrototypeTag, void* pArg = nullptr);
 	void Clear_ComponentMgr(_int iSceneIndex);
 #pragma endregion
 

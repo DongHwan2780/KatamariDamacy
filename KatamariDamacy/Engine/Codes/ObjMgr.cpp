@@ -20,7 +20,7 @@ HRESULT CObjMgr::Reserve_Manager(_uint iNumScenes)
 	return S_OK;
 }
 
-HRESULT CObjMgr::Add_Prototype(const _tchar * pPrototypeTag, CObj * pPrototype)
+HRESULT CObjMgr::Add_Prototype(const wstring& pPrototypeTag, CObj * pPrototype)
 {
 	if (pPrototype == nullptr || Find_Prototype(pPrototypeTag) != nullptr)	// 받아온 객체가 nullptr이거나 이미 있다면 FAIL반환
 		return E_FAIL;
@@ -30,7 +30,7 @@ HRESULT CObjMgr::Add_Prototype(const _tchar * pPrototypeTag, CObj * pPrototype)
 	return S_OK;
 }
 
-HRESULT CObjMgr::Add_GameObj(_int iSceneIndex, const _tchar * pPrototypeTag, const _tchar * pLayerTag, void * pArg)
+HRESULT CObjMgr::Add_GameObj(_int iSceneIndex, const wstring& pPrototypeTag, const wstring& pLayerTag, void * pArg)
 {
 	CObj* pPrototype = Find_Prototype(pPrototypeTag);		
 	if (pPrototype == nullptr)	// 태그로 원본을 찾았는데 원본이 없다면
@@ -105,7 +105,7 @@ void CObjMgr::Clear(_int iSceneIndex)
 	m_pGameObjects[iSceneIndex].clear();
 }
 
-CComponent * CObjMgr::GetComponent(_uint iLevelIndex, const _tchar* pLayerTag, const _tchar* pComponentTag, _uint iIndex)
+CComponent * CObjMgr::GetComponent(_uint iLevelIndex, const wstring& pLayerTag, const wstring& pComponentTag, _uint iIndex)
 {
 	if (iLevelIndex >= m_iNumScenes)
 		return nullptr;
@@ -117,19 +117,43 @@ CComponent * CObjMgr::GetComponent(_uint iLevelIndex, const _tchar* pLayerTag, c
 	return pLayer->GetComponent(pComponentTag, iIndex);
 }
 
-CObj * CObjMgr::Find_Prototype(const _tchar * pPrototypeTag)
+_uint CObjMgr::GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const
 {
-	auto iter = find_if(m_Prototypes.begin(), m_Prototypes.end(), CTagFinder(pPrototypeTag));
+	auto iter = m_pGameObjects[iLevelIndex].find(LayerTag);
 
-	if (m_Prototypes.end() == iter)
-		return nullptr;
+	//if (m_pGameObjects[iLevelIndex].end() == iter)
+	//{
+	//	MSG_BOX("Failed to GetObjListSize");
+	//	return 0;
+	//}
 
-	return iter->second;
+	return iter->second->GetGameObjectListSize();
 }
 
-CLayer * CObjMgr::Find_Layer(_int iSceneIndex, const _tchar *pLayerTag)
+CObj * CObjMgr::GetGameObject(_uint iLevelIndex, const wstring & LayerTag, _uint iIndex) const
 {
-	auto iter = find_if(m_pGameObjects[iSceneIndex].begin(), m_pGameObjects[iSceneIndex].end(), CTagFinder(pLayerTag));
+	auto iter_find = m_pGameObjects[iLevelIndex].find(LayerTag);
+	if (m_pGameObjects[iLevelIndex].end() == iter_find)
+	{
+		wstring ErrMsg = LayerTag + L" is not found";
+		return nullptr;
+	}
+	return iter_find->second->GetGameObject(iIndex);
+}
+
+CObj * CObjMgr::Find_Prototype(const wstring& pPrototypeTag)
+{
+	auto iter_find = m_Prototypes.find(pPrototypeTag);
+
+	if (m_Prototypes.end() == iter_find)
+		return nullptr;
+
+	return iter_find->second;
+}
+
+CLayer * CObjMgr::Find_Layer(_int iSceneIndex, const wstring&pLayerTag)
+{
+	auto iter = m_pGameObjects[iSceneIndex].find(pLayerTag);
 
 	if (m_pGameObjects[iSceneIndex].end() == iter)
 		return nullptr;

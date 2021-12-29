@@ -25,19 +25,19 @@ private:
 
 public:
 	HRESULT Reserve_Manager(_int iNumScenes);
-	HRESULT Add_Prototype(_int iSceneIndex, const _tchar* pPrototypeTag, CComponent* pPrototype);
-	CComponent* Clone_Component(_int iSceneIndex, const _tchar* pPrototypeTag, void* pArg);
+	HRESULT Add_Prototype(_int iSceneIndex, const wstring& pPrototypeTag, CComponent* pPrototype);
+	CComponent* Clone_Component(_int iSceneIndex, const wstring& pPrototypeTag, void* pArg);
 	void Clear(_int iSceneIndex);
 
 public:
-	CComponent* Find_Prototype(_int iSceneIndex, const _tchar* pPrototypeTag);
+	CComponent* Find_Prototype(_int iSceneIndex, const wstring& pPrototypeTag);
 
 public:
 	virtual void Free() override;
 
 private:
-	unordered_map<const _tchar*, CComponent*>*			m_pPrototypes = nullptr;
-	typedef unordered_map<const _tchar*, CComponent*>	PROTOTYPES;
+	unordered_map<wstring, CComponent*>*			m_pPrototypes = nullptr;
+	typedef unordered_map<wstring, CComponent*>	PROTOTYPES;
 
 private:
 	_int	m_iNumScenes = 0;

@@ -63,7 +63,7 @@ HRESULT CToolMap::Render()
 	if (FAILED(SetUp_ConstantTable()))
 		return E_FAIL;
 
-	_uint		iNumMaterials = m_pModel->Get_NumMaterials();
+	_uint		iNumMaterials = (_uint)m_pModel->Get_NumMaterials();
 
 	m_pModel->Bind_Buffers();
 
@@ -79,16 +79,16 @@ HRESULT CToolMap::Render()
 HRESULT CToolMap::SetUp_Components()
 {
 	/* For.Com_Renderer */
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Renderer"), TEXT("Com_Renderer"), (CComponent**)&m_pRenderer)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Renderer", L"Com_Renderer", (CComponent**)&m_pRenderer)))
 		return E_FAIL;
 
 	/* For.Com_Model */
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Model_StageMap"), TEXT("Com_Model"), (CComponent**)&m_pModel)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Model_StageMap", L"Com_Model", (CComponent**)&m_pModel)))
 		return E_FAIL;
 
 	/* For.Com_Transform */
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Transform"), TEXT("Com_Transform"), (CComponent**)&m_pTransform)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform)))
 		return E_FAIL;
 
 	return S_OK;

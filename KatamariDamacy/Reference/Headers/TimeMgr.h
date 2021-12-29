@@ -16,18 +16,18 @@ private:
 	virtual ~CTimeMgr() = default;
 
 public:
-	HRESULT Add_Timers(const _tchar* TimeTag);
-	_double	Compute_DeltaTime(const _tchar* TimeTag);
+	HRESULT Add_Timers(const wstring& TimeTag);
+	_double	Compute_DeltaTime(const wstring& TimeTag);
 
 private:
-	CTimer* Find_Timers(const _tchar* TimeTag);
+	CTimer* Find_Timers(const wstring& TimeTag);
 
 public:
 	virtual void Free();
 
 private:
-	typedef unordered_map<const _tchar*, CTimer*> TIMERS;		//TIMERS	m_pTimers;  -> 키값이 const라서 못쓰는거같음
-	unordered_map<const _tchar*, CTimer*>	m_pTimers;
+	typedef unordered_map<wstring, CTimer*> TIMERS;		//TIMERS	m_pTimers;  -> 키값이 const라서 못쓰는거같음
+	unordered_map<wstring, CTimer*>	m_pTimers;
 
 	//TIMERS		m_pTimers;
 };

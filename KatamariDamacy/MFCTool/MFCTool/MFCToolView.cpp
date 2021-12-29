@@ -12,20 +12,18 @@
 #include "MFCToolDoc.h"
 #include "MFCToolView.h"
 #include "MainFrm.h"
-
 #include "Form.h"
 #include "ObjTool.h"
-#include "Transform.h"
 
 #include "ToolCamera.h"
 #include "ToolMap.h"
-#include "ClientDefines.h"
 
 #include "ToolApple.h"
 
-#ifdef _DEBUG
+#ifdef _MFCTOOL
 #define new DEBUG_NEW
 #endif
+
 HWND g_hWnd;
 HINSTANCE	g_hInst;
 // CMFCToolView]
@@ -77,9 +75,9 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 
 	//m_pManagement->UpdateTool();
 
-	m_pManagement->Update_Tool(1/40);
+	m_pManagement->Update_Tool(1.0 / 40.0);
 
-	m_pManagement->Update_Scene(1/40);
+	m_pManagement->Update_Scene(1.0 / 40.0);
 
 	m_pManagement->Clear_BackBufferView(_float4(0.f, 0.f, 1.f, 1.f));
 	m_pManagement->Clear_DepthStencilView(1.f, 0);
@@ -177,26 +175,26 @@ void CMFCToolView::OnInitialUpdate()
 #pragma region Obj_Prototype
 	_matrix		ScaleMatrix, RotationMatrix, TranslationMatrix;
 	_matrix		ModelPivotMatrix;
-	ScaleMatrix = XMMatrixScaling(10.f, 10.f, 10.f);
+	ScaleMatrix = XMMatrixScaling(15.f, 15.f, 15.f);
 	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
 	ModelPivotMatrix = ScaleMatrix;
 
 	// ¸Ê
-	hr = m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Model_StageMap"), CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/StageMap/", "StageMap.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_StageMap", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/StageMap/", "StageMap.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
 	ScaleMatrix = XMMatrixScaling(100.f, 100.f, 100.f);
 	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
 	ModelPivotMatrix = ScaleMatrix ;
-	hr = m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Model_Apple"), CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/Object/", "Apple.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_Apple", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/Object/", "Apple.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
-	hr = m_pManagement->Add_Prototype(TEXT("GameObject_ToolCamera"), CToolCamera::Create(m_pDevice, m_pDeviceContext));
-	hr = m_pManagement->Add_Prototype(TEXT("GameObject_StageMap"), CToolMap::Create(m_pDevice, m_pDeviceContext));
-	hr = m_pManagement->Add_Prototype(TEXT("GameObject_ToolApple"), CToolApple::Create(m_pDevice, m_pDeviceContext));
+	hr = m_pManagement->Add_Prototype(L"GameObject_ToolCamera", CToolCamera::Create(m_pDevice, m_pDeviceContext));
+	hr = m_pManagement->Add_Prototype(L"GameObject_StageMap", CToolMap::Create(m_pDevice, m_pDeviceContext));
+	hr = m_pManagement->Add_Prototype(L"GameObject_Apple", CToolApple::Create(m_pDevice, m_pDeviceContext));
 
 #pragma endregion
 }
 
-HRESULT CMFCToolView::Ready_Layer_Camera(const _tchar * pLayerTag)
+HRESULT CMFCToolView::Ready_Layer_Camera(const wstring& pLayerTag)
 {
 	CCamera::CAMERADESC		CameraDesc;
 	ZeroMemory(&CameraDesc, sizeof(CCamera::CAMERADESC));
@@ -208,15 +206,15 @@ HRESULT CMFCToolView::Ready_Layer_Camera(const _tchar * pLayerTag)
 	CameraDesc.TransformDesc.fSpeedPerSec = 5.0f;
 	CameraDesc.TransformDesc.fRotatePerSec = XMConvertToRadians(90.0f);
 
-	if (FAILED(m_pManagement->Add_GameObj(STATIC_SCENE, TEXT("GameObject_ToolCamera"), pLayerTag, &CameraDesc)))
+	if (FAILED(m_pManagement->Add_GameObj(STATIC_SCENE, L"GameObject_ToolCamera", pLayerTag, &CameraDesc)))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CMFCToolView::Ready_Layer_StageMap(const _tchar * pLayerTag)
+HRESULT CMFCToolView::Ready_Layer_StageMap(const wstring& pLayerTag)
 {
-	if (FAILED(m_pManagement->Add_GameObj(STATIC_SCENE, TEXT("GameObject_StageMap"), pLayerTag)))
+	if (FAILED(m_pManagement->Add_GameObj(STATIC_SCENE, L"GameObject_StageMap", pLayerTag)))
 		return E_FAIL;
 
 	return S_OK;
@@ -228,11 +226,11 @@ HRESULT CMFCToolView::Ready_Prototype_Component()
 		return E_FAIL;
 
 	/* For.Prototype_Transform */
-	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Transform"), CTransform::Create(m_pDevice, m_pDeviceContext))))
+	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Transform", CTransform::Create(m_pDevice, m_pDeviceContext))))
 		return E_FAIL;
 
 	/* For.Prototype_Renderer */
-	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Renderer"), m_pRenderer = CRenderer::Create(m_pDevice, m_pDeviceContext))))
+	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Renderer", m_pRenderer = CRenderer::Create(m_pDevice, m_pDeviceContext))))
 		return E_FAIL;
 	Safe_AddRef(m_pRenderer);
 
@@ -249,7 +247,7 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	if (pForm->m_CtrlTab_Main.GetCurSel() == 0 )
 	{
-		CModel*		pModel = dynamic_cast<CModel*>(m_pManagement->GetComponent(STATIC_SCENE, TEXT("Layer_StageMap"), TEXT("Com_Model")));
+		CModel*		pModel = dynamic_cast<CModel*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_StageMap", L"Com_Model"));
 		Safe_AddRef(pModel);
 
 		CTransform*	pTransformMap = nullptr;
@@ -261,10 +259,10 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 		if (m_bFirst)
 		{
-			Ready_Layer_Camera(TEXT("Layer_Camera"));
-			Ready_Layer_StageMap(TEXT("Layer_StageMap"));
+			Ready_Layer_Camera(L"Layer_Camera");
+			Ready_Layer_StageMap(L"Layer_StageMap");
 
-			pTransformMap = dynamic_cast<CTransform*>(m_pManagement->GetComponent(STATIC_SCENE, TEXT("Layer_StageMap"), TEXT("Com_Transform")));
+			pTransformMap = dynamic_cast<CTransform*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_StageMap", L"Com_Transform"));
 			XMStoreFloat4x4(&matWorld, pTransformMap->Get_WorldMatrix());
 
 			m_bFirst = false;
@@ -275,20 +273,19 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 			vPosition = {vOut.x, 0.f, vOut.z};
 			//vPosition = vOut;
 
-			//CString FbxName;
-			//_uint iIdx = pObjTool->m_FBXListBox.GetCurSel();
-			//pObjTool->m_FBXListBox.GetText(iIdx, FbxName);
+			CString FbxName;
+			_uint iIdx = pObjTool->m_FBXListBox.GetCurSel();
+			pObjTool->m_FBXListBox.GetText(iIdx, FbxName);
 
-			m_pManagement->Add_GameObj(STATIC_SCENE, TEXT("GameObject_ToolApple"), TEXT("Layer_ToolApple"), &vPosition);
+			m_pManagement->Add_GameObj(STATIC_SCENE, pObjTool->m_strObjName.GetString(), pObjTool->m_strLayerName.GetString(), &vPosition);
 
-			//_uint ObjCnt = pObjTool->m_ObjList.GetCount();
-			//CString ObjListName;
-			//ObjListName.Format(FbxName + L"%d", ObjCnt);
-			//pObjTool->m_ObjList.AddString(ObjListName);
-
-		}
+			_uint ObjCnt = pObjTool->m_ObjList.GetCount();
+			CString ObjListName;
+			ObjListName.Format(FbxName + L"%d", ObjCnt);
+			pObjTool->m_ObjList.AddString(ObjListName);
 
 			Safe_Release(pModel);
+		}
 	}
 
 	CView::OnLButtonDown(nFlags, point);
