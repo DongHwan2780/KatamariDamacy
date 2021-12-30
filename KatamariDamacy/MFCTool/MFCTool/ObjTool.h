@@ -45,4 +45,13 @@ public:
 
 	CObj* m_pGameObj;
 	CTransform*  m_pTransform;
+	afx_msg void OnEnChangePosX();
+	afx_msg void OnEnChangePosY();
+	afx_msg void OnEnChangePosZ();
+	afx_msg void OnEnChangeScaleX();
+	afx_msg void OnEnChangeScaleY();
+	afx_msg void OnEnChangeScaleZ();
+	afx_msg void OnEnChangeAngleX();
+	afx_msg void OnEnChangeAngleY();
+	afx_msg void OnEnChangeAngleZ();
 };

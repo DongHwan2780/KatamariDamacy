@@ -31,6 +31,105 @@
     <Filter Include="05.ToolObj\00.Apple">
       <UniqueIdentifier>{ed31a9a6-a43d-4c99-9fc7-bdb637793345}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.ToolObj\01.Bag">
+      <UniqueIdentifier>{ce1bec6c-a8d0-4cdf-8cba-47200766d1cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\02.Banana">
+      <UniqueIdentifier>{e6068711-bd9c-49e0-bdca-a98222b8380d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\03.Bat">
+      <UniqueIdentifier>{d5d61825-e925-4690-b74d-588a25dc2110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\04.Bansai">
+      <UniqueIdentifier>{c81e3d17-1143-4161-887d-8dff04b05b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\05.Book0">
+      <UniqueIdentifier>{f02bd221-62a0-4aa8-b026-54e25905531a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\06.Book1">
+      <UniqueIdentifier>{4b9c8a98-9e82-4397-ae7d-c8d653dcd4c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\07.Bowling">
+      <UniqueIdentifier>{014f1189-5d12-4645-9f25-a9b065373a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\08.Cake">
+      <UniqueIdentifier>{a6bd4545-941a-42fd-9492-e251a34f804f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\09.Can">
+      <UniqueIdentifier>{cedc64a5-cf61-454a-8ce4-b5f4cd1b1fbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\10.Candy">
+      <UniqueIdentifier>{9976ec62-3f60-4140-a860-b096ae9027f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\11.Clock">
+      <UniqueIdentifier>{c1cc83bb-eb40-461e-93e7-f4b455bb2d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\12.Denden">
+      <UniqueIdentifier>{499217f1-1e02-4ce2-852f-48d4033dce1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\13.Dice">
+      <UniqueIdentifier>{78b8b605-a50d-472d-8a83-08ca8c9b779b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\14.DrinkCan0">
+      <UniqueIdentifier>{81ef003e-c65c-4902-90e1-3e47e7707d5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\15.DrinkCan1">
+      <UniqueIdentifier>{193ebe2b-71a6-4617-a4f7-59e3430761f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\16.Egg">
+      <UniqueIdentifier>{0efa3aa4-69ce-4768-b6f5-51b6c6c6e5f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\17.Eraser">
+      <UniqueIdentifier>{2a2087dc-5774-4ad5-a297-7af33ca6e409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\18.Fork">
+      <UniqueIdentifier>{41230056-64b1-4bda-b9ca-32aa783fc71e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\19.FryPan">
+      <UniqueIdentifier>{58a7bda0-1248-4897-b44c-4c8f86d4b458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\20.LipStick">
+      <UniqueIdentifier>{c6798b04-ec5e-41bd-bdda-a169219a7698}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\21.Magnet">
+      <UniqueIdentifier>{4937330d-589b-4105-a0b9-0c3d101bfd64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\22.melon">
+      <UniqueIdentifier>{07939def-2a1b-4ae5-b46a-9ac7b4a8786b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\23.MilkPack">
+      <UniqueIdentifier>{e9180abd-2229-4451-93a9-3f73e68f4999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\24.Orange">
+      <UniqueIdentifier>{bbbf3d8d-1985-4b66-8097-8fdad4396ae3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\25.Pilon">
+      <UniqueIdentifier>{8bc63d6b-aa48-4a07-bc8d-0869c386e575}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\26.Pin0">
+      <UniqueIdentifier>{970369ea-1b45-4dbe-a242-a66a0d52ae36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\27.Pin1">
+      <UniqueIdentifier>{fa7feafa-5e31-4684-af76-412cccf9b3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\28.Radio">
+      <UniqueIdentifier>{111f6cd4-1ae2-45ae-a607-1c4da643614e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\29.Spoon">
+      <UniqueIdentifier>{52b86dc7-c835-41af-9a72-2db56609bd12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\30.Stand">
+      <UniqueIdentifier>{5d2dcbbd-7a46-485f-a8bd-4d11b1a81ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\31.SunFlower">
+      <UniqueIdentifier>{bd0ae6f4-6196-4095-b5a8-d0e212b95fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\32.Tree">
+      <UniqueIdentifier>{f33e9299-dcea-4572-8e9d-95ee6346b905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05.ToolObj\33.Tulip">
+      <UniqueIdentifier>{e005d5ca-a8aa-451e-b5f5-064ded81a4f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -69,6 +168,105 @@
     <ClInclude Include="ToolApple.h">
       <Filter>05.ToolObj\00.Apple</Filter>
     </ClInclude>
+    <ClInclude Include="ToolBag.h">
+      <Filter>05.ToolObj\01.Bag</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBanana.h">
+      <Filter>05.ToolObj\02.Banana</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBat.h">
+      <Filter>05.ToolObj\03.Bat</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBansai.h">
+      <Filter>05.ToolObj\04.Bansai</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBook0.h">
+      <Filter>05.ToolObj\05.Book0</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBook1.h">
+      <Filter>05.ToolObj\06.Book1</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBowling.h">
+      <Filter>05.ToolObj\07.Bowling</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolCake.h">
+      <Filter>05.ToolObj\08.Cake</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolEgg.h">
+      <Filter>05.ToolObj\16.Egg</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolDrinkCan1.h">
+      <Filter>05.ToolObj\15.DrinkCan1</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolDrinkCan0.h">
+      <Filter>05.ToolObj\14.DrinkCan0</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolDice.h">
+      <Filter>05.ToolObj\13.Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolDenden.h">
+      <Filter>05.ToolObj\12.Denden</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolClock.h">
+      <Filter>05.ToolObj\11.Clock</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolCandy.h">
+      <Filter>05.ToolObj\10.Candy</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolCan.h">
+      <Filter>05.ToolObj\09.Can</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolEraser.h">
+      <Filter>05.ToolObj\17.Eraser</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolFork.h">
+      <Filter>05.ToolObj\18.Fork</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolFryPan.h">
+      <Filter>05.ToolObj\19.FryPan</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolLipStick.h">
+      <Filter>05.ToolObj\20.LipStick</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolMagnet.h">
+      <Filter>05.ToolObj\21.Magnet</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolMelon.h">
+      <Filter>05.ToolObj\22.melon</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolMilkPack.h">
+      <Filter>05.ToolObj\23.MilkPack</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolOrange.h">
+      <Filter>05.ToolObj\24.Orange</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolPilon.h">
+      <Filter>05.ToolObj\25.Pilon</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolPin0.h">
+      <Filter>05.ToolObj\26.Pin0</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolPin1.h">
+      <Filter>05.ToolObj\27.Pin1</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolRadio.h">
+      <Filter>05.ToolObj\28.Radio</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolSpoon.h">
+      <Filter>05.ToolObj\29.Spoon</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolStand.h">
+      <Filter>05.ToolObj\30.Stand</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolSunFlower.h">
+      <Filter>05.ToolObj\31.SunFlower</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolTree.h">
+      <Filter>05.ToolObj\32.Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolTulip.h">
+      <Filter>05.ToolObj\33.Tulip</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -100,6 +298,105 @@
     </ClCompile>
     <ClCompile Include="ToolApple.cpp">
       <Filter>05.ToolObj\00.Apple</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBag.cpp">
+      <Filter>05.ToolObj\01.Bag</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBanana.cpp">
+      <Filter>05.ToolObj\02.Banana</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBat.cpp">
+      <Filter>05.ToolObj\03.Bat</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBansai.cpp">
+      <Filter>05.ToolObj\04.Bansai</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBook0.cpp">
+      <Filter>05.ToolObj\05.Book0</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBook1.cpp">
+      <Filter>05.ToolObj\06.Book1</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBowling.cpp">
+      <Filter>05.ToolObj\07.Bowling</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolCake.cpp">
+      <Filter>05.ToolObj\08.Cake</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolEgg.cpp">
+      <Filter>05.ToolObj\16.Egg</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolDrinkCan1.cpp">
+      <Filter>05.ToolObj\15.DrinkCan1</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolDrinkCan0.cpp">
+      <Filter>05.ToolObj\14.DrinkCan0</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolDice.cpp">
+      <Filter>05.ToolObj\13.Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolDenden.cpp">
+      <Filter>05.ToolObj\12.Denden</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolClock.cpp">
+      <Filter>05.ToolObj\11.Clock</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolCandy.cpp">
+      <Filter>05.ToolObj\10.Candy</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolCan.cpp">
+      <Filter>05.ToolObj\09.Can</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolEraser.cpp">
+      <Filter>05.ToolObj\17.Eraser</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolFork.cpp">
+      <Filter>05.ToolObj\18.Fork</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolFryPan.cpp">
+      <Filter>05.ToolObj\19.FryPan</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolLipStick.cpp">
+      <Filter>05.ToolObj\20.LipStick</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolMagnet.cpp">
+      <Filter>05.ToolObj\21.Magnet</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolMelon.cpp">
+      <Filter>05.ToolObj\22.melon</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolMilkPack.cpp">
+      <Filter>05.ToolObj\23.MilkPack</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolOrange.cpp">
+      <Filter>05.ToolObj\24.Orange</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolPilon.cpp">
+      <Filter>05.ToolObj\25.Pilon</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolPin0.cpp">
+      <Filter>05.ToolObj\26.Pin0</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolPin1.cpp">
+      <Filter>05.ToolObj\27.Pin1</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolRadio.cpp">
+      <Filter>05.ToolObj\28.Radio</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolSpoon.cpp">
+      <Filter>05.ToolObj\29.Spoon</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolStand.cpp">
+      <Filter>05.ToolObj\30.Stand</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolSunFlower.cpp">
+      <Filter>05.ToolObj\31.SunFlower</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolTree.cpp">
+      <Filter>05.ToolObj\32.Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolTulip.cpp">
+      <Filter>05.ToolObj\33.Tulip</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
