@@ -41,6 +41,10 @@ public:
 	void Set_TransformDesc(const TRANSFORMDESC& TransformDesc) { m_TransformDesc = TransformDesc; }
 	void Set_Scale(_fvector vScale);
 
+	void Set_PosX(STATE eState, _float PosX) { memcpy(&m_MatWorld.m[eState][0], &PosX, sizeof(_float)); }
+	void Set_PosY(STATE eState, _float PosY) { memcpy(&m_MatWorld.m[eState][1], &PosY, sizeof(_float)); }
+	void Set_PosZ(STATE eState, _float PosZ) { memcpy(&m_MatWorld.m[eState][2], &PosZ, sizeof(_float)); }
+
 
 public:
 	void Move_Straight(_double DeltaTime, class CNavigation* pNavigation = nullptr);

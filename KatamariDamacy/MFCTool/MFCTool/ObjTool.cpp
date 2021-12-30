@@ -51,6 +51,15 @@ BEGIN_MESSAGE_MAP(CObjTool, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON3, &CObjTool::OnBnClickedApply)
 	ON_BN_CLICKED(IDC_BUTTON4, &CObjTool::OnBnClickedSave)
 	ON_LBN_SELCHANGE(IDC_LIST2, &CObjTool::OnLbnSelchangeObjList)
+	ON_EN_CHANGE(IDC_EDIT2, &CObjTool::OnEnChangePosX)
+	ON_EN_CHANGE(IDC_EDIT3, &CObjTool::OnEnChangePosY)
+	ON_EN_CHANGE(IDC_EDIT4, &CObjTool::OnEnChangePosZ)
+	ON_EN_CHANGE(IDC_EDIT5, &CObjTool::OnEnChangeScaleX)
+	ON_EN_CHANGE(IDC_EDIT6, &CObjTool::OnEnChangeScaleY)
+	ON_EN_CHANGE(IDC_EDIT7, &CObjTool::OnEnChangeScaleZ)
+	ON_EN_CHANGE(IDC_EDIT8, &CObjTool::OnEnChangeAngleX)
+	ON_EN_CHANGE(IDC_EDIT9, &CObjTool::OnEnChangeAngleY)
+	ON_EN_CHANGE(IDC_EDIT10, &CObjTool::OnEnChangeAngleZ)
 END_MESSAGE_MAP()
 
 
@@ -62,7 +71,7 @@ void CObjTool::OnLbnSelchangeFBXList()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
 
-	m_ObjList.ResetContent();
+	//m_ObjList.ResetContent();
 
 	int iIdx = m_FBXListBox.GetCurSel();
 	int ObjCnt = 0;
@@ -145,10 +154,65 @@ void CObjTool::OnBnClickedApply()
 void CObjTool::OnBnClickedSave()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	UpdateData(TRUE);
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+	CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_tMainSplitter.GetPane(0, 1));
+
+	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
 
 
-	UpdateData(FALSE);
+	CFileDialog Dlg(FALSE,// 열기 모드(TRUE) 혹은 저장 모드(FALSE) 어떤것 할 것인지. 
+		L"dat",// 디폴트 확장자 명 
+		L"*.dat",// 디폴트 파일 이름 
+		OFN_OVERWRITEPROMPT);// 창에 기본 상태를 설정해줄 수 있음. 애는 중복파일 저장시 경고메시지 띄워줌.  
+	TCHAR szFilePath[MAX_PATH]{};
+
+	GetCurrentDirectory(MAX_PATH, szFilePath);
+	PathRemoveFileSpec(szFilePath);
+
+	lstrcat(szFilePath, L"\\Data\\Object");
+
+	Dlg.m_ofn.lpstrInitialDir = szFilePath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString wstrFilePath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(wstrFilePath.GetString(), GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		DWORD dwByte = 0;
+		_uint MaxCnt = m_ObjList.GetCount();
+		_uint iModelIdx = m_FBXListBox.GetCurSel();
+		CString wstrModelName;
+		CString wstrLayerName = L"Layer_";
+
+		CObj* pGameObj = nullptr;
+		_float3 vPosition = { 0.f, 0.f, 0.f };
+		_float3 vScale = { 0.f,0.f,0.f };
+		_float3 vRotate = { 0.f, 0.f, 0.f };
+
+		m_FBXListBox.GetText(iModelIdx, wstrModelName);
+		wstrLayerName += wstrModelName;
+
+		for (_uint i = 0; i < MaxCnt; ++i)
+		{
+
+			//pGameObj = m_pManagement->GetGameObject(STATIC_SCENE, wstrLayerName.GetString(), i);
+			//m_pTransform = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(L"Com_Transform"));
+
+			//XMStoreFloat3(&vPosition, m_pTransform->Get_State(CTransform::POSITION));
+
+			//vScale = dynamic_cast<CTransform*>(pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vScale;
+			//vRotate = dynamic_cast<CTransform*>(pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vRotate;
+
+			//WriteFile(hFile, vPosition, sizeof(_float3), &dwByte, nullptr);
+			//WriteFile(hFile, vScale, sizeof(_float3), &dwByte, nullptr);
+			//WriteFile(hFile, vRotate, sizeof(_float3), &dwByte, nullptr);
+		}
+		CloseHandle(hFile);
+	}
+
+	RELEASE_INSTANCE(CManagement);
 }
 
 
@@ -159,32 +223,25 @@ void CObjTool::OnLbnSelchangeObjList()
 
 	int iIdx = m_ObjList.GetCurSel();
 	_vector vPos;   /*, vAngle;*/
-	_vector ScaleX, ScaleY, ScaleZ;
 
 	if (iIdx < 0)
 		return;
 
 	m_pGameObj = m_pManagement->GetGameObject(STATIC_SCENE, m_strLayerName.GetString(), iIdx);
 
-	m_pTransform = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(/*STATIC_SCENE, m_strLayerName.GetString(), */L"Com_Transform"));
+	m_pTransform = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(L"Com_Transform"));
 
 	vPos = m_pTransform->Get_State(CTransform::POSITION);
-	ScaleX = m_pTransform->Get_State(CTransform::RIGHT);
-	ScaleY = m_pTransform->Get_State(CTransform::UP);
-	ScaleZ = m_pTransform->Get_State(CTransform::LOOK);
 
+	// 포지션
 	m_fPosX = XMVectorGetX(vPos);
-
 	m_fPosY = XMVectorGetY(vPos);
-
 	m_fPosZ = XMVectorGetZ(vPos);
 
-
-	m_fScaleX = XMVectorGetX(ScaleX);
-
-	m_fScaleY = XMVectorGetY(ScaleY);
-
-	m_fScaleZ = XMVectorGetZ(ScaleZ);
+	// 스케일
+	//m_fScaleX = m_pTransform->Get_Scale(CTransform::RIGHT);
+	//m_fScaleY = m_pTransform->Get_Scale(CTransform::UP);
+	//m_fScaleZ = m_pTransform->Get_Scale(CTransform::LOOK);
 
 	//m_fAngleX = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vRotate.x;
 
@@ -192,7 +249,79 @@ void CObjTool::OnLbnSelchangeObjList()
 
 	//m_fAngleZ = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vRotate.z;
 
+	RELEASE_INSTANCE(CManagement);
 	UpdateData(FALSE);
 
-	RELEASE_INSTANCE(CManagement);
+}
+
+
+void CObjTool::OnEnChangePosX()
+{
+	UpdateData(TRUE);
+	m_pTransform->Set_PosX(CTransform::POSITION, m_fPosX);
+	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnEnChangePosY()
+{
+	UpdateData(TRUE);
+	m_pTransform->Set_PosY(CTransform::POSITION, m_fPosY);
+	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnEnChangePosZ()
+{
+	UpdateData(TRUE);
+	m_pTransform->Set_PosZ(CTransform::POSITION, m_fPosZ);
+	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnEnChangeScaleX()
+{
+	UpdateData(TRUE);
+
+	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnEnChangeScaleY()
+{
+	UpdateData(TRUE);
+	
+	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnEnChangeScaleZ()
+{
+	UpdateData(TRUE);
+
+	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnEnChangeAngleX()
+{
+	UpdateData(TRUE);
+
+	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnEnChangeAngleY()
+{
+	UpdateData(TRUE);
+
+	UpdateData(FALSE);
+}
+
+
+void CObjTool::OnEnChangeAngleZ()
+{
+	UpdateData(TRUE);
+
+	UpdateData(FALSE);
 }
