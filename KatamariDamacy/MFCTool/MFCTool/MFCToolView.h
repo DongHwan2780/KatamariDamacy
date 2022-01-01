@@ -24,9 +24,10 @@ public:
 	CRenderer*				m_pRenderer = nullptr;
 	_float4x4			matWorld;
 
+	_bool		m_bInvalidate = true;
+
 private:
 	_bool		m_bFirst = true;
-	//bool m_bInvalidate = true;
 // 작업입니다.
 public:
 

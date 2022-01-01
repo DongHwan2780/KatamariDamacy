@@ -121,7 +121,10 @@ void CMFCToolView::OnDraw(CDC* /*pDC*/)
 
 	m_pManagement->Present();
 
-	Invalidate(false);
+	if (m_bInvalidate)
+	{
+		Invalidate(false);
+	}
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 }
