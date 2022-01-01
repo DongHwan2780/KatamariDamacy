@@ -1,11 +1,6 @@
 #pragma once
 
-#ifndef __PLAYERBALL_H__
-#define __PLAYERBALL_H__
-
-#include "ClientDefines.h"
-#include "Obj.h"
-#include "Player.h"
+#include "ObjList.h"
 
 BEGIN(Engine)
 class CCollider;
@@ -14,14 +9,12 @@ class CTransform;
 class CModel;
 END
 
-BEGIN(Client)
-
-class CPlayerBall final : public CObj
+class CBag final : public CObjList
 {
-public:
-	explicit CPlayerBall(DEVICES);
-	explicit CPlayerBall(const CPlayerBall& other);
-	virtual ~CPlayerBall() = default;
+private:
+	explicit CBag(DEVICES);
+	explicit CBag(const CBag& other);
+	virtual ~CBag() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -35,7 +28,7 @@ private:
 	HRESULT SetUp_ConstantTable();
 
 public:
-	static CPlayerBall*	Create(DEVICES);
+	static CBag*	Create(DEVICES);
 	virtual CObj*	Clone(void* pArg) override;
 	virtual void Free() override;
 
@@ -44,12 +37,5 @@ private:
 	CRenderer*		m_pRenderer = nullptr;
 	CModel*			m_pModel = nullptr;
 	CCollider*		m_pCollider = nullptr;
-
-
-private:
-	_float			m_fBallSize = 0.f;
-	CTransform*		m_pPlayerTransform = nullptr;
-
 };
-END
-#endif // !__PLAYERBALL_H__
+
