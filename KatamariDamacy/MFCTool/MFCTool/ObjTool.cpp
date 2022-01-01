@@ -156,6 +156,7 @@ void CObjTool::OnBnClickedSave()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 	CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_tMainSplitter.GetPane(0, 1));
+	pView->m_bInvalidate = false;
 
 	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
 
@@ -187,31 +188,29 @@ void CObjTool::OnBnClickedSave()
 		CString wstrLayerName = L"Layer_";
 
 		CObj* pGameObj = nullptr;
-		_float3 vPosition = { 0.f, 0.f, 0.f };
-		_float3 vScale = { 0.f,0.f,0.f };
-		_float3 vRotate = { 0.f, 0.f, 0.f };
+		CTransform* pTransform = nullptr;
+
+		_vector vPosition;
+		_float vScale = 0.f;
+		_vector vRotate = { 0.f, 0.f, 0.f };
 
 		m_FBXListBox.GetText(iModelIdx, wstrModelName);
 		wstrLayerName += wstrModelName;
 
 		for (_uint i = 0; i < MaxCnt; ++i)
 		{
+			pGameObj = m_pManagement->GetGameObject(STATIC_SCENE, wstrLayerName.GetString(), i);
+			pTransform = dynamic_cast<CTransform*>(pGameObj->GetComponent(L"Com_Transform"));
 
-			//pGameObj = m_pManagement->GetGameObject(STATIC_SCENE, wstrLayerName.GetString(), i);
-			//m_pTransform = dynamic_cast<CTransform*>(m_pGameObj->GetComponent(L"Com_Transform"));
+			vPosition = pTransform->Get_State(CTransform::POSITION);
+			vScale = pTransform->Get_Scale(CTransform::RIGHT);
 
-			//XMStoreFloat3(&vPosition, m_pTransform->Get_State(CTransform::POSITION));
-
-			//vScale = dynamic_cast<CTransform*>(pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vScale;
-			//vRotate = dynamic_cast<CTransform*>(pGameObj->GetComponent(L"Com_Transform"))->GetTransformDesc().vRotate;
-
-			//WriteFile(hFile, vPosition, sizeof(_float3), &dwByte, nullptr);
-			//WriteFile(hFile, vScale, sizeof(_float3), &dwByte, nullptr);
-			//WriteFile(hFile, vRotate, sizeof(_float3), &dwByte, nullptr);
+			WriteFile(hFile, &vPosition, sizeof(_vector), &dwByte, nullptr);
+			WriteFile(hFile, &vScale, sizeof(_float), &dwByte, nullptr);
 		}
 		CloseHandle(hFile);
 	}
-
+	pView->m_bInvalidate = true;
 	RELEASE_INSTANCE(CManagement);
 }
 
