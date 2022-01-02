@@ -293,6 +293,39 @@ _bool CModel::RayCast(_float3 & out, HWND hWnd, _uint iWinCX, _uint iWinCY, _flo
 	return false;
 }
 
+_bool CModel::IsGround(_float3 & inOut) const
+{
+	VTXMESH* pVertices = (VTXMESH*)m_pVertices;
+
+	_uint iRow = _uint(inOut.z / 15);
+	_uint iCol = _uint(inOut.x / 15);
+	_uint iIndex = iRow * m_iNumVertices + iCol;
+
+	if (m_iNumFaces <= iIndex)
+		return false;
+
+	_vector plane;
+
+	_float fRatioX = fabs(pVertices[iIndex + m_iNumVertices].vPosition.x - inOut.x);
+	_float fRatioZ = fabs(pVertices[iIndex + m_iNumVertices].vPosition.z - inOut.z);
+
+	if (fRatioZ < fRatioX) // ¿À¸¥ÂÊ »ï°¢Çü
+	{
+		plane = XMPlaneFromPoints( XMLoadFloat3(&pVertices[iIndex + m_iNumVertices].vPosition)
+			, XMLoadFloat3(&pVertices[iIndex + m_iNumVertices + 1].vPosition)
+			, XMLoadFloat3(&pVertices[iIndex + 1].vPosition));
+	}
+	else // ¿ÞÂÊ »ï°¢Çü
+	{
+		plane = XMPlaneFromPoints(XMLoadFloat3(&pVertices[iIndex + m_iNumVertices].vPosition)
+			, XMLoadFloat3(&pVertices[iIndex + 1].vPosition)
+			, XMLoadFloat3(&pVertices[iIndex].vPosition));
+	}
+	inOut.y = -(XMVectorGetX(plane) * inOut.x + XMVectorGetZ(plane) * inOut.z + XMVectorGetW(plane)) / XMVectorGetY(plane);
+
+	return true;
+}
+
 HRESULT CModel::Bind_Buffers()
 {
 	if (nullptr == m_pDeviceContext)

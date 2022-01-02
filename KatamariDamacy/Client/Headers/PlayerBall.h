@@ -33,6 +33,7 @@ public:
 private:
 	HRESULT SetUp_Components();
 	HRESULT SetUp_ConstantTable();
+	void SetTransform();
 
 public:
 	static CPlayerBall*	Create(DEVICES);

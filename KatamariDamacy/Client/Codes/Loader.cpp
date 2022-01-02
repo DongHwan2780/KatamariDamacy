@@ -2,7 +2,10 @@
 #include "..\Headers\Loader.h"
 
 #include "Management.h"
+
+
 #include "Player.h"
+#include "PlayerBall.h"
 #include "Terrain.h"
 #include "MainCamera.h"
 #include "StageMap.h"
@@ -71,10 +74,13 @@ HRESULT CLoader::StageLoader()
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_Player"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/Katamari/", "OUJI01.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
 		return E_FAIL;
 
+	ScaleMatrix = XMMatrixScaling(30.f, 30.f, 30.f);
+	ModelPivotMatrix = ScaleMatrix;
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_PlayerBall"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/Katamari/", "PlayerBall.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
+		return E_FAIL;
+
 	/* Component_Model_StageMap*/
-	//_matrix		ScaleMatrix, RotationMatrix, TranslationMatrix;
-	//_matrix		ModelPivotMatrix;
-	ScaleMatrix = XMMatrixScaling(10.f, 10.f,10.f);
+	ScaleMatrix = XMMatrixScaling(15.f, 15.f,15.f);
 	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
 
 	ModelPivotMatrix = ScaleMatrix /** RotationMatrix*/;
@@ -92,6 +98,10 @@ HRESULT CLoader::StageLoader()
 
 	/* GameObject_Player*/
 	if (FAILED(pManagement->Add_Prototype(TEXT("GameObject_Player"), CPlayer::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
+	/* GameObject_PlayerBall*/
+	if (FAILED(pManagement->Add_Prototype(TEXT("GameObject_PlayerBall"), CPlayerBall::Create(m_pDevice, m_pDeviceContext))))
 		return E_FAIL;
 
 	/* GameObject_StageMap */

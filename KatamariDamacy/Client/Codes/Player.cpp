@@ -39,6 +39,19 @@ _int CPlayer::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
+	if (m_bFistCreate)
+	{
+		Ready_Layer_PlayerBall(L"Layer_PlayerBall");
+
+		CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
+
+		RELEASE_INSTANCE(CManagement);
+
+		m_bFistCreate = false;
+	}
+
 	Movement(DeltaTime);
 
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
@@ -189,11 +202,11 @@ void CPlayer::ResistAccel(_double DeltaTime, _float Ballsize)
 HRESULT CPlayer::SetUp_Components()
 {
 	/* For.Com_Renderer */
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Renderer"), TEXT("Com_Renderer"), (CComponent**)&m_pRenderer)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Renderer", L"Com_Renderer", (CComponent**)&m_pRenderer)))
 		return E_FAIL;
 
 	/* For.Com_Model */
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Model_Player"), TEXT("Com_Model"), (CComponent**)&m_pModel)))
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Player", L"Com_Model", (CComponent**)&m_pModel)))
 		return E_FAIL;
 
 	/* For.Com_Transform */
@@ -201,14 +214,14 @@ HRESULT CPlayer::SetUp_Components()
 	CTransform::TRANSFORMDESC	TransformDesc;
 	TransformDesc.fSpeedPerSec = 3.f;
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Transform"), TEXT("Com_Transform"), (CComponent**)&m_pTransform, &TransformDesc)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;
 
 	/* For.Com_Collider */
 	CCollider::COLLIDERDESC		ColliderDesc;
 	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Collider_AABB"), TEXT("Com_Collider"), (CComponent**)&m_pCollider, &ColliderDesc)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_AABB", L"Com_Collider", (CComponent**)&m_pCollider, &ColliderDesc)))
 		return E_FAIL;
 
 	return S_OK;
@@ -224,6 +237,18 @@ HRESULT CPlayer::SetUp_ConstantTable()
 	m_pModel->SetUp_ValueOnShader("g_WorldMatrix", &XMMatrixTranspose(m_pTransform->Get_WorldMatrix()), sizeof(_matrix));
 	m_pModel->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixTranspose(pManagement->Get_Transform(CPipeLine::D3DTS_VIEW)), sizeof(_matrix));
 	m_pModel->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(pManagement->Get_Transform(CPipeLine::D3DTS_PROJ)), sizeof(_matrix));
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
+}
+
+HRESULT CPlayer::Ready_Layer_PlayerBall(const wstring & pLayerTag)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_PlayerBall"), pLayerTag)))
+		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);
 
