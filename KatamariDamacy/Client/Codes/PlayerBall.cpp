@@ -31,7 +31,7 @@ HRESULT CPlayerBall::Initialize_Clone(void * pArg)
 
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
-	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, TEXT("Layer_Player"), TEXT("Com_Transform")));
+	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Player", L"Com_Transform"));
 
 	RELEASE_INSTANCE(CManagement);
 
@@ -42,6 +42,8 @@ _int CPlayerBall::Update(_double DeltaTime)
 {
 	if (0 > __super::Update(DeltaTime))
 		return -1;
+
+	SetTransform();
 
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
 
@@ -77,7 +79,7 @@ HRESULT CPlayerBall::Render()
 	for (_uint i = 0; i < iNumMaterials; ++i)
 	{
 		m_pModel->SetUp_TextureOnShader("g_DiffuseTexture", i, aiTextureType_DIFFUSE);
-		m_pModel->Render(i, 1);
+		m_pModel->Render(i, 0);
 	}
 
 #ifdef _DEBUG
@@ -90,26 +92,25 @@ HRESULT CPlayerBall::Render()
 HRESULT CPlayerBall::SetUp_Components()
 {
 	/* For.Com_Renderer */
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Renderer"), TEXT("Com_Renderer"), (CComponent**)&m_pRenderer)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Renderer", L"Com_Renderer", (CComponent**)&m_pRenderer)))
 		return E_FAIL;
 
 	/* For.Com_Model */
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Model_PlayerBall"), TEXT("Com_Model"), (CComponent**)&m_pModel)))
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_PlayerBall", L"Com_Model", (CComponent**)&m_pModel)))
 		return E_FAIL;
 
 	/* For.Com_Transform */
 
 	CTransform::TRANSFORMDESC	TransformDesc;
-	TransformDesc.fSpeedPerSec = 3.f;
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Transform"), TEXT("Com_Transform"), (CComponent**)&m_pTransform, &TransformDesc)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;
 
 	/* For.Com_Collider */
 	CCollider::COLLIDERDESC		ColliderDesc;
 	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Collider_AABB"), TEXT("Com_Collider"), (CComponent**)&m_pCollider, &ColliderDesc)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_AABB", L"Com_Collider", (CComponent**)&m_pCollider, &ColliderDesc)))
 		return E_FAIL;
 
 	return S_OK;
@@ -129,6 +130,19 @@ HRESULT CPlayerBall::SetUp_ConstantTable()
 	RELEASE_INSTANCE(CManagement);
 
 	return S_OK;
+}
+
+void CPlayerBall::SetTransform()
+{
+	_matrix matWorld, matRotX, matRotY, matRotZ, matParents;
+
+	_float3 vPos;
+	XMStoreFloat3(&vPos, m_pPlayerTransform->Get_State(CTransform::POSITION));
+	matParents = XMMatrixTranslation(vPos.x, vPos.y, vPos.z );
+
+	matWorld = m_pTransform->Get_WorldMatrix() * matParents;
+
+	m_pTransform->Set_WorldMatrix(matWorld);
 }
 
 CPlayerBall * CPlayerBall::Create(DEVICES)

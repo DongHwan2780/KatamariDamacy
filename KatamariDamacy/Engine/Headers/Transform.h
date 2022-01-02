@@ -45,6 +45,8 @@ public:
 	void Set_PosY(STATE eState, _float PosY) { memcpy(&m_MatWorld.m[eState][1], &PosY, sizeof(_float)); }
 	void Set_PosZ(STATE eState, _float PosZ) { memcpy(&m_MatWorld.m[eState][2], &PosZ, sizeof(_float)); }
 
+	void Set_WorldMatrix(_fmatrix WorldMatrix) { XMStoreFloat4x4(&m_MatWorld, WorldMatrix); };
+
 	const _vector Get_State_Const(STATE eState) const { return *(_vector*)&m_MatWorld.m[eState][0]; }
 	const _float Get_Scale_Const(STATE eState) const { return XMVectorGetX(XMVector3Length(Get_State_Const(eState))); }
 

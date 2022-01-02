@@ -80,7 +80,7 @@ HRESULT CStageOne::Ready_Lights()
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_Player(const wstring&)
+HRESULT CStageOne::Ready_Layer_Player(const wstring& pLayerTag)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -92,16 +92,16 @@ HRESULT CStageOne::Ready_Layer_Player(const wstring&)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_Camera(const wstring&)
+HRESULT CStageOne::Ready_Layer_Camera(const wstring& pLayerTag)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
 	CCamera::CAMERADESC		CameraDesc;
 	ZeroMemory(&CameraDesc, sizeof(CCamera::CAMERADESC));
 
-	CameraDesc.vEye = _float3(0.f, 5.f, -6.f);
+	CameraDesc.vEye = _float3(0.f, 3.f, -6.f);
 	CameraDesc.vAt = _float3(0.f, 0.f, 0.f);
-	CameraDesc.vAxisY = _float3(0.f, 1.f, 0.f);
+	CameraDesc.vAxisY = _float3(0.f, 1.f, 0.f); 
 
 	CameraDesc.TransformDesc.fSpeedPerSec = 5.0f;
 	CameraDesc.TransformDesc.fRotatePerSec = XMConvertToRadians(90.0f);
@@ -113,7 +113,7 @@ HRESULT CStageOne::Ready_Layer_Camera(const wstring&)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_StageMap(const wstring&)
+HRESULT CStageOne::Ready_Layer_StageMap(const wstring& pLayerTag)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -161,7 +161,7 @@ HRESULT CStageOne::Ready_Prototype_GameObject()
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_SizeUI(const wstring&)
+HRESULT CStageOne::Ready_Layer_SizeUI(const wstring& pLayerTag)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -174,7 +174,7 @@ HRESULT CStageOne::Ready_Layer_SizeUI(const wstring&)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_StickyUI(const wstring&)
+HRESULT CStageOne::Ready_Layer_StickyUI(const wstring& pLayerTag)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
@@ -187,12 +187,12 @@ HRESULT CStageOne::Ready_Layer_StickyUI(const wstring&)
 	return S_OK;
 }
 
-HRESULT CStageOne::Ready_Layer_TimeUI(const wstring&)
+HRESULT CStageOne::Ready_Layer_TimeUI(const wstring& pLayerTag)
 {
 	return E_NOTIMPL;
 }
 
-HRESULT CStageOne::Ready_Layer_PlayerMoveUI(const wstring&)
+HRESULT CStageOne::Ready_Layer_PlayerMoveUI(const wstring& pLayerTag)
 {
 	return E_NOTIMPL;
 }

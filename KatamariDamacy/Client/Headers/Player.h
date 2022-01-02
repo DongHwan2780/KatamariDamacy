@@ -38,6 +38,7 @@ private:
 private:
 	HRESULT SetUp_Components();
 	HRESULT SetUp_ConstantTable();
+	HRESULT Ready_Layer_PlayerBall(const wstring& pLayerTag);
 
 public:
 	static CPlayer*	Create(DEVICES);
@@ -49,6 +50,8 @@ private:
 	CRenderer*		m_pRenderer = nullptr;
 	CModel*			m_pModel = nullptr;
 	CCollider*		m_pCollider = nullptr;
+
+	CTransform*		m_pPlayerBallTransform = nullptr;
 
 private:
 
@@ -69,6 +72,8 @@ private:
 	//Ãæµ¹
 	_float3			m_vReactionDir = { 0.f, 0.f, 0.f };
 	_float			m_fReactionPower = 0.f;
+
+	_bool			m_bFistCreate = true;
 
 };
 END

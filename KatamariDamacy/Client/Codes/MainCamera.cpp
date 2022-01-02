@@ -30,8 +30,6 @@ HRESULT CMainCamera::Initialize_Clone(void * pArg)
 
 	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, TEXT("Layer_Player"), TEXT("Com_Transform")));
 
-	//Safe_AddRef(m_pPlayerTransform);
-
 	RELEASE_INSTANCE(CManagement);
 
 
@@ -75,7 +73,7 @@ _uint CMainCamera::Movement(_double DeltaTime)
 
 	_vector vInTargetLook = vLook * -m_fDistanceToTarget;
 
-	_vector vUp = XMVectorSet(0.f, 5.f, 0.f, 0.f);
+	_vector vUp = XMVectorSet(0.f, 3.f, 0.f, 0.f);
 
 	_vector vRight = m_pTransform->Get_State(CTransform::RIGHT);
 	_matrix	matRot = XMMatrixRotationAxis(vRight, m_fCamAngle);
