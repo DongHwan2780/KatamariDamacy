@@ -23,7 +23,7 @@ HRESULT CLogo::Initialize()
 	if (FAILED(Ready_Prototype_GameObject()))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
+	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"), 0)))
 		return E_FAIL;
 
 	return S_OK;
@@ -59,7 +59,7 @@ HRESULT CLogo::Ready_Prototype_Component()
 
 
 	/* Prototype_Texture_BackGround */
-	if (FAILED(pManagement->Add_Prototype(LOGO_SCENE, TEXT("Component_Texture_BackGround"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/Logo/staff_back.png"), 1))))
+	if (FAILED(pManagement->Add_Prototype(LOGO_SCENE, TEXT("Component_Texture_BackGround"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/Logo/BackGround%d.png"), 2))))
 		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);
@@ -82,12 +82,12 @@ HRESULT CLogo::Ready_Prototype_GameObject()
 	return S_OK;
 }
 
-HRESULT CLogo::Ready_Layer_BackGround(const wstring& pLayerTag)
+HRESULT CLogo::Ready_Layer_BackGround(const wstring& pLayerTag, _uint iSceneIndex)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
 	/* For.GameObject_BackGround */
-	if (FAILED(pManagement->Add_GameObj(LOGO_SCENE, TEXT("Prototype_BackGround"), pLayerTag)))
+	if (FAILED(pManagement->Add_GameObj(LOGO_SCENE, TEXT("Prototype_BackGround"), pLayerTag, &iSceneIndex)))
 		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);

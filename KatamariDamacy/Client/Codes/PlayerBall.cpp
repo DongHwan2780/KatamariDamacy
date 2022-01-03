@@ -102,6 +102,7 @@ HRESULT CPlayerBall::SetUp_Components()
 	/* For.Com_Transform */
 
 	CTransform::TRANSFORMDESC	TransformDesc;
+	TransformDesc.fRotatePerSec = XMConvertToRadians(360.0f);
 
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;
@@ -134,15 +135,19 @@ HRESULT CPlayerBall::SetUp_ConstantTable()
 
 void CPlayerBall::SetTransform()
 {
-	_matrix matWorld, matRotX, matRotY, matRotZ, matParents;
+	_vector		vRight, vUp, vLook;
+	_matrix		TransMatrix;
+	TransMatrix = XMMatrixTranslation(0.f, 0.5f, 2.f);
 
-	_float3 vPos;
-	XMStoreFloat3(&vPos, m_pPlayerTransform->Get_State(CTransform::POSITION));
-	matParents = XMMatrixTranslation(vPos.x, vPos.y, vPos.z );
+	vRight = m_pTransform->Get_State(CTransform::RIGHT);
+	vUp = m_pTransform->Get_State(CTransform::UP);
+	vLook = m_pTransform->Get_State(CTransform::LOOK);
 
-	matWorld = m_pTransform->Get_WorldMatrix() * matParents;
+	m_pTransform->Set_WorldMatrix(m_pPlayerTransform->Get_WorldMatrix() * TransMatrix);
 
-	m_pTransform->Set_WorldMatrix(matWorld);
+	m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, m_pPlayerTransform->Get_WorldMatrix() * TransMatrix));
+	m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, m_pPlayerTransform->Get_WorldMatrix() * TransMatrix));
+	m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, m_pPlayerTransform->Get_WorldMatrix() * TransMatrix));
 }
 
 CPlayerBall * CPlayerBall::Create(DEVICES)

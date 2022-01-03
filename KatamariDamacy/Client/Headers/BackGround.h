@@ -45,6 +45,8 @@ private:
 	_float4x4			m_TransformMatrix;
 
 	_float				m_fX, m_fY, m_fSizeX, m_fSizeY;
+
+	_uint				iIdx = 0;
 };
 
 END

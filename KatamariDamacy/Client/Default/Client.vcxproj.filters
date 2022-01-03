@@ -172,6 +172,9 @@
     <Filter Include="01.Object\01.ObjList\33.Tulip">
       <UniqueIdentifier>{fd1b3611-b4fc-460d-8ca0-8bac8725f930}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Object\02.CommonObj\03.UI\04.LoadingUI">
+      <UniqueIdentifier>{4cf90ba8-8676-4ac1-8e1d-95b539132089}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -348,6 +351,9 @@
     <ClInclude Include="..\Headers\Tulip.h">
       <Filter>01.Object\01.ObjList\33.Tulip</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\LoadingUI.h">
+      <Filter>01.Object\02.CommonObj\03.UI\04.LoadingUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -508,6 +514,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Fork.cpp">
       <Filter>01.Object\01.ObjList\18.Fork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\LoadingUI.cpp">
+      <Filter>01.Object\02.CommonObj\03.UI\04.LoadingUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

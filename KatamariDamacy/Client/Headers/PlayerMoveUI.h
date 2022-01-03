@@ -26,7 +26,11 @@ public:
 	virtual HRESULT	Render() override;
 
 private:
+	void Movement(_double DeltaTime);
+
+private:
 	HRESULT SetUp_Components();
+	HRESULT SetUp_ConstantTable();
 
 public:
 	static CPlayerMoveUI*	Create(DEVICES);
@@ -37,5 +41,10 @@ private:
 	CTransform*		m_pTransform = nullptr;
 	CRenderer*		m_pRenderer = nullptr;
 	CModel*			m_pModel = nullptr;
+
+private:
+	_float4x4			m_OrthMatrix;
+	_float4x4			m_TransformMatrix;
+	_float				m_fX, m_fY, m_fSizeX, m_fSizeY;
 };
 END

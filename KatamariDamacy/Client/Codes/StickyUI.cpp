@@ -40,8 +40,8 @@ HRESULT CStickyUI::Initialize_Clone(void * pArg)
 	m_TransformMatrix._11 = m_fSizeX;
 	m_TransformMatrix._22 = m_fSizeY;
 
-	m_TransformMatrix._41 = m_fX - (g_iWinCX >> 1);
-	m_TransformMatrix._42 = -m_fY + (g_iWinCY >> 1);
+	m_TransformMatrix._41 = -550.f;
+	m_TransformMatrix._42 = -260.f;
 
 	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH(g_iWinCX, g_iWinCY, 0.0f, 1.f));
 

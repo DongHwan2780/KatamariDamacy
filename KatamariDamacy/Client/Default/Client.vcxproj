@@ -191,6 +191,7 @@
     <ClInclude Include="..\Headers\LipStick.h" />
     <ClInclude Include="..\Headers\Loader.h" />
     <ClInclude Include="..\Headers\Loading.h" />
+    <ClInclude Include="..\Headers\LoadingUI.h" />
     <ClInclude Include="..\Headers\Logo.h" />
     <ClInclude Include="..\Headers\Magnet.h" />
     <ClInclude Include="..\Headers\MainApp.h" />
@@ -248,6 +249,7 @@
     <ClCompile Include="..\Codes\LipStick.cpp" />
     <ClCompile Include="..\Codes\Loader.cpp" />
     <ClCompile Include="..\Codes\Loading.cpp" />
+    <ClCompile Include="..\Codes\LoadingUI.cpp" />
     <ClCompile Include="..\Codes\Logo.cpp" />
     <ClCompile Include="..\Codes\Magnet.cpp" />
     <ClCompile Include="..\Codes\MainApp.cpp" />
