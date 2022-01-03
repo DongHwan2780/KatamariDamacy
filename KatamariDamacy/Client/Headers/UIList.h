@@ -43,6 +43,7 @@ protected:			// 직교투영에서 쓸 변수들
 	_float4x4			m_OrthMatrix;
 	_float4x4			m_TransformMatrix;
 	_float				m_fX, m_fY, m_fSizeX, m_fSizeY;
+	_double				m_iIdx = 0;
 };
 END
 #endif // !__UILIST_H__

@@ -29,8 +29,8 @@ HRESULT CSizeUI::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_ComponentsOrthUI()))
 		return E_FAIL;
 
-	m_fSizeX = g_iWinCX;
-	m_fSizeY = g_iWinCY;
+	m_fSizeX = 380.f;
+	m_fSizeY = 380.f;
 
 	m_fX = g_iWinCX - m_fSizeX * 0.5f;
 	m_fY = m_fSizeY * 0.5f;
@@ -40,8 +40,8 @@ HRESULT CSizeUI::Initialize_Clone(void * pArg)
 	m_TransformMatrix._11 = m_fSizeX;
 	m_TransformMatrix._22 = m_fSizeY;
 
-	m_TransformMatrix._41 = m_fX - (g_iWinCX >> 1);
-	m_TransformMatrix._42 = -m_fY + (g_iWinCY >> 1);
+	m_TransformMatrix._41 = -600.f;
+	m_TransformMatrix._42 = 300.f;
 
 	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH(g_iWinCX, g_iWinCY, 0.0f, 1.f));
 
@@ -53,6 +53,11 @@ _int CSizeUI::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
+	if (m_iIdx < 4.0)
+		m_iIdx += DeltaTime * 4.0;
+	else
+ 		m_iIdx = 0.0;
+
 	return _int();
 }
 
@@ -63,6 +68,9 @@ _int CSizeUI::Late_Update(_double DeltaTime)
 
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
+
+	if (m_iIdx >= 4.0)
+		m_iIdx = 0.0;
 
 	return m_pRenderer->Add_RenderGroup(CRenderer::PRIORITY, this);
 }
@@ -76,7 +84,7 @@ HRESULT CSizeUI::Render()
 	m_pVIBuffer->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixIdentity(), sizeof(_matrix));
 	m_pVIBuffer->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_OrthMatrix)), sizeof(_matrix));
 
-	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseTexture", m_pTexture)))
+	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseTexture", m_pTexture, (_uint)m_iIdx)))
 		return E_FAIL;
 
 	if (FAILED(__super::Render()))

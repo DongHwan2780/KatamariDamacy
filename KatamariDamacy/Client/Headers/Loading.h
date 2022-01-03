@@ -16,6 +16,12 @@ public:
 	virtual _int	Update(_double DeltaTime) override;
 	virtual HRESULT Render() override;
 
+private:
+	HRESULT Ready_Prototype_Component();
+	HRESULT Ready_Prototype_GameObject();
+	HRESULT Ready_Layer_BackGround(const wstring& pLayerTag, _uint iSceneIndex);
+	HRESULT Ready_Layer_LoadingUI(const wstring& pLayerTag);
+
 public:
 	static CLoading* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, SCENE eScene, _uint iSceneIndex);
 	virtual void Free() override;

@@ -22,14 +22,16 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Lights()))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Prototype_Component()))
-	//	return E_FAIL;
+	if (FAILED(Ready_Prototype_Component()))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Prototype_GameObject()))
-	//	return E_FAIL;
+	if (FAILED(Ready_Prototype_GameObject()))
+		return E_FAIL;
+
 
 	if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
 		return E_FAIL;
+
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
@@ -37,11 +39,17 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Layer_StageMap(TEXT("Layer_StageMap"))))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_SizeUI(TEXT("Layer_SizeUI"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_SizeUI(TEXT("Layer_SizeUI"))))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_StickyUI(TEXT("Layer_StickUI"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_StickyUI(TEXT("Layer_StickUI"))))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_TimeUI(TEXT("Layer_TimeUI"))))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_PlayerMoveUI(TEXT("Layer_PlayerMoveUI"))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -137,6 +145,10 @@ HRESULT CStageOne::Ready_Prototype_Component()
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_StickUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/LastStickUI/ps4_stickR.png"), 1))))
 		return E_FAIL;
 
+	/* Prototype_Texture_TimeUI */
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_TimeUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/TimeUI/timer%d.png"), 2))))
+		return E_FAIL;
+
 	RELEASE_INSTANCE(CManagement);
 
 	return S_OK;
@@ -153,6 +165,14 @@ HRESULT CStageOne::Ready_Prototype_GameObject()
 
 	/* Prototype_StickUI */
 	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_StickUI"), CStickyUI::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
+	/* Prototype_TimeUI */
+	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_TimeUI"), CTimeUI::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
+	/* Prototype_PlayerMoveUI */
+	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_PlayerMoveUI"), CPlayerMoveUI::Create(m_pDevice, m_pDeviceContext))))
 		return E_FAIL;
 
 
@@ -189,12 +209,28 @@ HRESULT CStageOne::Ready_Layer_StickyUI(const wstring& pLayerTag)
 
 HRESULT CStageOne::Ready_Layer_TimeUI(const wstring& pLayerTag)
 {
-	return E_NOTIMPL;
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	/* For.GameObject_StickUI */
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_TimeUI"), pLayerTag)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
 }
 
 HRESULT CStageOne::Ready_Layer_PlayerMoveUI(const wstring& pLayerTag)
 {
-	return E_NOTIMPL;
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	/* Prototype_PlayerMoveUI */
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_PlayerMoveUI"), pLayerTag)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
 }
 
 

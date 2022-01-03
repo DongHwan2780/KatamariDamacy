@@ -74,6 +74,10 @@ HRESULT CLoader::StageLoader()
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_Player"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/Katamari/", "OUJI01.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
 		return E_FAIL;
 
+	ModelPivotMatrix = ScaleMatrix;
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_PlayerUI"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/Katamari/", "OUJI01.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
+		return E_FAIL;
+
 	ScaleMatrix = XMMatrixScaling(30.f, 30.f, 30.f);
 	ModelPivotMatrix = ScaleMatrix;
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_PlayerBall"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/Katamari/", "PlayerBall.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
