@@ -4,6 +4,8 @@
 #define __VIBUFFER_H__
 
 #include "Component.h"
+#include "PipeLine.h"
+#include "DebugDraw.h"
 
 BEGIN(Engine)
 
@@ -21,6 +23,11 @@ public:
 public:
 	HRESULT SetUp_ValueOnShader(const char* pConstantName, void* pData, _uint iByteSize);
 	HRESULT SetUp_TextureOnShader(const char* pConstantName, class CTexture* pTextureComponent, _uint iTextureIndex = 0);
+
+public:
+	_bool RayCast(_float3& out, HWND hWnd, _uint iWinCX, _uint iWinCY, _float4x4& matWorld);
+	_uint Get_VertexIndex() { return m_VertexIndex; }
+
 
 protected:
 	HRESULT Create_Buffers();
@@ -54,6 +61,11 @@ protected:
 
 protected:
 	void*				m_pVertices = nullptr;
+
+	_uint	 m_TerrainIndex;
+	_uint	 m_VertexIndex;
+	_uint	 m_TileZ;
+	_float   m_fTerrainInterval;
 };
 END
 #endif // !__VIBUFFER_H__

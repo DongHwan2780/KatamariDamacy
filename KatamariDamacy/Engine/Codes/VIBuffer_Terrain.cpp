@@ -1,42 +1,48 @@
 #include "..\Headers\VIBuffer_Terrain.h"
 
-CVIBuffer_Terrain::CVIBuffer_Terrain(DEVICES)
+CVIBuffer_Terrain::CVIBuffer_Terrain(DEVICES, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval)
 	: CVIBuffer(pDevice, pDeviceContext)
+	, m_iVertexCountX(iVertexCountX)
+	, m_iVertexCountZ(iVertexCountZ)
+	, m_fVertexInterval(fVertexInterval)
 {
 }
 
 CVIBuffer_Terrain::CVIBuffer_Terrain(const CVIBuffer_Terrain & other)
 	: CVIBuffer(other)
+	, m_iVertexCountX(other.m_iVertexCountX)
+	, m_iVertexCountZ(other.m_iVertexCountZ)
+	, m_fVertexInterval(other.m_fVertexInterval)
 {
 }
 
-HRESULT CVIBuffer_Terrain::Initialize_Prototype( const _tchar* pHeightMapPath,  const _tchar* pShaderFilePath)
+HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 {
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
 
-	HANDLE		hFile = CreateFile(pHeightMapPath, GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-	if (0 == hFile)
-		return E_FAIL;
+	//HANDLE		hFile = CreateFile(pHeightMapPath, GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	//if (0 == hFile)
+	//	return E_FAIL;
 
-	_ulong					dwByte = 0;
+	//_ulong					dwByte = 0;
 
-	BITMAPFILEHEADER		fh;
-	ReadFile(hFile, &fh, sizeof(BITMAPFILEHEADER), &dwByte, nullptr);
+	//BITMAPFILEHEADER		fh;
+	//ReadFile(hFile, &fh, sizeof(BITMAPFILEHEADER), &dwByte, nullptr);
 
-	BITMAPINFOHEADER		ih;
-	ReadFile(hFile, &ih, sizeof(BITMAPINFOHEADER), &dwByte, nullptr);
+	//BITMAPINFOHEADER		ih;
+	//ReadFile(hFile, &ih, sizeof(BITMAPINFOHEADER), &dwByte, nullptr);
 
-	_ulong*		pPixel = new _ulong[ih.biWidth * ih.biHeight];		// 픽셀을 비트맵사이즈의 x * y만큼 만들어줌
-	ReadFile(hFile, pPixel, sizeof(_ulong) * ih.biWidth * ih.biHeight, &dwByte, nullptr);
+	//_ulong*		pPixel = new _ulong[ih.biWidth * ih.biHeight];		// 픽셀을 비트맵사이즈의 x * y만큼 만들어줌
+	//ReadFile(hFile, pPixel, sizeof(_ulong) * ih.biWidth * ih.biHeight, &dwByte, nullptr);
 
-	CloseHandle(hFile);
+	//CloseHandle(hFile);
 
 #pragma region VERTEXBUFFER
 
 	m_iStride = sizeof(VTXNORMALINFO);		// 버텍스 사이즈
-	m_iVertexCountX = ih.biWidth;			// 가로 개수 == 비트맵 가로 크기
-	m_iVertexCountZ = ih.biHeight;			// 세로 개수 == 비트맵 세로 크기
+	//m_iVertexCountX = ih.biWidth;			// 가로 개수 == 비트맵 가로 크기
+//	m_iVertexCountZ = ih.biHeight;			// 세로 개수 == 비트맵 세로 크기
 	m_iNumVertices = m_iVertexCountX * m_iVertexCountZ;		// 버텍스 갯수
 	m_iNumVertexBuffers = 1;		// 버퍼개수
 
@@ -57,7 +63,7 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype( const _tchar* pHeightMapPath,  
 		{
 			_uint		iIndex = i * m_iVertexCountX + j;
 
-			((VTXNORMALINFO*)m_pVertices)[iIndex].vPos = _float3(j, (pPixel[iIndex] & 0x000000ff) / 20.0f, i);
+			((VTXNORMALINFO*)m_pVertices)[iIndex].vPos = _float3(j * m_fVertexInterval, 0.f, i * m_fVertexInterval);
 			((VTXNORMALINFO*)m_pVertices)[iIndex].vNormal = _float3(0.f, 0.f, 0.f);
 			((VTXNORMALINFO*)m_pVertices)[iIndex].vTexUV = _float2(j / (m_iVertexCountX - 1.f), i / (m_iVertexCountZ - 1.f));
 		}
@@ -170,7 +176,7 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype( const _tchar* pHeightMapPath,  
 	if (FAILED(__super::Create_Buffers()))
 		return E_FAIL;
 
-	Safe_Delete_Array(pPixel);
+//	Safe_Delete_Array(pPixel);
 
 	/* 현재 정점이 어떤 멤버들을 가지고 있어! */
 	D3D11_INPUT_ELEMENT_DESC		ElmentDesc[] = {
@@ -192,11 +198,11 @@ HRESULT CVIBuffer_Terrain::Initialize_Clone(void * pArg)
 	return S_OK;
 }
 
-CVIBuffer_Terrain * CVIBuffer_Terrain::Create(DEVICES,  const _tchar* pHeightMapPath,  const _tchar* pShaderFilePath)
+CVIBuffer_Terrain * CVIBuffer_Terrain::Create(DEVICES,  const _tchar* pShaderFilePath, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval)
 {
-	CVIBuffer_Terrain*	pInstance = new CVIBuffer_Terrain(pDevice, pDeviceContext);
+	CVIBuffer_Terrain*	pInstance = new CVIBuffer_Terrain(pDevice, pDeviceContext, iVertexCountX, iVertexCountZ, fVertexInterval);
 
-	if (FAILED(pInstance->Initialize_Prototype(pHeightMapPath, pShaderFilePath)))
+	if (FAILED(pInstance->Initialize_Prototype(pShaderFilePath)))
 	{
 		MSG_BOX("Failed To Creating CVIBuffer_Terrain");
 		Safe_Release(pInstance);

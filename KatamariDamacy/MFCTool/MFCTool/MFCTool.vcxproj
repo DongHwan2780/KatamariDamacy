@@ -197,6 +197,7 @@
   <ItemGroup>
     <ClInclude Include="Form.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MapTool.h" />
     <ClInclude Include="MFCTool.h" />
     <ClInclude Include="MFCToolDoc.h" />
     <ClInclude Include="MFCToolView.h" />
@@ -244,6 +245,7 @@
   <ItemGroup>
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MapTool.cpp" />
     <ClCompile Include="MFCTool.cpp" />
     <ClCompile Include="MFCToolDoc.cpp" />
     <ClCompile Include="MFCToolView.cpp" />

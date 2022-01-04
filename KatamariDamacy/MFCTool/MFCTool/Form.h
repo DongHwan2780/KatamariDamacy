@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ObjTool.h"
+#include "MapTool.h"
 #include "afxcmn.h"
 
 // CForm Æû ºäÀÔ´Ï´Ù.
@@ -34,7 +35,8 @@ protected:
 
 public:
 	CObjTool	m_tObjTool;
-	CTabCtrl m_CtrlTab_Main;
+	CMapTool	m_tMapTool;
+	CTabCtrl	m_CtrlTab_Main;
 	afx_msg void OnTcnSelchangeTab_Main(NMHDR *pNMHDR, LRESULT *pResult);
 	virtual void OnInitialUpdate();
 };

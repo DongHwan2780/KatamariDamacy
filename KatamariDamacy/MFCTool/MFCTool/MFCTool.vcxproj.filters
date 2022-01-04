@@ -130,6 +130,12 @@
     <Filter Include="05.ToolObj\33.Tulip">
       <UniqueIdentifier>{e005d5ca-a8aa-451e-b5f5-064ded81a4f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="05.ToolObj\34.Dummy">
+      <UniqueIdentifier>{9cb0bef4-b049-4e43-b347-a09e34b989f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.ToolView\00.Form\01.MapTool">
+      <UniqueIdentifier>{5732abdd-6b31-4ac4-bfc5-f3f060427b32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -267,6 +273,9 @@
     <ClInclude Include="ToolTulip.h">
       <Filter>05.ToolObj\33.Tulip</Filter>
     </ClInclude>
+    <ClInclude Include="MapTool.h">
+      <Filter>01.ToolView\00.Form\01.MapTool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -397,6 +406,9 @@
     </ClCompile>
     <ClCompile Include="ToolTulip.cpp">
       <Filter>05.ToolObj\33.Tulip</Filter>
+    </ClCompile>
+    <ClCompile Include="MapTool.cpp">
+      <Filter>01.ToolView\00.Form\01.MapTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

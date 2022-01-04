@@ -14,6 +14,7 @@
 #include "MainFrm.h"
 #include "Form.h"
 #include "ObjTool.h"
+#include "MapTool.h"
 
 #include "ToolCamera.h"
 #include "ToolMap.h"
@@ -348,6 +349,7 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 	CMainFrame* pMainFrame = dynamic_cast<CMainFrame*>(AfxGetApp()->GetMainWnd());
 	CForm* pForm = dynamic_cast<CForm*>(pMainFrame->m_tMainSplitter.GetPane(0, 0));
 	CObjTool*	pObjTool = &pForm->m_tObjTool;
+	CMapTool*	pMapTool = &pForm->m_tMapTool;
 
 	if (pForm->m_CtrlTab_Main.GetCurSel() == 0 )
 	{
@@ -390,6 +392,10 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 			Safe_Release(pModel);
 		}
+	}
+	else if (pForm->m_CtrlTab_Main.GetCurSel() == 1)
+	{
+
 	}
 
 	CView::OnLButtonDown(nFlags, point);
