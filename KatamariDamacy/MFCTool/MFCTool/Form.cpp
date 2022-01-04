@@ -24,11 +24,15 @@ void CForm::Initialize()
 	m_CtrlTab_Main.GetWindowRect(rc);
 
 	m_CtrlTab_Main.InsertItem(0, L"ObjTool");
+	m_CtrlTab_Main.InsertItem(1, L"MapTool");
 	m_CtrlTab_Main.SetCurSel(0);
 
 	m_tObjTool.Create(IDD_OBJTOOL, &m_CtrlTab_Main);
 	m_tObjTool.MoveWindow(0, 20, rc.Width() - 5, rc.Height() - 5);
 	m_tObjTool.ShowWindow(SW_SHOW);
+
+	m_tMapTool.Create(IDD_MAPTOOL, &m_CtrlTab_Main);
+	m_tMapTool.MoveWindow(0, 20, rc.Width() - 5, rc.Height() - 5);
 }
 
 void CForm::DoDataExchange(CDataExchange* pDX)
@@ -65,14 +69,19 @@ void CForm::Dump(CDumpContext& dc) const
 void CForm::OnTcnSelchangeTab_Main(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	//int nIndex = m_CtrlTab_Main.GetCurSel();
-	//switch (nIndex)
-	//{
-	//case 0:
-	//	m_tObjTool.ShowWindow(SW_SHOW);
-	//	break;
-	//}
-	//*pResult = 0;
+	int nIndex = m_CtrlTab_Main.GetCurSel();
+	switch (nIndex)
+	{
+	case 0:
+		m_tObjTool.ShowWindow(SW_SHOW);
+		m_tMapTool.ShowWindow(SW_HIDE);
+		break;
+	case 1:
+		m_tObjTool.ShowWindow(SW_HIDE);
+		m_tMapTool.ShowWindow(SW_SHOW);
+		break;
+	}
+	*pResult = 0;
 }
 
 void CForm::OnInitialUpdate()
