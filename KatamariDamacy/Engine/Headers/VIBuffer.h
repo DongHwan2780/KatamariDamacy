@@ -27,7 +27,7 @@ public:
 public:
 	_bool RayCast(_float3& out, HWND hWnd, _uint iWinCX, _uint iWinCY, _float4x4& matWorld);
 	_uint Get_VertexIndex() { return m_VertexIndex; }
-
+	_float3 Get_VertexPos(_uint _VertexIdx);
 
 protected:
 	HRESULT Create_Buffers();
@@ -61,6 +61,7 @@ protected:
 
 protected:
 	void*				m_pVertices = nullptr;
+	POLYGONINDICES32*	pIndices = nullptr;
 
 	_uint	 m_TerrainIndex;
 	_uint	 m_VertexIndex;

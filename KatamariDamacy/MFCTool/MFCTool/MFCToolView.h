@@ -22,15 +22,17 @@ public:
 	ID3D11Device* m_pDevice;
 	ID3D11DeviceContext* m_pDeviceContext;
 	CRenderer*				m_pRenderer = nullptr;
+	CVIBuffer_Terrain*		m_pVIBuffer = nullptr;
 	_float4x4			matWorld;
 
 	_bool		m_bInvalidate = true;
-
+	_uint		m_iVertexIndex = 0;
 private:
 	_bool		m_bFirst = true;
 // 작업입니다.
 public:
-
+	ID3D11Device* Get_Device() const { return m_pDevice; }
+	ID3D11DeviceContext* Get_DeviceContext() const { return m_pDeviceContext; }
 // 재정의입니다.
 public:
 	virtual void OnDraw(CDC* pDC);  // 이 뷰를 그리기 위해 재정의되었습니다.

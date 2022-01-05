@@ -3,6 +3,7 @@
 
 // CMapTool 대화 상자입니다.
 #include "Management.h"
+#include "ClientDefines.h"
 
 class CMapTool : public CDialog
 {
@@ -41,4 +42,9 @@ public:
 	float m_fPosY;
 	float m_fPosZ;
 	int m_iWidthLength;
+
+	_uint iIndex = 0;
+
+	CVIBuffer_Terrain* m_pVIBuffer = nullptr;
+
 };

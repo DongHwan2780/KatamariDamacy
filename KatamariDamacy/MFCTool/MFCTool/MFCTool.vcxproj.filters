@@ -136,6 +136,9 @@
     <Filter Include="01.ToolView\00.Form\01.MapTool">
       <UniqueIdentifier>{5732abdd-6b31-4ac4-bfc5-f3f060427b32}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06.ToolTerrain">
+      <UniqueIdentifier>{0835f4bd-4cac-42fc-8425-8a8a3f537581}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.h">
@@ -276,6 +279,9 @@
     <ClInclude Include="MapTool.h">
       <Filter>01.ToolView\00.Form\01.MapTool</Filter>
     </ClInclude>
+    <ClInclude Include="ToolTerrain.h">
+      <Filter>06.ToolTerrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -409,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="MapTool.cpp">
       <Filter>01.ToolView\00.Form\01.MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolTerrain.cpp">
+      <Filter>06.ToolTerrain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

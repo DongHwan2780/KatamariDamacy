@@ -9,6 +9,8 @@
 #include "MainFrm.h"
 #include "Form.h"
 #include "MFCToolView.h"
+
+#include "ToolTerrain.h"
 // CMapTool 대화 상자입니다.
 
 IMPLEMENT_DYNAMIC(CMapTool, CDialog)
@@ -68,9 +70,9 @@ void CMapTool::OnBnClickedButtonUp()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	int iChangeIndex = m_iIndex += m_iTileY;
-	m_fPosX = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).x / m_fTileInterval;
-	m_fPosY = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).y;
-	m_fPosZ = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).z / m_fTileInterval;
+	m_fPosX = m_pVIBuffer->Get_VertexPos(iChangeIndex).x / m_fTileInterval;
+	m_fPosY = m_pVIBuffer->Get_VertexPos(iChangeIndex).y;
+	m_fPosZ = m_pVIBuffer->Get_VertexPos(iChangeIndex).z / m_fTileInterval;
 	UpdateData(FALSE);
 }
 
@@ -80,9 +82,9 @@ void CMapTool::OnBnClickedButtonLeft()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	int iChangeIndex = m_iIndex -= 1;
-	m_fPosX = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).x / m_fTileInterval;
-	m_fPosY = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).y;
-	m_fPosZ = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).z / m_fTileInterval;
+	m_fPosX = m_pVIBuffer->Get_VertexPos(iChangeIndex).x / m_fTileInterval;
+	m_fPosY = m_pVIBuffer->Get_VertexPos(iChangeIndex).y;
+	m_fPosZ = m_pVIBuffer->Get_VertexPos(iChangeIndex).z / m_fTileInterval;
 	UpdateData(FALSE);
 }
 
@@ -92,9 +94,9 @@ void CMapTool::OnBnClickedButtonRight()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	int iChangeIndex = m_iIndex += 1;
-	m_fPosX = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).x / m_fTileInterval;
-	m_fPosY = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).y;
-	m_fPosZ = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).z / m_fTileInterval;
+	m_fPosX = m_pVIBuffer->Get_VertexPos(iChangeIndex).x / m_fTileInterval;
+	m_fPosY = m_pVIBuffer->Get_VertexPos(iChangeIndex).y;
+	m_fPosZ = m_pVIBuffer->Get_VertexPos(iChangeIndex).z / m_fTileInterval;
 	UpdateData(FALSE);
 }
 
@@ -104,9 +106,9 @@ void CMapTool::OnBnClickedButtonDown()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
 	int iChangeIndex = m_iIndex -= m_iTileY;
-	m_fPosX = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).x / m_fTileInterval;
-	m_fPosY = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).y;
-	m_fPosZ = m_pTerrainBuffer->Get_VertexPos(iChangeIndex).z / m_fTileInterval;
+	m_fPosX = m_pVIBuffer->Get_VertexPos(iChangeIndex).x / m_fTileInterval;
+	m_fPosY = m_pVIBuffer->Get_VertexPos(iChangeIndex).y;
+	m_fPosZ = m_pVIBuffer->Get_VertexPos(iChangeIndex).z / m_fTileInterval;
 	UpdateData(FALSE);
 }
 
@@ -117,7 +119,7 @@ void CMapTool::OnBnClickedButtonSave()
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 	CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_tMainSplitter.GetPane(0, 1));
 	pView->m_bInvalidate = false;
-
+	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
 	CFileDialog Dlg(FALSE,// 열기 모드(TRUE) 혹은 저장 모드(FALSE) 어떤것 할 것인지. 
 		L"dat",// 디폴트 확장자 명 
 		L"*.dat",// 디폴트 파일 이름 
@@ -138,7 +140,7 @@ void CMapTool::OnBnClickedButtonSave()
 			return;
 
 		DWORD dwByte = 0;
-		CVIBufferTerrainTexture* m_pTerrainBuffer = dynamic_cast<CVIBufferTerrainTexture*>(m_pManagement->GetComponent(L"Layer_Terrain", L"Com_VIBuffer"));
+		CVIBuffer_Terrain* m_pTerrainBuffer = dynamic_cast<CVIBuffer_Terrain*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
 
 		_float3 pVertexPos = { 0.f, 0.f, 0.f };
 
@@ -150,10 +152,11 @@ void CMapTool::OnBnClickedButtonSave()
 		{
 			pVertexPos = m_pTerrainBuffer->Get_VertexPos(i);
 
-			WriteFile(hFile, pVertexPos, sizeof(_float3), &dwByte, nullptr);
+			WriteFile(hFile, &pVertexPos, sizeof(_float3), &dwByte, nullptr);
 		}
 		CloseHandle(hFile);
 	}
+	RELEASE_INSTANCE(CManagement);
 	pView->m_bInvalidate = true;
 }
 
@@ -162,6 +165,21 @@ void CMapTool::OnBnClickedButtonCreate()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
+	CManagement*	pGameInstance = GET_INSTANCE(CManagement);
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+	CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_tMainSplitter.GetPane(0, 1));
+	/* Component_VIBuffer_Terrain */
+
+//	pGameInstance->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Terrain"), CVIBuffer_Terrain::Create(pView->Get_Device(), pView->Get_DeviceContext(), TEXT("../../Client/Bin/ShaderFiles/Shader_Terrain.fx"), m_iTileX, m_iTileY, m_fTileInterval));
+
+	//if (m_iTileX > 0 && m_iTileY > 0)
+	//{
+	//	pGameInstance->Add_GameObj(STATIC_SCENE, L"GameObject_Terrain", L"Layer_Terrain");
+	//}
+
+
+
+	RELEASE_INSTANCE(CManagement);
 
 	UpdateData(FALSE);
 }
@@ -171,7 +189,7 @@ void CMapTool::OnBnClickedButtonApply()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	m_pTerrainBuffer->Set_TerrainPosY(m_iIndex, (m_VertexPosY / 10.f));
+	m_pVIBuffer->Set_TerrainPosY(m_iIndex, (m_fPosY / 10.f));
 	UpdateData(FALSE);
 }
 
@@ -185,7 +203,7 @@ void CMapTool::OnBnClickedButtonAll()
 		for (_uint j = 0; j < m_iTileX + 1; ++j)
 		{
 			iIndex = (m_iTileY * j) + i;
-			m_pTerrainTexture->Set_TerrainPosY(iIndex, (m_VertexPosY / 10.f));
+			m_pVIBuffer->Set_TerrainPosY(iIndex, (m_fPosY / 10.f));
 		}
 	}
 	UpdateData(FALSE);
@@ -198,7 +216,7 @@ void CMapTool::OnBnClickedButtonApplyWidth()
 	UpdateData(TRUE);
 	for (_uint i = m_iIndex; m_iIndex + m_iWidthLength > i; ++i)
 	{
-		m_pTerrainBuffer->Set_TerrainPosY(i, (m_VertexPosY / 10.f));
+		m_pVIBuffer->Set_TerrainPosY(i, (m_fPosY / 10.f));
 	}
 	UpdateData(FALSE);
 }
@@ -210,7 +228,7 @@ void CMapTool::OnBnClickedButtonApplyLength()
 	UpdateData(TRUE);
 	for (_uint i = 0; i < m_iWidthLength; ++i)
 	{
-		m_pTerrainBuffer->Set_TerrainPosY(m_iIndex + i*m_iTileX, (m_VertexPosY / 10.f));
+		m_pVIBuffer->Set_TerrainPosY(m_iIndex + i* m_iTileX, (m_fPosY / 10.f));
 	}
 	UpdateData(FALSE);
 }

@@ -10,22 +10,27 @@ BEGIN(Engine)
 class ENGINE_DLL CVIBuffer_Terrain final : public CVIBuffer
 {
 private:
-	explicit CVIBuffer_Terrain(DEVICES);
+	explicit CVIBuffer_Terrain(DEVICES, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval = 1.f);
 	explicit CVIBuffer_Terrain(const CVIBuffer_Terrain& other);
 	virtual ~CVIBuffer_Terrain() = default;
 public:
-	virtual HRESULT Initialize_Prototype(const  _tchar* pHeightMapPath, const _tchar* pShaderFilePath);
+	virtual HRESULT Initialize_Prototype(const _tchar* pShaderFilePath);
 	virtual HRESULT Initialize_Clone(void * pArg) override;
 
 public:
-	static CVIBuffer_Terrain* Create(DEVICES,  const _tchar* pHeightMapPath, const _tchar* pShaderFilePath);
+	void Set_TerrainPosY(_uint _iIndex, _float _fPosY);
+
+public:
+	static CVIBuffer_Terrain* Create(DEVICES, const _tchar* pShaderFilePath, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval = 1.f);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
 
 private:
 	_uint m_iVertexCountX = 0;
 	_uint m_iVertexCountZ = 0;
+	_float m_fVertexInterval = 1.f;
 
+	VTXNORMALINFO* pVertices = nullptr;
 };
 
 END
