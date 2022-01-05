@@ -239,6 +239,7 @@
     <ClInclude Include="ToolSpoon.h" />
     <ClInclude Include="ToolStand.h" />
     <ClInclude Include="ToolSunFlower.h" />
+    <ClInclude Include="ToolTerrain.h" />
     <ClInclude Include="ToolTree.h" />
     <ClInclude Include="ToolTulip.h" />
   </ItemGroup>
@@ -290,6 +291,7 @@
     <ClCompile Include="ToolSpoon.cpp" />
     <ClCompile Include="ToolStand.cpp" />
     <ClCompile Include="ToolSunFlower.cpp" />
+    <ClCompile Include="ToolTerrain.cpp" />
     <ClCompile Include="ToolTree.cpp" />
     <ClCompile Include="ToolTulip.cpp" />
   </ItemGroup>

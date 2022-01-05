@@ -89,8 +89,11 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 	m_IBDesc.MiscFlags = 0;
 	m_IBDesc.StructureByteStride = 0;
 
-	POLYGONINDICES32*		pIndices = new POLYGONINDICES32[m_iNumPrimitive];
+	pIndices = new POLYGONINDICES32[m_iNumPrimitive];
 	ZeroMemory(pIndices, sizeof(POLYGONINDICES32) * m_iNumPrimitive);
+
+	//m_pIndices = new POLYGONINDICES32[m_iNumPrimitive];
+	//ZeroMemory(m_pIndices, sizeof(POLYGONINDICES32) * m_iNumPrimitive);
 
 	_uint		iNumPrimitive = 0;
 
@@ -98,6 +101,19 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 	{
 		for (_uint j = 0; j < m_iVertexCountX - 1; ++j)
 		{
+			//_uint		iIndex = i * m_iVertexCountX + j;
+
+			//if (m_iNumVertices <= iIndex)
+			//	continue;
+
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0 = iIndex + m_iVertexCountX;
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1 = iIndex + m_iVertexCountX + 1;
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive++]._2 = iIndex + 1;
+
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0 = iIndex + m_iVertexCountX;
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1 = iIndex + 1;
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive++]._2 = iIndex;
+
 			_uint		iIndex = i * m_iVertexCountX + j;
 
 			_uint		iIndices[4] = { iIndex + m_iVertexCountX,
@@ -196,6 +212,24 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 HRESULT CVIBuffer_Terrain::Initialize_Clone(void * pArg)
 {
 	return S_OK;
+}
+
+void CVIBuffer_Terrain::Set_TerrainPosY(_uint _iIndex, _float _fPosY)
+{
+	D3D11_MAPPED_SUBRESOURCE mapresource;
+	ZeroMemory(&mapresource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	m_pDeviceContext->Map(m_pVB, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &mapresource);
+
+	//pVertices[_iIndex].vPos.y = _fPosY;
+
+	//memcpy(m_pVertices, pVertices, m_iStride * m_iNumVertices);
+
+	//memcpy(mapresource.pData, m_pVertices, sizeof(m_pVertices));
+
+	((VTXNORMALINFO*)mapresource.pData)[_iIndex].vPos.y = _fPosY;
+
+	m_pDeviceContext->Unmap(m_pVB, 0);
 }
 
 CVIBuffer_Terrain * CVIBuffer_Terrain::Create(DEVICES,  const _tchar* pShaderFilePath, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval)

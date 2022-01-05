@@ -18,6 +18,9 @@ public:
 	virtual HRESULT Initialize_Clone(void * pArg) override;
 
 public:
+	void Set_TerrainPosY(_uint _iIndex, _float _fPosY);
+
+public:
 	static CVIBuffer_Terrain* Create(DEVICES, const _tchar* pShaderFilePath, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval = 1.f);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
@@ -26,6 +29,8 @@ private:
 	_uint m_iVertexCountX = 0;
 	_uint m_iVertexCountZ = 0;
 	_float m_fVertexInterval = 1.f;
+
+	VTXNORMALINFO* pVertices = nullptr;
 };
 
 END

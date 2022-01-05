@@ -197,6 +197,11 @@ _bool CVIBuffer::RayCast(_float3 & out, HWND hWnd, _uint iWinCX, _uint iWinCY, _
 	return false;
 }
 
+_float3 CVIBuffer::Get_VertexPos(_uint _VertexIdx)
+{
+	return *(_float3*)((_byte*)(m_pVertices) + m_iStride * _VertexIdx);
+}
+
 HRESULT CVIBuffer::Create_Buffers()
 {
 	if (nullptr == m_pDevice)
