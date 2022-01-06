@@ -40,7 +40,7 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 
 #pragma region VERTEXBUFFER
 
-	m_iStride = sizeof(VTXNORMALINFO);		// 버텍스 사이즈
+	m_iStride = sizeof(VTXINFO);		// 버텍스 사이즈
 	//m_iVertexCountX = ih.biWidth;			// 가로 개수 == 비트맵 가로 크기
 //	m_iVertexCountZ = ih.biHeight;			// 세로 개수 == 비트맵 세로 크기
 	m_iNumVertices = m_iVertexCountX * m_iVertexCountZ;		// 버텍스 갯수
@@ -48,14 +48,14 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 
 	/* For.D3D11_BUFFER_DESC */
 	m_VBDesc.ByteWidth = m_iStride * m_iNumVertices;
-	m_VBDesc.Usage = D3D11_USAGE_IMMUTABLE;
+	m_VBDesc.Usage = D3D11_USAGE_DYNAMIC;
 	m_VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	m_VBDesc.CPUAccessFlags = 0;
+	m_VBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	m_VBDesc.MiscFlags = 0;
 	m_VBDesc.StructureByteStride = m_iStride;
 
-	m_pVertices = new VTXNORMALINFO[m_iNumVertices];
-	ZeroMemory(m_pVertices, sizeof(VTXNORMALINFO) * m_iNumVertices);
+	m_pVertices = new VTXINFO[m_iNumVertices];
+	ZeroMemory(m_pVertices, sizeof(VTXINFO) * m_iNumVertices);
 
 	for (_uint i = 0; i < m_iVertexCountZ; ++i)
 	{
@@ -63,9 +63,9 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 		{
 			_uint		iIndex = i * m_iVertexCountX + j;
 
-			((VTXNORMALINFO*)m_pVertices)[iIndex].vPos = _float3(j * m_fVertexInterval, 0.f, i * m_fVertexInterval);
-			((VTXNORMALINFO*)m_pVertices)[iIndex].vNormal = _float3(0.f, 0.f, 0.f);
-			((VTXNORMALINFO*)m_pVertices)[iIndex].vTexUV = _float2(j / (m_iVertexCountX - 1.f), i / (m_iVertexCountZ - 1.f));
+			((VTXINFO*)m_pVertices)[iIndex].vPos = _float3(j * m_fVertexInterval, 0.f, i * m_fVertexInterval);
+			//((VTXINFO*)m_pVertices)[iIndex].vNormal = _float3(0.f, 0.f, 0.f);
+			((VTXINFO*)m_pVertices)[iIndex].vTexUV = _float2(j / (m_iVertexCountX - 1.f), i / (m_iVertexCountZ - 1.f));
 		}
 	}
 
@@ -89,11 +89,8 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 	m_IBDesc.MiscFlags = 0;
 	m_IBDesc.StructureByteStride = 0;
 
-	pIndices = new POLYGONINDICES32[m_iNumPrimitive];
-	ZeroMemory(pIndices, sizeof(POLYGONINDICES32) * m_iNumPrimitive);
-
-	//m_pIndices = new POLYGONINDICES32[m_iNumPrimitive];
-	//ZeroMemory(m_pIndices, sizeof(POLYGONINDICES32) * m_iNumPrimitive);
+	m_pIndices = new POLYGONINDICES32[m_iNumPrimitive];
+	ZeroMemory(m_pIndices, sizeof(POLYGONINDICES32) * m_iNumPrimitive);
 
 	_uint		iNumPrimitive = 0;
 
@@ -101,91 +98,92 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 	{
 		for (_uint j = 0; j < m_iVertexCountX - 1; ++j)
 		{
-			//_uint		iIndex = i * m_iVertexCountX + j;
-
-			//if (m_iNumVertices <= iIndex)
-			//	continue;
-
-			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0 = iIndex + m_iVertexCountX;
-			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1 = iIndex + m_iVertexCountX + 1;
-			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive++]._2 = iIndex + 1;
-
-			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0 = iIndex + m_iVertexCountX;
-			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1 = iIndex + 1;
-			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive++]._2 = iIndex;
-
 			_uint		iIndex = i * m_iVertexCountX + j;
 
-			_uint		iIndices[4] = { iIndex + m_iVertexCountX,
-				iIndex + m_iVertexCountX + 1,
-				iIndex + 1,
-				iIndex
-			};
+			if (m_iNumVertices <= iIndex)
+				continue;
 
-			_vector			vNormal, vSour, vDest;
+			((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0 = iIndex + m_iVertexCountX;
+			((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1 = iIndex + m_iVertexCountX + 1;
+			((POLYGONINDICES32*)m_pIndices)[iNumPrimitive++]._2 = iIndex + 1;
 
-			/* 우상. */
-			pIndices[iNumPrimitive]._0 = iIndices[0];
-			pIndices[iNumPrimitive]._1 = iIndices[1];
-			pIndices[iNumPrimitive]._2 = iIndices[2];
-
-			vSour = XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vPos) -
-				XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vPos);
-
-			vDest = XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vPos) -
-				XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vPos);
-
-			vNormal = XMVector3Cross(vDest, vSour);
-
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vNormal,
-				(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vNormal) += vNormal));
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vNormal,
-				(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vNormal) += vNormal));
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vNormal,
-				(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vNormal) += vNormal));
-
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vNormal,
-				XMVector3Normalize(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vNormal)));
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vNormal,
-				XMVector3Normalize(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vNormal)));
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vNormal,
-				XMVector3Normalize(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vNormal)));
-
-			++iNumPrimitive;
+			((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0 = iIndex + m_iVertexCountX;
+			((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1 = iIndex + 1;
+			((POLYGONINDICES32*)m_pIndices)[iNumPrimitive++]._2 = iIndex;
 
 
-			/* 좌하. */
-			pIndices[iNumPrimitive]._0 = iIndices[0];
-			pIndices[iNumPrimitive]._1 = iIndices[2];
-			pIndices[iNumPrimitive]._2 = iIndices[3];
+			//_uint		iIndex = i * m_iVertexCountX + j;
 
-			vSour = XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vPos) -
-				XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vPos);
+			//_uint		iIndices[4] = { iIndex + m_iVertexCountX,
+			//	iIndex + m_iVertexCountX + 1,
+			//	iIndex + 1,
+			//	iIndex
+			//};
 
-			vDest = XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vPos) -
-				XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vPos);
+			//_vector			vNormal, vSour, vDest;
 
-			vNormal = XMVector3Cross(vDest, vSour);
+			///* 우상. */
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0 = iIndices[0];
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1 = iIndices[1];
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2 = iIndices[2];
 
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vNormal,
-				(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vNormal) += vNormal));
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vNormal,
-				(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vNormal) += vNormal));
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vNormal,
-				(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vNormal) += vNormal));
+			//vSour = XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vPos) -
+			//	XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vPos);
 
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vNormal,
-				XMVector3Normalize(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._0].vNormal)));
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vNormal,
-				XMVector3Normalize(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._1].vNormal)));
-			XMStoreFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vNormal,
-				XMVector3Normalize(XMLoadFloat3(&((VTXNORMALINFO*)m_pVertices)[pIndices[iNumPrimitive]._2].vNormal)));
+			//vDest = XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vPos) -
+			//	XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vPos);
 
-			++iNumPrimitive;
+			//vNormal = XMVector3Cross(vDest, vSour);
+
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vNormal,
+			////	(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vNormal) += vNormal));
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vNormal,
+			////	(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vNormal) += vNormal));
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vNormal,
+			////	(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vNormal) += vNormal));
+
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vNormal,
+			////	XMVector3Normalize(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vNormal)));
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vNormal,
+			////	XMVector3Normalize(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vNormal)));
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vNormal,
+			////	XMVector3Normalize(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vNormal)));
+
+			//++iNumPrimitive;
+
+
+			///* 좌하. */
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0 = iIndices[0];
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1 = iIndices[2];
+			//((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2 = iIndices[3];
+
+			//vSour = XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vPos) -
+			//	XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vPos);
+
+			//vDest = XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vPos) -
+			//	XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vPos);
+
+			//vNormal = XMVector3Cross(vDest, vSour);
+
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vNormal,
+			////	(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vNormal) += vNormal));
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vNormal,
+			////	(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vNormal) += vNormal));
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vNormal,
+			////	(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vNormal) += vNormal));
+
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vNormal,
+			////	XMVector3Normalize(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._0].vNormal)));
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vNormal,
+			////	XMVector3Normalize(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._1].vNormal)));
+			////XMStoreFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vNormal,
+			////	XMVector3Normalize(XMLoadFloat3(&((VTXINFO*)m_pVertices)[((POLYGONINDICES32*)m_pIndices)[iNumPrimitive]._2].vNormal)));
+
+			//++iNumPrimitive;
 		}
 	}
 
-	m_IBSubResourceData.pSysMem = pIndices;
+	m_IBSubResourceData.pSysMem = m_pIndices;
 
 #pragma endregion INDEXBUFFER
 
@@ -197,14 +195,11 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 	/* 현재 정점이 어떤 멤버들을 가지고 있어! */
 	D3D11_INPUT_ELEMENT_DESC		ElmentDesc[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
-	if (FAILED(__super::Compile_Shader(ElmentDesc, 3, pShaderFilePath)))
+	if (FAILED(__super::Compile_Shader(ElmentDesc, 2, pShaderFilePath)))
 		return E_FAIL;
-
-	Safe_Delete_Array(pIndices);
 
 	return S_OK;
 }
@@ -227,7 +222,7 @@ void CVIBuffer_Terrain::Set_TerrainPosY(_uint _iIndex, _float _fPosY)
 
 	//memcpy(mapresource.pData, m_pVertices, sizeof(m_pVertices));
 
-	((VTXNORMALINFO*)mapresource.pData)[_iIndex].vPos.y = _fPosY;
+	((VTXINFO*)mapresource.pData)[_iIndex].vPos.y = _fPosY;
 
 	m_pDeviceContext->Unmap(m_pVB, 0);
 }

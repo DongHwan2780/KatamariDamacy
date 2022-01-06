@@ -19,11 +19,11 @@ CMapTool::CMapTool(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_MAPTOOL, pParent)
 	, m_iTileX(0)
 	, m_iTileY(0)
-	, m_fTileInterval(0)
+	, m_fTileInterval(0.f)
 	, m_iIndex(0)
-	, m_fPosX(0)
-	, m_fPosY(0)
-	, m_fPosZ(0)
+	, m_fPosX(0.f)
+	, m_fPosY(0.f)
+	, m_fPosZ(0.f)
 	, m_iWidthLength(0)
 {
 
@@ -165,19 +165,34 @@ void CMapTool::OnBnClickedButtonCreate()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	UpdateData(TRUE);
-	CManagement*	pGameInstance = GET_INSTANCE(CManagement);
+	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
 	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
 	CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_tMainSplitter.GetPane(0, 1));
 	/* Component_VIBuffer_Terrain */
 
-//	pGameInstance->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Terrain"), CVIBuffer_Terrain::Create(pView->Get_Device(), pView->Get_DeviceContext(), TEXT("../../Client/Bin/ShaderFiles/Shader_Terrain.fx"), m_iTileX, m_iTileY, m_fTileInterval));
+	m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Terrain"), CVIBuffer_Terrain::Create(pView->Get_Device(), pView->Get_DeviceContext(), TEXT("../../Client/Bin/ShaderFiles/Shader_Terrain.fx"), m_iTileX, m_iTileY, m_fTileInterval));
 
-	//if (m_iTileX > 0 && m_iTileY > 0)
-	//{
-	//	pGameInstance->Add_GameObj(STATIC_SCENE, L"GameObject_Terrain", L"Layer_Terrain");
-	//}
+	if (m_iTileX > 0 && m_iTileY > 0)
+	{
+		m_pManagement->Add_GameObj(STATIC_SCENE, L"GameObject_Terrain", L"Layer_Terrain");
+
+		CCamera::CAMERADESC		CameraDesc;
+		ZeroMemory(&CameraDesc, sizeof(CCamera::CAMERADESC));
+
+		CameraDesc.vEye = _float3(0.f, 5.f, -6.f);
+		CameraDesc.vAt = _float3(0.f, 0.f, 0.f);
+		CameraDesc.vAxisY = _float3(0.f, 1.f, 0.f);
+
+		CameraDesc.TransformDesc.fSpeedPerSec = 5.f;
+		CameraDesc.TransformDesc.fRotatePerSec = XMConvertToRadians(90.0f);
+		m_pManagement->Add_GameObj(STATIC_SCENE, L"GameObject_ToolCamera", L"Layer_Camera", &CameraDesc);
 
 
+		m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
+
+		m_pVIBuffer->Set_TileInterval(m_fTileInterval);
+		m_pVIBuffer->Set_TileZ(m_iTileY);
+	}
 
 	RELEASE_INSTANCE(CManagement);
 

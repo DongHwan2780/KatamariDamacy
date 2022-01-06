@@ -29,6 +29,10 @@ public:
 	_uint Get_VertexIndex() { return m_VertexIndex; }
 	_float3 Get_VertexPos(_uint _VertexIdx);
 
+public:
+	void Set_TileZ(_uint TileZ) { m_TileZ = TileZ; }
+	void Set_TileInterval(_float TileInterval) { m_fTerrainInterval = TileInterval; }
+
 protected:
 	HRESULT Create_Buffers();
 	HRESULT Compile_Shader(D3D11_INPUT_ELEMENT_DESC* pElementDescs, _uint iNumElement, const _tchar* pShaderFilePath, _uint iTechniqueIndex = 0);
@@ -61,7 +65,10 @@ protected:
 
 protected:
 	void*				m_pVertices = nullptr;
-	POLYGONINDICES32*	pIndices = nullptr;
+	void*				m_pIndices = nullptr;
+	
+	//POLYGONINDICES32*	pIndices = nullptr;
+	//POLYGONINDICES32*	m_pPolygonIndices32 = nullptr;
 
 	_uint	 m_TerrainIndex;
 	_uint	 m_VertexIndex;

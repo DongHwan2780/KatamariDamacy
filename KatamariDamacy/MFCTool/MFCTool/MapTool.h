@@ -47,4 +47,5 @@ public:
 
 	CVIBuffer_Terrain* m_pVIBuffer = nullptr;
 
+	void Update_Dialog() { UpdateData(FALSE); }
 };

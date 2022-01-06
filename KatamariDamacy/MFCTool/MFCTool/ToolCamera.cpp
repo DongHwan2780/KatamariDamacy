@@ -19,7 +19,6 @@ HRESULT CToolCamera::Initialize_Prototype()
 {
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -27,6 +26,12 @@ HRESULT CToolCamera::Initialize_Clone(void * pArg)
 {
 	if (FAILED(__super::Initialize_Clone(pArg)))
 		return E_FAIL;
+
+	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
+
+	m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
+
+	RELEASE_INSTANCE(CManagement);
 
 	return S_OK;
 }
@@ -55,6 +60,18 @@ HRESULT CToolCamera::Render()
 
 void CToolCamera::Movement(_double DeltaTime)
 {
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	{
+		_float4x4 matWorld;
+		XMStoreFloat4x4(&matWorld, XMMatrixIdentity());
+
+		if (m_pVIBuffer->RayCast(vOut, g_hWnd, g_iWinCX, g_iWinCY, matWorld))
+		{
+			m_iVertexIndex = m_pVIBuffer->Get_VertexIndex();
+		}
+	}
+
+
 	if (GetAsyncKeyState('W') & 0x8000)
 	{
 		m_pTransform->Move_Straight(DeltaTime);

@@ -30,7 +30,7 @@ private:
 	_uint m_iVertexCountZ = 0;
 	_float m_fVertexInterval = 1.f;
 
-	VTXNORMALINFO* pVertices = nullptr;
+	//VTXNORMALINFO* pVertices = nullptr;
 };
 
 END
