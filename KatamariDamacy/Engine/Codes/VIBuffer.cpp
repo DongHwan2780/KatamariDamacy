@@ -25,6 +25,7 @@ CVIBuffer::CVIBuffer(const CVIBuffer & other)
 	, m_iNumVertexBuffers(other.m_iNumVertexBuffers)
 	, m_ePrimitive(other.m_ePrimitive)
 	, m_eIndexFormat(other.m_eIndexFormat)
+	, m_pIndices(other.m_pIndices)
 {
 	for (auto& EffectDesc : m_EffectDescs)
 	{
@@ -158,9 +159,9 @@ _bool CVIBuffer::RayCast(_float3 & out, HWND hWnd, _uint iWinCX, _uint iWinCY, _
 
 	for (_uint i = 0; i < m_iNumPrimitive; ++i)
 	{
-		memcpy(&_1, ((_byte*)m_IBSubResourceData.pSysMem) + i * m_iIndexSize, iSize);
-		memcpy(&_2, ((_byte*)m_IBSubResourceData.pSysMem) + i * m_iIndexSize + (iSize), iSize);
-		memcpy(&_3, ((_byte*)m_IBSubResourceData.pSysMem) + i * m_iIndexSize + (iSize * 2), iSize);
+		memcpy(&_1, ((_byte*)m_pIndices) + i * m_iIndexSize, iSize);
+		memcpy(&_2, ((_byte*)m_pIndices) + i * m_iIndexSize + (iSize), iSize);
+		memcpy(&_3, ((_byte*)m_pIndices) + i * m_iIndexSize + (iSize * 2), iSize);
 
 		memcpy(&v1, ((_byte*)m_pVertices) + _1 * m_iStride, sizeof(_float3));
 		memcpy(&v2, ((_byte*)m_pVertices) + _2 * m_iStride, sizeof(_float3));
@@ -275,7 +276,10 @@ void CVIBuffer::Free()
 	__super::Free();
 
 	if (false == m_isCloned)
+	{
 		Safe_Delete_Array(m_pVertices);
+		Safe_Delete_Array(m_pIndices);
+	}
 
 	for (auto& EffectDesc : m_EffectDescs)
 	{

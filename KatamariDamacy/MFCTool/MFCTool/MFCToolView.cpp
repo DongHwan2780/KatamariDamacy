@@ -83,6 +83,7 @@ CMFCToolView::CMFCToolView()
 
 CMFCToolView::~CMFCToolView()
 {
+	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pRenderer);
 	Safe_Release(m_pDeviceContext);
 	Safe_Release(m_pDevice);
@@ -258,7 +259,7 @@ void CMFCToolView::OnInitialUpdate()
 	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_Tree", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/Object/", "Tree.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_Tulip", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/Object/", "Tulip.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
-	m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Terrain"), CVIBuffer_Terrain::Create(m_pDevice, m_pDeviceContext, TEXT("../../Client/Bin/ShaderFiles/Shader_Terrain.fx"), 100, 100, 1.f));
+	//m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Terrain"), CVIBuffer_Terrain::Create(m_pDevice, m_pDeviceContext, TEXT("../../Client/Bin/ShaderFiles/Shader_Terrain.fx"), 100, 100, 1.f));
 
 	hr = m_pManagement->Add_Prototype(L"GameObject_ToolCamera", CToolCamera::Create(m_pDevice, m_pDeviceContext));
 	hr = m_pManagement->Add_Prototype(L"GameObject_StageMap", CToolMap::Create(m_pDevice, m_pDeviceContext));
@@ -369,9 +370,8 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 		if (m_bFirst)
 		{
-			Ready_Layer_Camera(L"Layer_Camera");
+			//Ready_Layer_Camera(L"Layer_Camera");
 			Ready_Layer_StageMap(L"Layer_StageMap");
-
 			pTransformMap = dynamic_cast<CTransform*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_StageMap", L"Com_Transform"));
 			XMStoreFloat4x4(&matWorld, pTransformMap->Get_WorldMatrix());
 
@@ -397,28 +397,22 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 			Safe_Release(pModel);
 		}
 	}
+
+
+
 	else if (pForm->m_CtrlTab_Main.GetCurSel() == 1)
 	{
-		
-		_float3 vOut;
-		_float4x4 matWorld;
-		XMStoreFloat4x4(&matWorld, XMMatrixIdentity());
+		//Ready_Layer_Camera(L"Layer_Camera");
+
+		CToolCamera* m_pMainCamera = dynamic_cast<CToolCamera*>(m_pManagement->GetGameObject(STATIC_SCENE, L"Layer_Camera"));
+		m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
 
 
-		if (m_bFirst)
-		{
-			Ready_Layer_Camera(L"Layer_Camera");
-			m_pManagement->Add_GameObj(STATIC_SCENE, L"GameObject_Terrain", L"Layer_Terrain");
-			m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
-			Safe_AddRef(m_pVIBuffer);
-			m_bFirst = false;
-		}
-		else if (m_pVIBuffer->RayCast(vOut, g_hWnd, g_iWinCX, g_iWinCY, matWorld))
-		{
-			m_iVertexIndex = m_pVIBuffer->Get_VertexIndex();
-
-			Safe_Release(m_pVIBuffer);
-		}
+		pForm->m_tMapTool.m_iIndex = m_pMainCamera->Get_VertexIndex();
+		pForm->m_tMapTool.m_fPosX = m_pVIBuffer->Get_VertexPos(pForm->m_tMapTool.m_iIndex).x;
+		pForm->m_tMapTool.m_fPosY = m_pVIBuffer->Get_VertexPos(pForm->m_tMapTool.m_iIndex).y;
+		pForm->m_tMapTool.m_fPosZ = m_pVIBuffer->Get_VertexPos(pForm->m_tMapTool.m_iIndex).z;
+		pForm->m_tMapTool.Update_Dialog();
 	}
 
 	CView::OnLButtonDown(nFlags, point);

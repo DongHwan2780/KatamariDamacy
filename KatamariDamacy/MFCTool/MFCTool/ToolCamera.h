@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Camera.h"
-
+#include "Management.h"
 class CToolCamera final : public CCamera
 {
 private:
@@ -18,11 +18,16 @@ public:
 
 public:
 	void Movement(_double DeltaTime);
-
+	_uint Get_VertexIndex() { return m_iVertexIndex; }
+	_float3 Get_VertexPos() { return vOut; }
 public:
 	static CToolCamera* Create(DEVICES);
 	virtual CObj * Clone(void * pArg) override;
 	virtual void Free() override;
 
+private:
+	CVIBuffer_Terrain*		m_pVIBuffer = nullptr;
+	_uint m_iVertexIndex = 0;
+	_float3 vOut;
 };
 
