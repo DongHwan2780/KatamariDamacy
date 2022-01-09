@@ -212,17 +212,16 @@ HRESULT CVIBuffer_Terrain::Initialize_Clone(void * pArg)
 void CVIBuffer_Terrain::Set_TerrainPosY(_uint _iIndex, _float _fPosY)
 {
 	D3D11_MAPPED_SUBRESOURCE mapresource;
-	ZeroMemory(&mapresource, sizeof(D3D11_MAPPED_SUBRESOURCE));
 
 	m_pDeviceContext->Map(m_pVB, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &mapresource);
 
 	//pVertices[_iIndex].vPos.y = _fPosY;
+	((VTXINFO*)mapresource.pData)[_iIndex].vPos.y = _fPosY;
 
-	//memcpy(m_pVertices, pVertices, m_iStride * m_iNumVertices);
+	memcpy(m_pVertices, mapresource.pData, m_iStride * m_iNumVertices);
 
 	//memcpy(mapresource.pData, m_pVertices, sizeof(m_pVertices));
 
-	((VTXINFO*)mapresource.pData)[_iIndex].vPos.y = _fPosY;
 
 	m_pDeviceContext->Unmap(m_pVB, 0);
 }

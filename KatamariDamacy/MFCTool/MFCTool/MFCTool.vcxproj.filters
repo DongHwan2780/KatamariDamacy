@@ -282,6 +282,9 @@
     <ClInclude Include="ToolTerrain.h">
       <Filter>06.ToolTerrain</Filter>
     </ClInclude>
+    <ClInclude Include="ToolDummy.h">
+      <Filter>05.ToolObj\34.Dummy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -418,6 +421,9 @@
     </ClCompile>
     <ClCompile Include="ToolTerrain.cpp">
       <Filter>06.ToolTerrain</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolDummy.cpp">
+      <Filter>05.ToolObj\34.Dummy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -40,6 +40,10 @@ public:
 	_bool Collision_AABB(CCollider* pTargetCollider);
 	_bool Collision_OBB(CCollider* pTargetCollider);
 
+	const COLLIDERDESC& GetTransformDesc() const { return m_ColliderDesc; }
+	void Set_Size(const _float3& ColSize) { m_ColliderDesc.vSize = ColSize; }
+	void Set_Scale(_fvector vScale);
+
 private:
 	_fmatrix Remove_ScaleRotation(_fmatrix TransformMatrix);
 	_fmatrix Remove_Scale(_fmatrix TransformMatrix);

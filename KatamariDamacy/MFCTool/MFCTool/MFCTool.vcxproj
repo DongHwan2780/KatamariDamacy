@@ -222,6 +222,7 @@
     <ClInclude Include="ToolDice.h" />
     <ClInclude Include="ToolDrinkCan0.h" />
     <ClInclude Include="ToolDrinkCan1.h" />
+    <ClInclude Include="ToolDummy.h" />
     <ClInclude Include="ToolEgg.h" />
     <ClInclude Include="ToolEraser.h" />
     <ClInclude Include="ToolFork.h" />
@@ -274,6 +275,7 @@
     <ClCompile Include="ToolDice.cpp" />
     <ClCompile Include="ToolDrinkCan0.cpp" />
     <ClCompile Include="ToolDrinkCan1.cpp" />
+    <ClCompile Include="ToolDummy.cpp" />
     <ClCompile Include="ToolEgg.cpp" />
     <ClCompile Include="ToolEraser.cpp" />
     <ClCompile Include="ToolFork.cpp" />

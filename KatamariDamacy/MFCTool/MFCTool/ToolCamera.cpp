@@ -60,16 +60,16 @@ HRESULT CToolCamera::Render()
 
 void CToolCamera::Movement(_double DeltaTime)
 {
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
-	{
-		_float4x4 matWorld;
-		XMStoreFloat4x4(&matWorld, XMMatrixIdentity());
+	//if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+	//{
+	//	_float4x4 matWorld;
+	//	XMStoreFloat4x4(&matWorld, XMMatrixIdentity());
 
-		if (m_pVIBuffer->RayCast(vOut, g_hWnd, g_iWinCX, g_iWinCY, matWorld))
-		{
-			m_iVertexIndex = m_pVIBuffer->Get_VertexIndex();
-		}
-	}
+	//	if (m_pVIBuffer->RayCast(vOut, g_hWnd, g_iWinCX, g_iWinCY, matWorld))
+	//	{
+	//		m_iVertexIndex = m_pVIBuffer->Get_VertexIndex();
+	//	}
+	//}
 
 
 	if (GetAsyncKeyState('W') & 0x8000)

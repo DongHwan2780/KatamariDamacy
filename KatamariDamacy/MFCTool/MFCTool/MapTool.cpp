@@ -59,6 +59,7 @@ BEGIN_MESSAGE_MAP(CMapTool, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON6, &CMapTool::OnBnClickedButtonAll)
 	ON_BN_CLICKED(IDC_BUTTON7, &CMapTool::OnBnClickedButtonApplyWidth)
 	ON_BN_CLICKED(IDC_BUTTON8, &CMapTool::OnBnClickedButtonApplyLength)
+	ON_BN_CLICKED(IDC_BUTTON13, &CMapTool::OnBnClickedLoad)
 END_MESSAGE_MAP()
 
 
@@ -248,3 +249,67 @@ void CMapTool::OnBnClickedButtonApplyLength()
 	UpdateData(FALSE);
 }
 
+
+
+void CMapTool::OnBnClickedLoad()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CMainFrame* pMain = dynamic_cast<CMainFrame*>(::AfxGetApp()->GetMainWnd());
+	CMFCToolView* pView = dynamic_cast<CMFCToolView*>(pMain->m_tMainSplitter.GetPane(0, 1));
+	pView->m_bInvalidate = false;
+
+	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
+
+	CFileDialog Dlg(TRUE,// 열기 모드(TRUE) 혹은 저장 모드(FALSE) 어떤것 할 것인지. 
+		L"dat",// 디폴트 확장자 명 
+		L"*.dat",// 디폴트 파일 이름 
+		OFN_OVERWRITEPROMPT);// 창에 기본 상태를 설정해줄 수 있음. 애는 중복파일 저장시 경고메시지 띄워줌.  
+	TCHAR szFilePath[MAX_PATH]{};
+	GetCurrentDirectory(MAX_PATH, szFilePath);
+	PathRemoveFileSpec(szFilePath);
+	lstrcat(szFilePath, L"\\Data");
+	Dlg.m_ofn.lpstrInitialDir = szFilePath;
+	if (IDOK == Dlg.DoModal())
+	{
+		CString wstrFilePath = Dlg.GetPathName();
+		HANDLE hFile = CreateFile(wstrFilePath.GetString(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		if (m_pVIBuffer != nullptr)
+		{
+			Safe_Release(m_pVIBuffer);
+		}
+
+		DWORD dwByte = 0;
+		_float3 pVertexPos;
+
+		ReadFile(hFile, &m_iTileX, sizeof(_uint), &dwByte, nullptr);
+		ReadFile(hFile, &m_iTileY, sizeof(_uint), &dwByte, nullptr);
+		ReadFile(hFile, &m_fTileInterval, sizeof(_float), &dwByte, nullptr);
+
+		m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Terrain"), CVIBuffer_Terrain::Create(pView->Get_Device(), pView->Get_DeviceContext(), TEXT("../../Client/Bin/ShaderFiles/Shader_Terrain.fx"), m_iTileX, m_iTileY, m_fTileInterval));
+
+		m_pManagement->Add_Prototype(TEXT("GameObject_Terrain"), CToolTerrain::Create(pView->Get_Device(), pView->Get_DeviceContext()));
+
+		m_pManagement->Add_GameObj(STATIC_SCENE, L"GameObject_Terrain", L"Layer_Terrain");
+
+		CVIBuffer_Terrain* m_pTerrainBuffer = dynamic_cast<CVIBuffer_Terrain*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
+		int i = 0;
+		//for (int i = 0; i < (m_iTileX*m_iTileY) - 1; ++i)
+		while (1)
+		{
+			ReadFile(hFile, &pVertexPos, sizeof(_float3), &dwByte, nullptr);
+			if (0 == dwByte)
+				break;
+			m_pTerrainBuffer->Set_TerrainPosY(i, pVertexPos.y);
+			++i;
+		}
+
+		Safe_Release(m_pTerrainBuffer);
+		CloseHandle(hFile);
+	}
+	pView->m_bInvalidate = true;
+	RELEASE_INSTANCE(CManagement);
+}
