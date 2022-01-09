@@ -19,6 +19,7 @@
 #include "ToolCamera.h"
 #include "ToolMap.h"
 #include "ToolTerrain.h"
+#include "ToolDummy.h"
 
 #include "ToolApple.h"
 #include "ToolBag.h"
@@ -263,6 +264,7 @@ void CMFCToolView::OnInitialUpdate()
 
 	hr = m_pManagement->Add_Prototype(L"GameObject_ToolCamera", CToolCamera::Create(m_pDevice, m_pDeviceContext));
 	hr = m_pManagement->Add_Prototype(L"GameObject_StageMap", CToolMap::Create(m_pDevice, m_pDeviceContext));
+	hr = m_pManagement->Add_Prototype(L"GameObject_Dummy", CToolDummy::Create(m_pDevice, m_pDeviceContext));
 
 	hr = m_pManagement->Add_Prototype(L"GameObject_Apple",		CToolApple::Create(m_pDevice, m_pDeviceContext));
 	hr = m_pManagement->Add_Prototype(L"GameObject_Bag",		CToolBag::Create(m_pDevice, m_pDeviceContext));
@@ -344,6 +346,10 @@ HRESULT CMFCToolView::Ready_Prototype_Component()
 		return E_FAIL;
 	Safe_AddRef(m_pRenderer);
 
+	/* For.Collider Component */
+	if (FAILED(m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Collider_OBB"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_OBB))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -370,17 +376,20 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 		if (m_bFirst)
 		{
-			//Ready_Layer_Camera(L"Layer_Camera");
+			Ready_Layer_Camera(L"Layer_Camera");
 			Ready_Layer_StageMap(L"Layer_StageMap");
 			pTransformMap = dynamic_cast<CTransform*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_StageMap", L"Com_Transform"));
-			XMStoreFloat4x4(&matWorld, pTransformMap->Get_WorldMatrix());
+
+			m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
+			XMStoreFloat4x4(&matWorld, XMMatrixIdentity());
+
 
 			m_bFirst = false;
 		}
 
-		else if (pModel->RayCast(vOut, g_hWnd, g_iWinCX, g_iWinCY, matWorld, vCameraPos))
+		else if (m_pVIBuffer->RayCast(vOut, g_hWnd, g_iWinCX, g_iWinCY, matWorld))
 		{
-			vPosition = {vOut.x, 0.f, vOut.z};
+			vPosition = {vOut.x, vOut.y + 1.f, vOut.z};
 			//vPosition = vOut;
 
 			CString FbxName;

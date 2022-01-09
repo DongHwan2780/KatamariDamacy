@@ -20,7 +20,7 @@ public:
 
 public:
 	class CComponent* GetComponent(const wstring& ComponentTag, _uint iIndex = 0);
-	_uint GetGameObjectListSize() const;
+	size_t GetGameObjectListSize() const;
 	class CObj* GetGameObject(_uint iIndex = 0) const;
 public:
 	static CLayer*	Create();

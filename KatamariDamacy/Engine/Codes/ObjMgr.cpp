@@ -117,15 +117,15 @@ CComponent * CObjMgr::GetComponent(_uint iLevelIndex, const wstring& pLayerTag, 
 	return pLayer->GetComponent(pComponentTag, iIndex);
 }
 
-_uint CObjMgr::GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const
+size_t CObjMgr::GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const
 {
 	auto iter = m_pGameObjects[iLevelIndex].find(LayerTag);
 
-	//if (m_pGameObjects[iLevelIndex].end() == iter)
-	//{
-	//	MSG_BOX("Failed to GetObjListSize");
-	//	return 0;
-	//}
+	if (m_pGameObjects[iLevelIndex].end() == iter)
+	{
+		MSG_BOX("Failed to GetObjListSize");
+		return 0;
+	}
 
 	return iter->second->GetGameObjectListSize();
 }

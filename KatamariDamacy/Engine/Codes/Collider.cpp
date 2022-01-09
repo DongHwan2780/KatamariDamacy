@@ -247,6 +247,17 @@ _bool CCollider::Collision_OBB(CCollider * pTargetCollider)
 	return true;
 }
 
+void CCollider::Set_Scale(_fvector vScale)
+{
+	_vector		vRight = XMVector3Normalize(*(_vector*)&m_TransformMatrix.m[0][0]) * XMVectorGetX(vScale);
+	_vector		vUp = XMVector3Normalize(*(_vector*)&m_TransformMatrix.m[1][0]) * XMVectorGetY(vScale);
+	_vector		vLook = XMVector3Normalize(*(_vector*)&m_TransformMatrix.m[2][0]) * XMVectorGetZ(vScale);
+
+	memcpy(&m_TransformMatrix.m[0][0], &vRight, sizeof(_float3));
+	memcpy(&m_TransformMatrix.m[1][0], &vUp, sizeof(_float3));
+	memcpy(&m_TransformMatrix.m[2][0], &vLook, sizeof(_float3));
+}
+
 _fmatrix CCollider::Remove_ScaleRotation(_fmatrix TransformMatrix)
 {
 	_matrix			NonRotateMatrix = XMMatrixIdentity();

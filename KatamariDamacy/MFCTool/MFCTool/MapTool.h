@@ -48,4 +48,5 @@ public:
 	CVIBuffer_Terrain* m_pVIBuffer = nullptr;
 
 	void Update_Dialog() { UpdateData(FALSE); }
+	afx_msg void OnBnClickedLoad();
 };

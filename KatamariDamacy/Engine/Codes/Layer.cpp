@@ -56,7 +56,7 @@ CComponent * CLayer::GetComponent(const wstring& ComponentTag, _uint iIndex)
 	return (*iter)->GetComponent(ComponentTag);
 }
 
-_uint CLayer::GetGameObjectListSize() const
+size_t CLayer::GetGameObjectListSize() const
 {
 	return (_uint)m_ObjList.size();
 }

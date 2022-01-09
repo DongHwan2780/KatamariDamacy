@@ -25,7 +25,7 @@ public:
 
 public:
 	class CComponent* GetComponent(_uint iLevelIndex, const wstring& pLayerTag, const wstring& pComponentTag, _uint iIndex = 0) ;
-	_uint GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const;
+	size_t GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const;
 	class CObj* GetGameObject(_uint iLevelIndex, const wstring& LayerTag, _uint iIndex = 0) const;
 
 private:
