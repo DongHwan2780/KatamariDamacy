@@ -29,6 +29,8 @@ HRESULT CTerrain::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_Components()))
 		return E_FAIL;
 
+	//LoadData(pArg);
+
 	return S_OK;
 }
 
@@ -81,18 +83,6 @@ HRESULT CTerrain::SetUp_Components()
 	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_VIBuffer_Terrain"), TEXT("Com_VIBuffer"), (CComponent**)&m_pVIBuffer)))
 		return E_FAIL;
 
-	/* For.Com_Texture */
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Texture_Terrain"), TEXT("Com_Texture"), (CComponent**)&m_pTexture)))
-		return E_FAIL;
-
-	/* For.Com_Filter*/
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Texture_Filter"), TEXT("Com_Filter"), (CComponent**)&m_pFilter)))
-		return E_FAIL;
-
-	/* For.Com_Brush*/
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Texture_Brush"), TEXT("Com_Brush"), (CComponent**)&m_pBrush)))
-		return E_FAIL;
-
 	return S_OK;
 }
 
@@ -107,32 +97,38 @@ HRESULT CTerrain::SetUp_ConstantTable()
 	m_pVIBuffer->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixTranspose(pManagement->Get_Transform(CPipeLine::D3DTS_VIEW)), sizeof(_matrix));
 	m_pVIBuffer->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(pManagement->Get_Transform(CPipeLine::D3DTS_PROJ)), sizeof(_matrix));
 
-	_matrix		ViewMatrix = pManagement->Get_Transform(CPipeLine::D3DTS_VIEW);
-
-	/* 카메라의 월드변환행렬. */
-	ViewMatrix = XMMatrixInverse(nullptr, ViewMatrix);
-	m_pVIBuffer->SetUp_ValueOnShader("g_vCamPosition", &ViewMatrix.r[3], sizeof(_vector));
-
-	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseSourTexture", m_pTexture, 0)))
-		return E_FAIL;
-	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseDestTexture", m_pTexture, 1)))
-		return E_FAIL;
-	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_FilterTexture", m_pFilter)))
-		return E_FAIL;
-	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_BrushTexture", m_pBrush)))
-		return E_FAIL;
-
-	LIGHTDESC		LightDesc = *pManagement->Get_LightDesc();
-
-	m_pVIBuffer->SetUp_ValueOnShader("g_vLightDir", &LightDesc.vLightDir, sizeof(_vector));
-	m_pVIBuffer->SetUp_ValueOnShader("g_vLightDiffuse", &LightDesc.vDiffuse, sizeof(_vector));
-	m_pVIBuffer->SetUp_ValueOnShader("g_vLightAmbient", &LightDesc.vAmbient, sizeof(_vector));
-	m_pVIBuffer->SetUp_ValueOnShader("g_vLightSpecular", &LightDesc.vSpecular, sizeof(_vector));
-
 	RELEASE_INSTANCE(CManagement);
 
 
 	return S_OK;
+}
+
+void CTerrain::LoadData(void * pArg)
+{
+	HANDLE hFile = CreateFile(L"../../MFCTool/Data/Object/TerrainMap.dat", GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return;
+
+	if (m_pVIBuffer != nullptr)
+	{
+		Safe_Release(m_pVIBuffer);
+	}
+
+	DWORD dwByte = 0;
+	_float3 pVertexPos;
+
+	int i = 0;
+
+	while (1)
+	{
+		ReadFile(hFile, &pVertexPos, sizeof(_float3), &dwByte, nullptr);
+		if (0 == dwByte)
+			break;
+		m_pVIBuffer->Set_TerrainPosY(i, pVertexPos.y);
+		++i;
+	}
+	CloseHandle(hFile);
 }
 
 CTerrain * CTerrain::Create(DEVICES)
@@ -165,10 +161,7 @@ void CTerrain::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pBrush);
 	Safe_Release(m_pTransform);
-	Safe_Release(m_pFilter);
-	Safe_Release(m_pTexture);
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pRenderer);
 }

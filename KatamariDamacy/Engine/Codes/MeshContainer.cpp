@@ -18,7 +18,7 @@ CMeshContainer::CMeshContainer(const CMeshContainer & other)
 
 void CMeshContainer::Get_BoneMatrices(_matrix * pBoneMatrices)
 {
-	_uint		iNumBones = m_Bones.size();
+	_uint		iNumBones = (_uint)m_Bones.size();
 
 	for (_uint i = 0; i < iNumBones; ++i)
 	{

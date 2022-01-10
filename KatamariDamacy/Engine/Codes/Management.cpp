@@ -108,7 +108,7 @@ CComponent * CManagement::GetComponent(_uint iLevelIndex, const wstring& pLayerT
 }
 _uint CManagement::GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const
 {
-	return m_pObjMgr->GetGameObjectListSize(iLevelIndex, LayerTag);
+	return (_uint)m_pObjMgr->GetGameObjectListSize(iLevelIndex, LayerTag);
 }
 CObj * CManagement::GetGameObject(_uint iLevelIndex, const wstring & LayerTag, _uint iIndex) const
 {

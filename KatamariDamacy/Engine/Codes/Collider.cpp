@@ -258,6 +258,24 @@ void CCollider::Set_Scale(_fvector vScale)
 	memcpy(&m_TransformMatrix.m[2][0], &vLook, sizeof(_float3));
 }
 
+void CCollider::Set_Points(const _float3 & ColSize)
+{
+	m_ColliderDesc.vSize = ColSize;
+
+	m_pBB->Extents = _float3(m_ColliderDesc.vSize.x * 0.5f, m_ColliderDesc.vSize.y * 0.5f, m_ColliderDesc.vSize.z * 0.5f);
+	m_pBB->Center = _float3(0.f, m_pBB->Extents.y, 0.f);
+
+	m_vPoint[0] = _float3(m_pBB->Center.x - m_pBB->Extents.x, m_pBB->Center.y + m_pBB->Extents.y, m_pBB->Center.z - m_pBB->Extents.z);
+	m_vPoint[1] = _float3(m_pBB->Center.x + m_pBB->Extents.x, m_pBB->Center.y + m_pBB->Extents.y, m_pBB->Center.z - m_pBB->Extents.z);
+	m_vPoint[2] = _float3(m_pBB->Center.x + m_pBB->Extents.x, m_pBB->Center.y - m_pBB->Extents.y, m_pBB->Center.z - m_pBB->Extents.z);
+	m_vPoint[3] = _float3(m_pBB->Center.x - m_pBB->Extents.x, m_pBB->Center.y - m_pBB->Extents.y, m_pBB->Center.z - m_pBB->Extents.z);
+
+	m_vPoint[4] = _float3(m_pBB->Center.x - m_pBB->Extents.x, m_pBB->Center.y + m_pBB->Extents.y, m_pBB->Center.z + m_pBB->Extents.z);
+	m_vPoint[5] = _float3(m_pBB->Center.x + m_pBB->Extents.x, m_pBB->Center.y + m_pBB->Extents.y, m_pBB->Center.z + m_pBB->Extents.z);
+	m_vPoint[6] = _float3(m_pBB->Center.x + m_pBB->Extents.x, m_pBB->Center.y - m_pBB->Extents.y, m_pBB->Center.z + m_pBB->Extents.z);
+	m_vPoint[7] = _float3(m_pBB->Center.x - m_pBB->Extents.x, m_pBB->Center.y - m_pBB->Extents.y, m_pBB->Center.z + m_pBB->Extents.z);
+}
+
 _fmatrix CCollider::Remove_ScaleRotation(_fmatrix TransformMatrix)
 {
 	_matrix			NonRotateMatrix = XMMatrixIdentity();

@@ -184,6 +184,7 @@
     <ClInclude Include="..\Headers\Dice.h" />
     <ClInclude Include="..\Headers\DrinkCan0.h" />
     <ClInclude Include="..\Headers\DrinkCan1.h" />
+    <ClInclude Include="..\Headers\Dummy.h" />
     <ClInclude Include="..\Headers\Egg.h" />
     <ClInclude Include="..\Headers\Eraser.h" />
     <ClInclude Include="..\Headers\Fork.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="..\Codes\Dice.cpp" />
     <ClCompile Include="..\Codes\DrinkCan0.cpp" />
     <ClCompile Include="..\Codes\DrinkCan1.cpp" />
+    <ClCompile Include="..\Codes\Dummy.cpp" />
     <ClCompile Include="..\Codes\Egg.cpp" />
     <ClCompile Include="..\Codes\Eraser.cpp" />
     <ClCompile Include="..\Codes\Fork.cpp" />

@@ -20,6 +20,8 @@ public:
 	SCENE Get_NextScene() const { return m_eScene; }
 	_bool Get_Finish() const { return m_bFinish; }
 
+public:
+	HRESULT LoadDataTerrain(void* pArg = nullptr);
 
 public:
 	static CLoader* Create(DEVICES, SCENE eScene);

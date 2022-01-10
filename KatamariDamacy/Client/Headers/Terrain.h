@@ -4,7 +4,6 @@
 #include "Obj.h"
 
 BEGIN(Engine)
-class CTexture;
 class CRenderer;
 class CTransform;
 class CVIBuffer_Terrain;
@@ -29,6 +28,7 @@ public:
 private:
 	HRESULT SetUp_Components();
 	HRESULT SetUp_ConstantTable();
+	void LoadData(void* pArg = nullptr);
 
 public:
 	static CTerrain* Create(DEVICES);
@@ -36,12 +36,9 @@ public:
 	virtual void Free() override;
 
 private:
-	CTexture*			m_pTexture = nullptr;
-	CTexture*			m_pFilter = nullptr;
-	CTexture*			m_pBrush = nullptr;
-	CRenderer*			m_pRenderer = nullptr;
-	CTransform*			m_pTransform = nullptr;
-	CVIBuffer_Terrain*	m_pVIBuffer = nullptr;
+	CTransform*		m_pTransform = nullptr;
+	CRenderer*		m_pRenderer = nullptr;
+	CVIBuffer_Terrain* m_pVIBuffer = nullptr;
 };
 
 END

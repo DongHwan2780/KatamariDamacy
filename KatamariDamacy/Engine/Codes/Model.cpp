@@ -520,7 +520,7 @@ HRESULT CModel::Create_Materials(aiMaterial * pMaterial, const char * pMeshFileP
 
 		_tchar		szWideFullPath[MAX_PATH] = TEXT("");
 
-		MultiByteToWideChar(CP_ACP, 0, szFullPath, strlen(szFullPath), szWideFullPath, MAX_PATH);
+		MultiByteToWideChar(CP_ACP, 0, szFullPath, (_int)strlen(szFullPath), szWideFullPath, MAX_PATH);
 
 		if (!strcmp(szExt, ".dds"))				// 확장자명에 따라서 타입에 따른 텍스쳐 생성
 			pModelTexture->pModelTexture[i] = CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::DDS, szWideFullPath);		
@@ -537,7 +537,7 @@ HRESULT CModel::Create_Materials(aiMaterial * pMaterial, const char * pMeshFileP
 
 HRESULT CModel::Sort_MeshesByMaterial()
 {
-	_uint		iNumMaterials = m_ModelTextures.size();
+	_uint		iNumMaterials = (_uint)m_ModelTextures.size();
 
 	m_SortByMaterialMesh.resize(iNumMaterials);	// 머테리얼의 개수만큼 공간과 원소를 잡아준다.
 												// reserve는 공간만 잡아줄 뿐 원소는 채워주지않고, 인자가 capacity보다 클때 iter를 사용할수없고 무효화되는 주의점이 있음.

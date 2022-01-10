@@ -21,6 +21,9 @@ public:
 	HRESULT Ready_Layer_Player(const wstring& pLayerTag);
 	HRESULT Ready_Layer_Camera(const wstring& pLayerTag);
 	HRESULT Ready_Layer_StageMap(const wstring& pLayerTag);
+	HRESULT Ready_Layer_Terrain(const wstring& pLayerTag);
+
+	HRESULT Ready_Layer_Dummy(const wstring& pLayerTag);
 
 private:
 	HRESULT Ready_Prototype_Component();

@@ -95,7 +95,7 @@ _int CObjMgr::Late_Update(_double DeltaTime)
 
 void CObjMgr::Clear(_int iSceneIndex)
 {
-	if (iSceneIndex >= m_iNumScenes)
+	if (iSceneIndex >= (_int)m_iNumScenes)
 		return;
 
 	for (auto& pair : m_pGameObjects[iSceneIndex])
