@@ -29,6 +29,8 @@ HRESULT CStageMap::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_Components()))
 		return E_FAIL;
 
+	m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(200.f, 0.f, 180.f, 1.f));
+
 	return S_OK;
 }
 

@@ -264,7 +264,7 @@ void CMFCToolView::OnInitialUpdate()
 
 	hr = m_pManagement->Add_Prototype(L"GameObject_ToolCamera", CToolCamera::Create(m_pDevice, m_pDeviceContext));
 	hr = m_pManagement->Add_Prototype(L"GameObject_StageMap", CToolMap::Create(m_pDevice, m_pDeviceContext));
-	hr = m_pManagement->Add_Prototype(L"GameObject_Dummy", CToolDummy::Create(m_pDevice, m_pDeviceContext));
+	hr = m_pManagement->Add_Prototype(L"GameObject_Dummy",		CToolDummy::Create(m_pDevice, m_pDeviceContext));
 
 	hr = m_pManagement->Add_Prototype(L"GameObject_Apple",		CToolApple::Create(m_pDevice, m_pDeviceContext));
 	hr = m_pManagement->Add_Prototype(L"GameObject_Bag",		CToolBag::Create(m_pDevice, m_pDeviceContext));

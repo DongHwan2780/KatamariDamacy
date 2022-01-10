@@ -175,6 +175,9 @@
     <Filter Include="01.Object\02.CommonObj\03.UI\04.LoadingUI">
       <UniqueIdentifier>{4cf90ba8-8676-4ac1-8e1d-95b539132089}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Object\01.ObjList\34.Dummy">
+      <UniqueIdentifier>{55fb204f-bebf-4d2b-a57a-edc3ff7a782f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -354,6 +357,9 @@
     <ClInclude Include="..\Headers\LoadingUI.h">
       <Filter>01.Object\02.CommonObj\03.UI\04.LoadingUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\Dummy.h">
+      <Filter>01.Object\01.ObjList\34.Dummy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -517,6 +523,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\LoadingUI.cpp">
       <Filter>01.Object\02.CommonObj\03.UI\04.LoadingUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Dummy.cpp">
+      <Filter>01.Object\01.ObjList\34.Dummy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

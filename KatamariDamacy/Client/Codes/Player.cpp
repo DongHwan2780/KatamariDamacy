@@ -220,7 +220,7 @@ HRESULT CPlayer::SetUp_Components()
 	/* For.Com_Transform */
 
 	CTransform::TRANSFORMDESC	TransformDesc;
-	TransformDesc.fSpeedPerSec = 3.f;
+	TransformDesc.fSpeedPerSec = 10.f;
 
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;

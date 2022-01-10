@@ -28,10 +28,11 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Prototype_GameObject()))
 		return E_FAIL;
 
-
 	if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
 		return E_FAIL;
 
+	if (FAILED(Ready_Layer_Terrain(TEXT("Layer_Terrain"))))
+		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
@@ -49,6 +50,9 @@ HRESULT CStageOne::Initialize()
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer_PlayerMoveUI(TEXT("Layer_PlayerMoveUI"))))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_Dummy(TEXT("Layer_Dummy"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -129,6 +133,48 @@ HRESULT CStageOne::Ready_Layer_StageMap(const wstring& pLayerTag)
 		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Layer_Terrain(const wstring & pLayerTag)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_Terrain"), pLayerTag)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Layer_Dummy(const wstring & pLayerTag)
+{
+	HANDLE hFile = CreateFile(L"../../MFCTool/Data/Object/Collider.dat", GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		E_FAIL;
+
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	DWORD dwByte = 0;
+	CTransform::TRANSFORMDESC TransformDesc;
+
+	while (true)
+	{
+		ReadFile(hFile, &TransformDesc.vPosition, sizeof(_vector), &dwByte, nullptr);
+		ReadFile(hFile, &TransformDesc.vScale, sizeof(_float3), &dwByte, nullptr);
+
+		if (dwByte == 0)
+			break;
+
+		if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_Dummy"), pLayerTag, &TransformDesc)))
+			return E_FAIL;	
+	}
+
+	CloseHandle(hFile);
+
+	RELEASE_INSTANCE(CManagement);
+
 	return S_OK;
 }
 

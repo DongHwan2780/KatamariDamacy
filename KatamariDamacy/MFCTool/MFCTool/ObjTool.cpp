@@ -245,6 +245,10 @@ void CObjTool::OnLbnSelchangeObjList()
 		m_fColScaleX = m_pCollider->GetTransformDesc().vSize.x;
 		m_fColScaleY = m_pCollider->GetTransformDesc().vSize.y;
 		m_fColScaleZ = m_pCollider->GetTransformDesc().vSize.z;
+
+		m_fScrollPosX.SetPos(m_fColPosX * 10);
+		m_fScrollPosY.SetPos(m_fColPosY * 10);
+		m_fScrollPosZ.SetPos(m_fColPosZ * 10);
 	}
 	else
 	{
@@ -301,6 +305,9 @@ void CObjTool::OnEnChangeScaleX()
 void CObjTool::OnEnChangeCollPosX()
 {
 	UpdateData(TRUE);
+
+	m_fScrollPosX.SetPos(m_fColPosX * 10);
+
 	m_pTransform->Set_PosX(CTransform::POSITION, m_fColPosX);
 	UpdateData(FALSE);
 }
@@ -309,6 +316,8 @@ void CObjTool::OnEnChangeCollPosX()
 void CObjTool::OnEnChangeCollPosY()
 {
 	UpdateData(TRUE);
+	m_fScrollPosY.SetPos(m_fColPosY * 10);
+
 	m_pTransform->Set_PosY(CTransform::POSITION, m_fColPosY);
 	UpdateData(FALSE);
 }
@@ -317,6 +326,8 @@ void CObjTool::OnEnChangeCollPosY()
 void CObjTool::OnEnChangeCollPosZ()
 {
 	UpdateData(TRUE);
+	m_fScrollPosZ.SetPos(m_fColPosZ * 10);
+
 	m_pTransform->Set_PosZ(CTransform::POSITION, m_fColPosZ);
 	UpdateData(FALSE);
 }
@@ -325,8 +336,10 @@ void CObjTool::OnEnChangeCollPosZ()
 void CObjTool::OnEnChangeCollScaleX()
 {
 	UpdateData(TRUE);
+	_float3 vScale = _float3(m_fColScaleX, m_fColScaleY, m_fColScaleZ);
+	m_pCollider->Set_Points(vScale);
 
-	m_pCollider->Set_Scale(XMVectorSet(m_fColScaleX, m_fColScaleY, m_fColScaleZ, 1.f));
+	//m_pCollider->Set_Scale(XMVectorSet(m_fColScaleX, m_fColScaleY, m_fColScaleZ, 1.f));
 
 	UpdateData(FALSE);
 }
@@ -335,7 +348,9 @@ void CObjTool::OnEnChangeCollScaleX()
 void CObjTool::OnEnChangeCollScaleY()
 {
 	UpdateData(TRUE);
-	m_pCollider->Set_Scale(XMVectorSet(m_fColScaleX, m_fColScaleY, m_fColScaleZ, 1.f));
+	_float3 vScale = _float3(m_fColScaleX, m_fColScaleY, m_fColScaleZ);
+	m_pCollider->Set_Points(vScale);
+	//m_pCollider->Set_Scale(XMVectorSet(m_fColScaleX, m_fColScaleY, m_fColScaleZ, 1.f));
 	UpdateData(FALSE);
 }
 
@@ -343,7 +358,9 @@ void CObjTool::OnEnChangeCollScaleY()
 void CObjTool::OnEnChangeCollScaleZ()
 {
 	UpdateData(TRUE);
-	m_pCollider->Set_Scale(XMVectorSet(m_fColScaleX, m_fColScaleY, m_fColScaleZ, 1.f));
+	_float3 vScale = _float3(m_fColScaleX, m_fColScaleY, m_fColScaleZ);
+	m_pCollider->Set_Points(vScale);
+	//m_pCollider->Set_Scale(XMVectorSet(m_fColScaleX, m_fColScaleY, m_fColScaleZ, 1.f));
 	UpdateData(FALSE);
 }
 
@@ -353,9 +370,9 @@ void CObjTool::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	UpdateData(TRUE);
 
-	m_fColPosX = (float)m_fScrollPosX.GetPos();
-	m_fColPosY = (float)m_fScrollPosY.GetPos();
-	m_fColPosZ = (float)m_fScrollPosZ.GetPos();
+	m_fColPosX = (float)m_fScrollPosX.GetPos() / 10.f;
+	m_fColPosY = (float)m_fScrollPosY.GetPos() / 10.f;
+	m_fColPosZ = (float)m_fScrollPosZ.GetPos() / 10.f;
 
 
 	m_pTransform->Set_PosX(CTransform::POSITION, m_fColPosX);
@@ -374,13 +391,19 @@ BOOL CObjTool::OnInitDialog()
 
 	UpdateData(FALSE);
 
+
+	m_fScrollPosX.SetPos(m_fColPosX * 10);
+	m_fScrollPosY.SetPos(m_fColPosY * 10);
+	m_fScrollPosZ.SetPos(m_fColPosZ * 10);
+
+
 	m_fScrollPosX.SetTicFreq(1);
 	m_fScrollPosY.SetTicFreq(1);
 	m_fScrollPosZ.SetTicFreq(1);
 
-	m_fScrollPosX.SetRange(-100, 450);
-	m_fScrollPosY.SetRange(-100, 450);
-	m_fScrollPosZ.SetRange(-100, 450);
+	m_fScrollPosX.SetRange(-100, 4500);
+	m_fScrollPosY.SetRange(-500, 500);
+	m_fScrollPosZ.SetRange(-100, 4500);
 
 	// TODO:  여기에 추가 초기화 작업을 추가합니다.
 

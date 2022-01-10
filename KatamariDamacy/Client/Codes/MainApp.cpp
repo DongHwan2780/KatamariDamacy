@@ -35,7 +35,7 @@ HRESULT CMainApp::Initialize()
 _uint CMainApp::Update(_double dDeltaTime)
 {
 
-	m_fDeltaTime += dDeltaTime;
+	//m_fDeltaTime += dDeltaTime;
 
 	m_pManagement->Update(dDeltaTime);
 
