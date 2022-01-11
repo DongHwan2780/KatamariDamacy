@@ -289,25 +289,14 @@ void CMapTool::OnBnClickedLoad()
 		ReadFile(hFile, &m_iTileY, sizeof(_uint), &dwByte, nullptr);
 		ReadFile(hFile, &m_fTileInterval, sizeof(_float), &dwByte, nullptr);
 
-		m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Terrain"), CVIBuffer_Terrain::Create(pView->Get_Device(), pView->Get_DeviceContext(), TEXT("../../Client/Bin/ShaderFiles/Shader_Terrain.fx"), m_iTileX, m_iTileY, m_fTileInterval));
-
+		m_pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_VIBuffer_Terrain"), CVIBuffer_Terrain::CreateLoadData(pView->Get_Device(), pView->Get_DeviceContext(), TEXT("../../Client/Bin/ShaderFiles/Shader_Terrain.fx"), hFile, m_iTileX, m_iTileY, m_fTileInterval));
+		
 		m_pManagement->Add_Prototype(TEXT("GameObject_Terrain"), CToolTerrain::Create(pView->Get_Device(), pView->Get_DeviceContext()));
 
 		m_pManagement->Add_GameObj(STATIC_SCENE, L"GameObject_Terrain", L"Layer_Terrain");
 
 		CVIBuffer_Terrain* m_pTerrainBuffer = dynamic_cast<CVIBuffer_Terrain*>(m_pManagement->GetComponent(STATIC_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
-		int i = 0;
-		//for (int i = 0; i < (m_iTileX*m_iTileY) - 1; ++i)
-		while (1)
-		{
-			ReadFile(hFile, &pVertexPos, sizeof(_float3), &dwByte, nullptr);
-			if (0 == dwByte)
-				break;
-			m_pTerrainBuffer->Set_TerrainPosY(i, pVertexPos.y);
-			++i;
-		}
 
-		Safe_Release(m_pTerrainBuffer);
 		CloseHandle(hFile);
 	}
 	pView->m_bInvalidate = true;

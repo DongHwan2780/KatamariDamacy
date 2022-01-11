@@ -82,7 +82,7 @@ void CObjTool::OnLbnSelchangeFBXList()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CManagement*	m_pManagement = GET_INSTANCE(CManagement);
 
-	//m_ObjList.ResetContent();
+	m_ObjList.ResetContent();
 
 	int iIdx = m_FBXListBox.GetCurSel();
 	int ObjCnt = 0;
@@ -93,7 +93,7 @@ void CObjTool::OnLbnSelchangeFBXList()
 	m_strObjName += wstrModelName;
 	m_strLayerName += wstrModelName;
 
-//	ObjCnt = m_pManagement->GetGameObjectListSize(STATIC_SCENE, m_strLayerName.GetString());
+	ObjCnt = m_pManagement->GetGameObjectListSize(STATIC_SCENE, m_strLayerName.GetString());
 
 	for (int i = 0; i < ObjCnt; ++i)
 	{
@@ -103,10 +103,9 @@ void CObjTool::OnLbnSelchangeFBXList()
 		ObjName += ObjNum;
 
 		m_ObjList.AddString(ObjName);
-		RELEASE_INSTANCE(CManagement);
-		UpdateData(FALSE);
 	}
 
+	UpdateData(FALSE);
 	RELEASE_INSTANCE(CManagement);
 }
 
@@ -216,6 +215,7 @@ void CObjTool::OnBnClickedSave()
 	pView->m_bInvalidate = true;
 	RELEASE_INSTANCE(CManagement);
 }
+
 
 
 void CObjTool::OnLbnSelchangeObjList()
