@@ -223,7 +223,7 @@ void CMFCToolView::OnInitialUpdate()
 	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_StageMap", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/StageMap/", "StageMap.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
 	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
-	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
+	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(180.0f));
 	ModelPivotMatrix = ScaleMatrix * RotationMatrix;
 	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_Apple", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/Object/", "Apple.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_Bag", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/Object/", "Bag.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
@@ -389,7 +389,7 @@ void CMFCToolView::OnLButtonDown(UINT nFlags, CPoint point)
 
 		else if (m_pVIBuffer->RayCast(vOut, g_hWnd, g_iWinCX, g_iWinCY, matWorld))
 		{
-			vPosition = {vOut.x, vOut.y + 1.f, vOut.z};
+			vPosition = {vOut.x, vOut.y, vOut.z};
 			//vPosition = vOut;
 
 			CString FbxName;
