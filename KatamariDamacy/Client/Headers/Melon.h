@@ -8,7 +8,8 @@ class CRenderer;
 class CTransform;
 class CModel;
 END
-
+BEGIN(Client)
+END
 class CMelon final : public CObjList
 {
 private:

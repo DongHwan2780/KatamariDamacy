@@ -29,10 +29,17 @@ HRESULT CBag::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_Components()))
 		return E_FAIL;
 
-	_float3 vPickingPos = _float3{0.f ,0.f, 0.f};
-	memcpy(&vPickingPos, pArg, sizeof(_float3));
+	CTransform::TRANSFORMDESC TransformDesc;
 
-	m_pTransform->Set_State(CTransform::POSITION, XMLoadFloat3(&vPickingPos));
+	if (pArg)
+	{
+		memcpy(&TransformDesc, pArg, sizeof(CTransform::TRANSFORMDESC));
+	}
+
+
+	m_pTransform->Set_State(CTransform::POSITION, TransformDesc.vPosition);
+
+	m_pTransform->Set_Scale(XMVectorSet(TransformDesc.fScale, TransformDesc.fScale, TransformDesc.fScale, 0.f));
 
 	return S_OK;
 }
@@ -87,7 +94,7 @@ HRESULT CBag::SetUp_Components()
 		return E_FAIL;
 
 	/* For.Com_Model */
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Model_Bag", L"Com_Model", (CComponent**)&m_pModel)))
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Bag", L"Com_Model", (CComponent**)&m_pModel)))
 		return E_FAIL;
 
 	/* For.Com_Transform */
@@ -120,7 +127,7 @@ CBag * CBag::Create(DEVICES)
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX("Failed to Creating CStageMap");
+		MSG_BOX("Failed to Creating CBag");
 		Safe_Release(pInstance);
 	}
 
@@ -133,7 +140,7 @@ CObj * CBag::Clone(void * pArg)
 
 	if (FAILED(pInstance->Initialize_Clone(pArg)))
 	{
-		MSG_BOX("Failed to Creating CStageMap");
+		MSG_BOX("Failed to Creating CBag");
 		Safe_Release(pInstance);
 	}
 
@@ -142,10 +149,10 @@ CObj * CBag::Clone(void * pArg)
 
 void CBag::Free()
 {
-	__super::Free();
 
-	Safe_Release(m_pCollider);
+	//Safe_Release(m_pCollider);
 	Safe_Release(m_pTransform);
 	Safe_Release(m_pModel);
 	Safe_Release(m_pRenderer);
+	__super::Free();
 }

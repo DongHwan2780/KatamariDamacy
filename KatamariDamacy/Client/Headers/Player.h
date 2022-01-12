@@ -6,6 +6,7 @@
 #include "ClientDefines.h"
 #include "Obj.h"
 #include "PlayerBall.h"
+#include "Management.h"
 
 BEGIN(Engine)
 class CCollider;
@@ -34,6 +35,7 @@ private:
 	void Movement(_double DeltaTime);
 	void Acceleration(_double DeltaTime, _float Ballsize);
 	void ResistAccel(_double DeltaTime, _float Ballsize);
+	void Gravity(_double DeltaTime);
 
 private:
 	HRESULT SetUp_Components();
@@ -52,7 +54,7 @@ private:
 	CCollider*		m_pCollider = nullptr;
 
 	CTransform*		m_pPlayerBallTransform = nullptr;
-
+	CVIBuffer_Terrain* m_pVIBuffer = nullptr;
 private:
 
 	// ¼Óµµ  m_pTransform.speed = ballsize * accel

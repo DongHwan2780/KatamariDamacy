@@ -43,9 +43,11 @@ _int CPlayerBall::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
+
 	SetTransform();
 
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
+	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
 
 	return _int();
 }
@@ -84,6 +86,7 @@ HRESULT CPlayerBall::Render()
 
 #ifdef _DEBUG
 	m_pCollider->Render();
+	m_pColliderSphere->Render();
 #endif
 
 	return S_OK;
@@ -111,7 +114,13 @@ HRESULT CPlayerBall::SetUp_Components()
 	CCollider::COLLIDERDESC		ColliderDesc;
 	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_AABB", L"Com_Collider", (CComponent**)&m_pCollider, &ColliderDesc)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_AABB", L"Com_AABB", (CComponent**)&m_pCollider, &ColliderDesc)))
+		return E_FAIL;
+
+
+	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
+	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_Sphere", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
 		return E_FAIL;
 
 	return S_OK;
@@ -180,6 +189,8 @@ void CPlayerBall::Free()
 {
 	__super::Free();
 
+	Safe_Release(m_pColliderSphere);
+	Safe_Release(m_pPlayerTransform);
 	Safe_Release(m_pCollider);
 	Safe_Release(m_pTransform);
 	Safe_Release(m_pModel);

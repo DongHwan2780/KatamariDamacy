@@ -16,27 +16,42 @@ CObjList::CObjList(const CObjList & other)
 
 HRESULT CObjList::Initialize_Prototype()
 {
-	return E_NOTIMPL;
+	if (FAILED(__super::Initialize_Prototype()))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 HRESULT CObjList::Initialize_Clone(void * pArg)
 {
-	return E_NOTIMPL;
+	if (FAILED(__super::Initialize_Clone(pArg)))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 _int CObjList::Update(_double DeltaTime)
 {
+	if (0 > __super::Update(DeltaTime))
+		return -1;
+
 	return _int();
 }
 
 _int CObjList::Late_Update(_double DeltaTime)
 {
+	if (0 > __super::Late_Update(DeltaTime))
+		return -1;
+
 	return _int();
 }
 
 HRESULT CObjList::Render()
 {
-	return E_NOTIMPL;
+	if (FAILED(__super::Render()))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 void CObjList::Gravity(_double DeltaTime)
@@ -58,4 +73,5 @@ CObj * CObjList::Clone(void * pArg)
 
 void CObjList::Free()
 {
+	__super::Free();
 }

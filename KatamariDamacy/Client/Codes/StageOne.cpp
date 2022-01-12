@@ -28,11 +28,12 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Prototype_GameObject()))
 		return E_FAIL;
 
+	if (FAILED(Ready_Layer_Terrain(TEXT("Layer_Terrain"))))
+		return E_FAIL;
+
 	if (FAILED(Ready_Layer_Player(TEXT("Layer_Player"))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_Terrain(TEXT("Layer_Terrain"))))
-		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
@@ -54,6 +55,8 @@ HRESULT CStageOne::Initialize()
 
 	if (FAILED(Ready_Layer_Dummy(TEXT("Layer_Dummy"))))
 		return E_FAIL;
+
+	Ready_Layer_StageObj();
 
 	return S_OK;
 }
@@ -174,6 +177,157 @@ HRESULT CStageOne::Ready_Layer_Dummy(const wstring & pLayerTag)
 	CloseHandle(hFile);
 
 	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Layer_StageObj()
+{
+	wstring wstrFilePath[32] = { L"", L"", L"", L"", L"", L"", L"", L"", L"", L""
+		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
+		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
+		, L"" , L"" }
+
+
+		, wstrProtoTag[32] = { L"", L"", L"", L"", L"", L"", L"", L"", L"", L""
+		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
+		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
+		, L"" , L"" }
+
+		, wstrLayerTag[32] = { L"", L"", L"", L"", L"", L"", L"", L"", L"", L""
+			, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
+			, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
+			, L"" , L"" };
+
+	wstrFilePath[0] = L"../../MFCTool/Data/Object/Apple.dat";
+	wstrFilePath[1] = L"../../MFCTool/Data/Object/Bag.dat";
+	wstrFilePath[2] = L"../../MFCTool/Data/Object/Banana.dat";
+	wstrFilePath[3] = L"../../MFCTool/Data/Object/Bansai.dat";
+	wstrFilePath[4] = L"../../MFCTool/Data/Object/Bat.dat";
+	wstrFilePath[5] = L"../../MFCTool/Data/Object/Book0.dat";
+	wstrFilePath[6] = L"../../MFCTool/Data/Object/Book1.dat";
+	wstrFilePath[7] = L"../../MFCTool/Data/Object/Bowling.dat";
+	wstrFilePath[8] = L"../../MFCTool/Data/Object/Cake.dat";
+	wstrFilePath[9] = L"../../MFCTool/Data/Object/Can.dat";
+	wstrFilePath[10] = L"../../MFCTool/Data/Object/Candy.dat";
+	wstrFilePath[11] = L"../../MFCTool/Data/Object/Clock.dat";
+	wstrFilePath[12] = L"../../MFCTool/Data/Object/Dice.dat";
+	wstrFilePath[13] = L"../../MFCTool/Data/Object/DrinkCan0.dat";
+	wstrFilePath[14] = L"../../MFCTool/Data/Object/DrinkCan1.dat";
+	wstrFilePath[15] = L"../../MFCTool/Data/Object/Egg.dat";
+	wstrFilePath[16] = L"../../MFCTool/Data/Object/Eraser.dat";
+	wstrFilePath[17] = L"../../MFCTool/Data/Object/Fork.dat";
+	wstrFilePath[18] = L"../../MFCTool/Data/Object/FryPan.dat";
+	wstrFilePath[19] = L"../../MFCTool/Data/Object/LipStick.dat";
+	wstrFilePath[20] = L"../../MFCTool/Data/Object/Magnet.dat";
+	wstrFilePath[21] = L"../../MFCTool/Data/Object/Melon.dat";
+	wstrFilePath[22] = L"../../MFCTool/Data/Object/MilkPack.dat";
+	wstrFilePath[23] = L"../../MFCTool/Data/Object/Orange.dat";
+	wstrFilePath[24] = L"../../MFCTool/Data/Object/Pilon.dat";
+	wstrFilePath[25] = L"../../MFCTool/Data/Object/Pin0.dat";
+	wstrFilePath[26] = L"../../MFCTool/Data/Object/Pin1.dat";
+	wstrFilePath[27] = L"../../MFCTool/Data/Object/Radio.dat";
+	wstrFilePath[28] = L"../../MFCTool/Data/Object/Spoon.dat";
+	wstrFilePath[29] = L"../../MFCTool/Data/Object/Stand.dat";
+	wstrFilePath[30] = L"../../MFCTool/Data/Object/SunFlower.dat";
+	wstrFilePath[31] = L"../../MFCTool/Data/Object/Tulip.dat";
+
+	wstrProtoTag[0] =		L"GameObject_Apple";
+	wstrProtoTag[1] =		L"GameObject_Bag";
+	wstrProtoTag[2] =		L"GameObject_Banana";
+	wstrProtoTag[3] =		L"GameObject_Bat";
+	wstrProtoTag[4] =		L"GameObject_Bansai";
+	wstrProtoTag[5] =		L"GameObject_Book0";
+	wstrProtoTag[6] =		L"GameObject_Book1";
+	wstrProtoTag[7] =		L"GameObject_Bowling";
+	wstrProtoTag[8] =		L"GameObject_Cake";
+	wstrProtoTag[9] =		L"GameObject_Can";
+	wstrProtoTag[10] =		L"GameObject_Candy";
+	wstrProtoTag[11] =		L"GameObject_Clock";
+	wstrProtoTag[12] =		L"GameObject_Dice";
+	wstrProtoTag[13] =		L"GameObject_DrinkCan0";
+	wstrProtoTag[14] =		L"GameObject_DrinkCan1";
+	wstrProtoTag[15] =		L"GameObject_Egg";
+	wstrProtoTag[16] =		L"GameObject_Eraser";
+	wstrProtoTag[17] =		L"GameObject_Fork";
+	wstrProtoTag[18] =		L"GameObject_FryPan";
+	wstrProtoTag[19] =		L"GameObject_LipStick";
+	wstrProtoTag[20] =		L"GameObject_Magnet";
+	wstrProtoTag[21] =		L"GameObject_Melon";
+	wstrProtoTag[22] =		L"GameObject_MilkPack";
+	wstrProtoTag[23] =		L"GameObject_Orange";
+	wstrProtoTag[24] =		L"GameObject_Pilon";
+	wstrProtoTag[25] =		L"GameObject_Pin0";
+	wstrProtoTag[26] =		L"GameObject_Pin1";
+	wstrProtoTag[27] =		L"GameObject_Radio";
+	wstrProtoTag[28] =		L"GameObject_Spoon";
+	wstrProtoTag[29] =		L"GameObject_Stand";
+	wstrProtoTag[30] =		L"GameObject_SunFlower";
+	wstrProtoTag[31] =		L"GameObject_Tulip";
+
+	wstrLayerTag[0] =	L"Layer_Apple";
+	wstrLayerTag[1] =	L"Layer_Bag";
+	wstrLayerTag[2] =	L"Layer_Banana";
+	wstrLayerTag[3] =	L"Layer_Bat";
+	wstrLayerTag[4] =	L"Layer_Bansai";
+	wstrLayerTag[5] =	L"Layer_Book0";
+	wstrLayerTag[6] =	L"Layer_Book1";
+	wstrLayerTag[7] =	L"Layer_Bowling";
+	wstrLayerTag[8] =	L"Layer_Cake";
+	wstrLayerTag[9] =	L"Layer_Can";
+	wstrLayerTag[10] =	L"Layer_Candy";
+	wstrLayerTag[11] =	L"Layer_Clock";
+	wstrLayerTag[12] =	L"Layer_Dice";
+	wstrLayerTag[13] =	L"Layer_DrinkCan0";
+	wstrLayerTag[14] =	L"Layer_DrinkCan1";
+	wstrLayerTag[15] =	L"Layer_Egg";
+	wstrLayerTag[16] =	L"Layer_Eraser";
+	wstrLayerTag[17] =	L"Layer_Fork";
+	wstrLayerTag[18] =	L"Layer_FryPan";
+	wstrLayerTag[19] =	L"Layer_LipStick";
+	wstrLayerTag[20] =	L"Layer_Magnet";
+	wstrLayerTag[21] =	L"Layer_Melon";
+	wstrLayerTag[22] =	L"Layer_MilkPack";
+	wstrLayerTag[23] =	L"Layer_Orange";
+	wstrLayerTag[24] =	L"Layer_Pilon";
+	wstrLayerTag[25] =	L"Layer_Pin0";
+	wstrLayerTag[26] =	L"Layer_Pin1";
+	wstrLayerTag[27] =	L"Layer_Radio";
+	wstrLayerTag[28] =	L"Layer_Spoon";
+	wstrLayerTag[29] =	L"Layer_Stand";
+	wstrLayerTag[30] =	L"Layer_SunFlower";
+	wstrLayerTag[31] =	L"Layer_Tulip";
+
+	for (int i = 0; i < 32; ++i)
+	{
+
+		HANDLE hFile = CreateFile(wstrFilePath[i].c_str(), GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			E_FAIL;
+
+		CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+		DWORD dwByte = 0;
+		CTransform::TRANSFORMDESC TransformDesc;
+
+		while (true)
+		{
+			ReadFile(hFile, &TransformDesc.vPosition, sizeof(_vector), &dwByte, nullptr);
+			ReadFile(hFile, &TransformDesc.fScale, sizeof(_float), &dwByte, nullptr);
+
+			if (dwByte == 0)
+				break;
+
+			if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, wstrProtoTag[i], wstrLayerTag[i], &TransformDesc)))
+				return E_FAIL;
+		}
+
+		RELEASE_INSTANCE(CManagement);
+		CloseHandle(hFile);
+	}
+
+
 
 	return S_OK;
 }

@@ -45,6 +45,7 @@ private:
 	CRenderer*		m_pRenderer = nullptr;
 	CModel*			m_pModel = nullptr;
 	CCollider*		m_pCollider = nullptr;
+	CCollider*		m_pColliderSphere = nullptr;
 
 
 private:

@@ -252,6 +252,40 @@ HRESULT CVIBuffer_Terrain::ReadyWithSave(const _tchar * pShaderFilePath, const H
 	return S_OK;
 }
 
+_bool CVIBuffer_Terrain::IsGround(_float3 & inOut) const
+{
+	VTXINFO* pVertices = (VTXINFO*)m_pVertices;
+	
+	_uint iRow = _uint(inOut.z / m_fVertexInterval);
+	_uint iCol = _uint(inOut.x / m_fVertexInterval);
+	_uint iIndex = iRow * m_iVertexCountX + iCol;
+
+	if (m_iNumVertices <= iIndex)
+		return false;
+
+	_vector vPlane;
+
+	
+	_float fRatioX = fabs(pVertices[iIndex + m_iVertexCountX].vPos.x - inOut.x);
+	_float fRatioZ = fabs(pVertices[iIndex + m_iVertexCountX].vPos.z - inOut.z);
+
+	if (fRatioZ < fRatioX) // ¿À¸¥ÂÊ »ï°¢Çü
+	{
+		vPlane = XMPlaneFromPoints(XMLoadFloat3(&pVertices[iIndex + m_iVertexCountX].vPos)
+			, XMLoadFloat3(&pVertices[iIndex + m_iVertexCountX + 1].vPos)
+			, XMLoadFloat3(&pVertices[iIndex + 1].vPos));
+	}
+	else // ¿ÞÂÊ »ï°¢Çü
+	{
+		vPlane = XMPlaneFromPoints(XMLoadFloat3(&pVertices[iIndex + m_iVertexCountX].vPos)
+			, XMLoadFloat3(&pVertices[iIndex + 1].vPos)
+			, XMLoadFloat3(&pVertices[iIndex].vPos));
+	}
+	inOut.y = -(XMVectorGetX(vPlane) * inOut.x + XMVectorGetZ(vPlane) * inOut.z + XMVectorGetW(vPlane)) / XMVectorGetY(vPlane);
+
+	return true;
+}
+
 CVIBuffer_Terrain * CVIBuffer_Terrain::Create(DEVICES,  const _tchar* pShaderFilePath, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval)
 {
 	CVIBuffer_Terrain*	pInstance = new CVIBuffer_Terrain(pDevice, pDeviceContext, iVertexCountX, iVertexCountZ, fVertexInterval);

@@ -17,6 +17,7 @@ public:
 	{
 		_vector		vPosition;
 		_float3		vScale;
+		_float		fScale;
 		_float		fSpeedPerSec;
 		_float		fRotatePerSec;
 	}TRANSFORMDESC;

@@ -7,7 +7,7 @@ class CCollider;
 class CRenderer;
 class CTransform;
 END
-
+BEGIN(Client)
 class CDummy final : public CObj
 {
 private:
@@ -37,3 +37,4 @@ private:
 	CCollider*		m_pOBBCom = nullptr;
 };
 
+END

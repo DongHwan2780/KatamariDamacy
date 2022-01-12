@@ -21,6 +21,8 @@ public:
 	void Set_TerrainPosY(_uint _iIndex, _float _fPosY);
 	virtual HRESULT ReadyWithSave(const _tchar * pShaderFilePath, const HANDLE& hFile);
 
+	_bool IsGround(_float3& inOut) const;
+
 public:
 	static CVIBuffer_Terrain* Create(DEVICES, const _tchar* pShaderFilePath, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval = 1.f);
 	static CVIBuffer_Terrain* CreateLoadData(DEVICES, const _tchar* pShaderFilePath, const HANDLE& hFile, _uint iVertexCountX, _uint iVertexCountZ, _float fVertexInterval = 1.f);
