@@ -68,9 +68,12 @@ HRESULT CCollider::Initialize_Clone(void * pArg)
 	if (nullptr != pArg)
 		memcpy(&m_ColliderDesc, pArg, sizeof(COLLIDERDESC));
 
-	m_isCollision = true;
+	m_isCollision = false;
 
 	_float3		vExtents, vCenter;
+
+	_float3		vSphereCenter;
+	_float		fRadius;
 
 	switch (m_eType)
 	{
@@ -100,6 +103,9 @@ HRESULT CCollider::Initialize_Clone(void * pArg)
 		break;
 
 	case CCollider::COLL_SPHERE:
+		vSphereCenter = _float3(0.f,0.f, 0.f);
+		fRadius = m_ColliderDesc.vSize.x;
+		m_pSphere = new BoundingSphere(vSphereCenter, fRadius);
 		break;
 	}
 
@@ -148,7 +154,7 @@ _bool CCollider::Update_State(_fmatrix TransformMatrix)
 	if (m_eType == CCollider::COLL_AABB)
 		XMStoreFloat4x4(&m_TransformMatrix, Remove_ScaleRotation(TransformMatrix));
 
-	else if (m_eType == CCollider::COLL_OBB)
+	else if (m_eType == CCollider::COLL_OBB || m_eType == CCollider::COLL_SPHERE)
 		XMStoreFloat4x4(&m_TransformMatrix, Remove_Scale(TransformMatrix));
 
 	return _bool();
@@ -245,6 +251,50 @@ _bool CCollider::Collision_OBB(CCollider * pTargetCollider)
 	pTargetCollider->m_isCollision = true;
 
 	return true;
+}
+
+_bool CCollider::Collision_Sphere(CCollider * pTargetCollider)
+{
+	if (COLL_SPHERE != m_eType ||
+		COLL_SPHERE != pTargetCollider->m_eType)
+		return false;
+
+	_vector		vMyCenter, vTargetCenter;
+	_float		fMyRadius, fTargetRadius;
+
+	_float3		vDiff;
+	_float		fDistance;
+
+
+	vMyCenter = XMVector3TransformCoord(XMLoadFloat3(&m_pSphere->Center), XMLoadFloat4x4(&m_TransformMatrix));
+	vTargetCenter = XMVector3TransformCoord(XMLoadFloat3(&pTargetCollider->m_pSphere->Center), XMLoadFloat4x4(&pTargetCollider->m_TransformMatrix));
+	//vMyCenter = m_pSphere->Center;
+	//vTargetCenter = pTargetCollider->m_pSphere->Center;
+
+	fMyRadius = m_pSphere->Radius;
+	fTargetRadius = pTargetCollider->m_pSphere->Radius;
+
+
+	XMStoreFloat3(&vDiff, (vTargetCenter - vMyCenter));
+
+	fDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&vDiff)));
+	//XMStoreFloat(&fDistance, XMVector3Length(XMLoadFloat3(&vDiff)));
+
+	if (fDistance <= (fMyRadius + fTargetRadius))
+	{
+		m_isCollision = true;
+		pTargetCollider->m_isCollision = true;
+
+		return true;
+	}
+	else
+	{
+		m_isCollision = false;
+		pTargetCollider->m_isCollision = false;
+
+		return false;
+	}
+
 }
 
 void CCollider::Set_Scale(_fvector vScale)

@@ -39,6 +39,9 @@ public:
 	_bool Update_State(_fmatrix TransformMatrix);
 	_bool Collision_AABB(CCollider* pTargetCollider);
 	_bool Collision_OBB(CCollider* pTargetCollider);
+	_bool Collision_Sphere(CCollider* pTargetCollider);
+
+
 
 	const COLLIDERDESC& GetTransformDesc() const { return m_ColliderDesc; }
 	void Set_Size(const _float3& ColSize) { m_ColliderDesc.vSize = ColSize; }

@@ -8,7 +8,7 @@ class CRenderer;
 class CTransform;
 class CModel;
 END
-
+BEGIN(Client)
 class CTulip final : public CObjList
 {
 private:
@@ -39,3 +39,4 @@ private:
 	CCollider*		m_pCollider = nullptr;
 };
 
+END

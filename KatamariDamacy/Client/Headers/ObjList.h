@@ -46,12 +46,6 @@ public:
 	virtual void Free() PURE;
 
 protected:
-	// 오브젝트 컴퍼넌트
-	CTransform*		m_pTransform = nullptr;
-	CRenderer*		m_pRenderer = nullptr;
-	CModel*			m_pModel = nullptr;
-
-
 	// 오브젝트 공통 사용 변수
 	_float		m_fObjSize = 0.f;					// 각 오브젝트 사이즈, 비교해서 붙을건지 튕겨나가게할건지
 	_bool		m_bStickCheck = false;
@@ -60,14 +54,7 @@ protected:
 	_float m_fGravityTime = 0.f;
 	_float m_fGravityY = 0.f;
 
-
-
-
-
-
 	CTransform*		m_pPlayerBallTransform = nullptr;
-
-
 };
 
 

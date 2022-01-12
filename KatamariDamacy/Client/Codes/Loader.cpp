@@ -25,7 +25,7 @@
 #include "Can.h"
 #include "Candy.h"
 #include "Clock.h"
-#include "Denden.h"
+
 #include "Dice.h"
 #include "DrinkCan0.h"
 #include "DrinkCan1.h"
@@ -45,7 +45,7 @@
 #include "Spoon.h"
 #include "Stand.h"
 #include "SunFlower.h"
-#include "Tree.h"
+
 #include "Tulip.h"
 
 CLoader::CLoader(DEVICES)
@@ -106,9 +106,7 @@ HRESULT CLoader::StageLoader()
 	_matrix		ModelPivotMatrix;
 	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
 	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
-
 	ModelPivotMatrix = ScaleMatrix * RotationMatrix;
-
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_Player"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/Katamari/", "OUJI01.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
 		return E_FAIL;
 
@@ -124,11 +122,53 @@ HRESULT CLoader::StageLoader()
 	/* Component_Model_StageMap*/
 	ScaleMatrix = XMMatrixScaling(15.f, 15.f,15.f);
 	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
-
 	ModelPivotMatrix = ScaleMatrix /** RotationMatrix*/;
-
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_StageMap"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/StageMap/", "StageMap.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
 		return E_FAIL;
+
+
+
+	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
+	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(180.0f));
+	ModelPivotMatrix = ScaleMatrix * RotationMatrix;
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Apple", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Apple.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bag", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bag.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Banana", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Banana.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bat", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bat.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bansai", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bansai.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Book0", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Book0.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Book1", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Book1.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bowling", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bowling.fbx",		TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Cake", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Cake.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Can", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Can.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Candy", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Candy.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Clock", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Clock.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Dice", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Dice.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_DrinkCan0", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "DrinkCan0.fbx",	TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_DrinkCan1", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "DrinkCan1.fbx",	TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Egg", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Egg.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Eraser", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Eraser.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Fork", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Fork.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_FryPan", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "FryPan.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_LipStick", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "LipStick.fbx",		TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Magnet", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Magnet.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Melon", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Melon.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_MilkPack", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "MilkPack.fbx",		TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Orange", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Orange.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Pilon", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Pilon.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Pin0", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Pin0.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Pin1", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Pin1.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Radio", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Radio.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Spoon", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Spoon.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Stand", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Stand.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_SunFlower", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "SunFlower.fbx",	TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Tulip", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Tulip.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -138,6 +178,10 @@ HRESULT CLoader::StageLoader()
 
 	/* For.Collider Component */
 	if (FAILED(pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Collider_OBB"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_OBB))))
+		return E_FAIL;
+
+	/* For.Collider Component */
+	if (FAILED(pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Collider_Sphere"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_SPHERE))))
 		return E_FAIL;
 
 	/* For.Terrain Buffer */
@@ -167,40 +211,38 @@ HRESULT CLoader::StageLoader()
 
 	pManagement->Add_Prototype(L"GameObject_Dummy",		CDummy::Create(m_pDevice, m_pDeviceContext));
 
-	//pManagement->Add_Prototype(L"GameObject_Apple",		CApple::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Bag",		CBag::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Banana",		CBanana::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Bat",		CBat::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Bansai",		CBansai::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Book0",		CBook0::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Book1",		CBook1::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Bowling",	CBowling::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Cake",		CCake::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Can",		CCan::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Candy",		CCandy::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Clock",		CClock::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Denden",		CDenden::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Dice",		CDice::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_DrinkCan0",	CDrinkCan0::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_DrinkCan1",	CDrinkCan1::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Egg",		CEgg::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Eraser",		CEraser::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Fork",		CFork::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_FryPan",		CFryPan::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_LipStick",	CLipStick::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Magnet",		CMagnet::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Melon",		CMelon::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_MilkPack",	CMilkPack::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Orange",		COrange::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Pilon",		CPilon::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Pin0",		CPin0::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Pin1",		CPin1::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Radio",		CRadio::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Spoon",		CSpoon::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Stand",		CStand::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_SunFlower",	CSunFlower::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Tree",		CTree::Create(m_pDevice, m_pDeviceContext));
-	//pManagement->Add_Prototype(L"GameObject_Tulip",		CTulip::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Apple",		CApple::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Bag",		CBag::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Banana",	CBanana::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Bat",		CBat::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Bansai",	CBansai::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Book0",		CBook0::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Book1",		CBook1::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Bowling",	CBowling::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Cake",		CCake::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Can",		CCan::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Candy",		CCandy::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Clock",		CClock::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Dice",		CDice::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_DrinkCan0",	CDrinkCan0::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_DrinkCan1",	CDrinkCan1::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Egg",		CEgg::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Eraser",	CEraser::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Fork",		CFork::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_FryPan",	CFryPan::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_LipStick",	CLipStick::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Magnet",	CMagnet::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Melon",		CMelon::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_MilkPack",	CMilkPack::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Orange",	COrange::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Pilon",		CPilon::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Pin0",		CPin0::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Pin1",		CPin1::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Radio",		CRadio::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Spoon",		CSpoon::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Stand",		CStand::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_SunFlower",	CSunFlower::Create(m_pDevice, m_pDeviceContext));
+	pManagement->Add_Prototype(L"GameObject_Tulip",		CTulip::Create(m_pDevice, m_pDeviceContext));
 
 	RELEASE_INSTANCE(CManagement);
 

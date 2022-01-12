@@ -9,6 +9,8 @@ class CTransform;
 class CModel;
 END
 
+BEGIN(Client)
+END
 class CApple final : public CObjList
 {
 private:
@@ -36,6 +38,9 @@ private:
 	CTransform*		m_pTransform = nullptr;
 	CRenderer*		m_pRenderer = nullptr;
 	CModel*			m_pModel = nullptr;
-	CCollider*		m_pCollider = nullptr;
+	CCollider*		m_pColliderSphere = nullptr;
+
+
+	CTransform*		m_pPlayerBallTransform = nullptr;
 };
 

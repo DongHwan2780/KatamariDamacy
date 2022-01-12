@@ -8,7 +8,8 @@ class CRenderer;
 class CTransform;
 class CModel;
 END
-
+BEGIN(Client)
+END
 class CFork final : public CObjList
 {
 private:

@@ -25,6 +25,8 @@ public:
 
 	HRESULT Ready_Layer_Dummy(const wstring& pLayerTag);
 
+	HRESULT Ready_Layer_StageObj();
+
 private:
 	HRESULT Ready_Prototype_Component();
 	HRESULT Ready_Prototype_GameObject();
