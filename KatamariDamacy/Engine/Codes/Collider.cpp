@@ -1,6 +1,10 @@
 #include "..\Headers\Collider.h"
 
 #include "PipeLine.h"
+#include "Layer.h"
+#include "Obj.h"
+#include "Transform.h"
+#include "Management.h"
 
 CCollider::CCollider(DEVICES)
 	:CComponent(pDevice, pDeviceContext)
@@ -268,17 +272,13 @@ _bool CCollider::Collision_Sphere(CCollider * pTargetCollider)
 
 	vMyCenter = XMVector3TransformCoord(XMLoadFloat3(&m_pSphere->Center), XMLoadFloat4x4(&m_TransformMatrix));
 	vTargetCenter = XMVector3TransformCoord(XMLoadFloat3(&pTargetCollider->m_pSphere->Center), XMLoadFloat4x4(&pTargetCollider->m_TransformMatrix));
-	//vMyCenter = m_pSphere->Center;
-	//vTargetCenter = pTargetCollider->m_pSphere->Center;
 
 	fMyRadius = m_pSphere->Radius;
 	fTargetRadius = pTargetCollider->m_pSphere->Radius;
 
 
 	XMStoreFloat3(&vDiff, (vTargetCenter - vMyCenter));
-
 	fDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&vDiff)));
-	//XMStoreFloat(&fDistance, XMVector3Length(XMLoadFloat3(&vDiff)));
 
 	if (fDistance <= (fMyRadius + fTargetRadius))
 	{
@@ -295,6 +295,69 @@ _bool CCollider::Collision_Sphere(CCollider * pTargetCollider)
 		return false;
 	}
 
+}
+
+_bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj *& Out)
+{
+
+	//auto iter_find = (*m_pGameObjects).find(_Layertag);	//iter_find == 레이어
+
+	//if ((*m_pGameObjects).end() == iter_find)
+	//	return false;
+
+	//for (auto& iter : iter_find->second->GetGameObjList())
+
+
+	//m_pLayer = pManagement->Get_GameObj();
+
+	//////////////////////////////////////////////////////////////////////////////////////
+	//CManagement* pManagement = GET_INSTANCE(CManagement);
+	//auto iter_find = pManagement->Get_GameObj();
+
+	//CCollider*	pMyCollider = static_cast<CCollider*>(_pObj->GetComponent(L"Com_SPHERE"));
+
+	//for (auto& iter : iter_find->GetGameObjList())		// 레이어에 있는 클론객체리스트
+	//{
+
+	//	CCollider*	pTargetCollider = static_cast<CCollider*>(iter->GetComponent(L"Com_SPHERE"));
+
+	//	if (COLL_SPHERE != m_eType ||
+	//		COLL_SPHERE != pTargetCollider->m_eType)
+	//		return false;
+
+	//	_vector		vMyCenter, vTargetCenter;
+	//	_float		fMyRadius, fTargetRadius;
+
+	//	_float3		vDiff;
+	//	_float		fDistance;
+
+	//	vMyCenter = XMVector3TransformCoord(XMLoadFloat3(&m_pSphere->Center), XMLoadFloat4x4(&m_TransformMatrix));
+	//	vTargetCenter = XMVector3TransformCoord(XMLoadFloat3(&pTargetCollider->m_pSphere->Center), XMLoadFloat4x4(&pTargetCollider->m_TransformMatrix));
+
+	//	fMyRadius = m_pSphere->Radius;
+	//	fTargetRadius = pTargetCollider->m_pSphere->Radius;
+
+
+	//	XMStoreFloat3(&vDiff, (vTargetCenter - vMyCenter));
+	//	fDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&vDiff)));
+
+	//	if (fDistance <= (fMyRadius + fTargetRadius))
+	//	{
+	//		pMyCollider->m_isCollision = true;
+	//		pTargetCollider->m_isCollision = true;
+
+	//		RELEASE_INSTANCE(CManagement);
+	//		return true;
+	//	}
+	//	else
+	//	{
+	//		pMyCollider->m_isCollision = false;
+	//		pTargetCollider->m_isCollision = false;
+
+	//		RELEASE_INSTANCE(CManagement);
+	//		return false;
+	//	}
+	//}
 }
 
 void CCollider::Set_Scale(_fvector vScale)

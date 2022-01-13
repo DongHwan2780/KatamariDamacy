@@ -43,6 +43,9 @@ private:
 
 	unordered_map<wstring, class CLayer*>*			m_pGameObjects = nullptr;		// ХЌЗа
 	typedef unordered_map<wstring, class CLayer*>		GAMEOBJECTS;
+
+public:
+	CLayer*	Get_GameObj();
 };
 
 END

@@ -22,6 +22,9 @@ public:
 	class CComponent* GetComponent(const wstring& ComponentTag, _uint iIndex = 0);
 	size_t GetGameObjectListSize() const;
 	class CObj* GetGameObject(_uint iIndex = 0) const;
+
+	list<class CObj*>	GetGameObjList() { return m_ObjList; }
+
 public:
 	static CLayer*	Create();
 	virtual void Free() override;

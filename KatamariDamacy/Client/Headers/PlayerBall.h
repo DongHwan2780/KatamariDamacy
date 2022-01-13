@@ -52,6 +52,8 @@ private:
 	_float			m_fBallSize = 0.f;
 	CTransform*		m_pPlayerTransform = nullptr;
 
+	_bool			m_bFirst = true;
+
 };
 END
 #endif // !__PLAYERBALL_H__

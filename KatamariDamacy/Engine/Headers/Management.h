@@ -12,6 +12,7 @@
 
 #include "PipeLine.h"
 #include "Input.h"
+#include "Collider.h"
 
 BEGIN(Engine)
 
@@ -44,20 +45,13 @@ public:
 
 	_uint GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const;
 	CObj* GetGameObject(_uint iLevelIndex, const wstring& LayerTag, _uint iIndex = 0) const;
+	CLayer*	Get_GameObj();
 #pragma endregion
 
 #pragma region COMPONENT_MGR
 	HRESULT Add_Prototype(_int iSceneIndex, const wstring& pPrototypeTag, class CComponent* pPrototype);
 	class CComponent* Clone_Component(_int iSceneIndex, const wstring& pPrototypeTag, void* pArg = nullptr);
 	void Clear_ComponentMgr(_int iSceneIndex);
-#pragma endregion
-
-#pragma region KEYMGR
-
-#pragma endregion
-
-#pragma region COLLISION_MGR
-
 #pragma endregion
 
 #pragma region SCENE_MGR
@@ -119,6 +113,7 @@ private:
 	class CLightMgr*		m_pLightMgr = nullptr;
 
 	class CPipeLine*		m_pPipeline = nullptr;
+	class CCollider*		m_pCollider = nullptr;
 };
 
 END

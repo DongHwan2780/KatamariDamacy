@@ -33,7 +33,6 @@ HRESULT CLoading::Initialize(SCENE eScene)
 
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"), 1)))
 		return E_FAIL;
-
 	return S_OK;
 }
 _int CLoading::Update(_double DeltaTime)
