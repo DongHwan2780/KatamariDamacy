@@ -114,6 +114,10 @@ CObj * CManagement::GetGameObject(_uint iLevelIndex, const wstring & LayerTag, _
 {
 	return m_pObjMgr->GetGameObject(iLevelIndex, LayerTag, iIndex);
 }
+CLayer* CManagement::Get_GameObj()
+{
+	return m_pObjMgr->Get_GameObj();
+}
 #pragma endregion
 
 #pragma region COMPONENT_MANAGER
@@ -301,13 +305,13 @@ _int CManagement::Update(_double DeltaTime)
 	if (FAILED(m_pInputDevice->SetUp_InputDeviceState()))
 		return -1;
 
-
 	if (0 > (iProgress = m_pObjMgr->Update(DeltaTime)))
 		return -1;
 
 
 	if (0 > (iProgress = m_pObjMgr->Late_Update(DeltaTime)))
 		return -1;
+
 	
 	return _int();
 }

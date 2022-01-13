@@ -181,3 +181,32 @@ void CObjMgr::Free()
 	}
 	m_Prototypes.clear();
 }
+
+CLayer* CObjMgr::Get_GameObj()
+{
+	//for (auto& pInstance : m_pGameObjects[3])
+	//{
+	//	return pInstance.second;
+	//}
+
+	//auto iter = m_pGameObjects[3];
+
+
+	//auto iter = m_pGameObjects[3].begin();
+	//if (m_pGameObjects[3].end() == iter)
+	//{
+	//	return nullptr;
+	//}
+
+	//for (_uint i = 0; i < 3; ++i, ++iter);
+
+	//return (*iter);
+	//CLayer*		pLayer = Find_Layer(3, L"Layer_StageObj");
+	//return pLayer;
+	auto iter = m_pGameObjects[3].find(L"Layer_StageObj");
+
+	if (m_pGameObjects[3].end() == iter)
+		return nullptr;
+
+	return iter->second;
+}

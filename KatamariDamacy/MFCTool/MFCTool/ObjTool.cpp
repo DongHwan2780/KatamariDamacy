@@ -242,9 +242,9 @@ void CObjTool::OnLbnSelchangeObjList()
 		m_fColPosY = XMVectorGetY(vPos);
 		m_fColPosZ = XMVectorGetZ(vPos);
 
-		m_fColScaleX = m_pCollider->GetTransformDesc().vSize.x;
-		m_fColScaleY = m_pCollider->GetTransformDesc().vSize.y;
-		m_fColScaleZ = m_pCollider->GetTransformDesc().vSize.z;
+		m_fColScaleX = m_pCollider->GetColliderDesc().vSize.x;
+		m_fColScaleY = m_pCollider->GetColliderDesc().vSize.y;
+		m_fColScaleZ = m_pCollider->GetColliderDesc().vSize.z;
 
 		m_fScrollPosX.SetPos(m_fColPosX * 10);
 		m_fScrollPosY.SetPos(m_fColPosY * 10);
@@ -464,7 +464,7 @@ void CObjTool::OnBnClickedColliderSave()
 			pCollider = dynamic_cast<CCollider*>(pGameObj->GetComponent(L"Com_OBB"));
 
 			vPosition = pTransform->Get_State(CTransform::POSITION);
-			vScale = pCollider->GetTransformDesc().vSize;
+			vScale = pCollider->GetColliderDesc().vSize;
 
 			WriteFile(hFile, &vPosition, sizeof(_vector), &dwByte, nullptr);
 			WriteFile(hFile, &vScale, sizeof(_float3), &dwByte, nullptr);

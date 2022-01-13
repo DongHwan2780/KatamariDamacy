@@ -35,12 +35,10 @@ public:
 	virtual void Free() override;
 
 private:
-	CTransform*		m_pTransform = nullptr;
 	CRenderer*		m_pRenderer = nullptr;
 	CModel*			m_pModel = nullptr;
-	CCollider*		m_pColliderSphere = nullptr;
 
-
+	CCollider*		pTargetCollider = nullptr;
 	CTransform*		m_pPlayerBallTransform = nullptr;
 };
 

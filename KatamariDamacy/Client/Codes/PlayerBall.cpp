@@ -44,10 +44,11 @@ _int CPlayerBall::Update(_double DeltaTime)
 		return -1;
 
 
-	SetTransform();
 
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
+
+	SetTransform();
 
 	return _int();
 }
@@ -59,6 +60,10 @@ _int CPlayerBall::Late_Update(_double DeltaTime)
 
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
+
+	//CObj*	pObj = nullptr;
+	//m_pColliderSphere->Collision_Sphere(this, L"Layer_StageObj", pObj);
+
 
 	return m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
 }
@@ -74,7 +79,7 @@ HRESULT CPlayerBall::Render()
 	if (FAILED(SetUp_ConstantTable()))
 		return E_FAIL;
 
-	_uint		iNumMaterials = m_pModel->Get_NumMaterials();
+	_uint		iNumMaterials = (_uint)m_pModel->Get_NumMaterials();
 
 	m_pModel->Bind_Buffers();
 

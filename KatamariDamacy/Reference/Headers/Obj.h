@@ -27,6 +27,8 @@ protected:
 public:
 	CComponent*	GetComponent(const wstring& pComponentTag) const;
 
+	CObj*		GetThis() { return this; }
+
 public:
 	virtual CObj*	Clone(void* pArg) = 0;
 	virtual void Free() override;

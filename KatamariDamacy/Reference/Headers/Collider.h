@@ -6,15 +6,25 @@
 #include "Component.h"
 #include "DebugDraw.h"
 
+#include "../../Client/Headers/ClientDefines.h"
+
 BEGIN(Engine)
+
+class CLayer;
+class CObj;
 
 class ENGINE_DLL CCollider final : public CComponent
 {
 public:
 	enum COLLTYPE { COLL_AABB, COLL_OBB, COLL_SPHERE, COLL_END} ;
+	enum OBJSTATE { OBJ_NONE, OBJ_PLAYERBALL, OBJ_WALL, OBJ_STICK, OBJ_END};
+
+	// OBJ_NONE 붙기전, OBJ_PLAYERBALL 플레이어공, OBJ_STICK 붙어있는오브젝트
+
 public:
 	typedef struct tagColliderDesc
 	{
+		OBJSTATE	eObjState = OBJ_END;
 		_float3		vSize = _float3(1.f, 1.f, 1.f);
 	} COLLIDERDESC;
 
@@ -41,12 +51,15 @@ public:
 	_bool Collision_OBB(CCollider* pTargetCollider);
 	_bool Collision_Sphere(CCollider* pTargetCollider);
 
+	_bool Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj*& Out);
 
 
-	const COLLIDERDESC& GetTransformDesc() const { return m_ColliderDesc; }
+
+	const COLLIDERDESC& GetColliderDesc() const { return m_ColliderDesc; }
 	void Set_Size(const _float3& ColSize) { m_ColliderDesc.vSize = ColSize; }
 	void Set_Scale(_fvector vScale);
 	void Set_Points(const _float3& ColSize);
+
 
 private:
 	_fmatrix Remove_ScaleRotation(_fmatrix TransformMatrix);
@@ -79,6 +92,17 @@ private:
 private:
 	DirectX::PrimitiveBatch<DirectX::VertexPositionColor>*				m_pBatch = nullptr;
 	typedef DirectX::PrimitiveBatch<DirectX::VertexPositionColor>		BATCH;
+
+
+protected:
+	unordered_map<wstring, class CLayer*>*			m_pGameObjects = nullptr;		// 클론
+	typedef unordered_map<wstring, class CLayer*>		GAMEOBJECTS;
+
+public:
+	void SetLayers(unordered_map<wstring, class CLayer*>* _pLayer) { m_pGameObjects = _pLayer; }
+
+
+	CLayer*	m_pLayer = nullptr;
 };
 END
 #endif // !__COLLIDER_H__

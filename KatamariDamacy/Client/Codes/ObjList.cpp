@@ -64,6 +64,35 @@ void CObjList::OnLandCheck()
 
 void CObjList::Coll_PlayerBall()
 {
+	//CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+
+	//if (m_pColliderSphere->GetColliderDesc().eObjState == CCollider::OBJ_NONE)
+	//{
+	//	CCollider*	pTargetCollider = dynamic_cast<CCollider*>(pManagement->GetComponent(STAGEONE_SCENE, TEXT("Layer_PlayerBall"), TEXT("Com_SPHERE")));
+
+	//	if (m_pColliderSphere->Collision_Sphere(pTargetCollider))
+	//	{
+	//		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
+
+	//		_vector		vRight, vUp, vLook;
+	//		_matrix		TransMatrix;
+	//		TransMatrix = XMMatrixTranslation(0.f, 0.f, 2.f);
+
+	//		vRight = m_pTransform->Get_State(CTransform::RIGHT);
+	//		vUp = m_pTransform->Get_State(CTransform::UP);
+	//		vLook = m_pTransform->Get_State(CTransform::LOOK);
+
+	//		m_pTransform->Set_WorldMatrix(m_pPlayerBallTransform->Get_WorldMatrix() * TransMatrix);
+
+	//		m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, m_pPlayerBallTransform->Get_WorldMatrix()));
+	//		m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, m_pPlayerBallTransform->Get_WorldMatrix()));
+	//		m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, m_pPlayerBallTransform->Get_WorldMatrix()));
+	//	}
+	//}
+
+
+	//RELEASE_INSTANCE(CManagement);
 }
 
 CObj * CObjList::Clone(void * pArg)
