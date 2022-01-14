@@ -38,7 +38,6 @@ _int CPlayerBall::Update(_double DeltaTime)
 		return -1;
 
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
-
 	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Player", L"Com_Transform"));
 
 	RELEASE_INSTANCE(CManagement);
