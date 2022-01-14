@@ -114,9 +114,9 @@ CObj * CManagement::GetGameObject(_uint iLevelIndex, const wstring & LayerTag, _
 {
 	return m_pObjMgr->GetGameObject(iLevelIndex, LayerTag, iIndex);
 }
-CLayer* CManagement::Get_GameObj()
+CLayer* CManagement::Get_GameObj(const wstring & _Layertag)
 {
-	return m_pObjMgr->Get_GameObj();
+	return m_pObjMgr->Get_GameObj(_Layertag);
 }
 #pragma endregion
 

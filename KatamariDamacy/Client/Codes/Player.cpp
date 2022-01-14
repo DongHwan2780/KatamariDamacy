@@ -256,7 +256,7 @@ HRESULT CPlayer::SetUp_Components()
 	CCollider::COLLIDERDESC		ColliderDesc;
 	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_AABB", L"Com_Collider", (CComponent**)&m_pCollider, &ColliderDesc)))
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Collider_OBB", L"Com_OBB", (CComponent**)&m_pCollider, &ColliderDesc)))
 		return E_FAIL;
 
 	return S_OK;
@@ -320,7 +320,6 @@ void CPlayer::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pPlayerBallTransform);
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pCollider);
 	Safe_Release(m_pTransform);

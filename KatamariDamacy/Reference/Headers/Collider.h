@@ -6,7 +6,7 @@
 #include "Component.h"
 #include "DebugDraw.h"
 
-#include "../../Client/Headers/ClientDefines.h"
+//#include "../../Client/Headers/ClientDefines.h"
 
 BEGIN(Engine)
 
@@ -51,6 +51,8 @@ public:
 	_bool Collision_OBB(CCollider* pTargetCollider);
 	_bool Collision_Sphere(CCollider* pTargetCollider);
 
+
+	_bool Collision_OBB(CObj * _pObj, const wstring & _Layertag);
 	_bool Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj*& Out);
 
 

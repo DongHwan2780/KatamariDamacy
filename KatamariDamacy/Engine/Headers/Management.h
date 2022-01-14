@@ -45,7 +45,7 @@ public:
 
 	_uint GetGameObjectListSize(_uint iLevelIndex, const wstring& LayerTag) const;
 	CObj* GetGameObject(_uint iLevelIndex, const wstring& LayerTag, _uint iIndex = 0) const;
-	CLayer*	Get_GameObj();
+	CLayer*	Get_GameObj(const wstring & _Layertag);
 #pragma endregion
 
 #pragma region COMPONENT_MGR

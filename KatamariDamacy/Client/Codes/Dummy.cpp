@@ -96,7 +96,7 @@ HRESULT CDummy::SetUp_Components(_float3 vScale)
 	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
 	ColliderDesc.vSize = _float3(vScale.x, vScale.y, vScale.z);
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_Collider_OBB"), L"Com_Collider", (CComponent**)&m_pOBBCom, &ColliderDesc)))
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Collider_OBB"), L"Com_OBB", (CComponent**)&m_pOBBCom, &ColliderDesc)))
 		return E_FAIL;
 	/* For.Com_Transform */
 

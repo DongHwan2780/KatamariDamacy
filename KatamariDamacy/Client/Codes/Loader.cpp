@@ -173,15 +173,15 @@ HRESULT CLoader::StageLoader()
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/* For.Collider Component */
-	if (FAILED(pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Collider_AABB"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_AABB))))
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Collider_AABB"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_AABB))))
 		return E_FAIL;
 
 	/* For.Collider Component */
-	if (FAILED(pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Collider_OBB"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_OBB))))
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Collider_OBB"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_OBB))))
 		return E_FAIL;
 
 	/* For.Collider Component */
-	if (FAILED(pManagement->Add_Prototype(STATIC_SCENE, TEXT("Component_Collider_Sphere"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_SPHERE))))
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Collider_SPHERE"), CCollider::Create(m_pDevice, m_pDeviceContext, CCollider::COLL_SPHERE))))
 		return E_FAIL;
 
 	/* For.Terrain Buffer */

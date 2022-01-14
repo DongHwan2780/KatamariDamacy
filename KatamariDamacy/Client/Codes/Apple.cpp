@@ -48,11 +48,6 @@ _int CApple::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
-	CManagement*	pManagement = GET_INSTANCE(CManagement);
-	pTargetCollider = dynamic_cast<CCollider*>(pManagement->GetComponent(STAGEONE_SCENE, TEXT("Layer_PlayerBall"), TEXT("Com_SPHERE")));
-	RELEASE_INSTANCE(CManagement);
-
-
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
 
 	return _int();
@@ -66,8 +61,13 @@ _int CApple::Late_Update(_double DeltaTime)
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
 
-	if (m_pColliderSphere->Collision_Sphere(pTargetCollider))
-	{
+	//CManagement*	pManagement = GET_INSTANCE(CManagement);
+	//pTargetCollider = dynamic_cast<CCollider*>(pManagement->GetComponent(STAGEONE_SCENE, TEXT("Layer_PlayerBall"), TEXT("Com_SPHERE")));
+	//RELEASE_INSTANCE(CManagement);
+
+
+	//if (m_pColliderSphere->Collision_Sphere(pTargetCollider))
+	//{
 		//m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
 
 		//_vector		vRight, vUp, vLook;
@@ -83,7 +83,7 @@ _int CApple::Late_Update(_double DeltaTime)
 		//m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, m_pPlayerBallTransform->Get_WorldMatrix()));
 		//m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, m_pPlayerBallTransform->Get_WorldMatrix()));
 		//m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, m_pPlayerBallTransform->Get_WorldMatrix()));
-	}
+	//}
 
 
 
@@ -136,8 +136,8 @@ HRESULT CApple::SetUp_Components()
 	CCollider::COLLIDERDESC		ColliderDesc;
 	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
 	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
-	ColliderDesc.eObjState = CCollider::OBJ_NONE;
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_Sphere", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
+	//ColliderDesc.eObjState = CCollider::OBJ_NONE;
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Collider_SPHERE", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
 		return E_FAIL;
 
 	return S_OK;

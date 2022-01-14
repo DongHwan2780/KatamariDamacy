@@ -47,7 +47,7 @@ private:
 	CCollider*		m_pCollider = nullptr;
 	CCollider*		m_pColliderSphere = nullptr;
 
-
+	CCollider*		pTargetCollider = nullptr;
 private:
 	_float			m_fBallSize = 0.f;
 	CTransform*		m_pPlayerTransform = nullptr;
