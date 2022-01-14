@@ -29,12 +29,6 @@ HRESULT CPlayerBall::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_Components()))
 		return E_FAIL;
 
-	CManagement*	pManagement = GET_INSTANCE(CManagement);
-
-	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Player", L"Com_Transform"));
-
-	RELEASE_INSTANCE(CManagement);
-
 	return S_OK;
 }
 
@@ -43,12 +37,16 @@ _int CPlayerBall::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
+	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Player", L"Com_Transform"));
 
+	RELEASE_INSTANCE(CManagement);
+
+	SetTransform();
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
 
-	SetTransform();
 
 	return _int();
 }
@@ -61,11 +59,45 @@ _int CPlayerBall::Late_Update(_double DeltaTime)
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
 
-	//CObj*	pObj = nullptr;
-	//m_pColliderSphere->Collision_Sphere(this, L"Layer_StageObj", pObj);
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	CObj*	pObj = nullptr;
+
+	if (m_pColliderSphere->Collision_Sphere(this, L"Layer_Apple", pObj))
+	{
+		CTransform* m_pObjTransform = dynamic_cast<CTransform*>(pObj->GetComponent(L"Com_Transform"));
+
+		_vector		vRight, vUp, vLook, vPos;
+		_matrix		TransMatrix;
+		TransMatrix = XMMatrixTranslation(1.f, 1.f, 1.f);
+
+		vRight = m_pObjTransform->Get_State(CTransform::RIGHT);
+		vUp = m_pObjTransform->Get_State(CTransform::UP);
+		vLook = m_pObjTransform->Get_State(CTransform::LOOK);
+		vPos = m_pObjTransform->Get_State(CTransform::POSITION);
 
 
-	return m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
+		m_pObjTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, m_pTransform->Get_WorldMatrix()));
+		m_pObjTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, m_pTransform->Get_WorldMatrix()));
+		m_pObjTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, m_pTransform->Get_WorldMatrix()));
+		//m_pObjTransform->Set_State(CTransform::POSITION, XMVector4Transform(vPos, m_pTransform->Get_WorldMatrix()));
+
+
+		m_pObjTransform->Set_WorldMatrix(TransMatrix * m_pTransform->Get_WorldMatrix());
+	}
+
+
+	if (m_pCollider->Collision_OBB(this, L"Layer_Dummy"))
+	{
+
+	}
+
+
+	m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
+
+	RELEASE_INSTANCE(CManagement);
+
+	return 0;
 }
 
 HRESULT CPlayerBall::Render()
@@ -117,15 +149,17 @@ HRESULT CPlayerBall::SetUp_Components()
 
 	/* For.Com_Collider */
 	CCollider::COLLIDERDESC		ColliderDesc;
+	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
 	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
 
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_AABB", L"Com_AABB", (CComponent**)&m_pCollider, &ColliderDesc)))
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Collider_OBB", L"Com_OBB", (CComponent**)&m_pCollider, &ColliderDesc)))
 		return E_FAIL;
 
 
 	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
 	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Collider_Sphere", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
+
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Collider_SPHERE", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
 		return E_FAIL;
 
 	return S_OK;
@@ -195,7 +229,6 @@ void CPlayerBall::Free()
 	__super::Free();
 
 	Safe_Release(m_pColliderSphere);
-	Safe_Release(m_pPlayerTransform);
 	Safe_Release(m_pCollider);
 	Safe_Release(m_pTransform);
 	Safe_Release(m_pModel);

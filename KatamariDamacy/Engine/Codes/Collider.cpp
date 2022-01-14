@@ -297,67 +297,114 @@ _bool CCollider::Collision_Sphere(CCollider * pTargetCollider)
 
 }
 
+_bool CCollider::Collision_OBB(CObj * _pObj, const wstring & _Layertag)
+{
+	_vector			vSourPoint[8], vDestPoint[8];
+
+	CManagement* pManagement = GET_INSTANCE(CManagement);
+	auto iter_find = pManagement->Get_GameObj(_Layertag);
+
+	for (auto& iter : iter_find->GetGameObjList())		// 레이어에 있는 클론객체리스트
+	{
+
+		CCollider*	pTargetCollider = static_cast<CCollider*>(iter->GetComponent(L"Com_OBB"));
+
+		for (_uint i = 0; i < 8; ++i)
+		{
+			vSourPoint[i] = XMVector3TransformCoord(XMLoadFloat3(&m_vPoint[i]), XMLoadFloat4x4(&m_TransformMatrix));
+			vDestPoint[i] = XMVector3TransformCoord(XMLoadFloat3(&pTargetCollider->m_vPoint[i]), XMLoadFloat4x4(&pTargetCollider->m_TransformMatrix));
+		}
+
+		OBBDESC		ObbDesc[2];
+		ObbDesc[0] = Compute_OBB(vSourPoint);
+		ObbDesc[1] = Compute_OBB(vDestPoint);
+
+		_float		fDistance[3] = { 0.0f };
+
+		for (_uint i = 0; i < 2; ++i)
+		{
+			for (_uint j = 0; j < 3; ++j)
+			{
+				fDistance[0] = fabs(XMVectorGetX(XMVector3Dot(XMLoadFloat3(&ObbDesc[0].vCenterAxis[0]), XMLoadFloat3(&ObbDesc[i].vAlignAxis[j])))) +
+					fabs(XMVectorGetX(XMVector3Dot(XMLoadFloat3(&ObbDesc[0].vCenterAxis[1]), XMLoadFloat3(&ObbDesc[i].vAlignAxis[j])))) +
+					fabs(XMVectorGetX(XMVector3Dot(XMLoadFloat3(&ObbDesc[0].vCenterAxis[2]), XMLoadFloat3(&ObbDesc[i].vAlignAxis[j]))));
+
+				fDistance[1] = fabs(XMVectorGetX(XMVector3Dot(XMLoadFloat3(&ObbDesc[1].vCenterAxis[0]), XMLoadFloat3(&ObbDesc[i].vAlignAxis[j])))) +
+					fabs(XMVectorGetX(XMVector3Dot(XMLoadFloat3(&ObbDesc[1].vCenterAxis[1]), XMLoadFloat3(&ObbDesc[i].vAlignAxis[j])))) +
+					fabs(XMVectorGetX(XMVector3Dot(XMLoadFloat3(&ObbDesc[1].vCenterAxis[2]), XMLoadFloat3(&ObbDesc[i].vAlignAxis[j]))));
+
+				fDistance[2] = fabs(XMVectorGetX(XMVector3Dot(XMLoadFloat3(&ObbDesc[1].vCenter) - XMLoadFloat3(&ObbDesc[0].vCenter), XMLoadFloat3(&ObbDesc[i].vAlignAxis[j]))));
+
+				if (fDistance[0] + fDistance[1] < fDistance[2])
+				{
+					m_isCollision = false;
+					pTargetCollider->m_isCollision = false;
+
+					RELEASE_INSTANCE(CManagement);
+					return false;
+				}
+				else
+				{
+					pTargetCollider->m_isCollision = true;
+				}
+			}
+		}
+		m_isCollision = true;
+		RELEASE_INSTANCE(CManagement);
+		return true;
+	}
+
+}
+
 _bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj *& Out)
 {
+	CManagement* pManagement = GET_INSTANCE(CManagement);
+	auto iter_find = pManagement->Get_GameObj(_Layertag);
 
-	//auto iter_find = (*m_pGameObjects).find(_Layertag);	//iter_find == 레이어
+	for (auto& iter : iter_find->GetGameObjList())		// 레이어에 있는 클론객체리스트
+	{
 
-	//if ((*m_pGameObjects).end() == iter_find)
-	//	return false;
+		CCollider*	pTargetCollider = static_cast<CCollider*>(iter->GetComponent(L"Com_SPHERE"));
 
-	//for (auto& iter : iter_find->second->GetGameObjList())
+		if (COLL_SPHERE != m_eType ||
+			COLL_SPHERE != pTargetCollider->m_eType)
+			 continue;
 
+		_vector		vMyCenter, vTargetCenter;
+		_float		fMyRadius, fTargetRadius;
 
-	//m_pLayer = pManagement->Get_GameObj();
+		_float3		vDiff;
+		_float		fDistance;
 
-	//////////////////////////////////////////////////////////////////////////////////////
-	//CManagement* pManagement = GET_INSTANCE(CManagement);
-	//auto iter_find = pManagement->Get_GameObj();
+		vMyCenter = XMVector3TransformCoord(XMLoadFloat3(&m_pSphere->Center), XMLoadFloat4x4(&m_TransformMatrix));
+		vTargetCenter = XMVector3TransformCoord(XMLoadFloat3(&pTargetCollider->m_pSphere->Center), XMLoadFloat4x4(&pTargetCollider->m_TransformMatrix));
 
-	//CCollider*	pMyCollider = static_cast<CCollider*>(_pObj->GetComponent(L"Com_SPHERE"));
-
-	//for (auto& iter : iter_find->GetGameObjList())		// 레이어에 있는 클론객체리스트
-	//{
-
-	//	CCollider*	pTargetCollider = static_cast<CCollider*>(iter->GetComponent(L"Com_SPHERE"));
-
-	//	if (COLL_SPHERE != m_eType ||
-	//		COLL_SPHERE != pTargetCollider->m_eType)
-	//		return false;
-
-	//	_vector		vMyCenter, vTargetCenter;
-	//	_float		fMyRadius, fTargetRadius;
-
-	//	_float3		vDiff;
-	//	_float		fDistance;
-
-	//	vMyCenter = XMVector3TransformCoord(XMLoadFloat3(&m_pSphere->Center), XMLoadFloat4x4(&m_TransformMatrix));
-	//	vTargetCenter = XMVector3TransformCoord(XMLoadFloat3(&pTargetCollider->m_pSphere->Center), XMLoadFloat4x4(&pTargetCollider->m_TransformMatrix));
-
-	//	fMyRadius = m_pSphere->Radius;
-	//	fTargetRadius = pTargetCollider->m_pSphere->Radius;
+		fMyRadius = m_pSphere->Radius;
+		fTargetRadius = pTargetCollider->m_pSphere->Radius;
 
 
-	//	XMStoreFloat3(&vDiff, (vTargetCenter - vMyCenter));
-	//	fDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&vDiff)));
+		XMStoreFloat3(&vDiff, (vTargetCenter - vMyCenter));
+		fDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&vDiff)));
 
-	//	if (fDistance <= (fMyRadius + fTargetRadius))
-	//	{
-	//		pMyCollider->m_isCollision = true;
-	//		pTargetCollider->m_isCollision = true;
+		if (fDistance <= (fMyRadius + fTargetRadius))
+		{
+			m_isCollision = true;
+			pTargetCollider->m_isCollision = true;
 
-	//		RELEASE_INSTANCE(CManagement);
-	//		return true;
-	//	}
-	//	else
-	//	{
-	//		pMyCollider->m_isCollision = false;
-	//		pTargetCollider->m_isCollision = false;
 
-	//		RELEASE_INSTANCE(CManagement);
-	//		return false;
-	//	}
-	//}
+			Out = iter->GetThis();
+
+			RELEASE_INSTANCE(CManagement);
+			return true;
+		}
+		else
+		{
+			pTargetCollider->m_isCollision = false;
+		}
+	}
+	m_isCollision = false;
+	RELEASE_INSTANCE(CManagement);
+	return false;
 }
 
 void CCollider::Set_Scale(_fvector vScale)

@@ -45,7 +45,7 @@ private:
 	typedef unordered_map<wstring, class CLayer*>		GAMEOBJECTS;
 
 public:
-	CLayer*	Get_GameObj();
+	CLayer*	Get_GameObj(const wstring & _Layertag);
 };
 
 END
