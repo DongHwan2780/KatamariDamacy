@@ -34,7 +34,9 @@ public:
 private:
 	CTransform*		m_pTransform = nullptr;
 	CRenderer*		m_pRenderer = nullptr;
-	CCollider*		m_pOBBCom = nullptr;
+	CCollider*		m_pCollider = nullptr;
+
+	CCollider*		pTargetCollider = nullptr;
 };
 
 END

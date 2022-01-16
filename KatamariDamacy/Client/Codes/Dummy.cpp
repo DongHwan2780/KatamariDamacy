@@ -47,8 +47,29 @@ _int CDummy::Update(_double DeltaTime)
 {
 	if (0 > __super::Update(DeltaTime))
 		return -1;
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
-	m_pOBBCom->Update_State(m_pTransform->Get_WorldMatrix());
+	CTransform*	pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Player", L"Com_Transform"));
+
+	CTransform* pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
+	CCollider*	pPlayerBallCollider = dynamic_cast<CCollider*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_OBB"));
+
+
+	_vector vPrePos = pPlayerTransform->Get_State(CTransform::POSITION);
+
+	if(m_pCollider->Collision_OBB(pPlayerBallCollider))
+	{
+		//pPlayerTransform->Set_TransformDescSpeed(pPlayerTransform->GetTransformDesc().fSpeedPerSec * -0.2f);
+		pPlayerTransform->Set_State(CTransform::POSITION, vPrePos);
+
+		_vector ReturnDir;
+		ReturnDir = pPlayerTransform->Get_State(CTransform::LOOK);
+
+		pPlayerTransform->MoveToDir(-ReturnDir, pPlayerTransform->GetTransformDesc().fSpeedPerSec * 0.1f, DeltaTime);
+	}
+
+	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
+	RELEASE_INSTANCE(CManagement);
 
 	return _int();
 }
@@ -79,7 +100,7 @@ HRESULT CDummy::Render()
 		return E_FAIL;
 
 #ifdef _DEBUG
-	m_pOBBCom->Render();
+	m_pCollider->Render();
 #endif
 
 	return S_OK;
@@ -95,8 +116,8 @@ HRESULT CDummy::SetUp_Components(_float3 vScale)
 	CCollider::COLLIDERDESC		ColliderDesc;
 	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
 	ColliderDesc.vSize = _float3(vScale.x, vScale.y, vScale.z);
-
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Collider_OBB"), L"Com_OBB", (CComponent**)&m_pOBBCom, &ColliderDesc)))
+	ColliderDesc.eObjState = CCollider::OBJ_WALL;
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Collider_OBB"), L"Com_OBB", (CComponent**)&m_pCollider, &ColliderDesc)))
 		return E_FAIL;
 	/* For.Com_Transform */
 
@@ -142,6 +163,6 @@ void CDummy::Free()
 	__super::Free();
 
 	Safe_Release(m_pTransform);
-	Safe_Release(m_pOBBCom);
+	Safe_Release(m_pCollider);
 	Safe_Release(m_pRenderer);
 }
