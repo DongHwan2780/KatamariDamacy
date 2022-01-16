@@ -40,7 +40,6 @@ _int CPlayerBall::Update(_double DeltaTime)
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Player", L"Com_Transform"));
 
-
 	SetTransform();
 
 	CObj*	pObj = nullptr;
@@ -51,11 +50,6 @@ _int CPlayerBall::Update(_double DeltaTime)
 
 		m_pObjCollider->Set_CollState(CCollider::OBJ_STICK);
 		m_pObjCollider->Set_CollPos(vPos);
-	}
-
-	if (m_pCollider->Collision_OBB(this, L"Layer_Dummy"))
-	{
-
 	}
 
 	RELEASE_INSTANCE(CManagement);
@@ -76,7 +70,6 @@ _int CPlayerBall::Late_Update(_double DeltaTime)
 		return -1;
 
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
-
 
 	m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
 
@@ -168,19 +161,37 @@ HRESULT CPlayerBall::SetUp_ConstantTable()
 
 void CPlayerBall::SetTransform()
 {
+	//_vector vPlayerPos = m_pPlayerTransform->Get_State(CTransform::POSITION);
+
 	_vector		vRight, vUp, vLook;
-	_matrix		TransMatrix;
+	_matrix TransMatrix;
 	TransMatrix = XMMatrixTranslation(0.f, 0.5f, 2.f);
 
 	vRight = m_pTransform->Get_State(CTransform::RIGHT);
 	vUp = m_pTransform->Get_State(CTransform::UP);
 	vLook = m_pTransform->Get_State(CTransform::LOOK);
 
+
 	m_pTransform->Set_WorldMatrix(TransMatrix * m_pPlayerTransform->Get_WorldMatrix());
 
 	m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, m_pPlayerTransform->Get_WorldMatrix()/* * TransMatrix*/));
 	m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, m_pPlayerTransform->Get_WorldMatrix()/* * TransMatrix*/));
 	m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, m_pPlayerTransform->Get_WorldMatrix()/* * TransMatrix*/));
+
+	//_matrix NonRotateMatrix = XMMatrixIdentity();
+
+	//NonRotateMatrix.r[0] = m_pTransform->Get_State(CTransform::RIGHT);
+	//NonRotateMatrix.r[1] = m_pTransform->Get_State(CTransform::UP);
+	//NonRotateMatrix.r[2] = m_pTransform->Get_State(CTransform::LOOK);
+	//NonRotateMatrix.r[3] = m_pPlayerTransform->Get_WorldMatrix().r[3];
+
+	//m_pTransform->Set_WorldMatrix(TransMatrix * NonRotateMatrix);
+
+	//m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, NonRotateMatrix * TransMatrix));
+	//m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, NonRotateMatrix * TransMatrix));
+	//m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, NonRotateMatrix * TransMatrix));
+
+
 }
 
 CPlayerBall * CPlayerBall::Create(DEVICES)

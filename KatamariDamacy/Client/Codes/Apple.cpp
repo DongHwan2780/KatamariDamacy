@@ -56,13 +56,15 @@ _int CApple::Update(_double DeltaTime)
 		_vector vBallPos = m_pPlayerBallTransform->Get_State(CTransform::POSITION);
 
 		OffsetMatrix = XMMatrixIdentity();
-		OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);
 
 		// 포지션을 구해주고 구한 포지션에 공의 회전값만큼 공전을 해줘라
 
 		_vector  vScale, vQuat, vTrans;
 		XMMatrixDecompose(&vScale, &vQuat, &vTrans, m_pPlayerBallTransform->Get_WorldMatrix());
 
+		// 렝스에다가 0 0 1 곱한값을 쿼터니언에 곱해줌
+
+		OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);
 		OffsetMatrix = OffsetMatrix * XMMatrixRotationQuaternion(vQuat);
 
 		//vRight = OffsetMatrix.r[0];
@@ -118,27 +120,9 @@ _int CApple::Late_Update(_double DeltaTime)
 	{
 		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
 
-		//_vector vPos = m_pTransform->Get_State(CTransform::POSITION);
-		//_vector vBallPos = m_pPlayerBallTransform->Get_State(CTransform::POSITION);
-
-		//if (m_bStickCheck == true)
-		//{
-		//	OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);
-		//}
-
-		_matrix			NonScaleMatrix = m_pPlayerBallTransform->Get_WorldMatrix();
-
-		NonScaleMatrix.r[0] = XMVector3Normalize(m_pPlayerBallTransform->Get_WorldMatrix().r[0]);
-		NonScaleMatrix.r[1] = XMVector3Normalize(m_pPlayerBallTransform->Get_WorldMatrix().r[1]);
-		NonScaleMatrix.r[2] = XMVector3Normalize(m_pPlayerBallTransform->Get_WorldMatrix().r[2]);
-
 		// 오브 포지션  - 공 포지션 == 오프셋
 
 		// 오프셋 * 스케일 뺀 공
-		_matrix		TransMatrix;
-		TransMatrix = XMMatrixTranslation(0.f, 0.5f, 2.f);
-
-
 		m_pTransform->Set_WorldMatrix(OffsetMatrix * m_pPlayerBallTransform->Get_WorldMatrix());
 		m_pTransform->Set_Scale(XMVectorSet(m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, 0.f));
 	}

@@ -309,6 +309,10 @@ _bool CCollider::Collision_OBB(CObj * _pObj, const wstring & _Layertag)
 
 		CCollider*	pTargetCollider = static_cast<CCollider*>(iter->GetComponent(L"Com_OBB"));
 
+		if (COLL_OBB != m_eType ||
+			COLL_OBB != pTargetCollider->m_eType)
+			continue;
+
 		for (_uint i = 0; i < 8; ++i)
 		{
 			vSourPoint[i] = XMVector3TransformCoord(XMLoadFloat3(&m_vPoint[i]), XMLoadFloat4x4(&m_TransformMatrix));
@@ -343,13 +347,10 @@ _bool CCollider::Collision_OBB(CObj * _pObj, const wstring & _Layertag)
 					RELEASE_INSTANCE(CManagement);
 					return false;
 				}
-				else
-				{
-					pTargetCollider->m_isCollision = true;
-				}
 			}
 		}
 		m_isCollision = true;
+		pTargetCollider->m_isCollision = true;
 		RELEASE_INSTANCE(CManagement);
 		return true;
 	}

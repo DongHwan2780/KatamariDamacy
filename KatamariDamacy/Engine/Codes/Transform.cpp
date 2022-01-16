@@ -150,6 +150,16 @@ void CTransform::RotateAxis(_fvector vAxis, _double DeltaTime)
 	Set_State(CTransform::LOOK, XMVector4Transform(vLook, RotationMatrix));
 }
 
+void CTransform::MoveToDir(_vector Look, _float fSpeed, _double DeltaTime)
+{
+	_vector vLook = Get_State(CTransform::LOOK);
+	_vector vPos = Get_State(CTransform::POSITION);
+
+	vPos += XMVector3Normalize(Look) * m_TransformDesc.fSpeedPerSec * _double(DeltaTime) * fSpeed;
+
+	Set_State(CTransform::POSITION, vPos);
+}
+
 CTransform * CTransform::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
 {
 	CTransform*	pInstance = new CTransform(pDevice, pDeviceContext);

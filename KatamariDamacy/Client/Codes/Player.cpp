@@ -33,7 +33,7 @@ HRESULT CPlayer::Initialize_Clone(void * pArg)
 	m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
 	RELEASE_INSTANCE(CManagement);
 
-	m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(100.f, 0.f, 40.f, 1.f));
+	m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(100.f, 0.f, 30.f, 1.f));
 
 	m_pModel->SetUp_AnimationIndex(20);
 
@@ -60,6 +60,8 @@ _int CPlayer::Update(_double DeltaTime)
 
 	Movement(DeltaTime);
 	Gravity(DeltaTime);
+	Acceleration(DeltaTime, 10.f);
+
 
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
 
@@ -122,11 +124,13 @@ void CPlayer::Movement(_double DeltaTime)
 		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(-DeltaTime);
+			//m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime* -20.f);
 			m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * 20.f);
 		}
 		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(DeltaTime);
+			//m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime  * 20.f);
 			m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * -20.f);
 		}
 	}
@@ -140,11 +144,13 @@ void CPlayer::Movement(_double DeltaTime)
 		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(-DeltaTime);
+		//	m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
 			m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * 20.f);
 		}
 		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(DeltaTime);
+			//m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
 			m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * -20.f);
 		}
 	}
@@ -228,7 +234,7 @@ void CPlayer::Gravity(_double DeltaTime)
 	}
 	else// 중력 적용
 	{
-		fPos.y = m_fGravityY - 9.8f * m_fGravityTime * m_fGravityTime * 3.f;
+		fPos.y = m_fGravityY - 9.8f * m_fGravityTime * m_fGravityTime ;
 		m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(fPos.x, fPos.y, fPos.z, 1.f));
 		m_fGravityTime += DeltaTime;
 	}
@@ -249,6 +255,7 @@ HRESULT CPlayer::SetUp_Components()
 	/* For.Com_Transform */
 
 	CTransform::TRANSFORMDESC	TransformDesc;
+	TransformDesc.fRotatePerSec = XMConvertToRadians(360.0f);
 	TransformDesc.fSpeedPerSec = 10.f;
 
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))

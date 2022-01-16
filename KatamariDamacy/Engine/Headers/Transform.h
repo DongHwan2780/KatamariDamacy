@@ -20,6 +20,7 @@ public:
 		_float		fScale;
 		_float		fSpeedPerSec;
 		_float		fRotatePerSec;
+		_float		fMySize;
 	}TRANSFORMDESC;
 
 private:
@@ -42,6 +43,8 @@ public:
 
 	void Set_State(STATE eState, _fvector vData) { memcpy(&m_MatWorld.m[eState][0], &vData, sizeof(_float3)); } // 어떤 벡터(eState)에 어떤 값(vData)를 넣을건지
 	void Set_TransformDesc(const TRANSFORMDESC& TransformDesc) { m_TransformDesc = TransformDesc; }
+	void Set_TransformDescSpeed(_float fixSpeed) { m_TransformDesc.fSpeedPerSec = fixSpeed; }
+
 	void Set_Scale(_fvector vScale);
 
 	void Set_PosX(STATE eState, _float PosX) { memcpy(&m_MatWorld.m[eState][0], &PosX, sizeof(_float)); }
@@ -64,6 +67,8 @@ public:
 	void LookAt(_fvector vTargetPos);
 	void SetUp_Rotate(_fvector vAxis, _float fDegree);
 	void RotateAxis(_fvector vAxis, _double DeltaTime);
+
+	void MoveToDir(_vector Look, _float fSpeed, _double DeltaTime);
 
 public:
 	static CTransform* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
