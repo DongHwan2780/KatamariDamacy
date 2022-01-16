@@ -155,10 +155,10 @@ HRESULT CCollider::Render()
 
 _bool CCollider::Update_State(_fmatrix TransformMatrix)
 {
-	if (m_eType == CCollider::COLL_AABB)
+	if (m_eType == CCollider::COLL_AABB || m_eType == CCollider::COLL_SPHERE)
 		XMStoreFloat4x4(&m_TransformMatrix, Remove_ScaleRotation(TransformMatrix));
 
-	else if (m_eType == CCollider::COLL_OBB || m_eType == CCollider::COLL_SPHERE)
+	else if (m_eType == CCollider::COLL_OBB )
 		XMStoreFloat4x4(&m_TransformMatrix, Remove_Scale(TransformMatrix));
 
 	return _bool();
@@ -356,7 +356,7 @@ _bool CCollider::Collision_OBB(CObj * _pObj, const wstring & _Layertag)
 
 }
 
-_bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj *& Out)
+_bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj *& Out, _float3& OutPos)
 {
 	CManagement* pManagement = GET_INSTANCE(CManagement);
 	auto iter_find = pManagement->Get_GameObj(_Layertag);
@@ -370,10 +370,16 @@ _bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj 
 			COLL_SPHERE != pTargetCollider->m_eType)
 			 continue;
 
+		if (pTargetCollider->GetColliderDesc().eObjState == OBJ_STICK)
+		{
+			m_isCollision = false;
+			continue;
+		}
+
 		_vector		vMyCenter, vTargetCenter;
 		_float		fMyRadius, fTargetRadius;
 
-		_float3		vDiff;
+		_float3		vDiff;		// 
 		_float		fDistance;
 
 		vMyCenter = XMVector3TransformCoord(XMLoadFloat3(&m_pSphere->Center), XMLoadFloat4x4(&m_TransformMatrix));
@@ -386,13 +392,18 @@ _bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj 
 		XMStoreFloat3(&vDiff, (vTargetCenter - vMyCenter));
 		fDistance = XMVectorGetX(XMVector3Length(XMLoadFloat3(&vDiff)));
 
+		_vector vDir, vCenter;
+
+		vDir = XMLoadFloat3(&vDiff);
+		vCenter = XMLoadFloat3(&m_pSphere->Center);
+
 		if (fDistance <= (fMyRadius + fTargetRadius))
 		{
 			m_isCollision = true;
 			pTargetCollider->m_isCollision = true;
 
-
 			Out = iter->GetThis();
+			XMStoreFloat3(&OutPos , -fMyRadius * vDir + vCenter);
 
 			RELEASE_INSTANCE(CManagement);
 			return true;

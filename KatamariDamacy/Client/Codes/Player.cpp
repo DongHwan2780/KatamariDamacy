@@ -33,6 +33,8 @@ HRESULT CPlayer::Initialize_Clone(void * pArg)
 	m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
 	RELEASE_INSTANCE(CManagement);
 
+	m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(100.f, 0.f, 40.f, 1.f));
+
 	m_pModel->SetUp_AnimationIndex(20);
 
 	return S_OK;

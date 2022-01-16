@@ -29,16 +29,14 @@ HRESULT CApple::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_Components()))
 		return E_FAIL;
 
-	CTransform::TRANSFORMDESC TransformDesc;
-
 	if (pArg)
 	{
 		memcpy(&TransformDesc, pArg, sizeof(CTransform::TRANSFORMDESC));
 	}
 
-
 	m_pTransform->Set_State(CTransform::POSITION, TransformDesc.vPosition);
 	m_pTransform->Set_Scale(XMVectorSet(TransformDesc.fScale, TransformDesc.fScale, TransformDesc.fScale, 0.f));
+	m_pTransform->Set_TransformDesc(TransformDesc);
 
 	return S_OK;
 }
@@ -48,7 +46,62 @@ _int CApple::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	if (m_pColliderSphere->GetColliderDesc().eObjState == CCollider::OBJ_STICK && m_bStickCheck == true)
+	{
+		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
+
+		_vector vPos = m_pTransform->Get_State(CTransform::POSITION);
+		_vector vBallPos = m_pPlayerBallTransform->Get_State(CTransform::POSITION);
+
+		OffsetMatrix = XMMatrixIdentity();
+		OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);
+
+		// 포지션을 구해주고 구한 포지션에 공의 회전값만큼 공전을 해줘라
+
+		_vector  vScale, vQuat, vTrans;
+		XMMatrixDecompose(&vScale, &vQuat, &vTrans, m_pPlayerBallTransform->Get_WorldMatrix());
+
+		OffsetMatrix = OffsetMatrix * XMMatrixRotationQuaternion(vQuat);
+
+		//vRight = OffsetMatrix.r[0];
+		//vUp = OffsetMatrix.r[1];
+		//vLook = OffsetMatrix.r[2];
+
+		//OffsetMatrix.r[0] = XMVector4Transform(vRight, RotationMatrix);
+		//OffsetMatrix.r[1] = XMVector4Transform(vUp, RotationMatrix);
+		//OffsetMatrix.r[2] = XMVector4Transform(vLook, RotationMatrix);
+
+		//Set_State(CTransform::RIGHT, XMVector4Transform(vRight, RotationMatrix));
+		//_matrix RotXMatrix, RotYMatrix, RotZMatrix;
+		//RotXMatrix = OffsetMatrix * XMMatrixTranslationFromVector(m_pPlayerBallTransform->Get_State(CTransform::RIGHT));
+		//RotYMatrix = OffsetMatrix * XMMatrixTranslationFromVector(m_pPlayerBallTransform->Get_State(CTransform::UP));
+		//RotZMatrix = OffsetMatrix * XMMatrixTranslationFromVector(m_pPlayerBallTransform->Get_State(CTransform::LOOK));
+		//OffsetMatrix = XMMatrixTranslationFromVector(XMLoadFloat3(&m_pColliderSphere->GetColliderDesc().vPos));
+		//OffsetMatrix = XMMatrixTranslationFromVector(XMQuaternionNormalize(vPos) - XMQuaternionNormalize(vBallPos));	
+		
+		//_matrix			NonRotateMatrix;
+		//NonRotateMatrix.r[3] = OffsetMatrix.r[3];
+
+		//_matrix			NonScaleMatrix = NonRotateMatrix;
+
+		//NonRotateMatrix.r[0] = XMVector3Normalize(OffsetMatrix.r[0]);
+		//NonRotateMatrix.r[1] = XMVector3Normalize(OffsetMatrix.r[1]);
+		//NonRotateMatrix.r[2] = XMVector3Normalize(OffsetMatrix.r[2]);
+		_matrix		TransMatrix;
+		TransMatrix = XMMatrixTranslation(0.f, 0.5f, 2.f);
+
+
+		m_pTransform->Set_WorldMatrix(OffsetMatrix * m_pPlayerBallTransform->Get_WorldMatrix());
+		m_pTransform->Set_Scale(XMVectorSet(m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, 0.f));
+
+		m_bStickCheck = false;
+	}
+
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
+
+	RELEASE_INSTANCE(CManagement);
 
 	return _int();
 }
@@ -60,32 +113,36 @@ _int CApple::Late_Update(_double DeltaTime)
 
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+	if (m_pColliderSphere->GetColliderDesc().eObjState == CCollider::OBJ_STICK && m_bStickCheck == false)
+	{
+		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
 
-	//CManagement*	pManagement = GET_INSTANCE(CManagement);
-	//pTargetCollider = dynamic_cast<CCollider*>(pManagement->GetComponent(STAGEONE_SCENE, TEXT("Layer_PlayerBall"), TEXT("Com_SPHERE")));
-	//RELEASE_INSTANCE(CManagement);
+		//_vector vPos = m_pTransform->Get_State(CTransform::POSITION);
+		//_vector vBallPos = m_pPlayerBallTransform->Get_State(CTransform::POSITION);
+
+		//if (m_bStickCheck == true)
+		//{
+		//	OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);
+		//}
+
+		_matrix			NonScaleMatrix = m_pPlayerBallTransform->Get_WorldMatrix();
+
+		NonScaleMatrix.r[0] = XMVector3Normalize(m_pPlayerBallTransform->Get_WorldMatrix().r[0]);
+		NonScaleMatrix.r[1] = XMVector3Normalize(m_pPlayerBallTransform->Get_WorldMatrix().r[1]);
+		NonScaleMatrix.r[2] = XMVector3Normalize(m_pPlayerBallTransform->Get_WorldMatrix().r[2]);
+
+		// 오브 포지션  - 공 포지션 == 오프셋
+
+		// 오프셋 * 스케일 뺀 공
+		_matrix		TransMatrix;
+		TransMatrix = XMMatrixTranslation(0.f, 0.5f, 2.f);
 
 
-	//if (m_pColliderSphere->Collision_Sphere(pTargetCollider))
-	//{
-		//m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
-
-		//_vector		vRight, vUp, vLook;
-		//_matrix		TransMatrix;
-		//TransMatrix = XMMatrixTranslation(0.f, 0.f, 2.f);
-
-		//vRight = m_pTransform->Get_State(CTransform::RIGHT);
-		//vUp = m_pTransform->Get_State(CTransform::UP);
-		//vLook = m_pTransform->Get_State(CTransform::LOOK);
-
-		//m_pTransform->Set_WorldMatrix(m_pPlayerBallTransform->Get_WorldMatrix() * TransMatrix);
-
-		//m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, m_pPlayerBallTransform->Get_WorldMatrix()));
-		//m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, m_pPlayerBallTransform->Get_WorldMatrix()));
-		//m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, m_pPlayerBallTransform->Get_WorldMatrix()));
-	//}
-
-
+		m_pTransform->Set_WorldMatrix(OffsetMatrix * m_pPlayerBallTransform->Get_WorldMatrix());
+		m_pTransform->Set_Scale(XMVectorSet(m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, 0.f));
+	}
+	RELEASE_INSTANCE(CManagement);
 
 	return m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
 }
@@ -136,7 +193,7 @@ HRESULT CApple::SetUp_Components()
 	CCollider::COLLIDERDESC		ColliderDesc;
 	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
 	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
-	//ColliderDesc.eObjState = CCollider::OBJ_NONE;
+	ColliderDesc.eObjState = CCollider::OBJ_NONE;
 	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Collider_SPHERE", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
 		return E_FAIL;
 
