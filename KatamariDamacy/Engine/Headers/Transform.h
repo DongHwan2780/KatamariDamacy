@@ -52,6 +52,8 @@ public:
 
 	const _vector Get_State_Const(STATE eState) const { return *(_vector*)&m_MatWorld.m[eState][0]; }
 	const _float Get_Scale_Const(STATE eState) const { return XMVectorGetX(XMVector3Length(Get_State_Const(eState))); }
+	const TRANSFORMDESC& GetTransformDesc() const { return m_TransformDesc;	}
+	//_matrix Get_RotatinMatrix() const { return RotationMatrix; }
 
 public:
 	void Move_Straight(_double DeltaTime, class CNavigation* pNavigation = nullptr);
@@ -71,6 +73,8 @@ public:
 private:
 	_float4x4		m_MatWorld;
 	TRANSFORMDESC	m_TransformDesc;
+
+	//_matrix			RotationMatrix;
 };
 
 END

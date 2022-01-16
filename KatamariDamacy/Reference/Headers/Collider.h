@@ -26,6 +26,7 @@ public:
 	{
 		OBJSTATE	eObjState = OBJ_END;
 		_float3		vSize = _float3(1.f, 1.f, 1.f);
+		_float3		vPos;
 	} COLLIDERDESC;
 
 	typedef struct tagOBBDesc
@@ -53,7 +54,7 @@ public:
 
 
 	_bool Collision_OBB(CObj * _pObj, const wstring & _Layertag);
-	_bool Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj*& Out);
+	_bool Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj*& Out, _float3& OutPos);
 
 
 
@@ -62,6 +63,8 @@ public:
 	void Set_Scale(_fvector vScale);
 	void Set_Points(const _float3& ColSize);
 
+	void Set_CollState(const OBJSTATE ObjState) { m_ColliderDesc.eObjState = ObjState; }
+	void Set_CollPos(const _float3 CollPos) { m_ColliderDesc.vPos = CollPos; }
 
 private:
 	_fmatrix Remove_ScaleRotation(_fmatrix TransformMatrix);
