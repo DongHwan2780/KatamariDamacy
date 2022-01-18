@@ -220,7 +220,7 @@ void CMFCToolView::OnInitialUpdate()
 	ModelPivotMatrix = ScaleMatrix;
 
 	// ¸Ê
-	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_StageMap", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/StageMap/", "StageMap.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	hr = m_pManagement->Add_Prototype(STATIC_SCENE, L"Component_Model_StageMap", CModel::Create(m_pDevice, m_pDeviceContext, "../../Client/Bin/Resources/Meshes/GameObject/StageMap/", "StageSkyMap.fbx", TEXT("../../Client/Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
 	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
 	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(180.0f));

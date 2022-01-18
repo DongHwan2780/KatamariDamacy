@@ -20,6 +20,7 @@ public:
 		_float		fScale;
 		_float		fSpeedPerSec;
 		_float		fRotatePerSec;
+		_float		fMySize;
 	}TRANSFORMDESC;
 
 private:
@@ -33,7 +34,7 @@ public:
 	//{ return *(_vector*)&m_MatWorld.m[eState][0]; }
 	//{ return *(static_cast<_vector>(&m_MatWorld).m[eState][0]); }
 public:
-	_vector Get_State(STATE eState) { return *(_vector*)&m_MatWorld.m[eState][0]; }
+	_vector Get_State(STATE eState) { return XMLoadFloat4((_float4*)&m_MatWorld.m[(_uint)eState][0]); }
 	_float Get_Scale(STATE eState) { return XMVectorGetX(XMVector3Length(Get_State(eState))); }
 	_matrix Get_WorldMatrixInverse() const { return XMMatrixInverse(nullptr, XMLoadFloat4x4(&m_MatWorld)); }
 	_matrix Get_WorldMatrix() const { return XMLoadFloat4x4(&m_MatWorld); }

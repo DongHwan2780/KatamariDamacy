@@ -40,8 +40,5 @@ private:
 
 	CCollider*		pTargetCollider = nullptr;
 	CTransform*		m_pPlayerBallTransform = nullptr;
-
-	_matrix		OffsetMatrix;
-	_bool		m_bStickCheck = true;
 };
 

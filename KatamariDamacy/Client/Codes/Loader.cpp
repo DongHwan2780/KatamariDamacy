@@ -123,7 +123,7 @@ HRESULT CLoader::StageLoader()
 	ScaleMatrix = XMMatrixScaling(15.f, 15.f,15.f);
 	RotationMatrix = XMMatrixRotationY(XMConvertToRadians(180.0f));
 	ModelPivotMatrix = ScaleMatrix /** RotationMatrix*/;
-	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_StageMap"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/StageMap/", "StageMap.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Model_StageMap"), CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/StageMap/", "StageSkyMap.fbx", TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix))))
 		return E_FAIL;
 
 

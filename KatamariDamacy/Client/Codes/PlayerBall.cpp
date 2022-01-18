@@ -44,12 +44,15 @@ _int CPlayerBall::Update(_double DeltaTime)
 
 	CObj*	pObj = nullptr;
 	_float3 vPos;
-	if (m_pColliderSphere->Collision_Sphere(this, L"Layer_Apple", pObj, vPos))
+	if (m_pColliderSphere->Collision_Sphere(this, L"Layer_StageObj", pObj, vPos))
 	{
 		CCollider* m_pObjCollider = dynamic_cast<CCollider*>(pObj->GetComponent(L"Com_SPHERE"));
+		CModel*		pModel = dynamic_cast<CModel*>(pObj->GetComponent(L"Com_Model"));
 
 		m_pObjCollider->Set_CollState(CCollider::OBJ_STICK);
 		m_pObjCollider->Set_CollPos(vPos);
+
+		Create_StickObjUI(pModel->GetModelDesc().iModelIndexNum);
 	}
 
 	RELEASE_INSTANCE(CManagement);
@@ -193,6 +196,16 @@ void CPlayerBall::SetTransform()
 
 
 }
+
+void CPlayerBall::Create_StickObjUI(_uint iModelIndex)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_StickObjUI"), L"Layer_StickObjUI", &iModelIndex);
+
+	RELEASE_INSTANCE(CManagement);
+}
+
 
 CPlayerBall * CPlayerBall::Create(DEVICES)
 {

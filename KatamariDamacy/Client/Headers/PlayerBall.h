@@ -6,6 +6,7 @@
 #include "ClientDefines.h"
 #include "Obj.h"
 #include "Player.h"
+#include "Layer.h"
 
 BEGIN(Engine)
 class CCollider;
@@ -35,6 +36,8 @@ private:
 	HRESULT SetUp_ConstantTable();
 	void SetTransform();
 
+	void Create_StickObjUI(_uint iModelIndex);
+
 public:
 	static CPlayerBall*	Create(DEVICES);
 	virtual CObj*	Clone(void* pArg) override;
@@ -53,6 +56,10 @@ private:
 	CTransform*		m_pPlayerTransform = nullptr;
 
 	_bool			m_bFirst = true;
+
+	CObj*		m_pStickObjUI = nullptr;
+	CLayer*		pLayer = nullptr;
+	_bool		m_bLayerFirst = false;
 
 };
 END

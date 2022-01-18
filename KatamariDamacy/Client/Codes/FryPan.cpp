@@ -28,17 +28,14 @@ HRESULT CFryPan::Initialize_Clone(void * pArg)
 
 	if (FAILED(SetUp_Components()))
 		return E_FAIL;
-	CTransform::TRANSFORMDESC TransformDesc;
-
 	if (pArg)
 	{
 		memcpy(&TransformDesc, pArg, sizeof(CTransform::TRANSFORMDESC));
 	}
 
-
 	m_pTransform->Set_State(CTransform::POSITION, TransformDesc.vPosition);
-
 	m_pTransform->Set_Scale(XMVectorSet(TransformDesc.fScale, TransformDesc.fScale, TransformDesc.fScale, 0.f));
+	m_pTransform->Set_TransformDesc(TransformDesc);
 
 	return S_OK;
 }
@@ -48,6 +45,9 @@ _int CFryPan::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
+	Coll_PlayerBall();
+
+	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
 	return _int();
 }
 
@@ -82,7 +82,9 @@ HRESULT CFryPan::Render()
 		m_pModel->SetUp_TextureOnShader("g_DiffuseTexture", i, aiTextureType_DIFFUSE);
 		m_pModel->Render(i, 0);
 	}
-
+#ifdef _DEBUG
+	m_pColliderSphere->Render();
+#endif
 	return S_OK;
 }
 
@@ -93,14 +95,22 @@ HRESULT CFryPan::SetUp_Components()
 		return E_FAIL;
 
 	/* For.Com_Model */
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_FryPan", L"Com_Model", (CComponent**)&m_pModel)))
+	CModel::MODELDESC	ModelDesc;
+	ZeroMemory(&ModelDesc, sizeof(CModel::MODELDESC));
+	ModelDesc.iModelIndexNum = 18;
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_FryPan", L"Com_Model", (CComponent**)&m_pModel, &ModelDesc)))
 		return E_FAIL;
 
 	/* For.Com_Transform */
 
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform)))
 		return E_FAIL;
-
+	CCollider::COLLIDERDESC		ColliderDesc;
+	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
+	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
+	ColliderDesc.eObjState = CCollider::OBJ_NONE;
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Collider_SPHERE", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
+		return E_FAIL;
 	return S_OK;
 }
 
@@ -126,7 +136,7 @@ CFryPan * CFryPan::Create(DEVICES)
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX("Failed to Creating CStageMap");
+		MSG_BOX("Failed to Creating CFryPan");
 		Safe_Release(pInstance);
 	}
 
@@ -139,7 +149,7 @@ CObj * CFryPan::Clone(void * pArg)
 
 	if (FAILED(pInstance->Initialize_Clone(pArg)))
 	{
-		MSG_BOX("Failed to Creating CStageMap");
+		MSG_BOX("Failed to Creating CFryPan");
 		Safe_Release(pInstance);
 	}
 
@@ -149,7 +159,7 @@ CObj * CFryPan::Clone(void * pArg)
 void CFryPan::Free()
 {
 
-	//Safe_Release(m_pCollider);
+	Safe_Release(m_pColliderSphere);
 	Safe_Release(m_pTransform);
 	Safe_Release(m_pModel);
 	Safe_Release(m_pRenderer);

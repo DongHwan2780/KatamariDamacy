@@ -58,7 +58,7 @@ _int CCamera::Update(_double DeltaTime)
 		return -1;
 
 	m_pPipeline->Set_Transform(CPipeLine::D3DTS_VIEW, m_pTransform->Get_WorldMatrixInverse());
-	m_pPipeline->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f), _float(1280) / 720.0f, 0.1f, 300.f));
+	m_pPipeline->Set_Transform(CPipeLine::D3DTS_PROJ, XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f), _float(1280) / 720.0f, 0.1f, 2000.f));
 
 	return _int();
 }

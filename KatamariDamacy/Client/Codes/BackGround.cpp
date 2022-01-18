@@ -43,7 +43,7 @@ HRESULT CBackGround::Initialize_Clone(void * pArg)
 	m_TransformMatrix._41 = m_fX - (g_iWinCX >> 1);
 	m_TransformMatrix._42 = -m_fY + (g_iWinCY >> 1);
 
-	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH(g_iWinCX, g_iWinCY, 0.0f, 1.f));
+	XMStoreFloat4x4(&m_ProjMatrix, XMMatrixOrthographicLH((float)g_iWinCX, (float)g_iWinCY, 0.0f, 1.f));
 
 	if (pArg)
 	{

@@ -64,7 +64,7 @@ HRESULT CStageMap::Render()
 	if (FAILED(SetUp_ConstantTable()))
 		return E_FAIL;
 
-	_uint		iNumMaterials = m_pModel->Get_NumMaterials();
+	_uint		iNumMaterials = (_uint)m_pModel->Get_NumMaterials();
 
 	m_pModel->Bind_Buffers();
 

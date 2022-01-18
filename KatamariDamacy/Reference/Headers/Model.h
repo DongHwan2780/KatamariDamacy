@@ -12,6 +12,13 @@ BEGIN(Engine)
 
 class ENGINE_DLL CModel final : public CComponent
 {
+public:
+	typedef struct tagModelDesc
+	{
+		_uint iModelIndexNum;
+	}MODELDESC;
+
+
 private:
 	explicit CModel(DEVICES);
 	explicit CModel(const CModel& other);
@@ -55,6 +62,9 @@ private:
 
 	void Add_Channel_To_HierarchyNode(_uint iAnimationindex, class CChannel* pChannel);
 
+public:
+	const MODELDESC& GetModelDesc() const { return m_ModelDesc; }
+
 
 public:
 	static CModel*	Create(DEVICES, const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix);
@@ -91,6 +101,9 @@ private:
 protected:
 	vector<EFFECTDESC>			m_EffectDescs;
 	ID3DX11Effect*				m_pEffect = nullptr;
+
+private:
+	MODELDESC	m_ModelDesc;
 };
 END
 #endif // !__MODEL_H__

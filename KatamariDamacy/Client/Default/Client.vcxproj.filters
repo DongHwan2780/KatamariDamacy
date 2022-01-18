@@ -79,107 +79,110 @@
     <Filter Include="01.Object\01.ObjList\NewFilter1">
       <UniqueIdentifier>{7454a790-217c-4da2-95ab-f1c5b22cb64b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\01.Bag">
-      <UniqueIdentifier>{97ad2f8e-149a-45ca-aa1f-708a8cac0ac0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\02.Banana">
-      <UniqueIdentifier>{8c0d0df3-c89c-49a6-aea6-65602c385318}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\03.Bat">
-      <UniqueIdentifier>{49546e02-c028-4a85-bb9a-d3e9de87d650}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\04.Bansai">
-      <UniqueIdentifier>{aeeef947-2d3d-4dc8-bbb9-20a900d8f0c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\05,Book0">
-      <UniqueIdentifier>{5befeb10-3cd1-40c8-bbbd-53c608f51580}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\06.Book1">
-      <UniqueIdentifier>{159be3d3-fd8a-45bd-a7a5-c1fd588c1e27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\07.Bowling">
-      <UniqueIdentifier>{3e932548-1b20-44e9-9733-e557554aabb1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\08.Cake">
-      <UniqueIdentifier>{41350874-8ec1-4e64-beb7-9e4f125928db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\09.Can">
-      <UniqueIdentifier>{c21f7491-fd22-40cb-bdfc-dfefb544a38e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\10.Candy">
-      <UniqueIdentifier>{a49deaa7-b84e-4216-a8a7-d5220c8dadcc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\11.Clock">
-      <UniqueIdentifier>{c3c10da6-af6a-4281-8f84-02aa9ab24b8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Object\01.ObjList\NewFilter1\12.Denden">
       <UniqueIdentifier>{216e4f75-41da-4cc9-83c8-2e8ebbe2fd3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\13.Dice">
-      <UniqueIdentifier>{baa8b451-bf80-4799-95de-47a89494fd39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\14.DrinkCan0">
-      <UniqueIdentifier>{ceab90af-8d45-453a-aeb3-e20cc2c403d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\15.DrinkCan1">
-      <UniqueIdentifier>{6ae6d86b-3246-44a7-84bc-4536be21768c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\16.Egg">
-      <UniqueIdentifier>{be68bc54-4ca6-4530-9e52-555a300d64b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\17.Eraser">
-      <UniqueIdentifier>{4388215e-07e7-4e30-a606-209defb52ff8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\18.Fork">
-      <UniqueIdentifier>{163401ec-f3a6-4f73-b27c-ece961215fdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\19.FryPan">
-      <UniqueIdentifier>{b9e007a4-ae8f-47c6-85b6-b4e3cf64bd31}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\20.LipStick">
-      <UniqueIdentifier>{14161356-34ea-4a36-9639-5aab5ce34bb5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\21.Magnet">
-      <UniqueIdentifier>{7c17caee-5170-43ef-9997-cf5a52caaea3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\22.Melon">
-      <UniqueIdentifier>{1ec913a8-3af1-41be-ad8c-d56274e875e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\23.MilkPack">
-      <UniqueIdentifier>{b5acd307-ea2d-4d03-bbbb-5d4e90d7015f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\24.Orange">
-      <UniqueIdentifier>{c245b046-e52c-4301-8b4d-b120edeb24b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\25.Pilon">
-      <UniqueIdentifier>{9a5e9e55-de74-48f2-905e-617176fb524e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\26.Pin0">
-      <UniqueIdentifier>{2ad1ad31-62a0-4a9f-bffe-68d70c6300aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\27.Pin1">
-      <UniqueIdentifier>{b95b0ce4-ad6a-4ce0-816c-87e6ee7412ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\28.Radio">
-      <UniqueIdentifier>{2b3802ea-5d0c-4c43-b2c4-14437bfff867}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\29.Spoon">
-      <UniqueIdentifier>{0c79e6f5-39c7-4fb5-86f3-f6ed856554d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\30.Stand">
-      <UniqueIdentifier>{fc24cf5c-8842-4d88-8cac-f550f388a772}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\31.SunFlower">
-      <UniqueIdentifier>{cfdae0cb-b75e-4344-8356-6ffcac01def3}</UniqueIdentifier>
     </Filter>
     <Filter Include="01.Object\01.ObjList\NewFilter1\32.Tree">
       <UniqueIdentifier>{0707130a-eb87-48d8-ae13-b0adb3916213}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Object\01.ObjList\NewFilter1\33.Tulip">
-      <UniqueIdentifier>{fd1b3611-b4fc-460d-8ca0-8bac8725f930}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Object\01.ObjList\34.Dummy">
       <UniqueIdentifier>{55fb204f-bebf-4d2b-a57a-edc3ff7a782f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\01.Bag">
+      <UniqueIdentifier>{97ad2f8e-149a-45ca-aa1f-708a8cac0ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\02.Banana">
+      <UniqueIdentifier>{8c0d0df3-c89c-49a6-aea6-65602c385318}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\03.Bat">
+      <UniqueIdentifier>{49546e02-c028-4a85-bb9a-d3e9de87d650}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\04.Bansai">
+      <UniqueIdentifier>{aeeef947-2d3d-4dc8-bbb9-20a900d8f0c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\05,Book0">
+      <UniqueIdentifier>{5befeb10-3cd1-40c8-bbbd-53c608f51580}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\06.Book1">
+      <UniqueIdentifier>{159be3d3-fd8a-45bd-a7a5-c1fd588c1e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\07.Bowling">
+      <UniqueIdentifier>{3e932548-1b20-44e9-9733-e557554aabb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\08.Cake">
+      <UniqueIdentifier>{41350874-8ec1-4e64-beb7-9e4f125928db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\09.Can">
+      <UniqueIdentifier>{c21f7491-fd22-40cb-bdfc-dfefb544a38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\10.Candy">
+      <UniqueIdentifier>{a49deaa7-b84e-4216-a8a7-d5220c8dadcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\11.Clock">
+      <UniqueIdentifier>{c3c10da6-af6a-4281-8f84-02aa9ab24b8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\13.Dice">
+      <UniqueIdentifier>{baa8b451-bf80-4799-95de-47a89494fd39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\14.DrinkCan0">
+      <UniqueIdentifier>{ceab90af-8d45-453a-aeb3-e20cc2c403d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\15.DrinkCan1">
+      <UniqueIdentifier>{6ae6d86b-3246-44a7-84bc-4536be21768c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\16.Egg">
+      <UniqueIdentifier>{be68bc54-4ca6-4530-9e52-555a300d64b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\17.Eraser">
+      <UniqueIdentifier>{4388215e-07e7-4e30-a606-209defb52ff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\18.Fork">
+      <UniqueIdentifier>{163401ec-f3a6-4f73-b27c-ece961215fdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\19.FryPan">
+      <UniqueIdentifier>{b9e007a4-ae8f-47c6-85b6-b4e3cf64bd31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\20.LipStick">
+      <UniqueIdentifier>{14161356-34ea-4a36-9639-5aab5ce34bb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\21.Magnet">
+      <UniqueIdentifier>{7c17caee-5170-43ef-9997-cf5a52caaea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\22.Melon">
+      <UniqueIdentifier>{1ec913a8-3af1-41be-ad8c-d56274e875e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\23.MilkPack">
+      <UniqueIdentifier>{b5acd307-ea2d-4d03-bbbb-5d4e90d7015f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\24.Orange">
+      <UniqueIdentifier>{c245b046-e52c-4301-8b4d-b120edeb24b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\25.Pilon">
+      <UniqueIdentifier>{9a5e9e55-de74-48f2-905e-617176fb524e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\26.Pin0">
+      <UniqueIdentifier>{2ad1ad31-62a0-4a9f-bffe-68d70c6300aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\27.Pin1">
+      <UniqueIdentifier>{b95b0ce4-ad6a-4ce0-816c-87e6ee7412ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\28.Radio">
+      <UniqueIdentifier>{2b3802ea-5d0c-4c43-b2c4-14437bfff867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\29.Spoon">
+      <UniqueIdentifier>{0c79e6f5-39c7-4fb5-86f3-f6ed856554d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\30.Stand">
+      <UniqueIdentifier>{fc24cf5c-8842-4d88-8cac-f550f388a772}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\31.SunFlower">
+      <UniqueIdentifier>{cfdae0cb-b75e-4344-8356-6ffcac01def3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\01.ObjList\33.Tulip">
+      <UniqueIdentifier>{fd1b3611-b4fc-460d-8ca0-8bac8725f930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\02.CommonObj\03.UI\05.StickObjUI">
+      <UniqueIdentifier>{1d3d0093-cd95-4f2c-bbb5-4544dbcf98fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -259,109 +262,112 @@
       <Filter>01.Object\01.ObjList\00.Apple</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Bag.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\01.Bag</Filter>
+      <Filter>01.Object\01.ObjList\01.Bag</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Banana.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\02.Banana</Filter>
+      <Filter>01.Object\01.ObjList\02.Banana</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Bansai.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\04.Bansai</Filter>
+      <Filter>01.Object\01.ObjList\04.Bansai</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Bat.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\03.Bat</Filter>
+      <Filter>01.Object\01.ObjList\03.Bat</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Book0.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\05,Book0</Filter>
+      <Filter>01.Object\01.ObjList\05,Book0</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Book1.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\06.Book1</Filter>
+      <Filter>01.Object\01.ObjList\06.Book1</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Bowling.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\07.Bowling</Filter>
+      <Filter>01.Object\01.ObjList\07.Bowling</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Cake.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\08.Cake</Filter>
+      <Filter>01.Object\01.ObjList\08.Cake</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Can.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\09.Can</Filter>
+      <Filter>01.Object\01.ObjList\09.Can</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Candy.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\10.Candy</Filter>
+      <Filter>01.Object\01.ObjList\10.Candy</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Clock.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\11.Clock</Filter>
+      <Filter>01.Object\01.ObjList\11.Clock</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Denden.h">
       <Filter>01.Object\01.ObjList\NewFilter1\12.Denden</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Dice.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\13.Dice</Filter>
+      <Filter>01.Object\01.ObjList\13.Dice</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\DrinkCan0.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\14.DrinkCan0</Filter>
+      <Filter>01.Object\01.ObjList\14.DrinkCan0</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\DrinkCan1.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\15.DrinkCan1</Filter>
+      <Filter>01.Object\01.ObjList\15.DrinkCan1</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Egg.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\16.Egg</Filter>
+      <Filter>01.Object\01.ObjList\16.Egg</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Eraser.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\17.Eraser</Filter>
+      <Filter>01.Object\01.ObjList\17.Eraser</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Fork.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\18.Fork</Filter>
+      <Filter>01.Object\01.ObjList\18.Fork</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\FryPan.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\19.FryPan</Filter>
+      <Filter>01.Object\01.ObjList\19.FryPan</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\LipStick.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\20.LipStick</Filter>
+      <Filter>01.Object\01.ObjList\20.LipStick</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Magnet.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\21.Magnet</Filter>
+      <Filter>01.Object\01.ObjList\21.Magnet</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Melon.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\22.Melon</Filter>
+      <Filter>01.Object\01.ObjList\22.Melon</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\MilkPack.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\23.MilkPack</Filter>
+      <Filter>01.Object\01.ObjList\23.MilkPack</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Orange.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\24.Orange</Filter>
+      <Filter>01.Object\01.ObjList\24.Orange</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Pilon.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\25.Pilon</Filter>
+      <Filter>01.Object\01.ObjList\25.Pilon</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Pin0.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\26.Pin0</Filter>
+      <Filter>01.Object\01.ObjList\26.Pin0</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Pin1.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\27.Pin1</Filter>
+      <Filter>01.Object\01.ObjList\27.Pin1</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Radio.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\28.Radio</Filter>
+      <Filter>01.Object\01.ObjList\28.Radio</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Spoon.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\29.Spoon</Filter>
+      <Filter>01.Object\01.ObjList\29.Spoon</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Stand.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\30.Stand</Filter>
+      <Filter>01.Object\01.ObjList\30.Stand</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\SunFlower.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\31.SunFlower</Filter>
+      <Filter>01.Object\01.ObjList\31.SunFlower</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Tree.h">
       <Filter>01.Object\01.ObjList\NewFilter1\32.Tree</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Tulip.h">
-      <Filter>01.Object\01.ObjList\NewFilter1\33.Tulip</Filter>
+      <Filter>01.Object\01.ObjList\33.Tulip</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\LoadingUI.h">
       <Filter>01.Object\02.CommonObj\03.UI\04.LoadingUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Dummy.h">
       <Filter>01.Object\01.ObjList\34.Dummy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\StickObjUI.h">
+      <Filter>01.Object\02.CommonObj\03.UI\05.StickObjUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -426,109 +432,112 @@
       <Filter>01.Object\01.ObjList\00.Apple</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Bag.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\01.Bag</Filter>
+      <Filter>01.Object\01.ObjList\01.Bag</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Banana.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\02.Banana</Filter>
+      <Filter>01.Object\01.ObjList\02.Banana</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Bansai.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\04.Bansai</Filter>
+      <Filter>01.Object\01.ObjList\04.Bansai</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Bat.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\03.Bat</Filter>
+      <Filter>01.Object\01.ObjList\03.Bat</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Book0.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\05,Book0</Filter>
+      <Filter>01.Object\01.ObjList\05,Book0</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Book1.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\06.Book1</Filter>
+      <Filter>01.Object\01.ObjList\06.Book1</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Bowling.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\07.Bowling</Filter>
+      <Filter>01.Object\01.ObjList\07.Bowling</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Cake.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\08.Cake</Filter>
+      <Filter>01.Object\01.ObjList\08.Cake</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Can.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\09.Can</Filter>
+      <Filter>01.Object\01.ObjList\09.Can</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Candy.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\10.Candy</Filter>
+      <Filter>01.Object\01.ObjList\10.Candy</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Clock.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\11.Clock</Filter>
+      <Filter>01.Object\01.ObjList\11.Clock</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Denden.cpp">
       <Filter>01.Object\01.ObjList\NewFilter1\12.Denden</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Dice.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\13.Dice</Filter>
+      <Filter>01.Object\01.ObjList\13.Dice</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\DrinkCan0.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\14.DrinkCan0</Filter>
+      <Filter>01.Object\01.ObjList\14.DrinkCan0</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\DrinkCan1.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\15.DrinkCan1</Filter>
+      <Filter>01.Object\01.ObjList\15.DrinkCan1</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Egg.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\16.Egg</Filter>
+      <Filter>01.Object\01.ObjList\16.Egg</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Eraser.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\17.Eraser</Filter>
+      <Filter>01.Object\01.ObjList\17.Eraser</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Tulip.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\33.Tulip</Filter>
+      <Filter>01.Object\01.ObjList\33.Tulip</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Tree.cpp">
       <Filter>01.Object\01.ObjList\NewFilter1\32.Tree</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\SunFlower.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\31.SunFlower</Filter>
+      <Filter>01.Object\01.ObjList\31.SunFlower</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Stand.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\30.Stand</Filter>
+      <Filter>01.Object\01.ObjList\30.Stand</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Spoon.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\29.Spoon</Filter>
+      <Filter>01.Object\01.ObjList\29.Spoon</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Radio.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\28.Radio</Filter>
+      <Filter>01.Object\01.ObjList\28.Radio</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Pin1.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\27.Pin1</Filter>
+      <Filter>01.Object\01.ObjList\27.Pin1</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Pin0.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\26.Pin0</Filter>
+      <Filter>01.Object\01.ObjList\26.Pin0</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Pilon.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\25.Pilon</Filter>
+      <Filter>01.Object\01.ObjList\25.Pilon</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Orange.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\24.Orange</Filter>
+      <Filter>01.Object\01.ObjList\24.Orange</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\MilkPack.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\23.MilkPack</Filter>
+      <Filter>01.Object\01.ObjList\23.MilkPack</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Melon.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\22.Melon</Filter>
+      <Filter>01.Object\01.ObjList\22.Melon</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Magnet.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\21.Magnet</Filter>
+      <Filter>01.Object\01.ObjList\21.Magnet</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\LipStick.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\20.LipStick</Filter>
+      <Filter>01.Object\01.ObjList\20.LipStick</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\FryPan.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\19.FryPan</Filter>
+      <Filter>01.Object\01.ObjList\19.FryPan</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Fork.cpp">
-      <Filter>01.Object\01.ObjList\NewFilter1\18.Fork</Filter>
+      <Filter>01.Object\01.ObjList\18.Fork</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\LoadingUI.cpp">
       <Filter>01.Object\02.CommonObj\03.UI\04.LoadingUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Dummy.cpp">
       <Filter>01.Object\01.ObjList\34.Dummy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\StickObjUI.cpp">
+      <Filter>01.Object\02.CommonObj\03.UI\05.StickObjUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
