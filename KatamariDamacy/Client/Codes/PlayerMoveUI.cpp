@@ -46,7 +46,7 @@ HRESULT CPlayerMoveUI::Initialize_Clone(void * pArg)
 	m_TransformMatrix._42 = -270.f;
 	m_TransformMatrix._43 = 0.5f;
 
-	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH(g_iWinCX, g_iWinCY, 0.0f, 1.f));
+	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH((float)g_iWinCX, (float)g_iWinCY, 0.0f, 1.f));
 
 	return S_OK;
 }
@@ -85,7 +85,7 @@ HRESULT CPlayerMoveUI::Render()
 	if (FAILED(SetUp_ConstantTable()))
 		return E_FAIL;
 
-	_uint		iNumMaterials = m_pModel->Get_NumMaterials();
+	_uint		iNumMaterials = (_uint)m_pModel->Get_NumMaterials();
 
 	m_pModel->Bind_Buffers();
 
@@ -114,12 +114,12 @@ void CPlayerMoveUI::Movement(_double DeltaTime)
 
 	else if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(3);
+		m_pModel->SetUp_AnimationIndex(43);
 	}
 
 	else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(2);
+		m_pModel->SetUp_AnimationIndex(42);
 	}
 	else
 		m_pModel->SetUp_AnimationIndex(20);

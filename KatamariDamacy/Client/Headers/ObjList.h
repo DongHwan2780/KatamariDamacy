@@ -37,6 +37,7 @@ public:
 
 public:
 	void Coll_PlayerBall();
+	void Create_StickObjUI(_uint iModelIndex);
 
 public:
 	_float	Get_PlayerBallSize() {}
@@ -57,6 +58,11 @@ protected:
 	_float m_fGravityY = 0.f;
 
 	CTransform*		m_pPlayerBallTransform = nullptr;
+
+
+	_matrix		OffsetMatrix;
+	_bool		m_bStickCheck = true;
+
 };
 
 

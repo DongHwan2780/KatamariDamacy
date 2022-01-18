@@ -4,6 +4,8 @@
 #include "PlayerBall.h"
 #include "Management.h"
 
+#include "StickObjUI.h"
+
 CObjList::CObjList(DEVICES)
 	:CObj(pDevice, pDeviceContext)
 {
@@ -64,47 +66,62 @@ void CObjList::OnLandCheck()
 
 void CObjList::Coll_PlayerBall()
 {
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	if (m_pColliderSphere->GetColliderDesc().eObjState == CCollider::OBJ_STICK && m_bStickCheck == true)
+	{
+		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
+
+		_vector vPos = m_pTransform->Get_State(CTransform::POSITION);
+		_vector vBallPos = m_pPlayerBallTransform->Get_State(CTransform::POSITION);
+
+		OffsetMatrix = XMMatrixIdentity();
+
+		// 포지션을 구해주고 구한 포지션에 공의 회전값만큼 공전을 해줘라
+
+		_vector  vScale, vQuat, vTrans;
+		XMMatrixDecompose(&vScale, &vQuat, &vTrans, m_pPlayerBallTransform->Get_WorldMatrix());
+
+		// 렝스에다가 0 0 1 곱한값을 쿼터니언에 곱해줌
+
+		OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);
+		OffsetMatrix = OffsetMatrix * XMMatrixRotationQuaternion(vQuat);
+
+		m_pTransform->Set_WorldMatrix(OffsetMatrix * m_pPlayerBallTransform->Get_WorldMatrix());
+		m_pTransform->Set_Scale(XMVectorSet(m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, 0.f));
+
+		m_bStickCheck = false;
+	}
+	else if (m_pColliderSphere->GetColliderDesc().eObjState == CCollider::OBJ_STICK && m_bStickCheck == false)
+	{
+		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
+
+		// 오브 포지션  - 공 포지션 == 오프셋
+
+		// 오프셋 * 스케일 뺀 공
+		m_pTransform->Set_WorldMatrix(OffsetMatrix * m_pPlayerBallTransform->Get_WorldMatrix());
+		m_pTransform->Set_Scale(XMVectorSet(m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, 0.f));
+	}
+
+	RELEASE_INSTANCE(CManagement);
+}
+
+void CObjList::Create_StickObjUI(_uint iModelIndex)
+{
 	//CManagement*	pManagement = GET_INSTANCE(CManagement);
 
 
-	//CTransform* m_pObjTransform = dynamic_cast<CTransform*>(pObj->GetComponent(L"Com_Transform"));
+	//pLayer = pManagement->Get_GameObj(L"Layer_StickObjUI");
 
-	//_vector		vRight, vUp, vLook, vPos;
-	//_matrix		TransMatrix;
-	//TransMatrix = XMMatrixTranslation(1.f, 1.f, 1.f);
+	//for (auto& iter : pLayer->GetGameObjList())
+	//{
+	//	if (iter != nullptr)
+	//	{
+	//		Safe_Release((*iter));
+	//	}
+	//}
 
-	//vRight = m_pObjTransform->Get_State(CTransform::RIGHT);
-	//vUp = m_pObjTransform->Get_State(CTransform::UP);
-	//vLook = m_pObjTransform->Get_State(CTransform::LOOK);
-	//vPos = m_pObjTransform->Get_State(CTransform::POSITION);
-
-	//_matrix ScaleMatrix;
-	//_float	fObjScale;
-
-	//fObjScale = m_pObjTransform->GetTransformDesc().fScale;
-	//ScaleMatrix = XMMatrixTranslation(fObjScale, fObjScale, fObjScale);
-
-	////m_pObjTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, m_pTransform->Get_WorldMatrix()));
-	////m_pObjTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, m_pTransform->Get_WorldMatrix()));
-	////m_pObjTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, m_pTransform->Get_WorldMatrix()));
-
-
-	//_matrix OffsetMatrix;
-	//_vector vBallPos = m_pTransform->Get_State(CTransform::POSITION);
-
-	//OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);
-
-	//_matrix			NonScaleMatrix = m_pTransform->Get_WorldMatrix();
-
-	//NonScaleMatrix.r[0] = XMVector3Normalize(m_pTransform->Get_WorldMatrix().r[0]);
-	//NonScaleMatrix.r[1] = XMVector3Normalize(m_pTransform->Get_WorldMatrix().r[1]);
-	//NonScaleMatrix.r[2] = XMVector3Normalize(m_pTransform->Get_WorldMatrix().r[2]);
-
-	//// 오브 포지션  - 공 포지션 == 오프셋
-
-	//// 오프셋 * 스케일 뺀 공
-	//m_pObjTransform->Set_WorldMatrix(OffsetMatrix * NonScaleMatrix);
-
+	//pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_SizeUI"), L"Layer_StickObjUI", &iModelIndex);
 
 	//RELEASE_INSTANCE(CManagement);
 }

@@ -43,7 +43,7 @@ HRESULT CLoadingUI::Initialize_Clone(void * pArg)
 	m_TransformMatrix._41 = 500.f;
 	m_TransformMatrix._42 = -230.f;
 
-	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH(g_iWinCX, g_iWinCY, 0.0f, 1.f));
+	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH((float)g_iWinCX, (float)g_iWinCY, 0.0f, 1.f));
 
 	return S_OK;
 }
@@ -85,7 +85,7 @@ HRESULT CLoadingUI::Render()
 	m_pVIBuffer->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixIdentity(), sizeof(_matrix));
 	m_pVIBuffer->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_OrthMatrix)), sizeof(_matrix));
 
-	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseTexture", m_pTexture, m_iIdx)))
+	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseTexture", m_pTexture, (_uint)m_iIdx)))
 		return E_FAIL;
 
 	if (FAILED(__super::Render()))

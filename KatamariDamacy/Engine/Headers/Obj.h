@@ -28,6 +28,8 @@ public:
 	CComponent*	GetComponent(const wstring& pComponentTag) const;
 
 	CObj*		GetThis() { return this; }
+	virtual void SetDead() { m_bDead = true; }
+
 
 public:
 	virtual CObj*	Clone(void* pArg) = 0;
@@ -41,6 +43,8 @@ protected:
 protected:
 	unordered_map<wstring, class CComponent*>			m_Components;
 	typedef unordered_map<wstring, class CComponent*>	COMPONENTS;
+
+	_bool	m_bDead = false;
 };
 
 END

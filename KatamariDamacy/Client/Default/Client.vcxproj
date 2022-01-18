@@ -213,6 +213,7 @@
     <ClInclude Include="..\Headers\StageMap.h" />
     <ClInclude Include="..\Headers\StageOne.h" />
     <ClInclude Include="..\Headers\Stand.h" />
+    <ClInclude Include="..\Headers\StickObjUI.h" />
     <ClInclude Include="..\Headers\StickyUI.h" />
     <ClInclude Include="..\Headers\SunFlower.h" />
     <ClInclude Include="..\Headers\Terrain.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="..\Codes\StageMap.cpp" />
     <ClCompile Include="..\Codes\StageOne.cpp" />
     <ClCompile Include="..\Codes\Stand.cpp" />
+    <ClCompile Include="..\Codes\StickObjUI.cpp" />
     <ClCompile Include="..\Codes\StickyUI.cpp" />
     <ClCompile Include="..\Codes\SunFlower.cpp" />
     <ClCompile Include="..\Codes\Terrain.cpp" />

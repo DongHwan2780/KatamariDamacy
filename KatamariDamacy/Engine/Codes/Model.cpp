@@ -158,6 +158,9 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 
 HRESULT CModel::Initialize_Clone(void * pArg)
 {
+	if (nullptr != pArg)
+		memcpy(&m_ModelDesc, pArg, sizeof(MODELDESC));
+
 	Create_HierarchyNodes(m_pScene->mRootNode, nullptr, 0, m_PivotMatrix);
 
 	sort(m_HierarchyNodes.begin(), m_HierarchyNodes.end(), [](CHierarchyNode* pSour, CHierarchyNode* pDest)

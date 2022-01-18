@@ -4,6 +4,7 @@
 CObj::CObj(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
 	:m_pDevice(pDevice)
 	,m_pDeviceContext(pDeviceContext)
+	, m_bDead(false)
 {
 	Safe_AddRef(m_pDeviceContext);
 	Safe_AddRef(m_pDevice);
@@ -12,6 +13,7 @@ CObj::CObj(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceContext)
 CObj::CObj(const CObj & other)
 	:m_pDevice(other.m_pDevice)
 	, m_pDeviceContext(other.m_pDeviceContext)
+	, m_bDead(false)
 {
 	Safe_AddRef(m_pDeviceContext);
 	Safe_AddRef(m_pDevice);

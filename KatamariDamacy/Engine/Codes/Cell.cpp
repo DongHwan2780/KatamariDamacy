@@ -124,7 +124,9 @@ CCell * CCell::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceConte
 
 void CCell::Free()
 {
+#ifdef _DEBUG
 	Safe_Release(m_pVIBuffer);
+#endif
 	Safe_Release(m_pDeviceContext);
 	Safe_Release(m_pDevice);
 }

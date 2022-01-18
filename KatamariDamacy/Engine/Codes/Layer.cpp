@@ -20,15 +20,22 @@ _int CLayer::Update(_double DeltaTime)
 {
 	_int	iProgress = 0;
 
-	for (auto& pGameObj : m_ObjList)
+	for (auto& iter = m_ObjList.begin(); iter != m_ObjList.end();)
 	{
-		iProgress = pGameObj->Update(DeltaTime);
-
-		if (0 > iProgress)
-			return -1;
+		if (iProgress = (*iter)->Update(DeltaTime))
+		{
+			if (iProgress == OBJ_DEAD)
+			{
+				Safe_Release((*iter));
+				m_ObjList.erase(iter);
+			}
+			return iProgress;
+		}
+		else
+			++iter;
 	}
 
-	return _int();
+	return iProgress;
 }
 
 _int CLayer::Late_Update(_double DeltaTime)

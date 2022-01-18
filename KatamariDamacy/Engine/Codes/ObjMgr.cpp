@@ -67,14 +67,13 @@ _int CObjMgr::Update(_double DeltaTime)
 	{
 		for (auto& pair : m_pGameObjects[i])
 		{
-
 			iProgress = pair.second->Update(DeltaTime);
-			if (0 > iProgress)
-				return -1;
+			if  (iProgress == OBJ_DEAD)
+				return iProgress;
 		}
 	}
 
-	return _int();
+	return iProgress;
 }
 
 _int CObjMgr::Late_Update(_double DeltaTime)

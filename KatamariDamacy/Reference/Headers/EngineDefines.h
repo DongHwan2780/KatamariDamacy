@@ -13,6 +13,8 @@
 #define KEY_RETURN	 0x00000010
 #pragma endregion
 
+#define OBJ_DEAD	4
+
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>		// 장치 헤더

@@ -94,7 +94,7 @@ HRESULT CPlayer::Render()
 	if (FAILED(SetUp_ConstantTable()))
 		return E_FAIL;
 
-	_uint		iNumMaterials = m_pModel->Get_NumMaterials();
+	_uint		iNumMaterials = (_uint)m_pModel->Get_NumMaterials();
 
 	m_pModel->Bind_Buffers();
 
@@ -157,7 +157,7 @@ void CPlayer::Movement(_double DeltaTime)
 
 	else if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(3);
+		m_pModel->SetUp_AnimationIndex(43);
 		m_pTransform->Move_Strafe(-DeltaTime);
 		m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * 20.f);
 
@@ -173,7 +173,7 @@ void CPlayer::Movement(_double DeltaTime)
 
 	else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(2);
+		m_pModel->SetUp_AnimationIndex(42);
 		m_pTransform->Move_Strafe(DeltaTime);
 		m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * -20.f);
 
@@ -203,7 +203,7 @@ void CPlayer::Acceleration(_double DeltaTime, _float Ballsize)
 		}
 		else if (m_fAccel < 15.f && fPlayerSpeed <= m_fMaxSpeed - 20.f)
 		{
-			m_fAccel += DeltaTime*25.f;
+			m_fAccel += (float)DeltaTime * 25.f;
 		}
 
 		if (fPlayerSpeed > 0.f)
@@ -236,10 +236,8 @@ void CPlayer::Gravity(_double DeltaTime)
 	{
 		fPos.y = m_fGravityY - 9.8f * m_fGravityTime * m_fGravityTime ;
 		m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(fPos.x, fPos.y, fPos.z, 1.f));
-		m_fGravityTime += DeltaTime;
+		m_fGravityTime += (float)DeltaTime;
 	}
-
-
 }
 
 HRESULT CPlayer::SetUp_Components()

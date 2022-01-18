@@ -8,6 +8,7 @@
 #include "StickyUI.h"
 #include "TimeUI.h"
 #include "PlayerMoveUI.h"
+#include "StickObjUI.h"
 
 CStageOne::CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
 	:CScene(pDevice, pDeviceContext, iSceneIndex)
@@ -318,7 +319,7 @@ HRESULT CStageOne::Ready_Layer_StageObj()
 			if (dwByte == 0)
 				break;
 
-			if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, wstrProtoTag[i], wstrLayerTag[i], &TransformDesc)))
+			if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, wstrProtoTag[i], L"Layer_StageObj", &TransformDesc)))
 				return E_FAIL;
 		}
 
@@ -372,6 +373,10 @@ HRESULT CStageOne::Ready_Prototype_GameObject()
 
 	/* Prototype_PlayerMoveUI */
 	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_PlayerMoveUI"), CPlayerMoveUI::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
+	/* Prototype_PlayerMoveUI */
+	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_StickObjUI"), CStickObjUI::Create(m_pDevice, m_pDeviceContext))))
 		return E_FAIL;
 
 

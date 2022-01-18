@@ -46,65 +46,9 @@ _int CApple::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
-	CManagement*	pManagement = GET_INSTANCE(CManagement);
-
-	if (m_pColliderSphere->GetColliderDesc().eObjState == CCollider::OBJ_STICK && m_bStickCheck == true)
-	{
-		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
-
-		_vector vPos = m_pTransform->Get_State(CTransform::POSITION);
-		_vector vBallPos = m_pPlayerBallTransform->Get_State(CTransform::POSITION);
-
-		OffsetMatrix = XMMatrixIdentity();
-
-		// 포지션을 구해주고 구한 포지션에 공의 회전값만큼 공전을 해줘라
-
-		_vector  vScale, vQuat, vTrans;
-		XMMatrixDecompose(&vScale, &vQuat, &vTrans, m_pPlayerBallTransform->Get_WorldMatrix());
-
-		// 렝스에다가 0 0 1 곱한값을 쿼터니언에 곱해줌
-
-		OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);
-		OffsetMatrix = OffsetMatrix * XMMatrixRotationQuaternion(vQuat);
-
-		//vRight = OffsetMatrix.r[0];
-		//vUp = OffsetMatrix.r[1];
-		//vLook = OffsetMatrix.r[2];
-
-		//OffsetMatrix.r[0] = XMVector4Transform(vRight, RotationMatrix);
-		//OffsetMatrix.r[1] = XMVector4Transform(vUp, RotationMatrix);
-		//OffsetMatrix.r[2] = XMVector4Transform(vLook, RotationMatrix);
-
-		//Set_State(CTransform::RIGHT, XMVector4Transform(vRight, RotationMatrix));
-		//_matrix RotXMatrix, RotYMatrix, RotZMatrix;
-		//RotXMatrix = OffsetMatrix * XMMatrixTranslationFromVector(m_pPlayerBallTransform->Get_State(CTransform::RIGHT));
-		//RotYMatrix = OffsetMatrix * XMMatrixTranslationFromVector(m_pPlayerBallTransform->Get_State(CTransform::UP));
-		//RotZMatrix = OffsetMatrix * XMMatrixTranslationFromVector(m_pPlayerBallTransform->Get_State(CTransform::LOOK));
-		//OffsetMatrix = XMMatrixTranslationFromVector(XMLoadFloat3(&m_pColliderSphere->GetColliderDesc().vPos));
-		//OffsetMatrix = XMMatrixTranslationFromVector(XMQuaternionNormalize(vPos) - XMQuaternionNormalize(vBallPos));	
-		
-		//_matrix			NonRotateMatrix;
-		//NonRotateMatrix.r[3] = OffsetMatrix.r[3];
-
-		//_matrix			NonScaleMatrix = NonRotateMatrix;
-
-		//NonRotateMatrix.r[0] = XMVector3Normalize(OffsetMatrix.r[0]);
-		//NonRotateMatrix.r[1] = XMVector3Normalize(OffsetMatrix.r[1]);
-		//NonRotateMatrix.r[2] = XMVector3Normalize(OffsetMatrix.r[2]);
-		_matrix		TransMatrix;
-		TransMatrix = XMMatrixTranslation(0.f, 0.5f, 2.f);
-
-
-		m_pTransform->Set_WorldMatrix(OffsetMatrix * m_pPlayerBallTransform->Get_WorldMatrix());
-		m_pTransform->Set_Scale(XMVectorSet(m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, 0.f));
-
-		m_bStickCheck = false;
-	}
+	Coll_PlayerBall();
 
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
-
-	RELEASE_INSTANCE(CManagement);
-
 	return _int();
 }
 
@@ -115,18 +59,6 @@ _int CApple::Late_Update(_double DeltaTime)
 
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
-	CManagement*	pManagement = GET_INSTANCE(CManagement);
-	if (m_pColliderSphere->GetColliderDesc().eObjState == CCollider::OBJ_STICK && m_bStickCheck == false)
-	{
-		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
-
-		// 오브 포지션  - 공 포지션 == 오프셋
-
-		// 오프셋 * 스케일 뺀 공
-		m_pTransform->Set_WorldMatrix(OffsetMatrix * m_pPlayerBallTransform->Get_WorldMatrix());
-		m_pTransform->Set_Scale(XMVectorSet(m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, m_pTransform->GetTransformDesc().fScale, 0.f));
-	}
-	RELEASE_INSTANCE(CManagement);
 
 	return m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
 }
@@ -166,7 +98,11 @@ HRESULT CApple::SetUp_Components()
 		return E_FAIL;
 
 	/* For.Com_Model */
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Apple", L"Com_Model", (CComponent**)&m_pModel)))
+	CModel::MODELDESC	ModelDesc;
+	ZeroMemory(&ModelDesc, sizeof(CModel::MODELDESC));
+	ModelDesc.iModelIndexNum = 0;
+
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Apple", L"Com_Model", (CComponent**)&m_pModel, &ModelDesc)))
 		return E_FAIL;
 
 	/* For.Com_Transform */
