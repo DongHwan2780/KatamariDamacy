@@ -21,23 +21,6 @@ HRESULT CVIBuffer_Terrain::Initialize_Prototype(const _tchar* pShaderFilePath)
 	if (FAILED(__super::Initialize_Prototype()))
 		return E_FAIL;
 
-	//HANDLE		hFile = CreateFile(pHeightMapPath, GENERIC_READ, 0, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-	//if (0 == hFile)
-	//	return E_FAIL;
-
-	//_ulong					dwByte = 0;
-
-	//BITMAPFILEHEADER		fh;
-	//ReadFile(hFile, &fh, sizeof(BITMAPFILEHEADER), &dwByte, nullptr);
-
-	//BITMAPINFOHEADER		ih;
-	//ReadFile(hFile, &ih, sizeof(BITMAPINFOHEADER), &dwByte, nullptr);
-
-	//_ulong*		pPixel = new _ulong[ih.biWidth * ih.biHeight];		// 픽셀을 비트맵사이즈의 x * y만큼 만들어줌
-	//ReadFile(hFile, pPixel, sizeof(_ulong) * ih.biWidth * ih.biHeight, &dwByte, nullptr);
-
-	//CloseHandle(hFile);
-
 #pragma region VERTEXBUFFER
 
 	m_iStride = sizeof(VTXINFO);		// 버텍스 사이즈
