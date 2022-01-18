@@ -34,6 +34,8 @@ public:
 public:
 	HRESULT CheckModel(_uint iModelIndex);
 
+	void Scale_adj(_uint iModelIndex);
+
 private:
 	HRESULT SetUp_ComponentsOrthUI(_uint iModelIndex);
 	HRESULT SetUp_ConstantTable();
@@ -46,6 +48,7 @@ public:
 private:
 	CTransform*		m_pTransform = nullptr;
 	CRenderer*		m_pRenderer = nullptr;
+	CModel*			m_pModelArray[32];
 	CModel*			m_pModel = nullptr;
 
 private:

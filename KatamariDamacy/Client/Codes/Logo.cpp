@@ -14,9 +14,6 @@ CLogo::CLogo(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint i
 HRESULT CLogo::Initialize()
 {
 	__super::Initialize();
-
-	//pManagement->PlayBGM(L"Village.ogg");
-
 	if (FAILED(Ready_Prototype_Component()))
 		return E_FAIL;
 
@@ -25,6 +22,11 @@ HRESULT CLogo::Initialize()
 
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"), 0)))
 		return E_FAIL;
+
+
+	//CManagement*		pManagement = GET_INSTANCE(CManagement);
+	//pManagement->PlayBGM(L"Logo.wav");
+	//RELEASE_INSTANCE(CManagement);
 
 	return S_OK;
 }
@@ -109,5 +111,8 @@ CLogo * CLogo::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceConte
 
 void CLogo::Free()
 {
+	//CManagement*		pManagement = GET_INSTANCE(CManagement);
+	//pManagement->StopAll();
+	//RELEASE_INSTANCE(CManagement);
 	__super::Free();
 }

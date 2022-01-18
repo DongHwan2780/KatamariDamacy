@@ -33,7 +33,7 @@ HRESULT CPlayer::Initialize_Clone(void * pArg)
 	m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
 	RELEASE_INSTANCE(CManagement);
 
-	m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(100.f, 0.f, 30.f, 1.f));
+	m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(80.f, 0.f, 20.f, 1.f));
 
 	m_pModel->SetUp_AnimationIndex(20);
 
@@ -119,19 +119,21 @@ void CPlayer::Movement(_double DeltaTime)
 	{
 		m_pModel->SetUp_AnimationIndex(1);
 		m_pTransform->Move_Straight(DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(XMVectorSet(1.f, 0.f, 0.f, 0.f), DeltaTime * 20.f);
+		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT) , DeltaTime * 20.f);
 
 		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(-DeltaTime);
-			//m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime* -20.f);
-			m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * 20.f);
+			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), -DeltaTime);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * 20.f);
+			
 		}
 		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(DeltaTime);
-			//m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime  * 20.f);
-			m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * -20.f);
+			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * -20.f);
+
 		}
 	}
 
@@ -139,19 +141,21 @@ void CPlayer::Movement(_double DeltaTime)
 	{
 		m_pModel->SetUp_AnimationIndex(12);
 		m_pTransform->Move_Straight(-DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(XMVectorSet(1.f, 0.f, 0.f, 0.f), DeltaTime * -20.f);
+		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT), DeltaTime * -20.f);
 
 		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(-DeltaTime);
-		//	m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
-			m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * 20.f);
+			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * 20.f);
+
 		}
 		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(DeltaTime);
-			//m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
-			m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * -20.f);
+			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), -DeltaTime);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * -20.f);
+
 		}
 	}
 
@@ -159,7 +163,7 @@ void CPlayer::Movement(_double DeltaTime)
 	{
 		m_pModel->SetUp_AnimationIndex(43);
 		m_pTransform->Move_Strafe(-DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * 20.f);
+		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * 20.f);
 
 		if (pManagement->Get_DIKState(DIK_UP) & 0x80)
 		{
@@ -175,7 +179,7 @@ void CPlayer::Movement(_double DeltaTime)
 	{
 		m_pModel->SetUp_AnimationIndex(42);
 		m_pTransform->Move_Strafe(DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime * -20.f);
+		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * -20.f);
 
 		if (pManagement->Get_DIKState(DIK_UP) & 0x80)
 		{
@@ -253,7 +257,7 @@ HRESULT CPlayer::SetUp_Components()
 	/* For.Com_Transform */
 
 	CTransform::TRANSFORMDESC	TransformDesc;
-	TransformDesc.fRotatePerSec = XMConvertToRadians(360.0f);
+	TransformDesc.fRotatePerSec = 180.0f;
 	TransformDesc.fSpeedPerSec = 10.f;
 
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
