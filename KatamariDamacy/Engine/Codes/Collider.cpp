@@ -448,6 +448,13 @@ void CCollider::Set_Points(const _float3 & ColSize)
 	m_vPoint[7] = _float3(m_pBB->Center.x - m_pBB->Extents.x, m_pBB->Center.y - m_pBB->Extents.y, m_pBB->Center.z + m_pBB->Extents.z);
 }
 
+void CCollider::Set_Radius(const _float fRadius)
+{
+	m_ColliderDesc.fRadius = fRadius;
+
+	m_pSphere->Radius = m_ColliderDesc.fRadius;
+}
+
 _fmatrix CCollider::Remove_ScaleRotation(_fmatrix TransformMatrix)
 {
 	_matrix			NonRotateMatrix = XMMatrixIdentity();

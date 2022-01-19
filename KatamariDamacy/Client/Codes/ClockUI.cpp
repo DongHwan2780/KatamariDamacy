@@ -108,7 +108,7 @@ HRESULT CClockUI::SetUp_ComponentsOrthUI()
 
 	/* For.Com_Transform */
 	CTransform::TRANSFORMDESC	TransformDesc;
-	TransformDesc.fRotatePerSec = 6.f;
+	TransformDesc.fRotatePerSec = 360.f / 300.f;
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;
 

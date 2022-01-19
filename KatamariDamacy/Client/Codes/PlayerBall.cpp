@@ -29,6 +29,10 @@ HRESULT CPlayerBall::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_Components()))
 		return E_FAIL;
 
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+	m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
+	RELEASE_INSTANCE(CManagement);
+
 	return S_OK;
 }
 
@@ -42,6 +46,7 @@ _int CPlayerBall::Update(_double DeltaTime)
 
 	RELEASE_INSTANCE(CManagement);
 
+	Gravity(DeltaTime);
 	SetTransform();
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
@@ -111,6 +116,26 @@ HRESULT CPlayerBall::Render()
 #endif
 
 	return S_OK;
+}
+
+void CPlayerBall::Gravity(_double DeltaTime)
+{
+	_vector vPosition = m_pTransform->Get_State(CTransform::POSITION);
+	_float3 fPos;
+	XMStoreFloat3(&fPos, vPosition);
+
+	if (m_pVIBuffer->IsGround(fPos)) // 바닥 충돌
+	{
+		m_fGravityTime = 0.f;
+		m_fGravityY = fPos.y;
+		m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(fPos.x, fPos.y, fPos.z, 1.f));
+	}
+	else// 중력 적용
+	{
+		fPos.y = m_fGravityY - 9.8f * m_fGravityTime * m_fGravityTime;
+		m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(fPos.x, fPos.y, fPos.z, 1.f));
+		m_fGravityTime += (float)DeltaTime;
+	}
 }
 
 HRESULT CPlayerBall::SetUp_Components()
@@ -226,7 +251,7 @@ CObj * CPlayerBall::Clone(void * pArg)
 void CPlayerBall::Free()
 {
 	__super::Free();
-
+	//Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pColliderSphere);
 	Safe_Release(m_pCollider);
 	Safe_Release(m_pTransform);

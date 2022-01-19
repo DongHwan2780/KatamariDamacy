@@ -107,7 +107,7 @@ HRESULT CClock::SetUp_Components()
 		return E_FAIL;
 	CCollider::COLLIDERDESC		ColliderDesc;
 	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
-	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
+	ColliderDesc.vSize = _float3(3.f, 3.f, 3.f);
 	ColliderDesc.eObjState = CCollider::OBJ_NONE;
 	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Collider_SPHERE", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
 		return E_FAIL;

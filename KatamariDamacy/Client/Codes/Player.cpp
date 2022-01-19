@@ -119,20 +119,20 @@ void CPlayer::Movement(_double DeltaTime)
 	{
 		m_pModel->SetUp_AnimationIndex(1);
 		m_pTransform->Move_Straight(DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT) , DeltaTime * 20.f);
+		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT) , DeltaTime);
 
 		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(-DeltaTime);
 			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), -DeltaTime);
-			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * 20.f);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime );
 			
 		}
 		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(DeltaTime);
 			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
-			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * -20.f);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), -DeltaTime);
 
 		}
 	}
@@ -141,20 +141,20 @@ void CPlayer::Movement(_double DeltaTime)
 	{
 		m_pModel->SetUp_AnimationIndex(12);
 		m_pTransform->Move_Straight(-DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT), DeltaTime * -20.f);
+		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT), -DeltaTime);
 
 		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(-DeltaTime);
 			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
-			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * 20.f);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime);
 
 		}
 		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 		{
 			m_pTransform->Move_Strafe(DeltaTime);
 			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), -DeltaTime);
-			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * -20.f);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), -DeltaTime);
 
 		}
 	}
@@ -163,7 +163,7 @@ void CPlayer::Movement(_double DeltaTime)
 	{
 		m_pModel->SetUp_AnimationIndex(43);
 		m_pTransform->Move_Strafe(-DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * 20.f);
+		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime);
 
 		if (pManagement->Get_DIKState(DIK_UP) & 0x80)
 		{
@@ -179,7 +179,7 @@ void CPlayer::Movement(_double DeltaTime)
 	{
 		m_pModel->SetUp_AnimationIndex(42);
 		m_pTransform->Move_Strafe(DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime * -20.f);
+		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), -DeltaTime);
 
 		if (pManagement->Get_DIKState(DIK_UP) & 0x80)
 		{
@@ -257,8 +257,8 @@ HRESULT CPlayer::SetUp_Components()
 	/* For.Com_Transform */
 
 	CTransform::TRANSFORMDESC	TransformDesc;
-	TransformDesc.fRotatePerSec = 180.0f;
-	TransformDesc.fSpeedPerSec = 10.f;
+	TransformDesc.fRotatePerSec = 10.0f;
+	TransformDesc.fSpeedPerSec = 5.f;
 
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;
@@ -331,7 +331,7 @@ void CPlayer::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pVIBuffer);
+	//Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pCollider);
 	Safe_Release(m_pTransform);
 	Safe_Release(m_pModel);

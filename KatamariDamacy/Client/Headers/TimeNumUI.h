@@ -1,20 +1,20 @@
 #pragma once
 
 
-#ifndef __TIMEUI_H__
-#define __TIMEUI_H__
+#ifndef __TIMENUMUI_H__
+#define __TIMENUMUI_H__
 
 #include "ClientDefines.h"
 #include "UIList.h"
 
 BEGIN(Client)
 
-class CTimeUI final : public CUIList
+class CTimeNumUI final : public CUIList
 {
 public:
-	explicit CTimeUI(DEVICES);
-	explicit CTimeUI(const CTimeUI& other);
-	virtual ~CTimeUI() = default;
+	explicit CTimeNumUI(DEVICES);
+	explicit CTimeNumUI(const CTimeNumUI& other);
+	virtual ~CTimeNumUI() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -23,18 +23,26 @@ public:
 	virtual _int	Late_Update(_double DeltaTime) override;
 	virtual HRESULT	Render() override;
 
+private:
+	void Calculate_Time(_double DeltaTime);
+
 
 private:
 	HRESULT SetUp_ComponentsOrthUI();
 
 public:
-	static CTimeUI*	Create(DEVICES);
+	static CTimeNumUI*	Create(DEVICES);
 	virtual CObj*	Clone(void* pArg) override;
 	virtual void Free() override;
 
 private:
-	_uint		m_iTextureIndex = 0;
+	_float4x4			m_TransformMatrixTwo;
+
+	_uint				m_iTextureIndexFirst = 0;
+	_uint				m_iTextureIndexSecond = 0;
+
+	_double				m_dNowTime = 0.0;
 };
 
 END
-#endif // !__TIMEUI_H__
+#endif // !__TIMENUMUI_H__

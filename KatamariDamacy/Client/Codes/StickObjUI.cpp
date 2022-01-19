@@ -32,8 +32,8 @@ HRESULT CStickObjUI::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_ComponentsOrthUI(m_iModelIndex)))
 		return E_FAIL;
 
-	m_fSizeX = 250.f;
-	m_fSizeY = 250.f;
+	m_fSizeX = 150.f;
+	m_fSizeY = 150.f;
 
 	m_fX = g_iWinCX - m_fSizeX * 0.5f;
 	m_fY = m_fSizeY * 0.5f;
@@ -45,7 +45,7 @@ HRESULT CStickObjUI::Initialize_Clone(void * pArg)
 
 	m_TransformMatrix._41 = -550.f;
 	m_TransformMatrix._42 = -260.f;
-	m_TransformMatrix._43 = 0.2f;
+	m_TransformMatrix._43 =  0.4f;
 
 	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH((float)g_iWinCX, (float)g_iWinCY, 0.0f, 1.f));
 
@@ -115,8 +115,15 @@ HRESULT CStickObjUI::CheckModel(_uint iModelIndex)
 void CStickObjUI::Scale_adj(_uint iModelIndex)
 {
 	_float	fScale = m_pModel->GetModelDesc().fModelScale;
-
-	m_pTransform->Set_Scale(XMVectorSet(fScale / 5.f , fScale / 5.f , fScale / 5.f, 0.f));
+	if (iModelIndex == 0 || iModelIndex == 2 || iModelIndex == 13 || iModelIndex == 14 || iModelIndex == 15 || iModelIndex == 16 || iModelIndex == 19 || iModelIndex == 24 ||
+		iModelIndex == 23 || iModelIndex == 25 || iModelIndex == 26 || iModelIndex == 12)
+	{
+		m_pTransform->Set_Scale(XMVectorSet(fScale / 2.f, fScale / 2.f, fScale / 2.f, 0.f));
+	}
+	else if(iModelIndex == 1 || iModelIndex == 8 || iModelIndex == 3)
+		m_pTransform->Set_Scale(XMVectorSet(fScale / 7.f , fScale / 7.f , fScale / 7.f, 0.f));
+	else
+		m_pTransform->Set_Scale(XMVectorSet(fScale / 5.f, fScale / 5.f, fScale / 5.f, 0.f));
 
 }
 
@@ -128,6 +135,11 @@ HRESULT CStickObjUI::SetUp_ComponentsOrthUI(_uint iModelIndex)
 
 	/* For.Com_Model */
 	wstring wstrModelTag[32] = { L"", L"", L"", L"", L"", L"", L"", L"", L"", L""
+		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
+		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
+		, L"" , L"" };
+
+	wstring wstrComTag[32] = { L"", L"", L"", L"", L"", L"", L"", L"", L"", L""
 		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
 		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
 		, L"" , L"" };
@@ -165,9 +177,43 @@ HRESULT CStickObjUI::SetUp_ComponentsOrthUI(_uint iModelIndex)
 	wstrModelTag[30] = L"Component_Model_SunFlower";
 	wstrModelTag[31] = L"Component_Model_Tulip";
 
+	wstrComTag[0] =	L"Com_ModelArray0";
+	wstrComTag[1] = L"Com_ModelArray1";
+	wstrComTag[2] = L"Com_ModelArray2";
+	wstrComTag[3] = L"Com_ModelArray3";
+	wstrComTag[4] = L"Com_ModelArray4";
+	wstrComTag[5] = L"Com_ModelArray5";
+	wstrComTag[6] = L"Com_ModelArray6";
+	wstrComTag[7] = L"Com_ModelArray7";
+	wstrComTag[8] = L"Com_ModelArray8";
+	wstrComTag[9] = L"Com_ModelArray9";
+	wstrComTag[10] = L"Com_ModelArray10";
+	wstrComTag[11] = L"Com_ModelArray11";
+	wstrComTag[12] = L"Com_ModelArray12";
+	wstrComTag[13] = L"Com_ModelArray13";
+	wstrComTag[14] = L"Com_ModelArray14";
+	wstrComTag[15] = L"Com_ModelArray15";
+	wstrComTag[16] = L"Com_ModelArray16";
+	wstrComTag[17] = L"Com_ModelArray17";
+	wstrComTag[18] = L"Com_ModelArray18";
+	wstrComTag[19] = L"Com_ModelArray19";
+	wstrComTag[20] = L"Com_ModelArray20";
+	wstrComTag[21] = L"Com_ModelArray21";
+	wstrComTag[22] = L"Com_ModelArray22";
+	wstrComTag[23] = L"Com_ModelArray23";
+	wstrComTag[24] = L"Com_ModelArray24";
+	wstrComTag[25] = L"Com_ModelArray25";
+	wstrComTag[26] = L"Com_ModelArray26";
+	wstrComTag[27] = L"Com_ModelArray27";
+	wstrComTag[28] = L"Com_ModelArray28";
+	wstrComTag[29] = L"Com_ModelArray29";
+	wstrComTag[30] = L"Com_ModelArray30";
+	wstrComTag[31] = L"Com_ModelArray31";
+
+
 	for (int i = 0; i < 32; ++i)
 	{
-		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, wstrModelTag[i], L"Com_ModelArray", (CComponent**)&m_pModelArray[i])))
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, wstrModelTag[i], wstrComTag[i], (CComponent**)&m_pModelArray[i])))
 			return E_FAIL;
 	}
 
@@ -230,7 +276,6 @@ CObj * CStickObjUI::Clone(void * pArg)
 
 void CStickObjUI::Free()
 {
-	__super::Free();
 
 	for(int i = 0; i < 32; ++i)
 	{
@@ -241,4 +286,5 @@ void CStickObjUI::Free()
 	Safe_Release(m_pModel);
 	Safe_Release(m_pRenderer);
 
+	__super::Free();
 }

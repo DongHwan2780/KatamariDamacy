@@ -218,6 +218,7 @@
     <ClInclude Include="..\Headers\StickyUI.h" />
     <ClInclude Include="..\Headers\SunFlower.h" />
     <ClInclude Include="..\Headers\Terrain.h" />
+    <ClInclude Include="..\Headers\TimeNumUI.h" />
     <ClInclude Include="..\Headers\TimeUI.h" />
     <ClInclude Include="..\Headers\Tree.h" />
     <ClInclude Include="..\Headers\Tulip.h" />
@@ -279,6 +280,7 @@
     <ClCompile Include="..\Codes\StickyUI.cpp" />
     <ClCompile Include="..\Codes\SunFlower.cpp" />
     <ClCompile Include="..\Codes\Terrain.cpp" />
+    <ClCompile Include="..\Codes\TimeNumUI.cpp" />
     <ClCompile Include="..\Codes\TimeUI.cpp" />
     <ClCompile Include="..\Codes\Tree.cpp" />
     <ClCompile Include="..\Codes\Tulip.cpp" />

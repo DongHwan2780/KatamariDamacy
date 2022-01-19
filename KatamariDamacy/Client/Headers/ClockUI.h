@@ -28,7 +28,6 @@ public:
 	virtual _int	Late_Update(_double DeltaTime) override;
 	virtual HRESULT	Render() override;
 
-
 private:
 	HRESULT SetUp_ComponentsOrthUI();
 
