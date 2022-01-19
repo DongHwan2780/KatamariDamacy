@@ -27,6 +27,7 @@ public:
 		OBJSTATE	eObjState = OBJ_END;
 		_float3		vSize = _float3(1.f, 1.f, 1.f);
 		_float3		vPos;
+		_float		fRadius;
 	} COLLIDERDESC;
 
 	typedef struct tagOBBDesc
@@ -62,6 +63,7 @@ public:
 	void Set_Size(const _float3& ColSize) { m_ColliderDesc.vSize = ColSize; }
 	void Set_Scale(_fvector vScale);
 	void Set_Points(const _float3& ColSize);
+	void Set_Radius(const _float fRadius);
 
 	void Set_CollState(const OBJSTATE ObjState) { m_ColliderDesc.eObjState = ObjState; }
 	void Set_CollPos(const _float3 CollPos) { m_ColliderDesc.vPos = CollPos; }

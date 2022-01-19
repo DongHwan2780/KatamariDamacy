@@ -130,43 +130,46 @@ HRESULT CLoader::StageLoader()
 
 	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
 	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(180.0f));
-	ModelPivotMatrix = ScaleMatrix * RotationMatrix;
+	ModelPivotMatrix = ScaleMatrix * RotationMatrix ;
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Apple", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Apple.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bag", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bag.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Banana", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Banana.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+
+	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
+	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(180.0f)) * XMMatrixRotationX(XMConvertToRadians(90.0f));
+	ModelPivotMatrix = ScaleMatrix * RotationMatrix;
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bat", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bat.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Cake", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Cake.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Radio", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Radio.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Fork", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Fork.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Spoon", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Spoon.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+
+
+	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
+	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(180.0f));
+	ModelPivotMatrix = ScaleMatrix * RotationMatrix;
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bansai", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bansai.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Book0", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Book0.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Book1", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Book1.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bowling", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bowling.fbx",		TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Cake", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Cake.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Can", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Can.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Candy", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Candy.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Clock", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Clock.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Dice", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Dice.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_DrinkCan0", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "DrinkCan0.fbx",	TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_DrinkCan1", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "DrinkCan1.fbx",	TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Egg", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Egg.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Eraser", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Eraser.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Fork", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Fork.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_FryPan", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "FryPan.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_LipStick", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "LipStick.fbx",		TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Magnet", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Magnet.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Melon", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Melon.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_MilkPack", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "MilkPack.fbx",		TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Orange", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Orange.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Pilon", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Pilon.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Pin0", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Pin0.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Pin1", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Pin1.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Radio", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Radio.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Spoon", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Spoon.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Stand", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Stand.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_SunFlower", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "SunFlower.fbx",	TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Tulip", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Tulip.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 

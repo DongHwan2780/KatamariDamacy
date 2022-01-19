@@ -10,6 +10,7 @@
 #include "PlayerMoveUI.h"
 #include "StickObjUI.h"
 #include "ClockUI.h"
+#include "TimeNumUI.h"
 
 CStageOne::CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
 	:CScene(pDevice, pDeviceContext, iSceneIndex)
@@ -58,6 +59,9 @@ HRESULT CStageOne::Initialize()
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer_StickObjUI(TEXT("Layer_StickObjUI"))))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_TimeNumUI(TEXT("Layer_TimeNumUI"))))
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Dummy(TEXT("Layer_Dummy"))))
@@ -360,9 +364,16 @@ HRESULT CStageOne::Ready_Prototype_Component()
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_TimeUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/TimeUI/timer%d.png"), 2))))
 		return E_FAIL;
 
-	/* Prototype_Texture_TimeUI */
+	/* Prototype_Texture_ClockUI */
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_ClockUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/TimeUI/timerPin.png"), 1))))
 		return E_FAIL;
+
+	/* Prototype_Texture_TimeNumUI */
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_TimeNumUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/NumText/Num%d.png"), 10))))
+		return E_FAIL;
+
+
+
 
 	RELEASE_INSTANCE(CManagement);
 
@@ -397,6 +408,11 @@ HRESULT CStageOne::Ready_Prototype_GameObject()
 	/* Prototype_ClockUI */
 	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_ClockUI"), CClockUI::Create(m_pDevice, m_pDeviceContext))))
 		return E_FAIL;
+
+	/* Prototype_TimeNumUI */
+	if (FAILED(pManagement->Add_Prototype(TEXT("Prototype_TimeNumUI"), CTimeNumUI::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
 
 
 	RELEASE_INSTANCE(CManagement);
@@ -472,6 +488,19 @@ HRESULT CStageOne::Ready_Layer_StickObjUI(const wstring & pLayerTag)
 }
 
 HRESULT CStageOne::Ready_Layer_ClockUI(const wstring & pLayerTag)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	/* Prototype_PlayerMoveUI */
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_TimeNumUI"), pLayerTag)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Layer_TimeNumUI(const wstring & pLayerTag)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 

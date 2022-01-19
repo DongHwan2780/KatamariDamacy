@@ -7,7 +7,7 @@
 #include "Obj.h"
 #include "Player.h"
 #include "Layer.h"
-
+#include "Management.h"
 BEGIN(Engine)
 class CCollider;
 class CRenderer;
@@ -31,6 +31,13 @@ public:
 	virtual _int	Late_Update(_double DeltaTime) override;
 	virtual HRESULT	Render() override;
 
+public:
+	_float	Get_PlayerBallSize() { return m_fBallSize; }
+
+
+private:
+	void Gravity(_double DeltaTime);
+
 private:
 	HRESULT SetUp_Components();
 	HRESULT SetUp_ConstantTable();
@@ -51,6 +58,7 @@ private:
 	CCollider*		m_pColliderSphere = nullptr;
 
 	CCollider*		pTargetCollider = nullptr;
+	CVIBuffer_Terrain* m_pVIBuffer = nullptr;
 private:
 	_float			m_fBallSize = 0.f;
 	CTransform*		m_pPlayerTransform = nullptr;
@@ -58,8 +66,10 @@ private:
 	_bool			m_bFirst = true;
 
 	CObj*		m_pStickObjUI = nullptr;
-	CLayer*		pLayer = nullptr;
-	_bool		m_bLayerFirst = false;
+
+	// ม฿ทย
+	_float			m_fGravityTime = 0.f;
+	_float			m_fGravityY = 0.f;
 
 };
 END

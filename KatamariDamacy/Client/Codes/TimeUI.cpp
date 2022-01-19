@@ -54,6 +54,12 @@ _int CTimeUI::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
+	if (m_dLimitTime < 60.0)
+	{
+		m_iTextureIndex = 1;
+	}
+
+
 	return _int();
 }
 
@@ -77,7 +83,7 @@ HRESULT CTimeUI::Render()
 	m_pVIBuffer->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixIdentity(), sizeof(_matrix));
 	m_pVIBuffer->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_OrthMatrix)), sizeof(_matrix));
 
-	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseTexture", m_pTexture)))
+	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseTexture", m_pTexture, m_iTextureIndex)))
 		return E_FAIL;
 
 	if (FAILED(__super::Render()))
