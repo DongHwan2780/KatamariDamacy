@@ -38,6 +38,8 @@ HRESULT CBanana::Initialize_Clone(void * pArg)
 	m_pTransform->Set_Scale(XMVectorSet(TransformDesc.fScale, TransformDesc.fScale, TransformDesc.fScale, 0.f));
 	m_pTransform->Set_TransformDesc(TransformDesc);
 	m_pModel->SetModelScale(TransformDesc.fScale);
+
+	m_fCollSize = 50.f;
 	return S_OK;
 }
 

@@ -372,6 +372,14 @@ HRESULT CStageOne::Ready_Prototype_Component()
 	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_TimeNumUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/NumText/Num%d.png"), 10))))
 		return E_FAIL;
 
+	/* Prototype_Texture_CMUI */
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_CM_UI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/NumText/CM.png"), 1))))
+		return E_FAIL;
+
+	/* Prototype_Texture_MMUI */
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_MM_UI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/NumText/mm.png"), 1))))
+		return E_FAIL;
+
 
 
 

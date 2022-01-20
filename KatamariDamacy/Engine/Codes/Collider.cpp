@@ -6,6 +6,7 @@
 #include "Transform.h"
 #include "Management.h"
 
+
 CCollider::CCollider(DEVICES)
 	:CComponent(pDevice, pDeviceContext)
 {
@@ -405,6 +406,8 @@ _bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj 
 
 			Out = iter->GetThis();
 			XMStoreFloat3(&OutPos , -fMyRadius * vDir + vCenter);
+
+			_pObj->Add_PlayerBallSize(iter->Get_ObjCollSize() / 10.f);
 
 			RELEASE_INSTANCE(CManagement);
 			return true;
