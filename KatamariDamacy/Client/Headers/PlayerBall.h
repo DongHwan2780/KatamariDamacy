@@ -34,7 +34,6 @@ public:
 public:
 	_float	Get_PlayerBallSize() { return m_fBallSize; }
 
-
 private:
 	void Gravity(_double DeltaTime);
 
@@ -59,8 +58,8 @@ private:
 
 	CCollider*		pTargetCollider = nullptr;
 	CVIBuffer_Terrain* m_pVIBuffer = nullptr;
+
 private:
-	_float			m_fBallSize = 0.f;
 	CTransform*		m_pPlayerTransform = nullptr;
 
 	_bool			m_bFirst = true;
@@ -70,6 +69,9 @@ private:
 	// ม฿ทย
 	_float			m_fGravityTime = 0.f;
 	_float			m_fGravityY = 0.f;
+
+	list<class CObj*>			m_StickList;
+	typedef list<class CObj*>	STICKLIST;
 
 };
 END

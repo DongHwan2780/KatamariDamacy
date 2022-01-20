@@ -31,6 +31,8 @@ public:
 	virtual void SetDead() { m_bDead = true; }
 
 
+	_float Get_ObjCollSize() { return m_fCollSize; }
+	void Add_PlayerBallSize(_float fBallSize) { m_fBallSize += fBallSize; }
 public:
 	virtual CObj*	Clone(void* pArg) = 0;
 	virtual void Free() override;
@@ -45,6 +47,9 @@ protected:
 	typedef unordered_map<wstring, class CComponent*>	COMPONENTS;
 
 	_bool	m_bDead = false;
+	_float	m_fCollSize = 0.f;
+
+	_float	m_fBallSize = 100.f;
 };
 
 END

@@ -33,6 +33,7 @@ HRESULT CPlayerBall::Initialize_Clone(void * pArg)
 	m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
 	RELEASE_INSTANCE(CManagement);
 
+	m_fBallSize = 100.f;
 	return S_OK;
 }
 
@@ -69,6 +70,7 @@ _int CPlayerBall::Late_Update(_double DeltaTime)
 	_float3 vPos;
 	if (m_pColliderSphere->Collision_Sphere(this, L"Layer_StageObj", pObj, vPos))
 	{
+
 		CCollider* m_pObjCollider = dynamic_cast<CCollider*>(pObj->GetComponent(L"Com_SPHERE"));
 		CModel*		pModel = dynamic_cast<CModel*>(pObj->GetComponent(L"Com_Model"));
 
@@ -79,6 +81,8 @@ _int CPlayerBall::Late_Update(_double DeltaTime)
 
 		pUIModel->SetModelIndex(pModel->GetModelDesc().iModelIndexNum);
 		pUIModel->SetModelScale(pModel->GetModelDesc().fModelScale);
+
+		m_StickList.emplace_back(pObj);
 	}
 
 
