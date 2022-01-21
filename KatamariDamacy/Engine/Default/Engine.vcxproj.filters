@@ -121,6 +121,12 @@
     <Filter Include="01.Manager\01.ComponentMgr\Navigation\Cell">
       <UniqueIdentifier>{7d62b60a-2853-4c1f-acd8-db4649779026}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\Instance">
+      <UniqueIdentifier>{e5adcb9f-476c-437c-a464-cf94b2c50fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Manager\01.ComponentMgr\VIBuffer\Instance\Point">
+      <UniqueIdentifier>{3fb7f7a5-7538-47a9-b1ba-667e248f6f72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -233,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Cell.cpp">
       <Filter>01.Manager\01.ComponentMgr\Navigation\Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\VIBuffer_PointInstance.cpp">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\Instance\Point</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="..\Headers\Cell.h">
       <Filter>01.Manager\01.ComponentMgr\Navigation\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\VIBuffer_PointInstance.h">
+      <Filter>01.Manager\01.ComponentMgr\VIBuffer\Instance\Point</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -190,6 +190,15 @@
     <Filter Include="01.Object\02.CommonObj\03.UI\07.TimeNumUI">
       <UniqueIdentifier>{1c675380-5684-4790-b242-66171b880061}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Object\03.Effect">
+      <UniqueIdentifier>{a7bd29f4-5a96-44b8-abe9-ab0bc9aee08a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\03.Effect\00.CollEffect">
+      <UniqueIdentifier>{cfb425c9-18be-4559-bb35-b52de007e038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\03.Effect\01.PlayerEffect">
+      <UniqueIdentifier>{988047f6-8342-4a72-b336-de5c6fac72fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -381,6 +390,12 @@
     <ClInclude Include="..\Headers\TimeNumUI.h">
       <Filter>01.Object\02.CommonObj\03.UI\07.TimeNumUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\Headers\CollEffect.h">
+      <Filter>01.Object\03.Effect\00.CollEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Headers\PlayerEffect.h">
+      <Filter>01.Object\03.Effect\01.PlayerEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -557,6 +572,12 @@
     <ClCompile Include="..\Codes\TimeNumUI.cpp">
       <Filter>01.Object\02.CommonObj\03.UI\07.TimeNumUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Codes\CollEffect.cpp">
+      <Filter>01.Object\03.Effect\00.CollEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\PlayerEffect.cpp">
+      <Filter>01.Object\03.Effect\01.PlayerEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -582,6 +603,9 @@
       <Filter>97.Shader</Filter>
     </FxCompile>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UI.fx">
+      <Filter>97.Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_PointInstance.fx">
       <Filter>97.Shader</Filter>
     </FxCompile>
   </ItemGroup>

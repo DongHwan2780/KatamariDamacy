@@ -11,6 +11,7 @@
 #include "StickObjUI.h"
 #include "ClockUI.h"
 #include "TimeNumUI.h"
+#include "PlayerEffect.h"
 
 CStageOne::CStageOne(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex)
 	:CScene(pDevice, pDeviceContext, iSceneIndex)
@@ -67,8 +68,11 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Layer_Dummy(TEXT("Layer_Dummy"))))
 		return E_FAIL;
 
-	Ready_Layer_StageObj();
+	if (FAILED(Ready_Layer_PlayerEffect(TEXT("Layer_PlayerEffect"))))
+		return E_FAIL;
 
+	Ready_Layer_StageObj();
+	 
 	//CManagement*		pManagement = GET_INSTANCE(CManagement);
 	//pManagement->PlayBGM(L"Stage.wav");
 	//RELEASE_INSTANCE(CManagement);
@@ -514,6 +518,19 @@ HRESULT CStageOne::Ready_Layer_TimeNumUI(const wstring & pLayerTag)
 
 	/* Prototype_PlayerMoveUI */
 	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_ClockUI"), pLayerTag)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
+}
+
+HRESULT CStageOne::Ready_Layer_PlayerEffect(const wstring & pLayerTag)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	/* Prototype_PlayerMoveUI */
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_PlayerEffect"), pLayerTag)))
 		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);
