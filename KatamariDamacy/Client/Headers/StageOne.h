@@ -38,6 +38,9 @@ private:
 	HRESULT Ready_Layer_ClockUI(const wstring& pLayerTag);
 
 	HRESULT Ready_Layer_TimeNumUI(const wstring& pLayerTag);
+
+	HRESULT Ready_Layer_PlayerEffect(const wstring& pLayerTag);
+
 public:
 	static CStageOne* Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext, _uint iSceneIndex);
 	virtual void Free() override;

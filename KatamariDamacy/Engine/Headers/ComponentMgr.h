@@ -12,7 +12,7 @@
 #include "VIBuffer_Rect.h"
 #include "VIBuffer_Terrain.h"
 #include "VIBuffer_UI.h"
-
+#include "VIBuffer_PointInstance.h"
 BEGIN(Engine)
 
 class CComponentMgr final : public CBase

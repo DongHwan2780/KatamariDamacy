@@ -11,6 +11,9 @@
 #include "StageMap.h"
 #include "Terrain.h"
 
+#include "CollEffect.h"
+#include "PlayerEffect.h"
+
 #include "Dummy.h"
 
 #include "Apple.h"
@@ -246,6 +249,27 @@ HRESULT CLoader::StageLoader()
 	pManagement->Add_Prototype(L"GameObject_Stand",		CStand::Create(m_pDevice, m_pDeviceContext));
 	pManagement->Add_Prototype(L"GameObject_SunFlower",	CSunFlower::Create(m_pDevice, m_pDeviceContext));
 	pManagement->Add_Prototype(L"GameObject_Tulip",		CTulip::Create(m_pDevice, m_pDeviceContext));
+
+	/* GameObject_Terrain*/
+	if (FAILED(pManagement->Add_Prototype(TEXT("GameObject_CollEffect"), CCollEffect::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
+	if (FAILED(pManagement->Add_Prototype(TEXT("GameObject_PlayerEffect"), CPlayerEffect::Create(m_pDevice, m_pDeviceContext))))
+		return E_FAIL;
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/* Component_VIBuffer_PointInstance */
+
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_VIBuffer_PointInstance"), CVIBuffer_PointInstance::Create(m_pDevice, m_pDeviceContext, TEXT("../Bin/ShaderFiles/Shader_PointInstance.fx"), 1))))
+		return E_FAIL;
+
+	/* Component_Texture_Effect */
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_CollEffect"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/Effect/CollEffect.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_PlayerEffect"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/Effect/PlayerEffect%d.png"), 4))))
+		return E_FAIL;
 
 	RELEASE_INSTANCE(CManagement);
 

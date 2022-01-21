@@ -15,11 +15,11 @@ protected:
 	virtual ~CObj() = default;
 
 public:
-	virtual HRESULT Initialize_Prototype();
-	virtual HRESULT Initialize_Clone(void* pArg);
-	virtual _int	Update(_double DeltaTime);
-	virtual _int	Late_Update(_double DeltaTime);
-	virtual HRESULT	Render();
+	virtual HRESULT Initialize_Prototype() = 0;
+	virtual HRESULT Initialize_Clone(void* pArg) = 0;
+	virtual _int	Update(_double DeltaTime) = 0;
+	virtual _int	Late_Update(_double DeltaTime) = 0;
+	virtual HRESULT	Render() = 0;
 
 protected:
 	HRESULT SetUp_Components(_int iSceneIndex, const wstring& pPrototypeTag, const wstring& pComponentTag,  class CComponent** pOut, void* pArg = nullptr);

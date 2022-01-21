@@ -43,7 +43,7 @@ HRESULT CPlayerMoveUI::Initialize_Clone(void * pArg)
 	m_TransformMatrix._22 = m_fSizeY;
 
 	m_TransformMatrix._41 = 550.f;
-	m_TransformMatrix._42 = -270.f;
+	m_TransformMatrix._42 = -280.f;
 	m_TransformMatrix._43 = 0.5f;
 
 	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH((float)g_iWinCX, (float)g_iWinCY, 0.0f, 1.f));
@@ -71,7 +71,7 @@ _int CPlayerMoveUI::Late_Update(_double DeltaTime)
 
 	m_pModel->Play_Animation(DeltaTime);
 
-	return m_pRenderer->Add_RenderGroup(CRenderer::PRIORITY, this);
+	return m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
 }
 
 HRESULT CPlayerMoveUI::Render()

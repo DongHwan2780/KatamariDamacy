@@ -181,6 +181,7 @@
     <ClInclude Include="..\Headers\ClientDefines.h" />
     <ClInclude Include="..\Headers\Clock.h" />
     <ClInclude Include="..\Headers\ClockUI.h" />
+    <ClInclude Include="..\Headers\CollEffect.h" />
     <ClInclude Include="..\Headers\Denden.h" />
     <ClInclude Include="..\Headers\Dice.h" />
     <ClInclude Include="..\Headers\DrinkCan0.h" />
@@ -207,6 +208,7 @@
     <ClInclude Include="..\Headers\Pin1.h" />
     <ClInclude Include="..\Headers\Player.h" />
     <ClInclude Include="..\Headers\PlayerBall.h" />
+    <ClInclude Include="..\Headers\PlayerEffect.h" />
     <ClInclude Include="..\Headers\PlayerMoveUI.h" />
     <ClInclude Include="..\Headers\Radio.h" />
     <ClInclude Include="..\Headers\SizeUI.h" />
@@ -243,6 +245,7 @@
     <ClCompile Include="..\Codes\Candy.cpp" />
     <ClCompile Include="..\Codes\Clock.cpp" />
     <ClCompile Include="..\Codes\ClockUI.cpp" />
+    <ClCompile Include="..\Codes\CollEffect.cpp" />
     <ClCompile Include="..\Codes\Denden.cpp" />
     <ClCompile Include="..\Codes\Dice.cpp" />
     <ClCompile Include="..\Codes\DrinkCan0.cpp" />
@@ -269,6 +272,7 @@
     <ClCompile Include="..\Codes\Pin1.cpp" />
     <ClCompile Include="..\Codes\Player.cpp" />
     <ClCompile Include="..\Codes\PlayerBall.cpp" />
+    <ClCompile Include="..\Codes\PlayerEffect.cpp" />
     <ClCompile Include="..\Codes\PlayerMoveUI.cpp" />
     <ClCompile Include="..\Codes\Radio.cpp" />
     <ClCompile Include="..\Codes\SizeUI.cpp" />
@@ -302,6 +306,7 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Mesh.fx" />
+    <FxCompile Include="..\Bin\ShaderFiles\Shader_PointInstance.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Rect.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_Terrain.fx" />
     <FxCompile Include="..\Bin\ShaderFiles\Shader_UI.fx" />

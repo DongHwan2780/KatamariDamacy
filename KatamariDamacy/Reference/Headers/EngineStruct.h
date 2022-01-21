@@ -77,6 +77,12 @@ namespace Engine
 		XMFLOAT2		vTexUV;
 	}VTXNORMALINFO;
 
+	typedef struct tagVertex_Point
+	{
+		XMFLOAT3		vPosition;
+		XMFLOAT2		vSize;
+	}VTXPOINT;
+
 	typedef struct tagVertex_Instancing
 	{
 		XMFLOAT4		vRight;

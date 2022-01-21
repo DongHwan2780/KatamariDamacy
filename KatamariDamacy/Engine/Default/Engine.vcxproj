@@ -216,6 +216,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClInclude Include="..\Headers\Timer.h" />
     <ClInclude Include="..\Headers\Transform.h" />
     <ClInclude Include="..\Headers\VIBuffer.h" />
+    <ClInclude Include="..\Headers\VIBuffer_PointInstance.h" />
     <ClInclude Include="..\Headers\VIBuffer_Rect.h" />
     <ClInclude Include="..\Headers\VIBuffer_Terrain.h" />
     <ClInclude Include="..\Headers\VIBuffer_Triangle.h" />
@@ -254,6 +255,7 @@ xcopy			/y				..\Bin\*.dll		..\..\x64\Debug\</Command>
     <ClCompile Include="..\Codes\Timer.cpp" />
     <ClCompile Include="..\Codes\Transform.cpp" />
     <ClCompile Include="..\Codes\VIBuffer.cpp" />
+    <ClCompile Include="..\Codes\VIBuffer_PointInstance.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Rect.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Terrain.cpp" />
     <ClCompile Include="..\Codes\VIBuffer_Triangle.cpp" />
