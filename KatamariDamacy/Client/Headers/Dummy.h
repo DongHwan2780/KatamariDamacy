@@ -26,6 +26,8 @@ private:
 	HRESULT SetUp_Components(_float3 vScale);
 	HRESULT SetUp_ConstantTable();
 
+	HRESULT Ready_Layer_CollEffect(const wstring& pLayerTag, _fvector vPos);
+
 public:
 	static CDummy*	Create(DEVICES);
 	virtual CObj*	Clone(void* pArg) override;

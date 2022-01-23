@@ -156,11 +156,11 @@ HRESULT CCollider::Render()
 
 _bool CCollider::Update_State(_fmatrix TransformMatrix)
 {
-	if (m_eType == CCollider::COLL_AABB || m_eType == CCollider::COLL_SPHERE)
+	if (m_eType == CCollider::COLL_AABB || m_eType == CCollider::COLL_SPHERE || m_eType == CCollider::COLL_OBB)
 		XMStoreFloat4x4(&m_TransformMatrix, Remove_ScaleRotation(TransformMatrix));
 
-	else if (m_eType == CCollider::COLL_OBB )
-		XMStoreFloat4x4(&m_TransformMatrix, Remove_Scale(TransformMatrix));
+	//else if (m_eType == CCollider::COLL_OBB )
+	//	XMStoreFloat4x4(&m_TransformMatrix, Remove_Scale(TransformMatrix));
 
 	return _bool();
 }
@@ -363,6 +363,8 @@ _bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj 
 	CManagement* pManagement = GET_INSTANCE(CManagement);
 	auto iter_find = pManagement->Get_GameObj(_Layertag);
 
+	auto iter_findPlayer = pManagement->Get_GameObj(L"Layer_Player");
+
 	for (auto& iter : iter_find->GetGameObjList())		// 레이어에 있는 클론객체리스트
 	{
 
@@ -407,8 +409,6 @@ _bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj 
 			Out = iter->GetThis();
 			XMStoreFloat3(&OutPos , -fMyRadius * vDir + vCenter);
 
-			_pObj->Add_PlayerBallSize(iter->Get_ObjCollSize() / 20.f);
-
 			RELEASE_INSTANCE(CManagement);
 			return true;
 		}
@@ -435,7 +435,9 @@ void CCollider::Set_Scale(_fvector vScale)
 
 void CCollider::Set_Points(const _float3 & ColSize)
 {
-	m_ColliderDesc.vSize = ColSize;
+	m_ColliderDesc.vSize.x += ColSize.x;
+	m_ColliderDesc.vSize.y += ColSize.y;
+	m_ColliderDesc.vSize.z += ColSize.z;
 
 	m_pBB->Extents = _float3(m_ColliderDesc.vSize.x * 0.5f, m_ColliderDesc.vSize.y * 0.5f, m_ColliderDesc.vSize.z * 0.5f);
 	m_pBB->Center = _float3(0.f, m_pBB->Extents.y, 0.f);
@@ -457,7 +459,7 @@ void CCollider::Set_Radius(CObj* _pObj, const _float fRadius)
 
 	CCollider*	pTargetCollider = static_cast<CCollider*>(_pObj->GetComponent(L"Com_SPHERE"));
 
-	pTargetCollider->m_pSphere->Radius = fRadius;
+	pTargetCollider->m_pSphere->Radius += fRadius;
 
 	RELEASE_INSTANCE(CManagement);
 }

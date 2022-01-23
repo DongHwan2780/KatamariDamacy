@@ -36,7 +36,7 @@ private:
 	CTransform*		m_pPlayerTransform = nullptr;
 
 	_float			m_fDistanceToTarget = 3.f;
-	_float			m_fCamAngle = XMConvertToRadians(30.f);
+	_float			m_fCamAngle = XMConvertToRadians(20.f);
 
 private:
 	CObj*				m_pPlayerBall = nullptr;

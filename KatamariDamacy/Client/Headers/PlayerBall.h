@@ -33,7 +33,7 @@ public:
 
 public:
 	_float	Get_PlayerBallSize() { return m_fBallSize; }
-	void	Set_SyncCheck() { m_bSyncCheck = false; }
+	void	Set_SyncCheck(_bool SyncCheck) { m_bSyncCheck = SyncCheck; }
 
 private:
 	void Gravity(_double DeltaTime);
@@ -44,6 +44,7 @@ private:
 	void SetTransform();
 
 	void Create_StickObjUI(_uint iModelIndex);
+	HRESULT Ready_Layer_CollEffect(const wstring& pLayerTag, _float3 vPos);
 
 public:
 	static CPlayerBall*	Create(DEVICES);

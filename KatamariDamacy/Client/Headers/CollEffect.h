@@ -42,5 +42,6 @@ private:
 
 private:
 	_float		m_fFrame = 0.f;
+	_vector vPos;
 };
 END

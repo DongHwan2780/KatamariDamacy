@@ -39,6 +39,20 @@ void CTransform::Set_Scale(_fvector vScale)
 	Set_State(CTransform::LOOK, vLook);
 }
 
+void CTransform::Set_AddScale(_fvector vScale)
+{
+	_vector		vRight = XMVector3Normalize(Get_State(CTransform::RIGHT));
+	_vector		vUp = XMVector3Normalize(Get_State(CTransform::UP));
+	_vector		vLook = XMVector3Normalize(Get_State(CTransform::LOOK));
+
+	XMVectorSetX(vRight, XMVectorGetX(vRight) + XMVectorGetX(vScale));
+	XMVectorSetY(vUp, XMVectorGetY(vUp) + XMVectorGetY(vScale));
+	
+	Set_State(CTransform::RIGHT, vRight);
+	Set_State(CTransform::UP, vUp);
+	Set_State(CTransform::LOOK, vLook);
+}
+
 void CTransform::Move_Straight(_double DeltaTime, class CNavigation* pNavigation)
 {
 	_vector vLook = Get_State(CTransform::LOOK);
@@ -66,7 +80,7 @@ void CTransform::Move_Strafe(_double DeltaTime, class CNavigation* pNavigation)
 	_vector vRight = Get_State(CTransform::RIGHT);
 	_vector vPos = Get_State(CTransform::POSITION);
 
-	vPos += XMVector3Normalize(vRight) * m_TransformDesc.fSpeedPerSec * _float(DeltaTime);
+	vPos += XMVector3Normalize(vRight) * m_TransformDesc.fSpeedPerRightSec * _float(DeltaTime);
 
 	if (nullptr == pNavigation)
 	{

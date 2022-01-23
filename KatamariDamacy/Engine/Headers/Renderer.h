@@ -10,7 +10,7 @@ BEGIN(Engine)
 class ENGINE_DLL CRenderer final : public CComponent
 {
 public:
-	enum RENDER {PRIORITY, NONALPHA, ALPHA, UI, RENDER_END};
+	enum RENDER {PRIORITY, NONALPHA, ALPHA, UI, UI2, RENDER_END};
 
 private:
 	explicit CRenderer(ID3D11Device* pDevice, ID3D11DeviceContext* pDeviceContext);
@@ -29,6 +29,7 @@ private:
 	HRESULT Render_NonAlpha();
 	HRESULT Render_Alpha();
 	HRESULT Render_UI();
+	HRESULT Render_UI2();
 
 
 public:

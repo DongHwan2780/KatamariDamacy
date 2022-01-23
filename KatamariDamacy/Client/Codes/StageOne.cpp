@@ -47,6 +47,9 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Layer_SizeUI(TEXT("Layer_SizeUI"))))
 		return E_FAIL;
 
+	if (FAILED(Ready_Layer_StickObjUI(TEXT("Layer_StickObjUI"))))
+		return E_FAIL;
+
 	if (FAILED(Ready_Layer_StickyUI(TEXT("Layer_StickUI"))))
 		return E_FAIL;
 
@@ -56,14 +59,9 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Layer_TimeUI(TEXT("Layer_TimeUI"))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_PlayerEffect(TEXT("Layer_PlayerEffect"))))
-		return E_FAIL;
-
 	if (FAILED(Ready_Layer_PlayerMoveUI(TEXT("Layer_PlayerMoveUI"))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_StickObjUI(TEXT("Layer_StickObjUI"))))
-		return E_FAIL;
 
 	if (FAILED(Ready_Layer_TimeNumUI(TEXT("Layer_TimeNumUI"))))
 		return E_FAIL;
@@ -74,9 +72,12 @@ HRESULT CStageOne::Initialize()
 
 	Ready_Layer_StageObj();
 	 
-	//CManagement*		pManagement = GET_INSTANCE(CManagement);
-	//pManagement->PlayBGM(L"Stage.wav");
-	//RELEASE_INSTANCE(CManagement);
+	//if (FAILED(Ready_Layer_PlayerEffect(TEXT("Layer_PlayerEffect"))))
+	//	return E_FAIL;
+
+	CManagement*		pManagement = GET_INSTANCE(CManagement);
+	pManagement->PlayBGM(L"Stage.wav");
+	RELEASE_INSTANCE(CManagement);
 
 	return S_OK;
 }
@@ -358,7 +359,7 @@ HRESULT CStageOne::Ready_Prototype_Component()
 
 
 	/* Prototype_Texture_SizeUI */
-	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_SizeUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/BallSizeUI/Size%d.png"), 5))))
+	if (FAILED(pManagement->Add_Prototype(STAGEONE_SCENE, TEXT("Component_Texture_SizeUI"), CTexture::Create(m_pDevice, m_pDeviceContext, CTexture::WIC, TEXT("../Bin/Resources/Textures/KatamariUITexture/BallSizeUI/Size%d.png"), 14))))
 		return E_FAIL;
 
 	/* Prototype_Texture_StickUI */
@@ -555,8 +556,8 @@ CStageOne * CStageOne::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pDevic
 
 void CStageOne::Free()
 {
-	//CManagement*		pManagement = GET_INSTANCE(CManagement);
-	//pManagement->StopAll();
-	//RELEASE_INSTANCE(CManagement);
+	CManagement*		pManagement = GET_INSTANCE(CManagement);
+	pManagement->StopAll();
+	RELEASE_INSTANCE(CManagement);
 	__super::Free();
 }

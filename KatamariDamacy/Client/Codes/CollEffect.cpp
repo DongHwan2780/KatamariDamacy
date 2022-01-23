@@ -29,6 +29,10 @@ HRESULT CCollEffect::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_Components()))
 		return E_FAIL;
 
+	memcpy(&vPos, pArg, sizeof(_vector));
+
+	m_pTransform->Set_State(CTransform::POSITION, vPos);
+
 	return S_OK;
 }
 
@@ -68,7 +72,7 @@ HRESULT CCollEffect::Render()
 	m_pVIBuffer->SetUp_ValueOnShader("g_WorldMatrix", &XMMatrixTranspose(m_pTransform->Get_WorldMatrix()), sizeof(_matrix));
 	m_pVIBuffer->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixTranspose(pManagement->Get_Transform(CPipeLine::D3DTS_VIEW)), sizeof(_matrix));
 	m_pVIBuffer->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(pManagement->Get_Transform(CPipeLine::D3DTS_PROJ)), sizeof(_matrix));
-	m_pVIBuffer->SetUp_ValueOnShader("g_vCamPosition", &pManagement->Get_CamPosition(), sizeof(_vector));
+	//m_pVIBuffer->SetUp_ValueOnShader("g_vCamPosition", &pManagement->Get_CamPosition(), sizeof(_vector));
 
 	if (FAILED(m_pVIBuffer->SetUp_TextureOnShader("g_DiffuseTexture", m_pTexture)))
 		return E_FAIL;
@@ -94,11 +98,11 @@ HRESULT CCollEffect::SetUp_Components()
 		return E_FAIL;
 
 	/* For.Com_VIBuffer */
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_VIBuffer_PointInstance"), TEXT("Com_VIBuffer"), (CComponent**)&m_pVIBuffer)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_VIBuffer_Rect"), TEXT("Com_VIBuffer"), (CComponent**)&m_pVIBuffer)))
 		return E_FAIL;
 
 	/* For.Com_Texture */
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Texture_Effect"), TEXT("Com_Texture"), (CComponent**)&m_pTexture)))
+	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, TEXT("Component_Texture_CollEffect"), TEXT("Com_Texture"), (CComponent**)&m_pTexture)))
 		return E_FAIL;
 
 

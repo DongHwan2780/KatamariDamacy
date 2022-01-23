@@ -33,14 +33,19 @@ HRESULT CPlayer::Initialize_Clone(void * pArg)
 	m_pVIBuffer = dynamic_cast<CVIBuffer_Terrain*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Terrain", L"Com_VIBuffer"));
 	RELEASE_INSTANCE(CManagement);
 
-	m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(80.f, 0.f, 20.f, 1.f));
+	m_pTransform->Set_State(CTransform::POSITION, XMVectorSet(320.f, 0.f, 40.f, 1.f));
 
 	m_pModel->SetUp_AnimationIndex(20);
 
-	m_fAccel = 2.f;
+	m_fAccel = 5.f;
 	m_fMaxSpeed = 10.f;
-	m_fBackAccel = 1.f;
-	m_fBackMaxSpeed = 5.f;
+	m_fBackAccel = 5.f;
+	m_fBackMaxSpeed = 10.f;
+
+	m_fLeftAccel = 5.f;
+	m_fRightAccel = 5.f;
+	m_fLeftMaxSpeed = 10.f;
+	m_fRightMaxSpeed = 10.f;
 
 	return S_OK;
 }
@@ -88,8 +93,6 @@ _int CPlayer::Late_Update(_double DeltaTime)
 
 
 	m_pModel->Play_Animation(DeltaTime);
-
-
 	return m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
 }
 
@@ -125,14 +128,34 @@ void CPlayer::Movement(_double DeltaTime)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
+	CObj* m_pPlayerBall = pManagement->GetGameObject(STAGEONE_SCENE, L"Layer_PlayerBall");
+
+	CPlayerBall* pPlayerBall = dynamic_cast<CPlayerBall*>(m_pPlayerBall);
+
+
 	if (pManagement->Get_DIKState(DIK_UP) & 0x80)
 	{
+		pPlayerBall->Set_SyncCheck(true);
+		m_pTransform->Set_TransformDescSpeedRight(0.f);
+
 		m_pTransform->Set_TransformDescAddSpeed(m_fAccel * DeltaTime);
 
 		if (m_pTransform->GetTransformDesc().fSpeedPerSec >= m_fMaxSpeed)
 			m_pTransform->Set_TransformDescSpeed(m_fMaxSpeed);
 
-		m_pModel->SetUp_AnimationIndex(1);
+		if (m_pTransform->GetTransformDesc().fSpeedPerSec <= 0)
+		{
+			CManagement*		pManagement = GET_INSTANCE(CManagement);
+			pManagement->StopSound(CSoundMgr::SOUNDCHANNEL::BREAK);
+			pManagement->PlaySounds(L"Break.wav", CSoundMgr::SOUNDCHANNEL::BREAK);
+			RELEASE_INSTANCE(CManagement);
+			m_pModel->SetUp_AnimationIndex(10);
+		}
+		else
+		{
+			m_pModel->SetUp_AnimationIndex(1);
+		}
+
 		m_pTransform->Move_Straight(DeltaTime);
 		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT) , DeltaTime);
 
@@ -154,25 +177,39 @@ void CPlayer::Movement(_double DeltaTime)
 
 	else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
 	{
-		m_pTransform->Set_TransformDescAddSpeed(m_fBackAccel * -DeltaTime);
+		pPlayerBall->Set_SyncCheck(true);
+		m_pTransform->Set_TransformDescSpeedRight(0.f);
 
-		if (m_pTransform->GetTransformDesc().fSpeedPerSec >= m_fBackMaxSpeed)
-			m_pTransform->Set_TransformDescSpeed(m_fBackMaxSpeed);
+		m_pTransform->Set_TransformDescAddSpeed(-m_fBackAccel * DeltaTime);
 
-		m_pModel->SetUp_AnimationIndex(12);
+		if (m_pTransform->GetTransformDesc().fSpeedPerSec <= -m_fBackMaxSpeed)
+			m_pTransform->Set_TransformDescSpeed(-m_fBackMaxSpeed);
+
+		if (m_pTransform->GetTransformDesc().fSpeedPerSec >= 0)
+		{
+			CManagement*		pManagement = GET_INSTANCE(CManagement);
+			pManagement->StopSound(CSoundMgr::SOUNDCHANNEL::BREAK);
+			pManagement->PlaySounds(L"Break.wav", CSoundMgr::SOUNDCHANNEL::BREAK);
+			RELEASE_INSTANCE(CManagement);
+			m_pModel->SetUp_AnimationIndex(9);
+		}
+		else
+		{
+			m_pModel->SetUp_AnimationIndex(12);
+		}
 		m_pTransform->Move_Straight(DeltaTime);
 		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT), -DeltaTime);
 
 		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 		{
-			m_pTransform->Move_Strafe(-DeltaTime);
+			m_pTransform->Move_Strafe(DeltaTime);
 			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), DeltaTime);
 			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime);
 
 		}
 		else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 		{
-			m_pTransform->Move_Strafe(DeltaTime);
+			m_pTransform->Move_Strafe(-DeltaTime);
 			m_pTransform->RotateAxis(XMVectorSet(0.f, 1.f, 0.f, 0.f), -DeltaTime);
 			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), -DeltaTime);
 
@@ -181,64 +218,144 @@ void CPlayer::Movement(_double DeltaTime)
 
 	else if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(43);
-		m_pTransform->Move_Strafe(-DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime);
+		pPlayerBall->Set_SyncCheck(true);
+		m_pTransform->Set_TransformDescSpeed(0.f);
+		m_pTransform->Set_TransformDescAddSpeedRight(-m_fLeftAccel * DeltaTime);
 
-		if (pManagement->Get_DIKState(DIK_UP) & 0x80)
+		if (m_pTransform->GetTransformDesc().fSpeedPerRightSec <= -m_fLeftMaxSpeed)
+			m_pTransform->Set_TransformDescSpeedRight(-m_fLeftMaxSpeed);
+
+		if (m_pTransform->GetTransformDesc().fSpeedPerRightSec >= 0)
 		{
-			m_pTransform->Move_Straight(DeltaTime);
+			CManagement*		pManagement = GET_INSTANCE(CManagement);
+			pManagement->StopSound(CSoundMgr::SOUNDCHANNEL::BREAK);
+			pManagement->PlaySounds(L"Break.wav", CSoundMgr::SOUNDCHANNEL::BREAK);
+			RELEASE_INSTANCE(CManagement);
+			m_pModel->SetUp_AnimationIndex(6);
 		}
-		else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
+		else
 		{
-			m_pTransform->Move_Straight(-DeltaTime);
+			m_pModel->SetUp_AnimationIndex(43);
 		}
-		//Around_Ball(2.f);
+
+			m_pTransform->Move_Strafe(DeltaTime);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), DeltaTime);
+
+			if (pManagement->Get_DIKState(DIK_UP) & 0x80)
+			{
+				m_pTransform->Move_Straight(DeltaTime);
+			}
+			else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
+			{
+				m_pTransform->Move_Straight(-DeltaTime);
+			}
 	}
 
 	else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(42);
-		m_pTransform->Move_Strafe(DeltaTime);
-		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), -DeltaTime);
+		m_pTransform->Set_TransformDescSpeed(0.f);
+		pPlayerBall->Set_SyncCheck(true);
 
-		if (pManagement->Get_DIKState(DIK_UP) & 0x80)
+		m_pTransform->Set_TransformDescAddSpeedRight(m_fRightAccel * DeltaTime);
+
+		if (m_pTransform->GetTransformDesc().fSpeedPerRightSec >= m_fRightMaxSpeed)
+			m_pTransform->Set_TransformDescSpeedRight(m_fRightMaxSpeed);
+
+		if (m_pTransform->GetTransformDesc().fSpeedPerRightSec <= 0)
 		{
-			m_pTransform->Move_Straight(DeltaTime);
+			CManagement*		pManagement = GET_INSTANCE(CManagement);
+			pManagement->StopSound(CSoundMgr::SOUNDCHANNEL::BREAK);
+			pManagement->PlaySounds(L"Break.wav", CSoundMgr::SOUNDCHANNEL::BREAK);
+			RELEASE_INSTANCE(CManagement);
+			m_pModel->SetUp_AnimationIndex(7);
 		}
-		else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
+		else
 		{
-			m_pTransform->Move_Straight(-DeltaTime);
+			m_pModel->SetUp_AnimationIndex(42);
 		}
-		//Around_Ball(-2.f);
+
+			m_pTransform->Move_Strafe(DeltaTime);
+			m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::LOOK), -DeltaTime);
+
+			if (pManagement->Get_DIKState(DIK_UP) & 0x80)
+			{
+				m_pTransform->Move_Straight(DeltaTime);
+			}
+			else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
+			{
+				m_pTransform->Move_Straight(-DeltaTime);
+			}
+	}
+	else if (pManagement->Get_DIKState(DIK_Q) & 0x80)
+	{
+		m_pModel->SetUp_AnimationIndex(3);
+		Around_Ball(2.f);
+	}
+	else if (pManagement->Get_DIKState(DIK_E) & 0x80)
+	{
+		m_pModel->SetUp_AnimationIndex(2);
+		Around_Ball(-2.f);
 	}
 	else
+	{
 		m_pModel->SetUp_AnimationIndex(20);
+		m_pTransform->Set_TransformDescAddSpeed(-2.5f * DeltaTime);
 
-	ResistAccel(DeltaTime);
+		if (m_pTransform->GetTransformDesc().fSpeedPerSec <= 0.f)
+			m_pTransform->Set_TransformDescSpeed(0.f);
+
+		m_pTransform->Set_TransformDescAddSpeedRight(-2.5f * DeltaTime);
+
+		if (m_pTransform->GetTransformDesc().fSpeedPerRightSec <= 0.f)
+			m_pTransform->Set_TransformDescSpeedRight(0.f);
+	}
+
+	//ResistAccel(DeltaTime);
 
 	RELEASE_INSTANCE(CManagement);
-}
-
-void CPlayer::Movementtwo(_double DeltaTime)
-{
-
 }
 
 void CPlayer::Acceleration(_double DeltaTime, _float Ballsize)
 {
 	_float fPlayerSpeed = m_pTransform->GetTransformDesc().fSpeedPerSec;
+	_float fPlayerSpeedRight = m_pTransform->GetTransformDesc().fSpeedPerRightSec;
 
-	m_fAccel += ((fPlayerSpeed / 10.f * (fPlayerSpeed / m_fMaxSpeed)) * DeltaTime);
+	if (fPlayerSpeed > m_fMaxSpeed - 4.f)
+	{
+		m_fAccel = 2.f;
+	}
+	else if (fPlayerSpeed <= m_fMaxSpeed)
+	{
+		m_fAccel += DeltaTime * 5.f;
+	}
 
 	if (fPlayerSpeed > 0.f)
 	{
-		m_fBackAccel = 1.f;
+		m_fBackAccel = 15.f;
 	}
-	else 
+	else if (fPlayerSpeed < -m_fBackMaxSpeed + 5.f)
 	{
-		m_fBackAccel = 2.f;
+		m_fBackAccel = 5.f;
 	}
+	////////////////////////////////////////////////////////////////////////////////////
+	if (fPlayerSpeedRight > m_fRightMaxSpeed - 4.f)
+	{
+		m_fRightAccel = 2.f;
+	}
+	else if (fPlayerSpeedRight <= m_fRightMaxSpeed)
+	{
+		m_fRightAccel += DeltaTime * 5.f;
+	}
+
+	if (fPlayerSpeedRight > 0.f)
+	{
+		m_fLeftAccel = 15.f;
+	}
+	else if (fPlayerSpeedRight < -m_fLeftMaxSpeed + 5.f)
+	{
+		m_fLeftAccel = 5.f;
+	}
+
 }
 
 void CPlayer::ResistAccel(_double DeltaTime)
@@ -285,7 +402,7 @@ void CPlayer::Around_Ball(_float Orbit)
 	CObj* m_pPlayerBall = pManagement->GetGameObject(STAGEONE_SCENE, L"Layer_PlayerBall");
 
 	CPlayerBall* pPlayerBall = dynamic_cast<CPlayerBall*>(m_pPlayerBall);
-	pPlayerBall->Set_SyncCheck();
+	pPlayerBall->Set_SyncCheck(false);
 
 	_vector vPos = m_pTransform->Get_State(CTransform::POSITION);
 	_vector vBallPos = m_pPlayerBallTransform->Get_State(CTransform::POSITION);

@@ -74,7 +74,7 @@ _int CTimeUI::Late_Update(_double DeltaTime)
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
 
-	return m_pRenderer->Add_RenderGroup(CRenderer::PRIORITY, this);
+	return m_pRenderer->Add_RenderGroup(CRenderer::UI, this);
 }
 
 HRESULT CTimeUI::Render()
