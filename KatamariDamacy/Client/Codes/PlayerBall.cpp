@@ -56,7 +56,7 @@ _int CPlayerBall::Update(_double DeltaTime)
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
 
-
+	m_fCollSize = m_fBallSize;
 	return _int();
 }
 
@@ -72,26 +72,58 @@ _int CPlayerBall::Late_Update(_double DeltaTime)
 
 	CObj*	pObj = nullptr;
 	_float3 vPos;
+
+
+
 	if (m_pColliderSphere->Collision_Sphere(this, L"Layer_StageObj", pObj, vPos))
 	{
+		if (pObj->Get_ObjCollSize() >= m_fBallSize)
+		{
 
-		CCollider* m_pObjCollider = dynamic_cast<CCollider*>(pObj->GetComponent(L"Com_SPHERE"));
-		CModel*		pModel = dynamic_cast<CModel*>(pObj->GetComponent(L"Com_Model"));
+			_vector vPrePos = m_pPlayerTransform->Get_State(CTransform::POSITION);
+			m_pPlayerTransform->Set_State(CTransform::POSITION, vPrePos);
 
-		m_pObjCollider->Set_CollState(CCollider::OBJ_STICK);
-		m_pObjCollider->Set_CollPos(vPos);
+			_vector ReturnDir;
+			ReturnDir = m_pPlayerTransform->Get_State(CTransform::LOOK);
 
-		CModel*	pUIModel = dynamic_cast<CModel*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_StickObjUI", L"Com_Model"));
-
-		pUIModel->SetModelIndex(pModel->GetModelDesc().iModelIndexNum);
-		pUIModel->SetModelScale(pModel->GetModelDesc().fModelScale);
+			m_pPlayerTransform->Set_TransformDescSpeed(m_pPlayerTransform->GetTransformDesc().fSpeedPerSec * -0.3f);
+			m_pPlayerTransform->MoveToDir(-ReturnDir, m_pPlayerTransform->GetTransformDesc().fSpeedPerSec * 2.f, DeltaTime);
 
 
-		_float3 vScale;
-		vScale = { ((m_fBallSize / 100.f)  / 4.f),  ((m_fBallSize / 100.f) / 4.f),  ((m_fBallSize / 100.f)/ 4.f) };		// 큐브콜라이더 사이즈 조정
-		m_pCollider->Set_Points(vScale);
-		m_pCollider->Set_Radius(this, (m_fBallSize / 100.f) / 4.f);		// 구 콜라이더 사이즈 조정
-		m_StickList.emplace_back(pObj);
+			CManagement*		pManagement = GET_INSTANCE(CManagement);
+			pManagement->StopSound(CSoundMgr::SOUNDCHANNEL::COLL);
+			pManagement->PlaySounds(L"Coll.wav", CSoundMgr::SOUNDCHANNEL::COLL);
+			RELEASE_INSTANCE(CManagement);
+
+		}
+		else
+		{ 
+			this->Add_PlayerBallSize(pObj->Get_ObjCollSize() / 20.f);
+
+			CCollider* m_pObjCollider = dynamic_cast<CCollider*>(pObj->GetComponent(L"Com_SPHERE"));
+			CModel*		pModel = dynamic_cast<CModel*>(pObj->GetComponent(L"Com_Model"));
+
+			m_pObjCollider->Set_CollState(CCollider::OBJ_STICK);
+			m_pObjCollider->Set_CollPos(vPos);
+
+			CModel*	pUIModel = dynamic_cast<CModel*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_StickObjUI", L"Com_Model"));
+
+			pUIModel->SetModelIndex(pModel->GetModelDesc().iModelIndexNum);
+			pUIModel->SetModelScale(pModel->GetModelDesc().fModelScale);
+
+
+			_float3 vScale;
+			vScale = { ((m_fBallSize / 100.f)  / 100.f),  ((m_fBallSize / 100.f) / 100.f),  ((m_fBallSize / 100.f)/ 100.f) };		// 큐브콜라이더 사이즈 조정
+			m_pCollider->Set_Points(vScale);
+			m_pColliderSphere->Set_Radius(this, (m_fBallSize / 100.f) / 200.f);		// 구 콜라이더 사이즈 조정
+			m_StickList.emplace_back(pObj);
+
+			CManagement*		pManagement = GET_INSTANCE(CManagement);
+			pManagement->StopSound(CSoundMgr::SOUNDCHANNEL::STICK);
+			pManagement->PlaySounds(L"Stick.wav", CSoundMgr::SOUNDCHANNEL::STICK);
+			RELEASE_INSTANCE(CManagement);
+		}
+
 	}
 
 
@@ -236,6 +268,19 @@ void CPlayerBall::SetTransform()
 void CPlayerBall::Create_StickObjUI(_uint iModelIndex)
 {
 
+}
+
+HRESULT CPlayerBall::Ready_Layer_CollEffect(const wstring & pLayerTag, _float3 vPos)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	/* Prototype_PlayerMoveUI */
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_CollEffect"), pLayerTag, &vPos)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
+	return S_OK;
 }
 
 

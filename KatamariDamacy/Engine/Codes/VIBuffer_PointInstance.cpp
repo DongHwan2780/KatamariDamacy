@@ -77,7 +77,7 @@ HRESULT CVIBuffer_PointInstance::Initialize_Prototype(const _tchar* pShaderFileP
 		pInstanceVertices[i].vRight = _float4(1.f, 0.f, 0.f, 0.f);
 		pInstanceVertices[i].vUp = _float4(0.f, 1.f, 0.f, 0.f);
 		pInstanceVertices[i].vLook = _float4(0.f, 0.f, 1.f, 0.f);
-		pInstanceVertices[i].vPosition = _float4(550.f, -280.f, 0.7f, 1.f);
+		pInstanceVertices[i].vPosition = _float4(0.f, 0.f, 0.f, 1.f);
 		m_InstanceMatrices.push_back(pInstanceVertices[i]);
 	}
 	m_VBInstanceSubResourceData.pSysMem = pInstanceVertices;	
@@ -117,6 +117,18 @@ HRESULT CVIBuffer_PointInstance::Update(_double TimeDelta, _float4 vPos)
 {
 	D3D11_MAPPED_SUBRESOURCE		SubResource;
 
+	CPipeLine*		pPipeLine = GET_INSTANCE(CPipeLine);
+
+	sort(m_InstanceMatrices.begin(), m_InstanceMatrices.end(), [&](VTXINSTANCE SourMatrix, VTXINSTANCE DestMatrix) {
+		_vector		SourPosition = XMVector4Transform(XMLoadFloat4(&SourMatrix.vPosition), pPipeLine->Get_Transform(CPipeLine::D3DTS_VIEW));
+		_vector		DestPosition = XMVector4Transform(XMLoadFloat4(&DestMatrix.vPosition), pPipeLine->Get_Transform(CPipeLine::D3DTS_VIEW));
+
+		if (XMVectorGetZ(SourPosition) > XMVectorGetZ(DestPosition))
+			return true;
+
+		return false;
+	});
+
 	if (FAILED(m_pDeviceContext->Map(m_pVBInstance, 0, D3D11_MAP_WRITE_NO_OVERWRITE, 0, &SubResource)))
 		return E_FAIL;
 
@@ -130,7 +142,7 @@ HRESULT CVIBuffer_PointInstance::Update(_double TimeDelta, _float4 vPos)
 
 	m_pDeviceContext->Unmap(m_pVBInstance, 0);
 
-
+	RELEASE_INSTANCE(CPipeLine);
 	return S_OK;
 }
 

@@ -73,7 +73,7 @@ _int CLoadingUI::Late_Update(_double DeltaTime)
 	if (m_iIdx >= 2.0)
 		m_iIdx = 0.0;
 
-	return m_pRenderer->Add_RenderGroup(CRenderer::PRIORITY, this);
+	return m_pRenderer->Add_RenderGroup(CRenderer::UI, this);
 }
 
 HRESULT CLoadingUI::Render()

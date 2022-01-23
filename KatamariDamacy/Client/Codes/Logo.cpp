@@ -24,9 +24,9 @@ HRESULT CLogo::Initialize()
 		return E_FAIL;
 
 
-	//CManagement*		pManagement = GET_INSTANCE(CManagement);
-	//pManagement->PlayBGM(L"Logo.wav");
-	//RELEASE_INSTANCE(CManagement);
+	CManagement*		pManagement = GET_INSTANCE(CManagement);
+	pManagement->PlayBGM(L"Logo.wav");
+	RELEASE_INSTANCE(CManagement);
 
 	return S_OK;
 }
@@ -111,9 +111,9 @@ CLogo * CLogo::Create(ID3D11Device * pDevice, ID3D11DeviceContext * pDeviceConte
 
 void CLogo::Free()
 {
-	//CManagement*		pManagement = GET_INSTANCE(CManagement);
-	//pManagement->StopAll();
-	//RELEASE_INSTANCE(CManagement);
+	CManagement*		pManagement = GET_INSTANCE(CManagement);
+	pManagement->StopAll();
+	RELEASE_INSTANCE(CManagement);
 
 	__super::Free();
 }

@@ -13,7 +13,7 @@ class ENGINE_DLL CSoundMgr final : public CBase
 public:
 	enum SOUNDCHANNEL
 	{
-		BGM, LOGO, SOUND_END
+		BGM, LOGO, BREAK, COLL, STICK, TIMER, SOUND_END
 	};
 
 private:

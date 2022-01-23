@@ -19,6 +19,7 @@ public:
 		_float3		vScale;
 		_float		fScale;
 		_float		fSpeedPerSec = 0.f;
+		_float		fSpeedPerRightSec = 0.f;
 		_float		fRotatePerSec;
 		_float		fMySize;
 	}TRANSFORMDESC;
@@ -46,7 +47,12 @@ public:
 	void Set_TransformDescSpeed(_float fixSpeed) { m_TransformDesc.fSpeedPerSec = fixSpeed; }
 	void Set_TransformDescAddSpeed(_float fixSpeed) { m_TransformDesc.fSpeedPerSec += fixSpeed; }
 
+	void Set_TransformDescSpeedRight(_float fixSpeed) { m_TransformDesc.fSpeedPerRightSec = fixSpeed; }
+	void Set_TransformDescAddSpeedRight(_float fixSpeed) { m_TransformDesc.fSpeedPerRightSec += fixSpeed; }
+
+
 	void Set_Scale(_fvector vScale);
+	void Set_AddScale(_fvector vScale);
 
 	void Set_PosX(STATE eState, _float PosX) { memcpy(&m_MatWorld.m[eState][0], &PosX, sizeof(_float)); }
 	void Set_PosY(STATE eState, _float PosY) { memcpy(&m_MatWorld.m[eState][1], &PosY, sizeof(_float)); }

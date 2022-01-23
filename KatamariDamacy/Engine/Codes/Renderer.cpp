@@ -54,6 +54,9 @@ HRESULT CRenderer::Draw_RenderGroup()
 	if (FAILED(Render_UI()))
 		return E_FAIL;
 
+	if (FAILED(Render_UI2()))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -121,6 +124,23 @@ HRESULT CRenderer::Render_UI()
 		}
 	}
 	m_RenderGroups[UI].clear();
+
+	return S_OK;
+}
+
+HRESULT CRenderer::Render_UI2()
+{
+	for (auto& pObj : m_RenderGroups[UI2])
+	{
+		if (pObj != nullptr)
+		{
+			if (FAILED(pObj->Render()))
+				return E_FAIL;
+
+			Safe_Release(pObj);
+		}
+	}
+	m_RenderGroups[UI2].clear();
 
 	return S_OK;
 }

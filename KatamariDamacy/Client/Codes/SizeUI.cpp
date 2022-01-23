@@ -30,15 +30,15 @@ HRESULT CSizeUI::Initialize_Clone(void * pArg)
 	if (FAILED(SetUp_ComponentsOrthUI()))
 		return E_FAIL;
 
-	m_fSizeX = 1.9f;
-	m_fSizeY = 1.9f;
+	m_fSizeX = 312.f;
+	m_fSizeY = 312.f;
 
 	XMStoreFloat4x4(&m_TransformMatrix, XMMatrixIdentity());		// 백그라운드
 	m_TransformMatrix._11 = m_fSizeX;
 	m_TransformMatrix._22 = m_fSizeY;
 	m_TransformMatrix._41 = -600.f;
 	m_TransformMatrix._42 = 300.f;
-	m_TransformMatrix._43 = 0.5f;
+	m_TransformMatrix._43 = 0.3f;
 
 	XMStoreFloat4x4(&m_TransformMatrixCM, XMMatrixIdentity());		// CM
 	m_TransformMatrixCM._11 = 70.f;
@@ -81,8 +81,8 @@ _int CSizeUI::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
-	if (m_iIdx < 4.0)
-		m_iIdx += DeltaTime * 4.0;
+	if (m_iIdx < 14.0)
+		m_iIdx += DeltaTime * 14.0;
 	else
  		m_iIdx = 0.0;
 
@@ -99,10 +99,10 @@ _int CSizeUI::Late_Update(_double DeltaTime)
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
 
-	if (m_iIdx >= 4.0)
+	if (m_iIdx >= 14.0)
 		m_iIdx = 0.0;
 
-	return m_pRenderer->Add_RenderGroup(CRenderer::PRIORITY, this);
+	return m_pRenderer->Add_RenderGroup(CRenderer::UI, this);
 }
 
 HRESULT CSizeUI::Render()
@@ -110,7 +110,7 @@ HRESULT CSizeUI::Render()
 	if (nullptr == m_pVIBuffer)
 		return E_FAIL;
 
-	m_pVIBuffer->SetUp_ValueOnShader("g_WorldMatrix", &XMMatrixTranspose(m_pTransform->Get_WorldMatrix() * XMLoadFloat4x4(&m_TransformMatrix)), sizeof(_matrix));
+	m_pVIBuffer->SetUp_ValueOnShader("g_WorldMatrix", &XMMatrixTranspose(/*m_pTransform->Get_WorldMatrix() * */XMLoadFloat4x4(&m_TransformMatrix)), sizeof(_matrix));
 	m_pVIBuffer->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixIdentity(), sizeof(_matrix));
 	m_pVIBuffer->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_OrthMatrix)), sizeof(_matrix));
 
@@ -229,9 +229,8 @@ void CSizeUI::Calculate_Size(_double DeltaTime)
 	m_iIndexOnesCM = ((int)fBallSize % 100) / 10;
 	m_iIndexOnesMM = ((int)fBallSize % 100) % 10;
 
-	_vector UIScale = XMVectorSet(fBallSize / 5.f, fBallSize/ 5.f, fBallSize/ 5.f, 0.f);
-
-	m_pTransform->Set_Scale(UIScale);
+	m_TransformMatrix._11 += (fBallSize / 100.f) * 0.01f;
+	m_TransformMatrix._22 += (fBallSize / 100.f) * 0.01f;
 
 	RELEASE_INSTANCE(CManagement);
 

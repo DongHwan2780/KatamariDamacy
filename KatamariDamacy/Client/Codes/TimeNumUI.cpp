@@ -73,7 +73,7 @@ _int CTimeNumUI::Late_Update(_double DeltaTime)
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
 
-	return m_pRenderer->Add_RenderGroup(CRenderer::PRIORITY, this);
+	return m_pRenderer->Add_RenderGroup(CRenderer::UI, this);
 }
 
 HRESULT CTimeNumUI::Render()
@@ -139,6 +139,9 @@ void CTimeNumUI::Calculate_Time(_double DeltaTime)
 	{
 		m_iTextureIndexFirst = Get_LimitTime() / 10.0;
 		m_iTextureIndexSecond = (int)Get_LimitTime() % 10;
+		CManagement*		pManagement = GET_INSTANCE(CManagement);
+		pManagement->PlaySounds(L"Timer.wav" , CSoundMgr::SOUNDCHANNEL::TIMER);
+		RELEASE_INSTANCE(CManagement);
 	}
 
 }

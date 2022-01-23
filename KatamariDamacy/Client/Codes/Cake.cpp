@@ -35,7 +35,7 @@ HRESULT CCake::Initialize_Clone(void * pArg)
 
 	_vector vPos = TransformDesc.vPosition;
 
-	vPos = XMVectorSet(XMVectorGetX(vPos), XMVectorGetY(vPos) + 1.f, XMVectorGetZ(vPos), 1.f);
+	vPos = XMVectorSet(XMVectorGetX(vPos), XMVectorGetY(vPos) + 2.f, XMVectorGetZ(vPos), 1.f);
 
 	m_pTransform->Set_State(CTransform::POSITION, vPos);
 	m_pTransform->Set_Scale(XMVectorSet(TransformDesc.fScale, TransformDesc.fScale, TransformDesc.fScale, 0.f));

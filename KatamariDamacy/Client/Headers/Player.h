@@ -33,7 +33,6 @@ public:
 
 private:
 	void Movement(_double DeltaTime);
-	void Movementtwo(_double DeltaTime);
 	void Acceleration(_double DeltaTime, _float Ballsize);
 	void ResistAccel(_double DeltaTime);
 	void Gravity(_double DeltaTime);
@@ -65,8 +64,16 @@ private:
 	_float			m_fBackAccel = 0.f;
 	_float			m_fMaxSpeed = 0.f;
 	_float			m_fBackMaxSpeed = 0.f;
+
+	_float			m_fLeftAccel = 0.f;		// 공 크기에 따라 값이 변경되어야함 -> 공이 크면 클수록 작게, 공이 작을수록 크게
+	_float			m_fRightAccel = 0.f;
+	_float			m_fLeftMaxSpeed = 0.f;
+	_float			m_fRightMaxSpeed = 0.f;
+
+
+
 	_float			m_fResist = 0.f;		// 저항값 == 공 크기 * 중력 가속 + 플레이어 속도
-	_float			m_fResistance = 1.f;
+	_float			m_fResistance = 2.f;
 
 	_float			m_fBallSize = 0.f;
 

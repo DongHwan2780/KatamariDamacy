@@ -102,24 +102,64 @@ void CPlayerMoveUI::Movement(_double DeltaTime)
 {
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
+	CTransform* m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Player", L"Com_Transform"));
+
 	if (pManagement->Get_DIKState(DIK_UP) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(1);
+		if (m_pPlayerTransform->GetTransformDesc().fSpeedPerSec <= 0)
+		{
+			m_pModel->SetUp_AnimationIndex(10);
+		}
+		else
+		{
+			m_pModel->SetUp_AnimationIndex(1);
+		}
 	}
 
 	else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(12);
+		if (m_pPlayerTransform->GetTransformDesc().fSpeedPerSec >= 0)
+		{
+			m_pModel->SetUp_AnimationIndex(9);
+		}
+		else
+		{
+			m_pModel->SetUp_AnimationIndex(12);
+		}
 	}
 
 	else if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(43);
+		if (m_pPlayerTransform->GetTransformDesc().fSpeedPerRightSec >= 0)
+		{
+			m_pModel->SetUp_AnimationIndex(6);
+		}
+		else
+		{
+			m_pModel->SetUp_AnimationIndex(43);
+		}
 	}
 
 	else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
 	{
-		m_pModel->SetUp_AnimationIndex(42);
+
+		if (m_pPlayerTransform->GetTransformDesc().fSpeedPerRightSec <= 0)
+		{
+			m_pModel->SetUp_AnimationIndex(7);
+		}
+		else
+		{
+			m_pModel->SetUp_AnimationIndex(42);
+		}
+	}
+	else if (pManagement->Get_DIKState(DIK_Q) & 0x80)
+	{
+		m_pModel->SetUp_AnimationIndex(3);
+	}
+
+	else if (pManagement->Get_DIKState(DIK_E) & 0x80)
+	{
+		m_pModel->SetUp_AnimationIndex(2);
 	}
 	else
 		m_pModel->SetUp_AnimationIndex(20);

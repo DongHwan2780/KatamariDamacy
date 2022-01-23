@@ -64,8 +64,13 @@ _int CDummy::Update(_double DeltaTime)
 		_vector ReturnDir;
 		ReturnDir = pPlayerTransform->Get_State(CTransform::LOOK);
 
+		pPlayerTransform->Set_TransformDescSpeed(pPlayerTransform->GetTransformDesc().fSpeedPerSec * -0.3f);
 		pPlayerTransform->MoveToDir(-ReturnDir, pPlayerTransform->GetTransformDesc().fSpeedPerSec * 2.f, DeltaTime);
-		pPlayerTransform->Set_TransformDescSpeed(pPlayerTransform->GetTransformDesc().fSpeedPerSec * 0.2f);
+
+		CManagement*		pManagement = GET_INSTANCE(CManagement);
+		pManagement->StopSound(CSoundMgr::SOUNDCHANNEL::COLL);
+		pManagement->PlaySounds(L"Coll.wav", CSoundMgr::SOUNDCHANNEL::COLL);
+		RELEASE_INSTANCE(CManagement);
 	}
 
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
@@ -129,6 +134,20 @@ HRESULT CDummy::SetUp_Components(_float3 vScale)
 
 HRESULT CDummy::SetUp_ConstantTable()
 {
+	return S_OK;
+}
+
+HRESULT CDummy::Ready_Layer_CollEffect(const wstring & pLayerTag, _fvector vPos)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
+	_vector vPosition = vPos;
+	/* Prototype_PlayerMoveUI */
+	if (FAILED(pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("GameObject_CollEffect"), pLayerTag, &vPosition)))
+		return E_FAIL;
+
+	RELEASE_INSTANCE(CManagement);
+
 	return S_OK;
 }
 

@@ -37,16 +37,11 @@ HRESULT CPlayerEffect::Initialize_Clone(void * pArg)
 	m_TransformMatrix._11 = m_fSizeX;
 	m_TransformMatrix._22 = m_fSizeY;
 
-	m_TransformMatrix._41 = 350.f;
+	m_TransformMatrix._41 = 550.f;
 	m_TransformMatrix._42 = -280.f;
-	m_TransformMatrix._43 = 0.1f;
+	m_TransformMatrix._43 = 0.9f;
 
 	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH((float)g_iWinCX, (float)g_iWinCY, 0.0f, 1.f));
-
-
-	//_vector vPos = XMVectorSet(m_TransformMatrix._41, m_TransformMatrix._42, m_TransformMatrix._43, 1.f);
-
-	//m_pTransform->Set_State(CTransform::POSITION, vPos);
 
 	return S_OK;
 }
@@ -56,8 +51,8 @@ _int CPlayerEffect::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
-	//m_TransformMatrix._41 -= 0.5f;
-	//m_TransformMatrix._42 += 0.5f;
+	m_TransformMatrix._41 -= 0.5f;
+	m_TransformMatrix._42 += 0.5f;
 
 	return _uint();
 }
@@ -72,7 +67,7 @@ _int CPlayerEffect::Late_Update(_double DeltaTime)
 
 	//MoveDir(DeltaTime);
 
-	return m_pRenderer->Add_RenderGroup(CRenderer::PRIORITY, this);
+	return m_pRenderer->Add_RenderGroup(CRenderer::UI, this);
 }
 
 HRESULT CPlayerEffect::Render()
@@ -183,7 +178,7 @@ HRESULT CPlayerEffect::SetUp_Components()
 		return E_FAIL;
 
 	/* For.Com_VIBuffer */
-	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_VIBuffer_UI"), TEXT("Com_VIBuffer"), (CComponent**)&m_pVIBuffer)))
+	if (FAILED(__super::SetUp_Components(STATIC_SCENE, TEXT("Component_VIBuffer_Rect"), TEXT("Com_VIBuffer"), (CComponent**)&m_pVIBuffer)))
 		return E_FAIL;
 
 	/* For.Com_Texture */
