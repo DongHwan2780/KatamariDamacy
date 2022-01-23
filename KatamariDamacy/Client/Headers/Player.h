@@ -33,9 +33,12 @@ public:
 
 private:
 	void Movement(_double DeltaTime);
+	void Movementtwo(_double DeltaTime);
 	void Acceleration(_double DeltaTime, _float Ballsize);
-	void ResistAccel(_double DeltaTime, _float Ballsize);
+	void ResistAccel(_double DeltaTime);
 	void Gravity(_double DeltaTime);
+
+	void Around_Ball(_float Orbit);
 
 private:
 	HRESULT SetUp_Components();
@@ -63,7 +66,7 @@ private:
 	_float			m_fMaxSpeed = 0.f;
 	_float			m_fBackMaxSpeed = 0.f;
 	_float			m_fResist = 0.f;		// 저항값 == 공 크기 * 중력 가속 + 플레이어 속도
-	
+	_float			m_fResistance = 1.f;
 
 	_float			m_fBallSize = 0.f;
 

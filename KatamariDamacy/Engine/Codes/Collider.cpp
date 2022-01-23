@@ -407,7 +407,7 @@ _bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj 
 			Out = iter->GetThis();
 			XMStoreFloat3(&OutPos , -fMyRadius * vDir + vCenter);
 
-			_pObj->Add_PlayerBallSize(iter->Get_ObjCollSize() / 10.f);
+			_pObj->Add_PlayerBallSize(iter->Get_ObjCollSize() / 20.f);
 
 			RELEASE_INSTANCE(CManagement);
 			return true;
@@ -451,11 +451,15 @@ void CCollider::Set_Points(const _float3 & ColSize)
 	m_vPoint[7] = _float3(m_pBB->Center.x - m_pBB->Extents.x, m_pBB->Center.y - m_pBB->Extents.y, m_pBB->Center.z + m_pBB->Extents.z);
 }
 
-void CCollider::Set_Radius(const _float fRadius)
+void CCollider::Set_Radius(CObj* _pObj, const _float fRadius)
 {
-	m_ColliderDesc.fRadius = fRadius;
+	CManagement* pManagement = GET_INSTANCE(CManagement);
 
-	m_pSphere->Radius = m_ColliderDesc.fRadius;
+	CCollider*	pTargetCollider = static_cast<CCollider*>(_pObj->GetComponent(L"Com_SPHERE"));
+
+	pTargetCollider->m_pSphere->Radius = fRadius;
+
+	RELEASE_INSTANCE(CManagement);
 }
 
 _fmatrix CCollider::Remove_ScaleRotation(_fmatrix TransformMatrix)

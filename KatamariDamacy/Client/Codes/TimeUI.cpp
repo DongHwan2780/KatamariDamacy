@@ -54,7 +54,10 @@ _int CTimeUI::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
-	if (m_dLimitTime < 60.0)
+	_double LimitTime = 0.0;
+	LimitTime = Get_LimitTime();
+
+	if (LimitTime <= 60.0)
 	{
 		m_iTextureIndex = 1;
 	}

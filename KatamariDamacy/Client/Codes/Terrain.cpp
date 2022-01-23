@@ -55,6 +55,8 @@ _int CTerrain::Late_Update(_double DeltaTime)
 
 HRESULT CTerrain::Render()
 {
+
+#ifdef _DEBUG
 	if (nullptr == m_pVIBuffer)
 		return E_FAIL;
 
@@ -65,6 +67,7 @@ HRESULT CTerrain::Render()
 		return E_FAIL;
 
 	m_pVIBuffer->Render(0);
+#endif // !#ifdef _DEBUG
 
 	return S_OK;
 }

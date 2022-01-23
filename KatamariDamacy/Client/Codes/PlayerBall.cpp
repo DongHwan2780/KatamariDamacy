@@ -48,7 +48,11 @@ _int CPlayerBall::Update(_double DeltaTime)
 	RELEASE_INSTANCE(CManagement);
 
 	Gravity(DeltaTime);
-	SetTransform();
+
+	if (m_bSyncCheck)
+	{
+		SetTransform();
+	}
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
 
@@ -82,6 +86,11 @@ _int CPlayerBall::Late_Update(_double DeltaTime)
 		pUIModel->SetModelIndex(pModel->GetModelDesc().iModelIndexNum);
 		pUIModel->SetModelScale(pModel->GetModelDesc().fModelScale);
 
+
+		_float3 vScale;
+		vScale = { ((m_fBallSize / 100.f)  / 4.f),  ((m_fBallSize / 100.f) / 4.f),  ((m_fBallSize / 100.f)/ 4.f) };		// 큐브콜라이더 사이즈 조정
+		m_pCollider->Set_Points(vScale);
+		m_pCollider->Set_Radius(this, (m_fBallSize / 100.f) / 4.f);		// 구 콜라이더 사이즈 조정
 		m_StickList.emplace_back(pObj);
 	}
 
@@ -215,7 +224,11 @@ void CPlayerBall::SetTransform()
 	_vector vInTargetLook = vPlayerLook * 3.f;
 
 	_float3 vSyncPos;
-	XMStoreFloat3(&vSyncPos, vTargetPos + vInTargetLook);
+
+	_vector vSyncYPos;
+	vSyncYPos = XMVectorSet(0.f, (m_fBallSize / 100.f) / 4.f, 0.f, 1.f);
+
+	XMStoreFloat3(&vSyncPos, vTargetPos + vInTargetLook + vSyncYPos);
 	m_pTransform->Set_State(CTransform::POSITION, XMVector4Transform(XMLoadFloat3(&vSyncPos), NonRotateMatrix));
 
 }

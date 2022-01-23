@@ -139,15 +139,18 @@ HRESULT CLoader::StageLoader()
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Banana", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Banana.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
 	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
-	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(180.0f)) * XMMatrixRotationX(XMConvertToRadians(90.0f));
+	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(90.0f)) /** XMMatrixRotationX(XMConvertToRadians(90.0f))*/;
 	ModelPivotMatrix = ScaleMatrix * RotationMatrix;
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Bat", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Bat.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Cake", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Cake.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
-	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Radio", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Radio.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Fork", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Fork.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Spoon", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Spoon.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
 
-
+	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
+	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(90.0f)) * XMMatrixRotationX(XMConvertToRadians(90.0f));
+	ModelPivotMatrix = ScaleMatrix * RotationMatrix;
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Cake", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Cake.fbx",				TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	pManagement->Add_Prototype(STAGEONE_SCENE, L"Component_Model_Radio", CModel::Create(m_pDevice, m_pDeviceContext, "../Bin/Resources/Meshes/GameObject/Object/", "Radio.fbx",			TEXT("../Bin/ShaderFiles/Shader_Mesh.fx"), ModelPivotMatrix));
+	
 	ScaleMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
 	RotationMatrix = XMMatrixRotationZ(XMConvertToRadians(180.0f));
 	ModelPivotMatrix = ScaleMatrix * RotationMatrix;

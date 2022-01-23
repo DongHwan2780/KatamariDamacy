@@ -66,17 +66,26 @@ HRESULT CMainCamera::SetUp_Components()
 
 _uint CMainCamera::Movement(_double DeltaTime)
 {
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+	m_pPlayerBall = pManagement->GetGameObject(STAGEONE_SCENE, L"Layer_PlayerBall");
+
+	CPlayerBall* pPlayerBall = dynamic_cast<CPlayerBall*>(m_pPlayerBall);
+	_float fBallSize = pPlayerBall->Get_PlayerBallSize();
+
+
 	_vector vTargetPos = m_pPlayerTransform->Get_State(CTransform::POSITION);
 
 	_vector	vLook = m_pPlayerTransform->Get_State(CTransform::LOOK);
 	m_pTransform->Set_State(CTransform::LOOK, XMVector3Normalize(vLook));
 
-	_vector vInTargetLook = vLook * -m_fDistanceToTarget;
+	_vector vInTargetLook = vLook * -(m_fDistanceToTarget + (fBallSize / 100.f));
 
 	_vector vUp = XMVectorSet(0.f, 3.f, 0.f, 0.f);
 
 	_vector vRight = m_pTransform->Get_State(CTransform::RIGHT);
 	_matrix	matRot = XMMatrixRotationAxis(vRight, m_fCamAngle);
+	XMVector3TransformNormal(vInTargetLook, matRot);
+
 
 	XMStoreFloat3(&m_CameraDesc.vEye, vTargetPos + vInTargetLook + vUp);
 	XMStoreFloat3(&m_CameraDesc.vAt, vTargetPos);
@@ -92,6 +101,7 @@ _uint CMainCamera::Movement(_double DeltaTime)
 
 	m_pTransform->Set_State(CTransform::POSITION, XMLoadFloat3(&m_CameraDesc.vEye));
 
+	RELEASE_INSTANCE(CManagement);
 	return _uint();
 }
 

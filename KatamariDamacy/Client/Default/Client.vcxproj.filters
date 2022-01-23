@@ -85,9 +85,6 @@
     <Filter Include="01.Object\01.ObjList\NewFilter1\32.Tree">
       <UniqueIdentifier>{0707130a-eb87-48d8-ae13-b0adb3916213}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Object\01.ObjList\34.Dummy">
-      <UniqueIdentifier>{55fb204f-bebf-4d2b-a57a-edc3ff7a782f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Object\01.ObjList\01.Bag">
       <UniqueIdentifier>{97ad2f8e-149a-45ca-aa1f-708a8cac0ac0}</UniqueIdentifier>
     </Filter>
@@ -198,6 +195,9 @@
     </Filter>
     <Filter Include="01.Object\03.Effect\01.PlayerEffect">
       <UniqueIdentifier>{988047f6-8342-4a72-b336-de5c6fac72fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Object\34.Dummy">
+      <UniqueIdentifier>{55fb204f-bebf-4d2b-a57a-edc3ff7a782f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -379,7 +379,7 @@
       <Filter>01.Object\02.CommonObj\03.UI\04.LoadingUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\Dummy.h">
-      <Filter>01.Object\01.ObjList\34.Dummy</Filter>
+      <Filter>01.Object\34.Dummy</Filter>
     </ClInclude>
     <ClInclude Include="..\Headers\StickObjUI.h">
       <Filter>01.Object\02.CommonObj\03.UI\05.StickObjUI</Filter>
@@ -561,7 +561,7 @@
       <Filter>01.Object\02.CommonObj\03.UI\04.LoadingUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Dummy.cpp">
-      <Filter>01.Object\01.ObjList\34.Dummy</Filter>
+      <Filter>01.Object\34.Dummy</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\StickObjUI.cpp">
       <Filter>01.Object\02.CommonObj\03.UI\05.StickObjUI</Filter>

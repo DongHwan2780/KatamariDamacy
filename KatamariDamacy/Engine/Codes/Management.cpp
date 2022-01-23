@@ -393,7 +393,6 @@ void CManagement::Free()
 {
 	Safe_Release(m_pLightMgr);
 	Safe_Release(m_pPipeline);
-	//Safe_Release(m_physx);
 	Safe_Release(m_pSoundMgr);
 	Safe_Release(m_pComponentMgr);
 	Safe_Release(m_pObjMgr);

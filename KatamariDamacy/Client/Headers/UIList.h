@@ -30,6 +30,10 @@ public:
 	virtual HRESULT	Render() PURE;
 
 public:
+	void Set_LimitTime(_double MinTime) { m_dLimitTime -= MinTime; }
+	_double Get_LimitTime() { return m_dLimitTime; }
+
+public:
 	virtual CObj*	Clone(void* pArg) PURE;
 	virtual void Free() PURE;
 
@@ -46,7 +50,8 @@ protected:			// 직교투영에서 쓸 변수들
 	_double				m_iIdx = 0;
 
 protected:
-	_double				m_dLimitTime = 300.0;
+	_double				m_dNowTime = 0.0;
+	_double				m_dLimitTime = 0.0;
 };
 END
 #endif // !__UILIST_H__

@@ -37,6 +37,11 @@ HRESULT CPlayer::Initialize_Clone(void * pArg)
 
 	m_pModel->SetUp_AnimationIndex(20);
 
+	m_fAccel = 2.f;
+	m_fMaxSpeed = 10.f;
+	m_fBackAccel = 1.f;
+	m_fBackMaxSpeed = 5.f;
+
 	return S_OK;
 }
 
@@ -45,25 +50,30 @@ _int CPlayer::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+
 	if (m_bFistCreate)
 	{
 		Ready_Layer_PlayerBall(L"Layer_PlayerBall");
 
-		CManagement*	pManagement = GET_INSTANCE(CManagement);
 
 		m_pPlayerBallTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_PlayerBall", L"Com_Transform"));
 
-		RELEASE_INSTANCE(CManagement);
 
 		m_bFistCreate = false;
 	}
 
+	CObj* m_pPlayerBall = pManagement->GetGameObject(STAGEONE_SCENE, L"Layer_PlayerBall");
+
+	CPlayerBall* pPlayerBall = dynamic_cast<CPlayerBall*>(m_pPlayerBall);
+	_float fBallSize = pPlayerBall->Get_PlayerBallSize();
+
 	Movement(DeltaTime);
 	Gravity(DeltaTime);
-	Acceleration(DeltaTime, 10.f);
-
+	Acceleration(DeltaTime, fBallSize);
 
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
+	RELEASE_INSTANCE(CManagement);
 
 	return _int();
 }
@@ -117,6 +127,11 @@ void CPlayer::Movement(_double DeltaTime)
 
 	if (pManagement->Get_DIKState(DIK_UP) & 0x80)
 	{
+		m_pTransform->Set_TransformDescAddSpeed(m_fAccel * DeltaTime);
+
+		if (m_pTransform->GetTransformDesc().fSpeedPerSec >= m_fMaxSpeed)
+			m_pTransform->Set_TransformDescSpeed(m_fMaxSpeed);
+
 		m_pModel->SetUp_AnimationIndex(1);
 		m_pTransform->Move_Straight(DeltaTime);
 		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT) , DeltaTime);
@@ -139,8 +154,13 @@ void CPlayer::Movement(_double DeltaTime)
 
 	else if (pManagement->Get_DIKState(DIK_DOWN) & 0x80)
 	{
+		m_pTransform->Set_TransformDescAddSpeed(m_fBackAccel * -DeltaTime);
+
+		if (m_pTransform->GetTransformDesc().fSpeedPerSec >= m_fBackMaxSpeed)
+			m_pTransform->Set_TransformDescSpeed(m_fBackMaxSpeed);
+
 		m_pModel->SetUp_AnimationIndex(12);
-		m_pTransform->Move_Straight(-DeltaTime);
+		m_pTransform->Move_Straight(DeltaTime);
 		m_pPlayerBallTransform->RotateAxis(m_pTransform->Get_State(CTransform::RIGHT), -DeltaTime);
 
 		if (pManagement->Get_DIKState(DIK_LEFT) & 0x80)
@@ -173,6 +193,7 @@ void CPlayer::Movement(_double DeltaTime)
 		{
 			m_pTransform->Move_Straight(-DeltaTime);
 		}
+		//Around_Ball(2.f);
 	}
 
 	else if (pManagement->Get_DIKState(DIK_RIGHT) & 0x80)
@@ -189,39 +210,53 @@ void CPlayer::Movement(_double DeltaTime)
 		{
 			m_pTransform->Move_Straight(-DeltaTime);
 		}
+		//Around_Ball(-2.f);
 	}
 	else
 		m_pModel->SetUp_AnimationIndex(20);
 
+	ResistAccel(DeltaTime);
+
 	RELEASE_INSTANCE(CManagement);
+}
+
+void CPlayer::Movementtwo(_double DeltaTime)
+{
+
 }
 
 void CPlayer::Acceleration(_double DeltaTime, _float Ballsize)
 {
-	_float fPlayerSpeed = m_fAccel * Ballsize;
+	_float fPlayerSpeed = m_pTransform->GetTransformDesc().fSpeedPerSec;
 
+	m_fAccel += ((fPlayerSpeed / 10.f * (fPlayerSpeed / m_fMaxSpeed)) * DeltaTime);
 
-		if (fPlayerSpeed > m_fMaxSpeed - 20.f)
-		{
-			m_fAccel = 7.f;
-		}
-		else if (m_fAccel < 15.f && fPlayerSpeed <= m_fMaxSpeed - 20.f)
-		{
-			m_fAccel += (float)DeltaTime * 25.f;
-		}
-
-		if (fPlayerSpeed > 0.f)
-		{
-			m_fBackAccel = 15.f;
-		}
-		else if (fPlayerSpeed < -m_fBackMaxSpeed + 20.f)
-		{
-			m_fBackAccel = 7.f;
-		}
+	if (fPlayerSpeed > 0.f)
+	{
+		m_fBackAccel = 1.f;
+	}
+	else 
+	{
+		m_fBackAccel = 2.f;
+	}
 }
 
-void CPlayer::ResistAccel(_double DeltaTime, _float Ballsize)
+void CPlayer::ResistAccel(_double DeltaTime)
 {
+	_float fVel = m_pTransform->GetTransformDesc().fSpeedPerSec;
+	// 속도에 따라 저항을 다르게 주어야 함
+	if (m_pTransform->GetTransformDesc().fSpeedPerSec > 0)
+	{
+		m_pTransform->Set_TransformDescAddSpeed(-DeltaTime * m_fResistance);//*fVel*0.002f*5);
+		if (m_pTransform->GetTransformDesc().fSpeedPerSec <= 0)
+			m_pTransform->Set_TransformDescSpeed(0.f);
+	}
+	else if (m_pTransform->GetTransformDesc().fSpeedPerSec < 0)
+	{
+		m_pTransform->Set_TransformDescAddSpeed(DeltaTime * m_fResistance);//*fVel*0.002f*5);
+		if (m_pTransform->GetTransformDesc().fSpeedPerSec >= 0)
+			m_pTransform->Set_TransformDescSpeed(0.f);
+	}
 }
 
 void CPlayer::Gravity(_double DeltaTime)
@@ -244,6 +279,47 @@ void CPlayer::Gravity(_double DeltaTime)
 	}
 }
 
+void CPlayer::Around_Ball(_float Orbit)
+{
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
+	CObj* m_pPlayerBall = pManagement->GetGameObject(STAGEONE_SCENE, L"Layer_PlayerBall");
+
+	CPlayerBall* pPlayerBall = dynamic_cast<CPlayerBall*>(m_pPlayerBall);
+	pPlayerBall->Set_SyncCheck();
+
+	_vector vPos = m_pTransform->Get_State(CTransform::POSITION);
+	_vector vBallPos = m_pPlayerBallTransform->Get_State(CTransform::POSITION);
+
+	_vector		vRight, vUp, vLook;
+
+	_matrix OffsetMatrix, OrbitMat, WorldMat;
+	OffsetMatrix = XMMatrixIdentity();
+
+	_matrix			NonRotateMatrix = XMMatrixIdentity();
+	NonRotateMatrix.r[3] = m_pPlayerBallTransform->Get_WorldMatrix().r[3];		// 부모 == 공 회전값 뺀 위치 매트릭스
+
+	OrbitMat = XMMatrixRotationY(XMConvertToRadians(Orbit));		// 공전 매트릭스
+	OffsetMatrix = XMMatrixTranslationFromVector(vPos - vBallPos);		// 공전 위치
+	WorldMat = OffsetMatrix * OrbitMat * NonRotateMatrix;
+	m_pTransform->Set_WorldMatrix(WorldMat);
+
+	vRight = m_pTransform->Get_State(CTransform::RIGHT);
+	vUp = m_pTransform->Get_State(CTransform::UP);
+	vLook = m_pTransform->Get_State(CTransform::LOOK);
+
+	vLook = m_pPlayerBallTransform->Get_State(CTransform::POSITION) - m_pTransform->Get_State(CTransform::POSITION);
+	m_pTransform->Set_State(CTransform::LOOK, XMVector3Normalize(vLook));
+
+	_float3 vAxis = _float3(0.f, 1.f, 0.f);
+	vRight = XMVector3Cross(XMLoadFloat3(&vAxis), vLook);
+	m_pTransform->Set_State(CTransform::RIGHT, XMVector3Normalize(vRight));
+
+	vUp = XMVector3Cross(vLook, vRight);
+	m_pTransform->Set_State(CTransform::UP, XMVector3Normalize(vUp));
+
+	RELEASE_INSTANCE(CManagement);
+}
+
 HRESULT CPlayer::SetUp_Components()
 {
 	/* For.Com_Renderer */
@@ -258,7 +334,6 @@ HRESULT CPlayer::SetUp_Components()
 
 	CTransform::TRANSFORMDESC	TransformDesc;
 	TransformDesc.fRotatePerSec = 10.0f;
-	TransformDesc.fSpeedPerSec = 5.f;
 
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;

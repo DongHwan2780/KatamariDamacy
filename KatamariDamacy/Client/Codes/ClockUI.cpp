@@ -143,10 +143,10 @@ CObj * CClockUI::Clone(void * pArg)
 
 void CClockUI::Free()
 {
+	__super::Free();
 
 	Safe_Release(m_pTransform);
 	Safe_Release(m_pTexture);
 	Safe_Release(m_pVIBuffer);
 	Safe_Release(m_pRenderer);
-	__super::Free();
 }
