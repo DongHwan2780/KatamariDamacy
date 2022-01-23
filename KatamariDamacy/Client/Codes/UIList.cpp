@@ -22,12 +22,26 @@ HRESULT CUIList::Initialize_Clone(void * pArg)
 {
 	__super::Initialize_Clone(pArg);
 
+	m_dLimitTime = 300.0;
+
 	return S_OK;
 }
 
 _int CUIList::Update(_double DeltaTime)
 {
 	__super::Update(DeltaTime);
+
+	m_dNowTime += DeltaTime;
+
+	if (Get_LimitTime() == 0)
+	{
+		m_dLimitTime = 0;
+	}
+	else if (m_dNowTime >= 1.0)
+	{
+		m_dLimitTime -= 1.0;
+		m_dNowTime = 0.0;
+	}
 
 	return _int();
 }

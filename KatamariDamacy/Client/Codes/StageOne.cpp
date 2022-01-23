@@ -56,6 +56,9 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Layer_TimeUI(TEXT("Layer_TimeUI"))))
 		return E_FAIL;
 
+	if (FAILED(Ready_Layer_PlayerEffect(TEXT("Layer_PlayerEffect"))))
+		return E_FAIL;
+
 	if (FAILED(Ready_Layer_PlayerMoveUI(TEXT("Layer_PlayerMoveUI"))))
 		return E_FAIL;
 
@@ -68,8 +71,6 @@ HRESULT CStageOne::Initialize()
 	if (FAILED(Ready_Layer_Dummy(TEXT("Layer_Dummy"))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_PlayerEffect(TEXT("Layer_PlayerEffect"))))
-		return E_FAIL;
 
 	Ready_Layer_StageObj();
 	 
@@ -317,6 +318,7 @@ HRESULT CStageOne::Ready_Layer_StageObj()
 	wstrLayerTag[30] =	L"Layer_SunFlower";
 	wstrLayerTag[31] =	L"Layer_Tulip";
 
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
 	for (int i = 0; i < 32; ++i)
 	{
 
@@ -325,7 +327,6 @@ HRESULT CStageOne::Ready_Layer_StageObj()
 		if (INVALID_HANDLE_VALUE == hFile)
 			E_FAIL;
 
-		CManagement*	pManagement = GET_INSTANCE(CManagement);
 
 		DWORD dwByte = 0;
 		CTransform::TRANSFORMDESC TransformDesc;
@@ -342,10 +343,10 @@ HRESULT CStageOne::Ready_Layer_StageObj()
 				return E_FAIL;
 		}
 
-		RELEASE_INSTANCE(CManagement);
 		CloseHandle(hFile);
 	}
 
+	RELEASE_INSTANCE(CManagement);
 
 
 	return S_OK;

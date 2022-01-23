@@ -41,7 +41,7 @@ private:
 	_uint				m_iTextureIndexFirst = 0;
 	_uint				m_iTextureIndexSecond = 0;
 
-	_double				m_dNowTime = 0.0;
+//	_double				m_dNowTime = 0.0;
 };
 
 END

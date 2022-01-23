@@ -59,13 +59,13 @@ _int CDummy::Update(_double DeltaTime)
 
 	if(m_pCollider->Collision_OBB(pPlayerBallCollider))
 	{
-		//pPlayerTransform->Set_TransformDescSpeed(pPlayerTransform->GetTransformDesc().fSpeedPerSec * -0.2f);
 		pPlayerTransform->Set_State(CTransform::POSITION, vPrePos);
 
 		_vector ReturnDir;
 		ReturnDir = pPlayerTransform->Get_State(CTransform::LOOK);
 
-		pPlayerTransform->MoveToDir(-ReturnDir, pPlayerTransform->GetTransformDesc().fSpeedPerSec * 0.1f, DeltaTime);
+		pPlayerTransform->MoveToDir(-ReturnDir, pPlayerTransform->GetTransformDesc().fSpeedPerSec * 2.f, DeltaTime);
+		pPlayerTransform->Set_TransformDescSpeed(pPlayerTransform->GetTransformDesc().fSpeedPerSec * 0.2f);
 	}
 
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());

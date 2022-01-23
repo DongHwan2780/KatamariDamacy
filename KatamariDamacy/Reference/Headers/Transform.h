@@ -18,7 +18,7 @@ public:
 		_vector		vPosition;
 		_float3		vScale;
 		_float		fScale;
-		_float		fSpeedPerSec;
+		_float		fSpeedPerSec = 0.f;
 		_float		fRotatePerSec;
 		_float		fMySize;
 	}TRANSFORMDESC;
@@ -44,6 +44,7 @@ public:
 	void Set_State(STATE eState, _fvector vData) { memcpy(&m_MatWorld.m[eState][0], &vData, sizeof(_float3)); } // 어떤 벡터(eState)에 어떤 값(vData)를 넣을건지
 	void Set_TransformDesc(const TRANSFORMDESC& TransformDesc) { m_TransformDesc = TransformDesc; }
 	void Set_TransformDescSpeed(_float fixSpeed) { m_TransformDesc.fSpeedPerSec = fixSpeed; }
+	void Set_TransformDescAddSpeed(_float fixSpeed) { m_TransformDesc.fSpeedPerSec += fixSpeed; }
 
 	void Set_Scale(_fvector vScale);
 

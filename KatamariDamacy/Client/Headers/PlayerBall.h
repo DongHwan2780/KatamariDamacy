@@ -33,6 +33,7 @@ public:
 
 public:
 	_float	Get_PlayerBallSize() { return m_fBallSize; }
+	void	Set_SyncCheck() { m_bSyncCheck = false; }
 
 private:
 	void Gravity(_double DeltaTime);
@@ -73,6 +74,8 @@ private:
 	list<class CObj*>			m_StickList;
 	typedef list<class CObj*>	STICKLIST;
 
+
+	_bool			m_bSyncCheck = true;
 };
 END
 #endif // !__PLAYERBALL_H__

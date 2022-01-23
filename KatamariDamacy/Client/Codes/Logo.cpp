@@ -114,5 +114,6 @@ void CLogo::Free()
 	//CManagement*		pManagement = GET_INSTANCE(CManagement);
 	//pManagement->StopAll();
 	//RELEASE_INSTANCE(CManagement);
+
 	__super::Free();
 }

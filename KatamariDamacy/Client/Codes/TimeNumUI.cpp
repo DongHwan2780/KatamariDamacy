@@ -110,49 +110,35 @@ HRESULT CTimeNumUI::Render()
 
 void CTimeNumUI::Calculate_Time(_double DeltaTime)
 {
-	m_dNowTime += DeltaTime;
-	if (m_dLimitTime == 0)
-	{
-		m_dLimitTime = 0;
-		m_iTextureIndexFirst = 0;
-		m_iTextureIndexSecond = 0;
-	}
-	else if (m_dNowTime >= 1.0)
-	{
-		m_dLimitTime -= 1.0;
-		m_dNowTime -= 1.0;
-	}
-
-
-	if (m_dLimitTime > 240.0)
+	if (Get_LimitTime() > 240.0)
 	{
 		m_iTextureIndexFirst = 0;
 		m_iTextureIndexSecond = 5;
 	}
-	else if (m_dLimitTime > 180.0)
+	else if (Get_LimitTime() > 180.0)
 	{
 		m_iTextureIndexFirst = 0;
 		m_iTextureIndexSecond = 4;
 	}
-	else if (m_dLimitTime > 120.0)
+	else if (Get_LimitTime() > 120.0)
 	{
 		m_iTextureIndexFirst = 0;
 		m_iTextureIndexSecond = 3;
 	}
-	else if (m_dLimitTime > 60.0)
+	else if (Get_LimitTime() > 60.0)
 	{
 		m_iTextureIndexFirst = 0;
 		m_iTextureIndexSecond = 2;
 	}
-	else if (m_dLimitTime == 60.0)
+	else if (Get_LimitTime() == 60.0)
 	{
 		m_iTextureIndexFirst = 0;
 		m_iTextureIndexSecond = 1;
 	}
-	else if(m_dLimitTime < 60.0)
+	else if(Get_LimitTime() < 60.0)
 	{
-		m_iTextureIndexFirst = m_dLimitTime / 10.0;
-		m_iTextureIndexSecond = (int)m_dLimitTime % 10;
+		m_iTextureIndexFirst = Get_LimitTime() / 10.0;
+		m_iTextureIndexSecond = (int)Get_LimitTime() % 10;
 	}
 
 }

@@ -45,7 +45,7 @@ HRESULT CStickObjUI::Initialize_Clone(void * pArg)
 
 	m_TransformMatrix._41 = -550.f;
 	m_TransformMatrix._42 = -260.f;
-	m_TransformMatrix._43 =  0.4f;
+	m_TransformMatrix._43 =  0.2f;
 
 	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH((float)g_iWinCX, (float)g_iWinCY, 0.0f, 1.f));
 
@@ -60,8 +60,7 @@ _int CStickObjUI::Update(_double DeltaTime)
 	m_iModelIndex = m_pModel->GetModelDesc().iModelIndexNum;
 
 	_vector vYAxis;
-
-	vYAxis = { 1.f, 1.f, 0.f, 0.f };
+	vYAxis = { 0.f, 1.f, 1.f, 0.f };
 	m_pTransform->RotateAxis(vYAxis, DeltaTime );
 
 	Scale_adj(m_iModelIndex);
@@ -115,12 +114,12 @@ HRESULT CStickObjUI::CheckModel(_uint iModelIndex)
 void CStickObjUI::Scale_adj(_uint iModelIndex)
 {
 	_float	fScale = m_pModel->GetModelDesc().fModelScale;
-	if (iModelIndex == 0 || iModelIndex == 2 || iModelIndex == 13 || iModelIndex == 14 || iModelIndex == 15 || iModelIndex == 16 || iModelIndex == 19 || iModelIndex == 24 ||
+	if (iModelIndex == 0 || iModelIndex == 2 || iModelIndex == 13 || iModelIndex == 14 || iModelIndex == 15 || iModelIndex == 16 || iModelIndex == 19 ||
 		iModelIndex == 23 || iModelIndex == 25 || iModelIndex == 26 || iModelIndex == 12)
 	{
 		m_pTransform->Set_Scale(XMVectorSet(fScale / 2.f, fScale / 2.f, fScale / 2.f, 0.f));
 	}
-	else if(iModelIndex == 1 || iModelIndex == 8 || iModelIndex == 3)
+	else if(iModelIndex == 1 || iModelIndex == 8 || iModelIndex == 3 || iModelIndex == 18 || iModelIndex == 11)
 		m_pTransform->Set_Scale(XMVectorSet(fScale / 7.f , fScale / 7.f , fScale / 7.f, 0.f));
 	else
 		m_pTransform->Set_Scale(XMVectorSet(fScale / 5.f, fScale / 5.f, fScale / 5.f, 0.f));
@@ -276,6 +275,7 @@ CObj * CStickObjUI::Clone(void * pArg)
 
 void CStickObjUI::Free()
 {
+	__super::Free();
 
 	for(int i = 0; i < 32; ++i)
 	{
@@ -286,5 +286,4 @@ void CStickObjUI::Free()
 	Safe_Release(m_pModel);
 	Safe_Release(m_pRenderer);
 
-	__super::Free();
 }
