@@ -81,7 +81,7 @@ HRESULT CSunFlower::Render()
 	for (_uint i = 0; i < iNumMaterials; ++i)
 	{
 		m_pModel->SetUp_TextureOnShader("g_DiffuseTexture", i, aiTextureType_DIFFUSE);
-		m_pModel->Render(i, 0);
+		m_pModel->Render(i, 2);
 	}
 #ifdef _DEBUG
 	m_pColliderSphere->Render();

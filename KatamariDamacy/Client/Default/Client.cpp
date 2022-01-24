@@ -79,7 +79,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 		TimeAcc += pManagement->Compute_DeltaTime(TEXT("Timer_Default"));
 
-		if (TimeAcc > 1.0 / 40.0)
+		if (TimeAcc > 1.0 / 60.0)
 		{
 			TimeAcc = 0.0;
 
