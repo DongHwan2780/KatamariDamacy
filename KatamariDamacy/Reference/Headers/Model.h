@@ -88,6 +88,10 @@ private:
 	VTXMESH*			m_pVertices = nullptr;
 	POLYGONINDICES32*	m_pPolygonIndices32 = nullptr;
 
+protected:
+	void*				m_pVoidVertices = nullptr;
+	void*				m_pVoidIndices = nullptr;
+
 	vector<class CMeshContainer*>			m_MeshContainers;
 
 	vector<vector<class CMeshContainer*>>	m_SortByMaterialMesh;		// 같은 재질을 가진 메쉬컨테이너끼리 묶어서 보관한다.

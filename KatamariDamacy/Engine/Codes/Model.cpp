@@ -28,6 +28,8 @@ CModel::CModel(const CModel & other)
 	, m_pEffect(other.m_pEffect)
 	, m_iAnimationIndex(other.m_iAnimationIndex)
 	, m_PivotMatrix(other.m_PivotMatrix)
+	, m_pVoidVertices(other.m_pVoidVertices)
+	, m_pVoidIndices(other.m_pVoidIndices)
 {
 	/* 메시컨테이너의 뼈들 중, HierarchyNode*의 주소에는 아직 값을 채우지 않았다. */
 	for (auto& pPrototypeMeshContainer : other.m_MeshContainers)
@@ -93,6 +95,16 @@ HRESULT CModel::Initialize_Prototype(const char * pMeshFilePath, const char * pM
 
 	m_pPolygonIndices32 = new POLYGONINDICES32[m_iNumFaces];
 	ZeroMemory(m_pPolygonIndices32, sizeof(POLYGONINDICES32) * m_iNumFaces);
+
+	////////////////////////////////////////////////////////////////////////////////////
+
+	m_pVoidVertices = new VTXMESH[m_iNumVertices];					
+	ZeroMemory(m_pVoidVertices, sizeof(VTXMESH) * m_iNumVertices);
+
+	m_pVoidIndices = new POLYGONINDICES32[m_iNumFaces];
+	ZeroMemory(m_pVoidIndices, sizeof(POLYGONINDICES32) * m_iNumFaces);
+
+	////////////////////////////////////////////////////////////////////////////////////
 
 	_uint		iStartVertexIndex = 0;
 	_uint		iStartFaceIndex = 0;
@@ -260,13 +272,13 @@ _bool CModel::RayCast(_float3 & out, HWND hWnd, _uint iWinCX, _uint iWinCY, _flo
 
 	for (_uint i = 0; i < m_iNumFaces; ++i)
 	{
-		memcpy(&_1, ((_byte*)m_pPolygonIndices32) + i * m_iIndexSize, iSize);
-		memcpy(&_2, ((_byte*)m_pPolygonIndices32) + i * m_iIndexSize + (iSize), iSize);
-		memcpy(&_3, ((_byte*)m_pPolygonIndices32) + i * m_iIndexSize + (iSize * 2), iSize);
+		memcpy(&_1, ((_byte*)m_pVoidIndices) + i * m_iIndexSize, iSize);
+		memcpy(&_2, ((_byte*)m_pVoidIndices) + i * m_iIndexSize + (iSize), iSize);
+		memcpy(&_3, ((_byte*)m_pVoidIndices) + i * m_iIndexSize + (iSize * 2), iSize);
 
-		memcpy(&v1, ((_byte*)m_pVertices) + _1 * m_iStride, sizeof(_float3));
-		memcpy(&v2, ((_byte*)m_pVertices) + _2 * m_iStride, sizeof(_float3));
-		memcpy(&v3, ((_byte*)m_pVertices) + _3 * m_iStride, sizeof(_float3));
+		memcpy(&v1, ((_byte*)m_pVoidVertices) + _1 * m_iStride, sizeof(_float3));
+		memcpy(&v2, ((_byte*)m_pVoidVertices) + _2 * m_iStride, sizeof(_float3));
+		memcpy(&v3, ((_byte*)m_pVoidVertices) + _3 * m_iStride, sizeof(_float3));
 
 		_vector vecRayPos, vecRayDir, vecV1, vecV2, vecV3;
 
@@ -281,6 +293,7 @@ _bool CModel::RayCast(_float3 & out, HWND hWnd, _uint iWinCX, _uint iWinCY, _flo
 		vecV3 = XMLoadFloat3(&v3);
 
 		vecRayDir = XMVector3Normalize(vecRayDir);
+
 
 		if (DX::Intersects(vecRayPos, vecRayDir, vecV1, vecV2, vecV3, dist))		//광선이랑 폴리곤이랑 충돌헀으면
 		{
@@ -406,20 +419,29 @@ HRESULT CModel::Create_MeshContainer(aiMesh * pMesh, _uint * pStartVertexIndex, 
 	{
 		/* 정점의 위치를 가지고 온다. */
 		memcpy(&m_pVertices[*pStartVertexIndex].vPosition, &pMesh->mVertices[i], sizeof(_float3));
+		memcpy(&((VTXMESH*)m_pVoidVertices)[*pStartVertexIndex].vPosition, &pMesh->mVertices[i], sizeof(_float3));
 
 		_vector		vPosition;
 		vPosition = XMLoadFloat3(&m_pVertices[*pStartVertexIndex].vPosition);
 		vPosition = XMVector3TransformCoord(vPosition, PivotMatrix);
 		XMStoreFloat3(&m_pVertices[*pStartVertexIndex].vPosition, vPosition);
 
+
+		vPosition = XMLoadFloat3(&((VTXMESH*)m_pVoidVertices)[*pStartVertexIndex].vPosition);
+		vPosition = XMVector3TransformCoord(vPosition, PivotMatrix);
+		XMStoreFloat3(&((VTXMESH*)m_pVoidVertices)[*pStartVertexIndex].vPosition, vPosition);
+
 		/* 정점의 노멀를 가지고 온다. */
 		memcpy(&m_pVertices[*pStartVertexIndex].vNormal, &pMesh->mNormals[i], sizeof(_float3));
+		memcpy(&((VTXMESH*)m_pVoidVertices)[*pStartVertexIndex].vNormal, &pMesh->mNormals[i], sizeof(_float3));
 
 		/* 정점의 텍스쳐 유브이좌표를 가지고 온다. */
 		memcpy(&m_pVertices[*pStartVertexIndex].vTexUV, &pMesh->mTextureCoords[0][i], sizeof(_float2));
+		memcpy(&((VTXMESH*)m_pVoidVertices)[*pStartVertexIndex].vTexUV, &pMesh->mTextureCoords[0][i], sizeof(_float2));
 
 		/* 정점의 탄젠트 정보를 가지고 온다. */
 		memcpy(&m_pVertices[*pStartVertexIndex].vTangent, &pMesh->mTangents[i], sizeof(_float3));
+		memcpy(&((VTXMESH*)m_pVoidVertices)[*pStartVertexIndex].vTangent, &pMesh->mTangents[i], sizeof(_float3));
 
 		++(*pStartVertexIndex);
 	}
@@ -431,6 +453,10 @@ HRESULT CModel::Create_MeshContainer(aiMesh * pMesh, _uint * pStartVertexIndex, 
 		m_pPolygonIndices32[*pStartFaceIndex]._0 = pMesh->mFaces[i].mIndices[0];
 		m_pPolygonIndices32[*pStartFaceIndex]._1 = pMesh->mFaces[i].mIndices[1];
 		m_pPolygonIndices32[*pStartFaceIndex]._2 = pMesh->mFaces[i].mIndices[2];
+
+		((POLYGONINDICES32*)m_pVoidIndices)[*pStartFaceIndex]._0 = pMesh->mFaces[i].mIndices[0];
+		((POLYGONINDICES32*)m_pVoidIndices)[*pStartFaceIndex]._1 = pMesh->mFaces[i].mIndices[1];
+		((POLYGONINDICES32*)m_pVoidIndices)[*pStartFaceIndex]._2 = pMesh->mFaces[i].mIndices[2];
 		++(*pStartFaceIndex);
 	}
 
@@ -845,6 +871,8 @@ void CModel::Free()
 	{
 		Safe_Delete_Array(m_pVertices);
 		Safe_Delete_Array(m_pPolygonIndices32);
+		Safe_Delete_Array(m_pVoidVertices);
+		Safe_Delete_Array(m_pVoidIndices);
 
 		for (auto& pModelTextures : m_ModelTextures)
 		{
