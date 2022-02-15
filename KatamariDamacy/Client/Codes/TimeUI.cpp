@@ -42,7 +42,6 @@ HRESULT CTimeUI::Initialize_Clone(void * pArg)
 
 	m_TransformMatrix._41 = 550.f;
 	m_TransformMatrix._42 = 270.f;
-	m_TransformMatrix._43 = 0.5f;
 
 	XMStoreFloat4x4(&m_OrthMatrix, XMMatrixOrthographicLH((float)g_iWinCX, (float)g_iWinCY, 0.0f, 1.f));
 

@@ -40,9 +40,23 @@ _int CPlayerBall::Update(_double DeltaTime)
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 	m_pPlayerTransform = dynamic_cast<CTransform*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_Player", L"Com_Transform"));
 
+	SetTransform();
+
+	CObj*	pObj = nullptr;
+	_float3 vPos;
+	if (m_pColliderSphere->Collision_Sphere(this, L"Layer_StageObj", pObj, vPos))
+	{
+		CCollider* m_pObjCollider = dynamic_cast<CCollider*>(pObj->GetComponent(L"Com_SPHERE"));
+		CModel*		pModel = dynamic_cast<CModel*>(pObj->GetComponent(L"Com_Model"));
+
+		m_pObjCollider->Set_CollState(CCollider::OBJ_STICK);
+		m_pObjCollider->Set_CollPos(vPos);
+
+		Create_StickObjUI(pModel->GetModelDesc().iModelIndexNum);
+	}
+
 	RELEASE_INSTANCE(CManagement);
 
-	SetTransform();
 	m_pCollider->Update_State(m_pTransform->Get_WorldMatrix());
 	m_pColliderSphere->Update_State(m_pTransform->Get_WorldMatrix());
 
@@ -59,23 +73,6 @@ _int CPlayerBall::Late_Update(_double DeltaTime)
 		return -1;
 
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
-
-	CObj*	pObj = nullptr;
-	_float3 vPos;
-	if (m_pColliderSphere->Collision_Sphere(this, L"Layer_StageObj", pObj, vPos))
-	{
-		CCollider* m_pObjCollider = dynamic_cast<CCollider*>(pObj->GetComponent(L"Com_SPHERE"));
-		CModel*		pModel = dynamic_cast<CModel*>(pObj->GetComponent(L"Com_Model"));
-
-		m_pObjCollider->Set_CollState(CCollider::OBJ_STICK);
-		m_pObjCollider->Set_CollPos(vPos);
-
-		CModel*	pUIModel = dynamic_cast<CModel*>(pManagement->GetComponent(STAGEONE_SCENE, L"Layer_StickObjUI", L"Com_Model"));
-
-		pUIModel->SetModelIndex(pModel->GetModelDesc().iModelIndexNum);
-		pUIModel->SetModelScale(pModel->GetModelDesc().fModelScale);
-	}
-
 
 	m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
 
@@ -126,7 +123,7 @@ HRESULT CPlayerBall::SetUp_Components()
 	/* For.Com_Transform */
 
 	CTransform::TRANSFORMDESC	TransformDesc;
-	TransformDesc.fRotatePerSec = 180.0f;
+	TransformDesc.fRotatePerSec = XMConvertToRadians(360.0f);
 
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;
@@ -167,33 +164,46 @@ HRESULT CPlayerBall::SetUp_ConstantTable()
 
 void CPlayerBall::SetTransform()
 {
+	//_vector vPlayerPos = m_pPlayerTransform->Get_State(CTransform::POSITION);
+
 	_vector		vRight, vUp, vLook;
+	_matrix TransMatrix;
+	TransMatrix = XMMatrixTranslation(0.f, 0.5f, 2.f);
+
 	vRight = m_pTransform->Get_State(CTransform::RIGHT);
 	vUp = m_pTransform->Get_State(CTransform::UP);
 	vLook = m_pTransform->Get_State(CTransform::LOOK);
 
-	_matrix			NonRotateMatrix = XMMatrixIdentity();
-	NonRotateMatrix.r[3] = m_pPlayerTransform->Get_WorldMatrix().r[3];
 
-	m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, NonRotateMatrix));
-	m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, NonRotateMatrix));
-	m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, NonRotateMatrix));
+	m_pTransform->Set_WorldMatrix(TransMatrix * m_pPlayerTransform->Get_WorldMatrix());
 
-	////////// 포지션 보정
-	_vector vTargetPos = m_pPlayerTransform->Get_State(CTransform::POSITION);
+	m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, m_pPlayerTransform->Get_WorldMatrix()/* * TransMatrix*/));
+	m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, m_pPlayerTransform->Get_WorldMatrix()/* * TransMatrix*/));
+	m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, m_pPlayerTransform->Get_WorldMatrix()/* * TransMatrix*/));
 
-	_vector	vPlayerLook = m_pPlayerTransform->Get_State(CTransform::LOOK);
-	_vector vInTargetLook = vPlayerLook * 3.f;
+	//_matrix NonRotateMatrix = XMMatrixIdentity();
 
-	_float3 vSyncPos;
-	XMStoreFloat3(&vSyncPos, vTargetPos + vInTargetLook);
-	m_pTransform->Set_State(CTransform::POSITION, XMVector4Transform(XMLoadFloat3(&vSyncPos), NonRotateMatrix));
+	//NonRotateMatrix.r[0] = m_pTransform->Get_State(CTransform::RIGHT);
+	//NonRotateMatrix.r[1] = m_pTransform->Get_State(CTransform::UP);
+	//NonRotateMatrix.r[2] = m_pTransform->Get_State(CTransform::LOOK);
+	//NonRotateMatrix.r[3] = m_pPlayerTransform->Get_WorldMatrix().r[3];
+
+	//m_pTransform->Set_WorldMatrix(TransMatrix * NonRotateMatrix);
+
+	//m_pTransform->Set_State(CTransform::RIGHT, XMVector4Transform(vRight, NonRotateMatrix * TransMatrix));
+	//m_pTransform->Set_State(CTransform::UP, XMVector4Transform(vUp, NonRotateMatrix * TransMatrix));
+	//m_pTransform->Set_State(CTransform::LOOK, XMVector4Transform(vLook, NonRotateMatrix * TransMatrix));
+
 
 }
 
 void CPlayerBall::Create_StickObjUI(_uint iModelIndex)
 {
+	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
+	pManagement->Add_GameObj(STAGEONE_SCENE, TEXT("Prototype_StickObjUI"), L"Layer_StickObjUI", &iModelIndex);
+
+	RELEASE_INSTANCE(CManagement);
 }
 
 

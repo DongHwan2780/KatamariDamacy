@@ -369,7 +369,7 @@ _bool CCollider::Collision_Sphere(CObj * _pObj, const wstring & _Layertag, CObj 
 
 		if (COLL_SPHERE != m_eType ||
 			COLL_SPHERE != pTargetCollider->m_eType)
-			 return false;
+			 continue;
 
 		if (pTargetCollider->GetColliderDesc().eObjState == OBJ_STICK)
 		{

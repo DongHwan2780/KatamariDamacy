@@ -15,8 +15,7 @@ class ENGINE_DLL CModel final : public CComponent
 public:
 	typedef struct tagModelDesc
 	{
-		_uint	iModelIndexNum;
-		_float	fModelScale;
+		_uint iModelIndexNum;
 	}MODELDESC;
 
 
@@ -65,8 +64,7 @@ private:
 
 public:
 	const MODELDESC& GetModelDesc() const { return m_ModelDesc; }
-	void SetModelIndex(_uint iModelIndex) { m_ModelDesc.iModelIndexNum = iModelIndex; }
-	void SetModelScale(_float fModelScale) { m_ModelDesc.fModelScale = fModelScale; }
+
 
 public:
 	static CModel*	Create(DEVICES, const char* pMeshFilePath, const char* pMeshFileName, const _tchar* pShaderFilePath, _fmatrix PivotMatrix);

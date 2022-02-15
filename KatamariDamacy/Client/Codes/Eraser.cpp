@@ -37,7 +37,6 @@ HRESULT CEraser::Initialize_Clone(void * pArg)
 	m_pTransform->Set_State(CTransform::POSITION, TransformDesc.vPosition);
 	m_pTransform->Set_Scale(XMVectorSet(TransformDesc.fScale, TransformDesc.fScale, TransformDesc.fScale, 0.f));
 	m_pTransform->Set_TransformDesc(TransformDesc);
-	m_pModel->SetModelScale(TransformDesc.fScale);
 	return S_OK;
 }
 

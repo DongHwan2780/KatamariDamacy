@@ -57,14 +57,10 @@ _int CStickObjUI::Update(_double DeltaTime)
 	if (0 > __super::Update(DeltaTime))
 		return -1;
 
-	m_iModelIndex = m_pModel->GetModelDesc().iModelIndexNum;
 
-	_vector vYAxis;
+	//m_pTransform->RotateAxis(XMVectorSet(0.f, 0.f, 1.f, 0.f), DeltaTime );
 
-	vYAxis = { 1.f, 1.f, 0.f, 0.f };
-	m_pTransform->RotateAxis(vYAxis, DeltaTime );
-
-	Scale_adj(m_iModelIndex);
+	CheckModel(m_iModelIndex);
 
 	return _int();
 }
@@ -85,23 +81,20 @@ HRESULT CStickObjUI::Render()
 	if (nullptr == m_pModel)
 		return E_FAIL;
 
-	if (m_iModelIndex != 32)
+	if (FAILED(__super::Render()))
+		return E_FAIL;
+
+	if (FAILED(SetUp_ConstantTable()))
+		return E_FAIL;
+
+	_uint		iNumMaterials = (_uint)m_pModel->Get_NumMaterials();
+
+	m_pModel->Bind_Buffers();
+
+	for (_uint i = 0; i < iNumMaterials; ++i)
 	{
-		if (FAILED(__super::Render()))
-			return E_FAIL;
-
-		if (FAILED(SetUp_ConstantTable()))
-			return E_FAIL;
-
-		_uint		iNumMaterials = (_uint)m_pModelArray[m_iModelIndex]->Get_NumMaterials();
-
-		m_pModelArray[m_iModelIndex]->Bind_Buffers();
-
-		for (_uint i = 0; i < iNumMaterials; ++i)
-		{
-			m_pModelArray[m_iModelIndex]->SetUp_TextureOnShader("g_DiffuseTexture", i, aiTextureType_DIFFUSE);
-			m_pModelArray[m_iModelIndex]->Render(i, 0);
-		}
+		m_pModel->SetUp_TextureOnShader("g_DiffuseTexture", i, aiTextureType_DIFFUSE);
+		m_pModel->Render(i, 0);
 	}
 
 	return S_OK;
@@ -109,15 +102,137 @@ HRESULT CStickObjUI::Render()
 
 HRESULT CStickObjUI::CheckModel(_uint iModelIndex)
 {
-	return S_OK;
-}
-
-void CStickObjUI::Scale_adj(_uint iModelIndex)
-{
-	_float	fScale = m_pModel->GetModelDesc().fModelScale;
-
-	m_pTransform->Set_Scale(XMVectorSet(fScale / 5.f , fScale / 5.f , fScale / 5.f, 0.f));
-
+	switch (iModelIndex)
+	{
+	case 0:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Apple", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 1:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Bag", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 2:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Banana", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 3:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Bat", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 4:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Bansai", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 5:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Book0", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 6:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Book1", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 7:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Bowling", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 8:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Cake", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 9:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Can", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 10:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Candy", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 11:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Clock", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 12:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Dice", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 13:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_DrinkCan0", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 14:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_DrinkCan1", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 15:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Egg", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 16:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Eraser", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 17:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Fork", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 18:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_FryPan", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 19:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_LipStick", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 20:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Magnet", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 21:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Melon", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 22:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_MilkPack", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 23:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Orange", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 24:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Pilon", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 25:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Pin0", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 26:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Pin1", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 27:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Radio", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 28:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Spoon", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 29:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Stand", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 30:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_SunFlower", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	case 31:
+		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Tulip", L"Com_Model", (CComponent**)&m_pModel)))
+			return E_FAIL;
+		break;
+	}
 }
 
 HRESULT CStickObjUI::SetUp_ComponentsOrthUI(_uint iModelIndex)
@@ -127,55 +242,6 @@ HRESULT CStickObjUI::SetUp_ComponentsOrthUI(_uint iModelIndex)
 		return E_FAIL;
 
 	/* For.Com_Model */
-	wstring wstrModelTag[32] = { L"", L"", L"", L"", L"", L"", L"", L"", L"", L""
-		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
-		, L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L"" , L""
-		, L"" , L"" };
-
-	wstrModelTag[0] = L"Component_Model_Apple";
-	wstrModelTag[1] = L"Component_Model_Bag";
-	wstrModelTag[2] = L"Component_Model_Banana";
-	wstrModelTag[3] = L"Component_Model_Bat";
-	wstrModelTag[4] = L"Component_Model_Bansai";
-	wstrModelTag[5] = L"Component_Model_Book0";
-	wstrModelTag[6] = L"Component_Model_Book1";
-	wstrModelTag[7] = L"Component_Model_Bowling";
-	wstrModelTag[8] = L"Component_Model_Cake";
-	wstrModelTag[9] = L"Component_Model_Can";
-	wstrModelTag[10] = L"Component_Model_Candy";
-	wstrModelTag[11] = L"Component_Model_Clock";
-	wstrModelTag[12] = L"Component_Model_Dice";
-	wstrModelTag[13] = L"Component_Model_DrinkCan0";
-	wstrModelTag[14] = L"Component_Model_DrinkCan1";
-	wstrModelTag[15] = L"Component_Model_Egg";
-	wstrModelTag[16] = L"Component_Model_Eraser";
-	wstrModelTag[17] = L"Component_Model_Fork";
-	wstrModelTag[18] = L"Component_Model_FryPan";
-	wstrModelTag[19] = L"Component_Model_LipStick";
-	wstrModelTag[20] = L"Component_Model_Magnet";
-	wstrModelTag[21] = L"Component_Model_Melon";
-	wstrModelTag[22] = L"Component_Model_MilkPack";
-	wstrModelTag[23] = L"Component_Model_Orange";
-	wstrModelTag[24] = L"Component_Model_Pilon";
-	wstrModelTag[25] = L"Component_Model_Pin0";
-	wstrModelTag[26] = L"Component_Model_Pin1";
-	wstrModelTag[27] = L"Component_Model_Radio";
-	wstrModelTag[28] = L"Component_Model_Spoon";
-	wstrModelTag[29] = L"Component_Model_Stand";
-	wstrModelTag[30] = L"Component_Model_SunFlower";
-	wstrModelTag[31] = L"Component_Model_Tulip";
-
-	for (int i = 0; i < 32; ++i)
-	{
-		if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, wstrModelTag[i], L"Com_ModelArray", (CComponent**)&m_pModelArray[i])))
-			return E_FAIL;
-	}
-
-	CModel::MODELDESC ModelDesc;
-	ModelDesc.iModelIndexNum = iModelIndex;
-
-	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Model_Tulip", L"Com_Model", (CComponent**)&m_pModel, &ModelDesc)))
-		return E_FAIL;
 
 	/* For.Com_Transform */
 	CTransform::TRANSFORMDESC	TransformDesc;
@@ -193,9 +259,9 @@ HRESULT CStickObjUI::SetUp_ConstantTable()
 
 	CManagement*	pManagement = GET_INSTANCE(CManagement);
 
-	m_pModelArray[m_iModelIndex]->SetUp_ValueOnShader("g_WorldMatrix", &XMMatrixTranspose(m_pTransform->Get_WorldMatrix() * XMLoadFloat4x4(&m_TransformMatrix)), sizeof(_matrix));
-	m_pModelArray[m_iModelIndex]->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixIdentity(), sizeof(_matrix));
-	m_pModelArray[m_iModelIndex]->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_OrthMatrix)), sizeof(_matrix));
+	m_pModel->SetUp_ValueOnShader("g_WorldMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_TransformMatrix)), sizeof(_matrix));
+	m_pModel->SetUp_ValueOnShader("g_ViewMatrix", &XMMatrixIdentity(), sizeof(_matrix));
+	m_pModel->SetUp_ValueOnShader("g_ProjMatrix", &XMMatrixTranspose(XMLoadFloat4x4(&m_OrthMatrix)), sizeof(_matrix));
 
 	RELEASE_INSTANCE(CManagement);
 
@@ -232,13 +298,7 @@ void CStickObjUI::Free()
 {
 	__super::Free();
 
-	for(int i = 0; i < 32; ++i)
-	{
-		Safe_Release(m_pModelArray[i]);
-	}
-
 	Safe_Release(m_pTransform);
 	Safe_Release(m_pModel);
 	Safe_Release(m_pRenderer);
-
 }

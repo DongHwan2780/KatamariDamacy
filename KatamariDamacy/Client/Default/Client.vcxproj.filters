@@ -184,9 +184,6 @@
     <Filter Include="01.Object\02.CommonObj\03.UI\05.StickObjUI">
       <UniqueIdentifier>{1d3d0093-cd95-4f2c-bbb5-4544dbcf98fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Object\02.CommonObj\03.UI\06.ClockUI">
-      <UniqueIdentifier>{99eacf14-1699-4dd4-8cc8-44afb5960f31}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -372,9 +369,6 @@
     <ClInclude Include="..\Headers\StickObjUI.h">
       <Filter>01.Object\02.CommonObj\03.UI\05.StickObjUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Headers\ClockUI.h">
-      <Filter>01.Object\02.CommonObj\03.UI\06.ClockUI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -544,9 +538,6 @@
     </ClCompile>
     <ClCompile Include="..\Codes\StickObjUI.cpp">
       <Filter>01.Object\02.CommonObj\03.UI\05.StickObjUI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Codes\ClockUI.cpp">
-      <Filter>01.Object\02.CommonObj\03.UI\06.ClockUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

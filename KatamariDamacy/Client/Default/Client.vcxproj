@@ -180,7 +180,6 @@
     <ClInclude Include="..\Headers\Candy.h" />
     <ClInclude Include="..\Headers\ClientDefines.h" />
     <ClInclude Include="..\Headers\Clock.h" />
-    <ClInclude Include="..\Headers\ClockUI.h" />
     <ClInclude Include="..\Headers\Denden.h" />
     <ClInclude Include="..\Headers\Dice.h" />
     <ClInclude Include="..\Headers\DrinkCan0.h" />
@@ -241,7 +240,6 @@
     <ClCompile Include="..\Codes\Can.cpp" />
     <ClCompile Include="..\Codes\Candy.cpp" />
     <ClCompile Include="..\Codes\Clock.cpp" />
-    <ClCompile Include="..\Codes\ClockUI.cpp" />
     <ClCompile Include="..\Codes\Denden.cpp" />
     <ClCompile Include="..\Codes\Dice.cpp" />
     <ClCompile Include="..\Codes\DrinkCan0.cpp" />
