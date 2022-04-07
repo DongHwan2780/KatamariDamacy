@@ -1,0 +1,6 @@
+﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\fullddack\Desktop\KatamariDamacy\KatamariDamacy\Client\Bin\Shader_Mesh.cso
+  failed to open file: C:\Users\fullddack\Desktop\KatamariDamacy\KatamariDamacy\Client\Bin\ShaderFiles\Shader_PointInstance.fx
+  compilation failed; no code produced
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppCommon.targets(1235,5): error MSB6006: "fxc.exe"이(가) 종료되었습니다(코드: 1).
