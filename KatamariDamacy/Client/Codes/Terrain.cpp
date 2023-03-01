@@ -66,7 +66,7 @@ HRESULT CTerrain::Render()
 	if (FAILED(__super::Render()))
 		return E_FAIL;
 
-	//m_pVIBuffer->Render(0);
+	m_pVIBuffer->Render(0);
 #endif // !#ifdef _DEBUG
 
 	return S_OK;

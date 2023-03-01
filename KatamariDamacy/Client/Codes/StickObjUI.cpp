@@ -76,7 +76,7 @@ _int CStickObjUI::Late_Update(_double DeltaTime)
 	if (0 > __super::Late_Update(DeltaTime))
 		return -1;
 
-	return m_pRenderer->Add_RenderGroup(CRenderer::NONALPHA, this);
+	return m_pRenderer->Add_RenderGroup(CRenderer::PRIORITY, this);
 }
 
 HRESULT CStickObjUI::Render()
@@ -92,11 +92,11 @@ HRESULT CStickObjUI::Render()
 		if (FAILED(SetUp_ConstantTable()))
 			return E_FAIL;
 
-		size_t		iNumMaterials = m_pModelArray[m_iModelIndex]->Get_NumMaterials();
+		_uint		iNumMaterials = (_uint)m_pModelArray[m_iModelIndex]->Get_NumMaterials();
 
 		m_pModelArray[m_iModelIndex]->Bind_Buffers();
 
-		for (size_t i = 0; i < iNumMaterials; ++i)
+		for (_uint i = 0; i < iNumMaterials; ++i)
 		{
 			m_pModelArray[m_iModelIndex]->SetUp_TextureOnShader("g_DiffuseTexture", i, aiTextureType_DIFFUSE);
 			m_pModelArray[m_iModelIndex]->Render(i, 0);
@@ -120,9 +120,9 @@ void CStickObjUI::Scale_adj(_uint iModelIndex)
 		m_pTransform->Set_Scale(XMVectorSet(fScale / 2.f, fScale / 2.f, fScale / 2.f, 0.f));
 	}
 	else if(iModelIndex == 1 || iModelIndex == 8 || iModelIndex == 3 || iModelIndex == 18 || iModelIndex == 11)
-		m_pTransform->Set_Scale(XMVectorSet(fScale / 9.f , fScale / 9.f , fScale / 9.f, 0.f));
+		m_pTransform->Set_Scale(XMVectorSet(fScale / 7.f , fScale / 7.f , fScale / 7.f, 0.f));
 	else
-		m_pTransform->Set_Scale(XMVectorSet(fScale / 7.f, fScale / 7.f, fScale / 7.f, 0.f));
+		m_pTransform->Set_Scale(XMVectorSet(fScale / 5.f, fScale / 5.f, fScale / 5.f, 0.f));
 
 }
 
@@ -224,7 +224,7 @@ HRESULT CStickObjUI::SetUp_ComponentsOrthUI(_uint iModelIndex)
 
 	/* For.Com_Transform */
 	CTransform::TRANSFORMDESC	TransformDesc;
-	TransformDesc.fRotatePerSec = 180.0f;
+	TransformDesc.fRotatePerSec = 360.0f;
 	if (FAILED(__super::SetUp_Components(STATIC_SCENE, L"Component_Transform", L"Com_Transform", (CComponent**)&m_pTransform, &TransformDesc)))
 		return E_FAIL;
 

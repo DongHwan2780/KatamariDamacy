@@ -122,34 +122,34 @@ HRESULT CCollider::Render()
 	if (nullptr == m_pEffect)
 		return E_FAIL;
 
-	//CPipeLine*		pPipeLine = GET_INSTANCE(CPipeLine);
+	CPipeLine*		pPipeLine = GET_INSTANCE(CPipeLine);
 
-	//m_pEffect->SetWorld(XMLoadFloat4x4(&m_TransformMatrix));
+	m_pEffect->SetWorld(XMLoadFloat4x4(&m_TransformMatrix));
 
-	//m_pEffect->SetView(pPipeLine->Get_Transform(CPipeLine::D3DTS_VIEW));
-	//m_pEffect->SetProjection(pPipeLine->Get_Transform(CPipeLine::D3DTS_PROJ));
+	m_pEffect->SetView(pPipeLine->Get_Transform(CPipeLine::D3DTS_VIEW));
+	m_pEffect->SetProjection(pPipeLine->Get_Transform(CPipeLine::D3DTS_PROJ));
 
-	//m_pDeviceContext->IASetInputLayout(m_pInputLayOut);
-	//m_pEffect->Apply(m_pDeviceContext);
+	m_pDeviceContext->IASetInputLayout(m_pInputLayOut);
+	m_pEffect->Apply(m_pDeviceContext);
 
-	//_vector		vColor = m_isCollision == true ? DirectX::Colors::Red : DirectX::Colors::Green;
+	_vector		vColor = m_isCollision == true ? DirectX::Colors::Red : DirectX::Colors::Green;
 
-	//m_pBatch->Begin();
+	m_pBatch->Begin();
 
-	//switch (m_eType)
-	//{
-	//case CCollider::COLL_AABB: case CCollider::COLL_OBB:
-	//	DX::Draw(m_pBatch, *m_pBB, vColor);
-	//	break;
+	switch (m_eType)
+	{
+	case CCollider::COLL_AABB: case CCollider::COLL_OBB:
+		DX::Draw(m_pBatch, *m_pBB, vColor);
+		break;
 
-	//case CCollider::COLL_SPHERE:
-	//	DX::Draw(m_pBatch, *m_pSphere, vColor);
-	//	break;
-	//}
+	case CCollider::COLL_SPHERE:
+		DX::Draw(m_pBatch, *m_pSphere, vColor);
+		break;
+	}
 
-	//m_pBatch->End();
+	m_pBatch->End();
 
-	//RELEASE_INSTANCE(CPipeLine);
+	RELEASE_INSTANCE(CPipeLine);
 
 	return S_OK;
 }

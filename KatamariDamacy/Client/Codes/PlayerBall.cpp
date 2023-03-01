@@ -211,7 +211,7 @@ HRESULT CPlayerBall::SetUp_Components()
 
 
 	ZeroMemory(&ColliderDesc, sizeof(CCollider::COLLIDERDESC));
-	ColliderDesc.vSize = _float3(0.5f, 0.5f, 0.5f);
+	ColliderDesc.vSize = _float3(1.f, 1.f, 1.f);
 
 	if (FAILED(__super::SetUp_Components(STAGEONE_SCENE, L"Component_Collider_SPHERE", L"Com_SPHERE", (CComponent**)&m_pColliderSphere, &ColliderDesc)))
 		return E_FAIL;

@@ -26,14 +26,7 @@ HRESULT CAnimation::Add_Channel(CChannel * pChannel)
 
 HRESULT CAnimation::Update_TransformationMatrices(_double DeltaTime)
 {
-	if (DeltaTime <= 0.02)
-	{
-		m_CurrentTime += fmod(m_TickPerSecond * DeltaTime, m_Duration);
-	}
-	else
-	{
-		m_CurrentTime += fmod(m_TickPerSecond * 0.02, m_Duration);
-	}	// 현재 애니메이션의 재생시간
+	m_CurrentTime += fmod(m_TickPerSecond * DeltaTime, m_Duration);		// 현재 애니메이션의 재생시간
 
 	if (m_CurrentTime > m_Duration) // 전체 애니메이션 재생 시간보다 현재 시간이 커지면
 	{
